@@ -161,7 +161,7 @@ After SEARCHING FOR and confirming the latest quarter, collect the following:
     - ✅ **The transcript date MUST match the earnings release date from Step 1**
     - ✅ **If transcript says "Q2 2023" but release was "Q3 2024", WRONG transcript obtained**
     - 🚨 **Common mistake**: Grabbing an old transcript without checking the date
-  - If transcript not yet available, listen to webcast replay or note to wait for transcript
+  - If transcript not yet available, listen to webcast replay or proceed with the press release and supplemental materials only — flag the transcript gap in the report
 
 **Supplemental Materials (if available):**
 - **Investor presentation/slides** - Often posted on IR site alongside press release

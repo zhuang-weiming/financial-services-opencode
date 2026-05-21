@@ -39,9 +39,9 @@ description: "Populates investment banking pitch deck templates with data from s
 
 **Check which environment you're in before deciding output format:**
 
-- **Opencode Web / Chat Interface**: Display populated content directly in chat with proper markdown formatting. Structure as slide-by-slide presentation outline.
+- **Opencode Web / Chat Interface**: Display populated content directly in chat with proper markdown formatting. Structure as slide-by-slide presentation outline. Do NOT write to disk.
 - **PowerPoint add-in**: the deck is open live; build slides directly into it.
-- **Headless with file output**: generate a `.pptx` file.
+- **Headless / Managed-agent (CMA)**: generate a `.pptx` file — only when explicitly requested or when no live Office app is available.
 
 ---
 
@@ -70,7 +70,7 @@ Pitch Deck Progress:
 ```
 
 ### Phase 1: Data Extraction
-1. **Create backup** of original template before any modifications — copy to `[filename]_backup.pptx`. Direct XML editing or unexpected errors can corrupt files.
+1. **Create backup** of original template before any modifications — copy to `[filename]_backup.pptx`. Direct XML editing or unexpected errors can corrupt files. **This step applies to headless/CMA file-output mode only.**
 2. Identify all source materials (Excel, CSV, PDF reports, Word documents, databases, web sources)
 3. Extract relevant data points from each source
 4. Validate all numbers against original sources

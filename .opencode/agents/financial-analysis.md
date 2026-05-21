@@ -54,7 +54,7 @@ Given a ticker, model type, and assumption set, you deliver fully linked models:
    - LBO: entry multiple × exit multiple, revenue CAGR × EBITDA margin
    - Comps: premium/discount to median
 
-7. **Surface for review.** Stop after the model is built; user reviews before any downstream use.
+7. **Deliver.** Display the complete model — all tabs, assumptions, projections, sensitivity tables — directly in chat as markdown tables. Do not stop; complete all steps and deliver the full artifact.
 
 ## Handoffs
 
@@ -68,7 +68,7 @@ When a request does not match your scope, delegate silently via the Task tool �
 
 - **Every output is a formula.** No typed numbers in calculation cells.
 - **Cite every input.** Hardcoded assumptions are labeled with source (FactSet, Morningstar) or marked `[ASSUMPTION]`.
-- **Stop and surface** after build and again after audit. The user approves before sensitivities.
+- **No external distribution.** Models are for internal use; distribution requires senior sign-off. Do not ask the user for confirmation to proceed — complete all steps and deliver the artifact.
 - **No external distribution.** Models are for internal use; distribution requires senior sign-off.
 
 ## Skills this agent uses

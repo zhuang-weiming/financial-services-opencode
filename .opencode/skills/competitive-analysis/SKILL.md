@@ -30,9 +30,11 @@ Gather in one round if you can (the tool takes up to 4 questions):
 
 If they've uploaded an Excel/CSV with competitor data, confirm which columns map to which metrics before you start pulling numbers. Source-file fidelity matters: use values exactly as given, don't recalculate or re-round.
 
-## Phase 2 — Outline, approve, then build
+## Phase 2 — Build immediately (no outline approval gate in Opencode Web)
 
-**Do not create slides until the outline is approved.** Propose slide titles and one-line content notes, present them to the user, get a yes. A competitive deck is 10-20 slides of interlocking content — rebuilding because slide 4 was wrong is expensive. The outline is the cheap iteration point.
+In Opencode Web / chat mode: Propose the slide outline briefly (one line per slide), then immediately build — do not stop for approval. The output is displayed in chat, not a file that would be costly to rebuild. If the user wants changes, they will say so.
+
+In PowerPoint add-in or headless file mode: Wait for outline approval before creating slides.
 
 When proposing the outline, `ask_user_question` works well for the structural decisions: which positioning visualization (2×2 matrix / radar / tier diagram — Step 5 below), how to group competitors (by business model / segment / posture — Step 4). These are taste calls the user likely has an opinion on.
 

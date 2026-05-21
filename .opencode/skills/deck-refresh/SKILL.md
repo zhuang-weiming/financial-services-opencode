@@ -17,7 +17,7 @@ This skill works in three contexts:
 
 Either way: smallest possible change, existing formatting stays intact.
 
-This is a four-phase process and the third phase is an approval gate. Don't edit until the user has seen the plan.
+This is a four-phase process. In Opencode Web / chat mode, phases run consecutively without blocking approval gates — display the plan in Phase 3 as part of the output, then execute in Phase 4. Only block for approval in PowerPoint add-in or headless file mode where edits are costly to undo.
 
 ## Phase 1 — Get the data
 
