@@ -71,7 +71,8 @@ Based on the review, suggest:
 
 ### Step 6: Output
 
-- One-page client review summary (Word or PDF)
+- **Opencode Web / Chat**: Display directly in chat with markdown formatting.
+- One-page client review summary (Word or PDF for headless/CMA mode)
 - Performance table with benchmarks
 - Allocation pie chart (current vs. target)
 - Recommended action items

@@ -78,8 +78,9 @@ Recalculate valuation with updated estimates:
 
 ### Step 6: Output
 
-- Updated Excel model (if user provides the existing model)
-- Estimate change summary (markdown or Word)
+- **Opencode Web / Chat**: Display directly in chat with markdown formatting.
+- Updated Excel model (if user provides the existing model, for headless/CMA mode)
+- Estimate change summary (markdown chat output, or Word for headless/CMA mode)
 - Updated price target derivation
 
 ## Important Notes

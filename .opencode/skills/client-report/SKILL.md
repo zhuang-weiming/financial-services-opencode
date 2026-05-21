@@ -71,9 +71,10 @@ Brief market summary tailored to the client's level of sophistication:
 
 ### Step 8: Output
 
-- PDF report (8-12 pages) with firm branding
-- Word document for customization
-- Excel data appendix (optional)
+- **Opencode Web / Chat**: Display content directly with proper markdown formatting — structured sections, tables, and charts described in text.
+- **Default (Headless)**: PDF report (8-12 pages) with firm branding
+- **Alternative**: Word document for customization
+- **Optional**: Excel data appendix
 
 **Report Structure:**
 1. Cover page (client name, period, firm logo)

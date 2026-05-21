@@ -72,8 +72,9 @@ Standard IC memo format:
 
 ### Step 3: Output Format
 
-- Default: Word document (.docx) with professional formatting
-- Alternative: Markdown for quick review
+- **Opencode Web / Chat**: Display content directly with proper markdown formatting — use headings, tables, and structured text.
+- **Default (Headless)**: Word document (.docx) with professional formatting
+- **Alternative**: Markdown for quick review
 - Include tables for financials and returns, not just prose
 
 ## Important Notes

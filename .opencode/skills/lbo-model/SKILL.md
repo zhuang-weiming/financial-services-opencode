@@ -34,6 +34,11 @@ Before starting any LBO model:
 - Use Python/openpyxl as described below
 - Write formula strings (`ws["D20"] = "=B5*B6"`), then run `recalc.py` before delivery
 
+**For Opencode Web:**
+- Display LBO model content directly in chat using markdown tables
+- Structure as: Sources & Uses table, Operating Model summary, Debt Schedule key metrics, Returns Analysis (IRR/MOIC)
+- Show assumptions and outputs in clearly formatted tables
+
 The rest of this skill is written with openpyxl examples, but the same principles apply to Office JS — just translate the API calls.
 
 ### Core Principles

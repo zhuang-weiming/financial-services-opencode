@@ -68,7 +68,8 @@ For each company, brief profile:
 
 ### Step 6: Output
 
-- Word document or PowerPoint with:
+- **Opencode Web / Chat**: Display sector overview directly in chat with markdown formatting — structured sections with tables, charts described in text, and key takeaways.
+- **Headless / CMA mode**: Word document or PowerPoint with:
   - Market overview and sizing
   - Competitive landscape map
   - Company comparison table

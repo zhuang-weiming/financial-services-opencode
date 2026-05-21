@@ -498,6 +498,9 @@ Before publishing, verify:
 
 Provide user with:
 
+**For Opencode Web:** Display the full report directly in chat with markdown formatting (sections, tables, key findings, and charts described in text).
+
+**For Headless / CMA mode:**
 1. **DOCX file**: `[Company]_Q[X]_[Year]_Earnings_Update.docx`
 2. **Chart files**: All PNG/JPG charts (for reference)
 3. **Optional XLS**: Updated financial model if maintained
@@ -524,3 +527,5 @@ Price Target: $XXX (prior: $XXX) - [+/-]XX% upside
 
 Deliverable: 8-12 page earnings update report with updated estimates and valuation.
 ```
+
+**⚠️ IMPORTANT — Do NOT append a "Next Steps", "Recommended Next Steps", "Suggested Next Steps", or any similar advisory section.** Such sections are not part of institutional equity research format and must never appear in earnings outputs. End with the valuation/estimates section or a brief closing paragraph only.

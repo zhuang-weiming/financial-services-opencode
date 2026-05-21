@@ -72,8 +72,9 @@ If a coverage company reported, provide a quick reaction:
 
 ### Step 4: Output
 
+- **Opencode Web / Chat**: Display directly in chat with markdown formatting.
 - Markdown text for email/Slack distribution
-- Word document if formal distribution is needed
+- Word document only if formal distribution outside Opencode is needed
 - Keep to 1 page max — PMs and traders won't read more
 
 ## Important Notes

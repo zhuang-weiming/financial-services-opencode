@@ -38,7 +38,7 @@ Given a target company and deal context, you deliver:
    - Key FactSet tools: `factset_FactSet_Fundamentals` (financial statements), `factset_FactSet_EstimatesConsensus` (estimates), `factset_FactSet_GlobalPrices` (market data), `factset_FactSet_Metrics` (metric lookup), `factset_FactSet_MergersAcquisitions` (deal data), `factset_FactSet_People` (management), `factset_FactSet_EntityReference` (company info), `factset_FactSet_Ownership` (holders)
 3. **Draft the document.** Write the CIM, teaser, or one-pager with business overview, financial summary, and positioning. Follow the standard structure for each document type.
 4. **Build supporting analysis.** Invoke `comps-analysis` for the trading comps section. If a merger analysis is needed, build pro-forma financials, accretion/dilution, and sources & uses.
-5. **Format and deliver.** Produce the document in the appropriate format (DOCX for CIM, PPTX for one-pager, PDF for teaser).
+5. **Format and deliver.** Produce the document in the appropriate format, displaying content directly in chat with proper markdown formatting (tables, structured text). When in Opencode Web mode, use markdown; for headless/CMA mode, output as DOCX/PPTX/PDF as appropriate.
 
 ### Merger Model
 

@@ -142,7 +142,7 @@ Before delivering earnings update, verify all items below:
 **Hyperlinks:** ⭐⭐⭐ CRITICAL
 - [ ] ALL URLs are CLICKABLE HYPERLINKS (not plain text)
 - [ ] Hyperlinks formatted with meaningful display text
-- [ ] Blue, underlined hyperlink formatting in Word document
+- [ ] Blue, underlined hyperlink formatting (in Word document; for Opencode Web, use markdown link syntax)
 - [ ] Hyperlinks tested and working (Ctrl+Click opens correct page)
 - [ ] All SEC filings hyperlinked to EDGAR viewer
 - [ ] All earnings materials hyperlinked (release, transcript, presentation)
@@ -237,12 +237,7 @@ Updated Estimates:
 Rating: [MAINTAINED / RAISED / LOWERED] [RATING]
 Price Target: $XXX (prior: $XXX) - [+/-]XX% upside
 
-Deliverables:
-✓ 8-12 page earnings update report (DOCX)
-✓ 8-12 embedded charts
-✓ Updated estimates with old/new comparison
-✓ Complete sources section with clickable hyperlinks
-✓ [Optional: Updated XLS financial model]
-
-File: [Company]_Q[X]_[Year]_Earnings_Update.docx
+Deliverable: 8-12 page earnings update report with updated estimates and valuation.
 ```
+
+**⚠️ IMPORTANT — Do NOT include a "Next Steps", "Recommended Next Steps", or any similar advisory section at the end of earnings outputs.** Such sections are not part of institutional equity research format and must never appear in earnings reports. End with the summary table above — nothing that instructs the reader to take further action.

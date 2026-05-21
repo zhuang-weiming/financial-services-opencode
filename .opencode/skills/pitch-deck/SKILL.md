@@ -35,6 +35,16 @@ description: "Populates investment banking pitch deck templates with data from s
 
 ---
 
+## Environment Detection
+
+**Check which environment you're in before deciding output format:**
+
+- **Opencode Web / Chat Interface**: Display populated content directly in chat with proper markdown formatting. Structure as slide-by-slide presentation outline.
+- **PowerPoint add-in**: the deck is open live; build slides directly into it.
+- **Headless with file output**: generate a `.pptx` file.
+
+---
+
 ## ⚠️ Critical Rendering Limitation
 
 **LibreOffice is used for validation but DOES NOT render PowerPoint files accurately.** It will mangle fonts, gradients, shape positions, text wrapping, and some table formatting.
@@ -124,12 +134,51 @@ Run through the [Final Quality Checklist](#final-quality-checklist) before deliv
 
 ---
 
+## Output Format for Opencode Web
+
+When displaying in Opencode Web chat, structure the populated deck as a slide-by-slide outline:
+
+```
+## Deck: [Company Name] — [Presentation Title]
+
+---
+
+### Slide 1: [Title]
+
+**[Takeaway Statement]**
+
+**Content:**
+- [Bullet 1]
+- [Bullet 2]
+
+**Data Table:**
+| Metric | Value | Source |
+|--------|-------|--------|
+| Revenue | $485M | FY24 Annual Report |
+| Growth | +15% YoY | Calculated |
+
+---
+
+### Slide 2: [Title]
+
+... continue with same structure ...
+
+---
+
+## Validation Summary
+- [ ] All figures match source documents
+- [ ] No placeholder text remaining
+- [ ] Formatting consistent across slides
+```
+
+---
+
 ## Quick Reference Tables
 
 ### Bullet Symbols
 
 | Context | Symbol | Usage |
-|---------|--------|-------|
+|--------|--------|-------|
 | Included/Positive | ✓ | Items within scope, features present |
 | Excluded/Negative | × | Items outside scope, features absent |
 | Neutral list | • | General enumeration, commentary |

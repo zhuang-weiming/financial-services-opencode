@@ -9,10 +9,11 @@ Update numbers across the deck. The deck is the source of truth for formatting; 
 
 ## Environment check
 
-This skill works in both the PowerPoint add-in and chat. Identify which you're in before starting — the edit mechanism differs, the intent doesn't:
+This skill works in three contexts:
 
-- **Add-in** — the deck is open live; edit text runs, table cells, and chart data directly.
-- **Chat** — the deck is an uploaded file; edit it by regenerating the affected slides with the new values and writing the result back.
+- **Opencode Web / Chat**: Display the updated content directly in chat with proper markdown formatting. Present the changes as a structured update showing what changed.
+- **PowerPoint add-in**: the deck is open live; edit text runs, table cells, and chart data directly.
+- **Chat with file upload**: the deck is an uploaded file; display the updated content with new values.
 
 Either way: smallest possible change, existing formatting stays intact.
 
@@ -23,7 +24,7 @@ This is a four-phase process and the third phase is an approval gate. Don't edit
 Use `ask_user_question` to find out how the new numbers are arriving:
 
 - **Pasted mapping** — user types or pastes "revenue $485M → $512M, EBITDA $120M → $135M." The clearest case.
-- **Uploaded Excel** — old/new columns, or a fresh output sheet the user wants pulled from. Read it, confirm which column is which before you trust it.
+- **Uploaded Excel** — old/new columns, or a fresh output sheet the user wants pulled from. Read it, confirm which column is which before we trust it.
 - **Just the new values** — "Q4 revenue was $512M, margins were 22%." You figure out what each one replaces. Workable, but confirm the mapping before you touch anything — a "$512M" that you map to revenue but the user meant for gross profit is a quiet disaster.
 
 Also ask about **derived numbers**: if revenue moves, does the user want growth rates and share percentages recalculated, or left alone? Most decks have "+15% YoY" baked in somewhere that's now stale. Whether to touch those is a judgment call the user should make, not you.
@@ -74,12 +75,13 @@ The flagged section matters. You're not just executing a find-replace — you're
 
 Use `ask_user_question` for the approval: proceed as shown, proceed but skip the flagged items, or let them revise the mapping first.
 
-## Phase 4 — Execute, preserve, report
+## Phase 4 — Execute, preserve, and report
 
 For each change, make the smallest edit that accomplishes it. How that happens depends on your environment:
 
-- **Add-in** — edit the specific run, cell, or chart series directly in the live deck.
-- **Chat** — regenerate the affected slide with the new value in place, preserving every other element exactly as it was, and write it back to the file.
+- **Opencode Web / Chat**: Present the updated deck content with new values in a structured format.
+- **Add-in**: edit the specific run, cell, or chart series directly in the live deck.
+- **Headless with file**: regenerate the affected slide with the new value in place, preserving every other element exactly as it was.
 
 Either way, the standard is the same:
 

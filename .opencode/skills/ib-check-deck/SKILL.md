@@ -9,12 +9,13 @@ Perform comprehensive QC on the presentation across four dimensions. Read every 
 
 ## Environment check
 
-This skill works in both the PowerPoint add-in and chat. Identify which you're in before starting:
+This skill works in all environments:
 
-- **Add-in** — read from the live open deck.
-- **Chat** — read from the uploaded `.pptx` file.
+- **Opencode Web / Chat**: Display findings directly in chat with proper markdown formatting and structured output.
+- **PowerPoint add-in**: read from the live open deck.
+- **Chat with file upload**: read from the uploaded `.pptx` file or from displayed content.
 
-This is read-and-report only — no edits — so the workflow is identical in both.
+This is read-and-report only — no edits — so the workflow is identical in all environments.
 
 ## Workflow
 
@@ -76,3 +77,26 @@ Use `references/report-format.md` as the structure. Categorize by severity:
 - **Minor** — font sizes, spacing, date formats. Polish.
 
 Lead with criticals. If there aren't any, say so explicitly — "no number inconsistencies found" is a finding, not an absence of one.
+
+## Output Format for Opencode Web
+
+When displaying in chat, structure findings as:
+
+```
+## Deck QC Report
+
+### Critical Issues
+| Slide | Issue | Finding |
+|-------|-------|---------|
+| 3 | Revenue mismatch | Shows $500M but source shows $485M |
+
+### Important Issues
+| Slide | Issue | Recommendation |
+|-------|-------|----------------|
+| 7 | Missing axis label | Add "Revenue ($M)" label |
+
+### Minor Issues
+| Slide | Issue | Note |
+|-------|-------|------|
+| 12 | Date format | Use "FY24" consistently |
+```

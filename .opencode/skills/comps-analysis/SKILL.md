@@ -35,7 +35,12 @@ description: |
 ---
 
 ## Overview
-This skill teaches Opencode to build institutional-grade comparable company analyses that combine operating metrics, valuation multiples, and statistical benchmarking. The output is a structured Excel/spreadsheet that enables informed investment decisions through peer comparison.
+This skill builds institutional-grade comparable company analyses that combine operating metrics, valuation multiples, and statistical benchmarking.
+
+**Output Format:**
+- **Opencode Web / Chat**: Display comps table directly in chat using markdown tables. Structure as: peer list table, operating metrics table, valuation multiples table, summary statistics, and key takeaways.
+- **Headless / CMA mode**: Generate a `.xlsx` file with professional formatting.
+- **Excel Add-in**: Use Office JS to build directly into the live workbook.
 
 **Reference Material & Contextualization:**
 

@@ -91,7 +91,8 @@ Build 3 scenarios:
 
 ### Step 5: Output
 
-- Excel workbook with:
+- **Opencode Web / Chat**: Display returns analysis directly in chat with markdown tables (assumptions, returns calculation, sensitivity matrices, scenario summary).
+- **Headless / CMA mode**: Excel workbook with:
   - Assumptions tab
   - Returns calculation
   - Sensitivity tables (formatted with conditional coloring)
