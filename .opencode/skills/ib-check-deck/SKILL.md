@@ -38,7 +38,7 @@ The script expects markdown-ish input with slide markers. Format as:
 Run the extraction script on what you collected:
 
 ```bash
-python scripts/extract_numbers.py /tmp/deck_content.md --check
+python .opencode/skills/ib-check-deck/scripts/extract_numbers.py /tmp/deck_content.md --check
 ```
 
 It normalizes units ($500M vs $500MM vs $500,000,000 → same number), categorizes values (revenue, EBITDA, multiples, margins), and flags when the same metric category shows conflicting values on different slides. This is the part most likely to catch something a human missed on the fifth read-through.

@@ -45,14 +45,19 @@ description: "Populates investment banking pitch deck templates with data from s
 
 ---
 
-## ⚠️ Critical Rendering Limitation
+## ⚠️ Rendering Validation
 
-**LibreOffice is used for validation but DOES NOT render PowerPoint files accurately.** It will mangle fonts, gradients, shape positions, text wrapping, and some table formatting.
+**If LibreOffice is available:** It can be used for validation but DOES NOT render PowerPoint files accurately. It will mangle fonts, gradients, shape positions, text wrapping, and some table formatting.
 
-**What this means:** A slide that passes visual validation in LibreOffice may still have issues in Microsoft PowerPoint. The validation loop catches structural issues (missing content, broken tables, placeholder formatting retained) but **cannot** catch font substitution, subtle alignment shifts, or gradient problems.
+**If LibreOffice is not available (common on macOS without installation):** Skip the PDF/image conversion step. Perform validation through structural checks and XML inspection instead.
+
+**Validation approach when LibreOffice is unavailable:**
+- Inspect the .pptx file as a ZIP archive to verify slide XML structure
+- Check table objects via XML rather than visual rendering
+- Verify formatting through the XML rather than converted images
 
 **Required action:** Always include this statement when delivering output:
-> "This file was validated using LibreOffice. Please review in Microsoft PowerPoint before distribution, as rendering differences may exist."
+> "Please review in Microsoft PowerPoint before distribution, as rendering may differ across platforms."
 
 ---
 
@@ -96,13 +101,21 @@ Pitch Deck Progress:
 
 **This is a feedback loop. Repeat until all checks pass OR escalation is triggered.**
 
+**Option 1: LibreOffice available (Linux or installed)**
 ```bash
 # Convert to images for visual validation
 soffice --headless --convert-to pdf presentation.pptx
 pdftoppm -jpeg -r 150 presentation.pdf slide
 ```
 
-**Validation checklist (check each slide image):**
+**Option 2: LibreOffice NOT available (macOS default)**
+Skip PDF conversion. Perform structural validation:
+- Open the .pptx as a ZIP archive
+- Navigate to `ppt/slides/` to inspect individual slide XML
+- Verify table structures in XML (look for `<a:tbl>` elements)
+- Check text content in `<a:t>` elements
+
+**Validation checklist:**
 - [ ] Text readable against background?
 - [ ] Tables are actual objects (columns aligned, NOT pipe/tab-separated text)?
 - [ ] Charts/tables fill designated areas?
@@ -344,9 +357,10 @@ For detailed explanations of the most critical failures, see [Critical Anti-Patt
 ## Error Handling
 
 **If PDF/image conversion fails:**
-1. Check LibreOffice is installed: `which soffice`
-2. Try alternative: `libreoffice --headless --convert-to pdf presentation.pptx`
-3. If still failing, open in PowerPoint/LibreOffice manually and export
+1. Check if LibreOffice is available: `which soffice` (returns path if installed)
+2. If LibreOffice is available: Try `libreoffice --headless --convert-to pdf presentation.pptx`
+3. If LibreOffice is NOT available: Use structural/XML validation instead
+4. If conversion still fails despite LibreOffice being installed, proceed with XML-based validation
 
 **If source data has inconsistencies or conflicts:**
 1. **Priority order**: Use data explicitly provided in the task files first

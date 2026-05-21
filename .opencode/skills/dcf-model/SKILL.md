@@ -24,7 +24,7 @@ These constraints apply throughout all DCF model building. Review before startin
 
 **Environment: Office JS vs Python/openpyxl:**
 - **If running inside Excel (Office Add-in / Office JS environment):** Use Office JS directly — do NOT use Python/openpyxl. Write formulas via `range.formulas = [["=D19*(1+$B$8)"]]`. No separate recalc step needed; Excel calculates natively. Use `range.format.*` for styling. The same formulas-over-hardcodes rule applies: set `.formulas`, never `.values` for derived cells.
-- **If generating a standalone .xlsx file (no live Excel session):** Use Python/openpyxl as described below, then run `recalc.py` before delivery.
+- **If generating a standalone .xlsx file (no live Excel session):** Use Python/openpyxl as described below. Write formulas, then verify formula integrity using the validation script if available.
 - The rest of this skill uses openpyxl examples — translate to Office JS API calls when in that environment, but all principles (formula strings, cell comments, section checkpoints, sensitivity table loops) apply identically.
 
 **⚠️ Office JS merged cell pitfall:** When building section headers with merged cells, do NOT call `.merge()` then set `.values` on the merged range — Office JS still reports the range's original dimensions and will throw `InvalidArgument: The number of rows or columns in the input array doesn't match the size or dimensions of the range`. Instead, write the value to the top-left cell alone, then merge and format the full range:
@@ -83,8 +83,11 @@ This applies to every merged section header in the DCF (market data, scenario bl
 - Test formulas immediately after creation
 
 **Formula Recalculation:**
-- Run `python recalc.py model.xlsx 30` before delivery
-- Fix ALL errors until status is "success"
+- For formula error checking, use the `validate_dcf.py` script if available in the skill's scripts directory:
+  ```bash
+  python .opencode/skills/dcf-model/scripts/validate_dcf.py model.xlsx
+  ```
+- If the validation script is not available, verify formulas manually by spot-checking key calculations and ensuring no Excel error values appear in the output
 - Zero formula errors required (#REF!, #DIV/0!, #VALUE!, etc.)
 
 **Scenario Blocks:**
@@ -765,7 +768,7 @@ In addition, be aware of these errors:
 **This skill uses the `xlsx` skill for all spreadsheet operations.** The xlsx skill provides:
 - Standardized formula construction rules
 - Number formatting conventions
-- Automated formula recalculation via `recalc.py` script
+- Automated formula validation via `validate_dcf.py` script when available
 - Comprehensive error checking and validation
 
 All Excel files created by this skill must follow xlsx skill requirements, including zero formula errors and proper recalculation.
@@ -802,50 +805,27 @@ Create **two sheets**:
 
 **CRITICAL**: Sensitivity tables go at the BOTTOM of the DCF sheet (not on a separate sheet). This keeps all valuation outputs together.
 
-### Formula Recalculation (MANDATORY)
+### Formula Validation (MANDATORY)
 
-After creating or modifying the Excel model, **recalculate all formulas** using the recalc.py script from the xlsx skill:
+After creating or modifying the Excel model, verify formula integrity:
 
+**Option 1: Use validation script (if available)**
 ```bash
-python recalc.py [path_to_excel_file] [timeout_seconds]
+python .opencode/skills/dcf-model/scripts/validate_dcf.py model.xlsx
 ```
 
-Example:
-```bash
-python recalc.py AAPL_DCF_Model_2025-10-12.xlsx 30
-```
+This will check for:
+- Formula errors (#REF!, #DIV/0!, #VALUE!, #NAME?, #NULL!, #NUM!, #N/A)
+- DCF logic issues (terminal growth vs WACC, WACC range, terminal value proportion)
 
-The script will:
-- Recalculate all formulas in all sheets using LibreOffice
-- Scan ALL cells for Excel errors (#REF!, #DIV/0!, #VALUE!, #NAME?, #NULL!, #NUM!, #N/A)
-- Return detailed JSON with error locations and counts
+**Option 2: Manual verification**
+If the validation script is not available, manually verify:
+- All formulas use cell references (not hardcoded computed values)
+- No Excel error values appear in key output cells
+- Spot-check sensitivity table formulas to ensure they recalculate correctly
+- Terminal growth rate is less than WACC (critical sanity check)
 
-**Expected output format:**
-```json
-{
-  "status": "success",           // or "errors_found"
-  "total_errors": 0,              // Total error count
-  "total_formulas": 42,           // Number of formulas in file
-  "error_summary": {}             // Only present if errors found
-}
-```
-
-**If errors are found**, the output will include details:
-```json
-{
-  "status": "errors_found",
-  "total_errors": 2,
-  "total_formulas": 42,
-  "error_summary": {
-    "#REF!": {
-      "count": 2,
-      "locations": ["DCF!B25", "DCF!C25"]
-    }
-  }
-}
-```
-
-**Fix all errors** and re-run recalc.py until status is "success" before delivering the model.
+**Fix all errors** before delivering the model.
 
 ### Formatting Standards
 
@@ -1227,13 +1207,13 @@ This approach centralizes scenario logic, making the model easier to audit and m
    - Cell comments on ALL hardcoded inputs
    - Professional borders around major sections
 
-2. **Recalculate formulas**: Run `python recalc.py model.xlsx 30`
+2. **Recalculate formulas**: If `validate_dcf.py` is available, run it. Otherwise manually verify no formula errors in the output.
 
 3. **Check output**:
-   - If `status` is `"success"` → Continue to step 4
-   - If `status` is `"errors_found"` → Check `error_summary` and read [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for debugging guidance
+   - If validation shows errors → Check error locations and read [TROUBLESHOOTING.md](./TROUBLESHOOTING.md) for debugging guidance
+   - If no errors → Continue to step 4
 
-4. **Fix errors and re-run recalc.py** until status is "success"
+4. **Fix errors** and re-verify until no formula errors remain
 
 5. **Spot-check formulas**:
    - Test one FCF formula - does it reference the correct assumption rows?
@@ -1254,7 +1234,7 @@ This approach centralizes scenario logic, making the model easier to audit and m
 Before delivering DCF model:
 
 **Required:**
-- Run `python recalc.py model.xlsx 30` until status is "success" (zero formula errors)
+- Verify formulas (using validation script if available, or manual spot-check) show zero errors
 - Two sheets: DCF (with sensitivity at bottom), WACC
 - Font colors: Blue=inputs, Black=formulas, Green=sheet links
 - Cell comments on ALL hardcoded inputs

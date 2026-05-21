@@ -32,7 +32,7 @@ Before starting any LBO model:
 
 **If generating a standalone .xlsx file (no live Excel session):**
 - Use Python/openpyxl as described below
-- Write formula strings (`ws["D20"] = "=B5*B6"`), then run `recalc.py` before delivery
+- Write formula strings (`ws["D20"] = "=B5*B6"`) and verify formulas after creation
 
 **For Opencode Web:**
 - Display LBO model content directly in chat using markdown tables
@@ -167,10 +167,7 @@ The following calculation patterns frequently cause issues across LBO models. Pa
 ## VERIFICATION CHECKLIST - RUN AFTER COMPLETION
 
 ### Run Formula Validation
-```bash
-python /mnt/skills/public/xlsx/recalc.py model.xlsx
-```
-Must return success with zero errors.
+Verify formulas by opening the Excel file and checking for any #REF!, #DIV/0!, #VALUE!, or other error indicators in calculated cells. Ensure zero formula errors.
 
 ### Section Balancing
 - [ ] Any sections that must balance (Sources/Uses, Assets/Liabilities) balance exactly
