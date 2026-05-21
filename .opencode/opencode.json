@@ -1,0 +1,52 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "instructions": [
+    ".opencode/instructions/data-priority.md"
+  ],
+  "mcp": {
+    "daloopa": {
+      "type": "remote",
+      "url": "https://mcp.daloopa.com/server/mcp"
+    },
+    "morningstar": {
+      "type": "remote",
+      "url": "https://mcp.morningstar.com/mcp"
+    },
+    "sp-global": {
+      "type": "remote",
+      "url": "https://kfinance.kensho.com/integrations/mcp"
+    },
+    "factset": {
+      "type": "remote",
+      "url": "https://mcp.factset.com/content/v1"
+    },
+    "moodys": {
+      "type": "remote",
+      "url": "https://api.moodys.com/genai-ready-data/m1/mcp"
+    },
+    "mtnewswire": {
+      "type": "remote",
+      "url": "https://vast-mcp.blueskyapi.com/mtnewswires"
+    },
+    "aiera": {
+      "type": "remote",
+      "url": "https://mcp-pub.aiera.com"
+    },
+    "lseg": {
+      "type": "remote",
+      "url": "https://api.analytics.lseg.com/lfa/mcp"
+    },
+    "pitchbook": {
+      "type": "remote",
+      "url": "https://premium.mcp.pitchbook.com/mcp"
+    },
+    "chronograph": {
+      "type": "remote",
+      "url": "https://ai.chronograph.pe/mcp"
+    },
+    "egnyte": {
+      "type": "remote",
+      "url": "https://mcp-server.egnyte.com/mcp"
+    }
+  }
+}
