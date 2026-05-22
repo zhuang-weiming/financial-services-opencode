@@ -13,7 +13,6 @@ This skill works in both the PowerPoint add-in and chat. Identify which you're i
 
 - **Add-in** — the deck is open live; build slides directly into it.
 - **Opencode Web / Chat** — display the competitive landscape as a structured markdown document with slide-by-slide outline.
-- **Headless with file output** — generate a `.pptx` file.
 
 Everything below applies in both.
 

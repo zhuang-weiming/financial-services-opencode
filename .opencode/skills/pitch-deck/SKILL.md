@@ -40,8 +40,6 @@ description: "Populates investment banking pitch deck templates with data from s
 **Check which environment you're in before deciding output format:**
 
 - **Opencode Web / Chat Interface**: Display populated content directly in chat with proper markdown formatting. Structure as slide-by-slide presentation outline. Do NOT write to disk.
-- **PowerPoint add-in**: the deck is open live; build slides directly into it.
-- **Headless / Managed-agent (CMA)**: generate a `.pptx` file — only when explicitly requested or when no live Office app is available.
 
 ---
 

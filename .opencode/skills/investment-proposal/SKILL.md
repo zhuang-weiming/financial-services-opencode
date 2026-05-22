@@ -71,10 +71,7 @@ Proposed allocation:
 
 ### Step 4: Output
 
-- **Opencode Web / Chat**: Display content directly with proper markdown formatting — structured sections with tables and bullet points.
-- **Default (Headless)**: PowerPoint presentation (12-15 slides) with firm branding
-- **Alternative**: PDF leave-behind version
-- **Optional**: One-page summary for follow-up email
+- **Opencode Web / Chat**: Display content directly with proper markdown formatting — structured sections with tables and bullet points. Do NOT generate PDF or PowerPoint files.
 
 ## Important Notes
 

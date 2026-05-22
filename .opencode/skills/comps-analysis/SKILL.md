@@ -39,8 +39,7 @@ This skill builds institutional-grade comparable company analyses that combine o
 
 **Output Format:**
 - **Opencode Web / Chat**: Display comps table directly in chat using markdown tables. Structure as: peer list table, operating metrics table, valuation multiples table, summary statistics, and key takeaways.
-- **Headless / CMA mode**: Generate a `.xlsx` file with professional formatting.
-- **Excel Add-in**: Use Office JS to build directly into the live workbook.
+- **Headless / CMA mode**: Display comps content directly in chat as structured markdown. Do NOT generate .xlsx files.
 
 **Reference Material & Contextualization:**
 

@@ -30,14 +30,15 @@ Before starting any LBO model:
 - No separate recalc step needed — Excel handles calculation natively
 - **Merged cell pitfall:** Do NOT call `.merge()` then set `.values` on the merged range (throws `InvalidArgument` — range still reports original dimensions). Instead: write value to top-left cell alone (`ws.getRange("A7").values = [["SOURCES & USES"]]`), then merge + format the full range (`ws.getRange("A7:F7").merge(); ws.getRange("A7:F7").format.fill.color = "#1F4E79";`)
 
-**If generating a standalone .xlsx file (no live Excel session):**
-- Use Python/openpyxl as described below
-- Write formula strings (`ws["D20"] = "=B5*B6"`) and verify formulas after creation
+**If generating standalone output (no live Excel session):**
+- Display content directly in chat using markdown tables
+- Do NOT write .xlsx files
 
 **For Opencode Web:**
 - Display LBO model content directly in chat using markdown tables
 - Structure as: Sources & Uses table, Operating Model summary, Debt Schedule key metrics, Returns Analysis (IRR/MOIC)
 - Show assumptions and outputs in clearly formatted tables
+- Do NOT generate .xlsx files under any circumstances
 
 The rest of this skill is written with openpyxl examples, but the same principles apply to Office JS — just translate the API calls.
 

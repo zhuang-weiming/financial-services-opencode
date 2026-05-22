@@ -61,8 +61,8 @@ Show the returns waterfall:
 Build 2-way sensitivity matrices:
 
 **Entry Multiple vs. Exit Multiple**
-| | Exit 6x | Exit 7x | Exit 8x | Exit 9x | Exit 10x |
-|---|---------|---------|---------|---------|----------|
+| Entry Multiple | Exit 6x | Exit 7x | Exit 8x | Exit 9x | Exit 10x |
+|---------------|---------|---------|---------|---------|----------|
 | Entry 7x | | | | | |
 | Entry 8x | | | | | |
 | Entry 9x | | | | | |
@@ -80,8 +80,8 @@ Show both IRR and MOIC in each cell (IRR / MOIC format).
 
 Build 3 scenarios:
 
-| | Bull | Base | Bear |
-|---|------|------|------|
+| Metric | Bull | Base | Bear |
+|--------|------|------|------|
 | Revenue CAGR | | | |
 | Exit EBITDA margin | | | |
 | Exit multiple | | | |

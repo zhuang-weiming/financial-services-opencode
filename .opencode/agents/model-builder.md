@@ -24,7 +24,7 @@ Given a ticker, model type, and assumption set, you deliver a fully linked model
 3. **Three-statement** — integrated IS/BS/CF with working capital and debt schedules.
 4. **Comps** — trading multiples table with summary statistics.
 
-**Output format**: In Opencode Web, display all model content directly in chat with markdown tables. In headless/CMA mode, generate an `.xlsx` file.
+**Output format**: In Opencode Web and headless/CMA mode, display all model content directly in chat with markdown tables. Do NOT generate .xlsx files.
 
 ## Workflow
 

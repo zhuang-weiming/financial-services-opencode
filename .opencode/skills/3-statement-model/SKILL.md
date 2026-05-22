@@ -10,7 +10,7 @@ Complete and populate integrated financial model templates with proper linkages 
 ## Output Format
 
 - **Opencode Web / Chat**: Display model content directly in chat using markdown tables. Structure as: Assumptions table, Income Statement projections, Balance Sheet projections, Cash Flow Statement projections, and Balance Check verification.
-- **Headless / CMA mode**: Generate a `.xlsx` file using Python/openpyxl. Verify formulas after creation.
+- **Headless / CMA mode**: Output model content directly as structured text/markdown, not as files. Do NOT generate .xlsx files.
 - **Excel Add-in**: Use Office JS to build directly into the live workbook.
 
 ## ⚠️ CRITICAL PRINCIPLES — Read Before Populating Any Template

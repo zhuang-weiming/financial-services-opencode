@@ -176,10 +176,9 @@ Verify content, formatting, accuracy, and timeliness before delivery.
 
 ## Output Specification
 
-**Primary Deliverable (Headless)**: DOCX report (8-12 pages)
-**For Opencode Web**: Display content directly with proper markdown formatting — structured as a professional research note with sections, tables, and key findings.
-**File Name**: `[Company]_Q[Quarter]_[Year]_Earnings_Update.docx`
-**Example**: `Nike_Q2_FY24_Earnings_Update.docx`
+**For Opencode Web**: Display content directly with proper markdown formatting — structured as a professional research note with sections, tables, and key findings. Do NOT generate DOCX files.
+
+**For Headless/CMA mode**: Display content directly with proper markdown formatting. Do NOT generate files.
 
 **IMPORTANT — Do NOT include a "Next Steps", "Recommended Next Steps", or any similar advisory section at the end of earnings outputs.** Such sections are not part of institutional equity research format and should never be appended to earnings notes. End the output with the valuation/estimates section or a brief closing paragraph — nothing that instructs the reader to take further action.
 

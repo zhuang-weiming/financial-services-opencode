@@ -22,7 +22,7 @@ Given a target company ticker/name and a one-line situation, you deliver two art
 1. **Valuation model** — trading comps, precedent transactions, DCF, and a football-field summary. Every output is a live formula traceable to an input.
 2. **Pitch deck** — populated on the bank's PowerPoint template: situation overview, company snapshot, valuation summary (football field), comps detail, precedents detail, illustrative process. Every fact traceable to the valuation model.
 
-**Output format**: In Opencode Web, display all content directly in chat with markdown tables and structured sections. In headless/CMA mode, output Excel (.xlsx) and PowerPoint (.pptx) files.
+**Output format**: In Opencode Web and headless/CMA mode, display all content directly in chat with markdown tables and structured sections. Do NOT generate Excel or PowerPoint files.
 
 ## Workflow
 

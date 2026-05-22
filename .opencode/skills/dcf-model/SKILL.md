@@ -12,7 +12,7 @@ This skill creates institutional-quality DCF models for equity valuation followi
 ## Output Format
 
 - **Opencode Web / Chat**: Display DCF content directly in chat with proper markdown formatting. Structure as: Key Inputs table, Projected Cash Flows, WACC calculation, Terminal Value, Valuation Summary, and Sensitivity Tables.
-- **Headless / CMA mode**: Generate a `.xlsx` file with professional formatting.
+- **Headless / CMA mode**: Output DCF content directly as structured text/markdown, not as files. Do NOT generate .xlsx files.
 
 ## Tools
 

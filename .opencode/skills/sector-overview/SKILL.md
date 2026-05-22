@@ -68,14 +68,7 @@ For each company, brief profile:
 
 ### Step 6: Output
 
-- **Opencode Web / Chat**: Display sector overview directly in chat with markdown formatting — structured sections with tables, charts described in text, and key takeaways.
-- **Headless / CMA mode**: Word document or PowerPoint with:
-  - Market overview and sizing
-  - Competitive landscape map
-  - Company comparison table
-  - Valuation summary
-  - Key charts: market growth, share trends, valuation history
-- Excel appendix with detailed company data
+- **Opencode Web / Chat**: Display sector overview directly in chat with markdown formatting — structured sections with tables, charts described in text, and key takeaways. Do NOT generate Word, PowerPoint, or Excel files.
 
 ## Important Notes
 
