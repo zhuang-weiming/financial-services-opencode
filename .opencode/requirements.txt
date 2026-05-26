@@ -13,6 +13,4 @@ httpx==0.28.1
 fastapi==0.136.1
 uvicorn==0.47.0
 mcp==1.27.1
-fal_client==0.13.1
-hermes-agent==0.14.0
 pydantic-settings==2.14.1
