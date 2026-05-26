@@ -1,0 +1,32 @@
+{
+  "report_date": "2024-03-15",
+  "portfolio_name": "Tech Portfolio Q1 2024",
+  "companies_reviewed": 4,
+  "ai_opportunities": [
+    {
+      "company": "TechCorp C",
+      "score": 8.2,
+      "priority": "Critical",
+      "quick_wins": [
+        "Loan processing automation (est. 40 hrs)",
+        "Fraud detection ML model (est. 40 hrs)"
+      ],
+      "total_hours": 80
+    },
+    {
+      "company": "TechCorp A",
+      "score": 7.5,
+      "priority": "High",
+      "quick_wins": [
+        "Invoice automation (est. 20 hrs)",
+        "Support chatbot (est. 20 hrs)"
+      ],
+      "total_hours": 40
+    }
+  ],
+  "recommended_actions": [
+    "Deploy to TechCorp C immediately",
+    "Start pilot at TechCorp A next quarter",
+    "Defer TechCorp B/D to later review"
+  ]
+}

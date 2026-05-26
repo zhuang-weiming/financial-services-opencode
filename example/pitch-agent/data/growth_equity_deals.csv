@@ -1,0 +1,6 @@
+company,ticker,growth_rate,ev_revenue,ev_ebitda,market_share
+Datadog,DDOG-US,45%,15x,50x,8%
+Snowflake,SNOW-US,50%,18x,55x,6%
+Cloudflare,NET-US,40%,12x,45x,5%
+MongoDB,MDB-US,35%,8x,35x,7%
+Elastic,ESTC-US,30%,6x,30x,4%

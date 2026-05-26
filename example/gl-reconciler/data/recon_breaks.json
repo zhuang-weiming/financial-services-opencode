@@ -1,0 +1,28 @@
+{
+  "breaks": [
+    {
+      "id": "BRK-001",
+      "trade_date": "2024-03-15",
+      "account": "Equity Positions",
+      "symbol": "AAPL-US",
+      "gl_balance": 2450000,
+      "subledger_balance": 2500000,
+      "variance": -50000,
+      "asset_class": "equity",
+      "suspected_cause": "timing",
+      "status": "pending"
+    },
+    {
+      "id": "BRK-002",
+      "trade_date": "2024-03-15",
+      "account": "Dividend Receivable",
+      "symbol": "MSFT-US",
+      "gl_balance": 25000,
+      "subledger_balance": 0,
+      "variance": 25000,
+      "asset_class": "equity",
+      "suspected_cause": "system_drift",
+      "status": "pending"
+    }
+  ]
+}

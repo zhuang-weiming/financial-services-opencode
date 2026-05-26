@@ -1,0 +1,21 @@
+{
+  "process_id": "M&A-2024-Q1-01",
+  "target": "CloudSoft Corporation",
+  "target_ticker": "CS-002",
+  "process_type": "Sell-side",
+  "stage": "Secondaries",
+  "timeline": {
+    "first_round": "2024-01-15",
+    "second_round": "2024-02-20",
+    "final_bids": "2024-03-15",
+    "closing": "2024-04-30"
+  },
+  "process_letters": {
+    "ioi": "sent",
+    "final_bid": "pending"
+  },
+  "participants": {
+    "strategic": ["Acquirer A", "Acquirer B"],
+    "financial": ["Fund X", "Fund Y"]
+  }
+}

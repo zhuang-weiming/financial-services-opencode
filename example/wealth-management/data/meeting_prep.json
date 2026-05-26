@@ -1,0 +1,47 @@
+{
+  "client": {
+    "name": "Meridian Family Office",
+    "meeting_date": "2024-04-20",
+    "portfolio_value": 8500000,
+    "since_last_review": 700000,
+    "ytd_return": 0.092,
+    "benchmark_return": 0.072,
+    "active_return": 0.020
+  },
+  "current_allocation": {
+    "us_large_cap": {"pct": 0.35, "value": 2975000, "ytd_return": 0.085},
+    "intl_developed": {"pct": 0.20, "value": 1700000, "ytd_return": 0.052},
+    "emerging_markets": {"pct": 0.10, "value": 850000, "ytd_return": 0.038},
+    "us_fixed_income": {"pct": 0.25, "value": 2125000, "ytd_return": 0.018},
+    "alternatives": {"pct": 0.10, "value": 850000, "ytd_return": 0.035}
+  },
+  "target_allocation": {
+    "us_large_cap": 0.30,
+    "intl_developed": 0.20,
+    "emerging_markets": 0.10,
+    "us_fixed_income": 0.30,
+    "alternatives": 0.10
+  },
+  "drift_analysis": {
+    "us_large_cap": "+5%",
+    "us_fixed_income": "-5%"
+  },
+  "key_updates": [
+    "Client's son starting college next fall - $60,000/year for 4 years",
+    "Client inherited $500,000 - seeking guidance on investment",
+    "Interest in sustainable investing has increased"
+  ],
+  "discussion_agenda": [
+    "Portfolio performance attribution",
+    "College funding plan - 529 vs. taxable account",
+    "Inherited asset investment strategy",
+    "Sustainable investing integration options",
+    "Action items for next quarter"
+  ],
+  "action_items": [
+    "Prepare college funding analysis",
+    "Draft IPS amendment for inherited assets",
+    "Research sustainable fund options meeting return objectives",
+    "Schedule follow-up to present rebalancing recommendations"
+  ]
+}

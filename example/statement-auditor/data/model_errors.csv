@@ -1,0 +1,4 @@
+error_id,error_type,sheet,cell,description
+ERR-001,link_broken,Income Statement,B15,Revenue link broken
+ERR-002,hardcoded,DCF,C42,Terminal value hardcoded
+ERR-003,cross_check,Cash Flow,D25,Cash tie-out variance

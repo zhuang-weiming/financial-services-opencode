@@ -1,0 +1,14 @@
+{
+  "period": "Q1 2024",
+  "beginning_cash": 12500000,
+  "net_operations": 2100000,
+  "net_financing": -500000,
+  "net_investing": -800000,
+  "ending_cash": 13300000,
+  "projected_q2": 13800000,
+  "assumptions": {
+    "revenue_growth": 0.06,
+    "operating_margin": 0.18,
+    "capex": 800000
+  }
+}

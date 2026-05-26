@@ -12,7 +12,7 @@ Build a complete competitive analysis deck. This is a two-phase process: gather 
 This skill works in both the PowerPoint add-in and chat. Identify which you're in before starting — the mechanics differ, the workflow doesn't:
 
 - **Add-in** — the deck is open live; build slides directly into it.
-- **Opencode Web / Chat** — display the competitive landscape as a structured markdown document with slide-by-slide outline.
+- **Chat** — generate a `.pptx` file (or build into one the user uploaded).
 
 Everything below applies in both.
 
@@ -29,11 +29,9 @@ Gather in one round if you can (the tool takes up to 4 questions):
 
 If they've uploaded an Excel/CSV with competitor data, confirm which columns map to which metrics before you start pulling numbers. Source-file fidelity matters: use values exactly as given, don't recalculate or re-round.
 
-## Phase 2 — Build immediately (no outline approval gate in Opencode Web)
+## Phase 2 — Outline, approve, then build
 
-In Opencode Web / chat mode: Propose the slide outline briefly (one line per slide), then immediately build — do not stop for approval. The output is displayed in chat, not a file that would be costly to rebuild. If the user wants changes, they will say so.
-
-In PowerPoint add-in or headless file mode: Wait for outline approval before creating slides.
+**Do not create slides until the outline is approved.** Propose slide titles and one-line content notes, present them to the user, get a yes. A competitive deck is 10-20 slides of interlocking content — rebuilding because slide 4 was wrong is expensive. The outline is the cheap iteration point.
 
 When proposing the outline, `ask_user_question` works well for the structural decisions: which positioning visualization (2×2 matrix / radar / tier diagram — Step 5 below), how to group competitors (by business model / segment / posture — Step 4). These are taste calls the user likely has an opinion on.
 
@@ -248,52 +246,6 @@ M&A transactions (multiples, rationale), partnership trends, capital raising pat
 | Bull | 30% | Market share gains, margin expansion |
 | Base | 50% | Current trajectory continues |
 | Bear | 20% | Competitive pressure, margin compression |
-```
-
----
-
-## Output Format for Opencode Web
-
-When displaying in Opencode Web chat, structure the competitive analysis as:
-
-```
-## Competitive Landscape: [Industry/Company]
-
----
-
-### Slide 1: Market Context
-
-**Market Size & Growth:**
-- Total Addressable Market: $XXbn (2024)
-- CAGR: XX% (2024-2028)
-- Key Drivers: [Driver 1], [Driver 2]
-
-**Source:** [Industry Report] (Year)
-
----
-
-### Slide 2: Competitive Positioning
-
-| Company | Revenue | Growth | Margin | Market Share |
-|---------|---------|--------|--------|--------------|
-| Company A | $X.XB | +XX% | XX% | XX% |
-| Company B | $X.XB | +XX% | XX% | XX% |
-
-**Key Insight:** [Takeaway statement]
-
----
-
-### Slide 3: [Company] Deep Dive
-
-**Strengths:**
-- ✓ [Strength 1]
-- ✓ [Strength 2]
-
-**Weaknesses:**
-- × [Weakness 1]
-- × [Weakness 2]
-
-... continue with same structure for each competitor ...
 ```
 
 ---

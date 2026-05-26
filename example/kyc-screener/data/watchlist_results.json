@@ -1,0 +1,28 @@
+{
+  "names": [
+    {
+      "id": "PEP-001",
+      "name": "Viktor Petrov",
+      "type": "individual",
+      "list": "OFAC SDN",
+      "match_confidence": 0.95,
+      "status": "pending"
+    },
+    {
+      "id": "PEP-002",
+      "name": "Maria Santos",
+      "type": "individual",
+      "list": "EU Sanctions",
+      "match_confidence": 0.72,
+      "status": "cleared"
+    },
+    {
+      "id": "PEP-003",
+      "name": "Alpha Trading Ltd",
+      "type": "entity",
+      "list": "FATF High-Risk",
+      "match_confidence": 0.88,
+      "status": "enhanced_due_diligence"
+    }
+  ]
+}

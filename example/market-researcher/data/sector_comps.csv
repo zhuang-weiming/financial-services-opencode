@@ -1,0 +1,4 @@
+sector,company,ticker,revenue_fy0,growth_fy1,market_share,revenue_per_share
+Cloud Infrastructure,Cloudflare,NET-US,1850000000,0.40,0.05,7.20
+Cloud Infrastructure,Datadog,DDOG-US,2100000000,0.45,0.08,7.80
+Cloud Infrastructure,Snowflake,SNOW-US,3200000000,0.50,0.06,10.50

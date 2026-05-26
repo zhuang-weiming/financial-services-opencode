@@ -1,0 +1,4 @@
+client_id,client_name,risk_rating,onboarding_date,account_type
+CLI-001,Harborview Endowment,Medium,2024-01-15,Institutional
+CLI-002,Meridian Family Office,Low,2024-02-20,Family Office
+CLI-003,Alpha Trading Ltd,High,2024-03-01,Corporation

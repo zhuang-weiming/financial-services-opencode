@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "morningstar": {
+      "type": "http",
+      "url": "https://mcp.morningstar.com/mcp"
+    },
+    "factset": {
+      "type": "http",
+      "url": "https://mcp.factset.com/content/v1"
+    }
+  }
+}

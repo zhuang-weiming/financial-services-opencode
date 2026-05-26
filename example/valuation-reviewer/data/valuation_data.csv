@@ -1,0 +1,4 @@
+company,ticker,base_price,target_price,upside_pct,valuation_method,wacc,terminal_growth
+Datadog,DDOG-US,118,140,18.6%,DCF,10.5%,4.5%
+Snowflake,SNOW-US,175,220,25.7%,DCF,10.8%,4.0%
+MongoDB,MDB-US,125,165,32.0%,DCF,11.2%,4.0%

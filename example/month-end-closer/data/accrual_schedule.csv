@@ -1,0 +1,4 @@
+account,beginning_balance,additions,reductions,ending_balance,gl_balance,variance
+Cash,12500000,2500000,1500000,13500000,13500000,0
+Equity Positions,2400000,100000,50000,2450000,2500000,-50000
+Accrued Expenses,450000,120000,80000,490000,485000,5000

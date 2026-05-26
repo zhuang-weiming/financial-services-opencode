@@ -1,0 +1,37 @@
+{
+  "audit_id": "AUD-2024-0315",
+  "model_name": "Tech Growth Model",
+  "audit_date": "2024-03-15",
+  "errors": [
+    {
+      "id": "ERR-001",
+      "type": "link_broken",
+      "sheet": "Income Statement",
+      "cell": "B15",
+      "description": "Revenue link to Balance Sheet broken"
+    },
+    {
+      "id": "ERR-002",
+      "type": "hardcoded",
+      "sheet": "DCF",
+      "cell": "C42",
+      "description": "Terminal value hardcoded instead of formula"
+    },
+    {
+      "id": "ERR-003",
+      "type": "cross_check",
+      "sheet": "Cash Flow",
+      "cell": "D25",
+      "description": "Cash tie-out off by $50,000"
+    }
+  ],
+  "warnings": [
+    {
+      "id": "WRN-001",
+      "type": "assumption_drift",
+      "sheet": "Assumptions",
+      "description": "WACC changed 3 times in last 5 periods"
+    }
+  ],
+  "overall_status": "FAIL"
+}

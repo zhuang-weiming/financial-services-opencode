@@ -1,6 +1,9 @@
-# Model Update
-
+---
+name: model-update
 description: Update financial models with new data — quarterly earnings, management guidance, macro changes, or revised assumptions. Adjusts estimates, recalculates valuation, and flags material changes. Use after earnings, guidance updates, or when assumptions need refreshing. Triggers on "update model", "plug earnings", "refresh estimates", "update numbers for [company]", "new guidance", or "revise estimates".
+---
+
+# Model Update
 
 ## Workflow
 
@@ -78,9 +81,8 @@ Recalculate valuation with updated estimates:
 
 ### Step 6: Output
 
-- **Opencode Web / Chat**: Display directly in chat with markdown formatting.
-- Updated Excel model (if user provides the existing model, for headless/CMA mode)
-- Estimate change summary (markdown chat output, or Word for headless/CMA mode)
+- Updated Excel model (if user provides the existing model)
+- Estimate change summary (markdown or Word)
 - Updated price target derivation
 
 ## Important Notes

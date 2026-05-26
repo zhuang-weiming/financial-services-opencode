@@ -1,0 +1,4 @@
+target,target_id,buyer_type,sector,deal_value,revenue_multiple,status
+TechCo Inc,TC-001,Strategic,Technology,850000000,4.5x,Completed
+CloudSoft,CS-002,Financial,Cloud SaaS,420000000,8.2x,Announced
+DataFlow,Df-003,Strategic,Data Analytics,320000000,6.1x,Pending

@@ -1,28 +1,33 @@
 ---
 name: xlsx-author
-description: Display tabular financial model content directly in chat with proper markdown formatting. Use when users need to view DCF models, comps analysis, LBO models, or 3-statement models. Output is formatted markdown tables, NOT Excel files.
+description: Produce a .xlsx file on disk (headless) instead of driving a live Excel workbook — for managed-agent sessions with no open Office app.
 ---
 
 # xlsx-author
 
-Use this skill when you need to deliver tabular financial model content — formatted as markdown tables displayed directly in the Opencode Web chat interface.
+Use this skill when running **headless** (managed-agent / CMA mode) and you need to deliver an Excel workbook as a **file artifact** rather than editing a live workbook via `mcp__office__excel_*`.
 
-## Environment Detection
+## Output contract
 
-**Check which environment you're in before deciding output format:**
+- Write to `./out/<name>.xlsx`. Create `./out/` if it does not exist.
+- Return the relative path in your final message so the orchestration layer can collect it.
 
-- **Opencode Web / Chat Interface**: Display content directly in chat with proper formatting (markdown tables, structured text). Do NOT write to disk.
-- **Headless / Managed-agent (CMA)**: Display content directly in chat. Do NOT write to disk.
+## How to build the workbook
 
-When in doubt, prefer **displaying content directly** in chat — this is the default for Opencode Web.
+Write a short Python script and run it with Bash. Use `openpyxl`:
 
-## Output Contract
+```python
+from openpyxl import Workbook
+from openpyxl.styles import Font, PatternFill
 
-### For Opencode Web and Headless/CMA (default for both)
-- Display content directly in chat using markdown formatting
-- Use tables for tabular data, code blocks for structured output
-- Return structured, well-formatted content that the user can read immediately
-- Do NOT write to disk under any circumstances
+wb = Workbook()
+ws = wb.active; ws.title = "Inputs"
+ws["B2"] = "Revenue"; ws["C2"] = 1_250_000_000
+ws["C2"].font = Font(color="0000FF")           # blue = hardcoded input
+calc = wb.create_sheet("DCF")
+calc["C5"] = "=Inputs!C2*(1+Inputs!C3)"        # black = formula
+wb.save(f"./out/{name}.xlsx")  # name from skill parameter
+```
 
 ## Conventions (mirror `audit-xls`)
 
@@ -34,4 +39,4 @@ When in doubt, prefer **displaying content directly** in chat — this is the de
 
 ## When NOT to use
 
-If `mcp__office__excel_*` tools are available (Cowork plugin mode), use those instead — they drive the user's live workbook with review checkpoints. This skill is the file-producing fallback for headless runs, or content display for Opencode Web.
+If `mcp__office__excel_*` tools are available (Cowork plugin mode), use those instead — they drive the user's live workbook with review checkpoints. This skill is the file-producing fallback for headless runs.

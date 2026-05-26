@@ -1,0 +1,8 @@
+trade_date,account,gl_balance,subledger_balance,variance,asset_class,symbol,trade_id
+2024-03-15,Cash,12500000,12500000,0,equity,USD,TRD-001
+2024-03-15,Equity Positions,2450000,2500000,-50000,equity,AAPL-US,TRD-002
+2024-03-15,Equity Positions,1800000,1800000,0,equity,MSFT-US,TRD-003
+2024-03-15,Dividend Receivable,25000,0,25000,equity,MSFT-US,TRD-004
+2024-03-15,Accrued Interest,45000,45200,-200,fixed_income,CORP-BOND-01,TRD-005
+2024-03-15,FX Position,5200000,5200000,0,fx,EUR-USD,TRD-006
+2024-03-15,Cash,3500000,3500000,0,fx,GBP-USD,TRD-007

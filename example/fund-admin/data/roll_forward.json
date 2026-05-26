@@ -1,0 +1,13 @@
+{
+  "roll_forward_id": "RF-2024-0315",
+  "account": "Distributions Payable",
+  "period": "Q1 2024",
+  "beginning_balance": 8000000,
+  "activity": {
+    "additions": 0,
+    "reductions": 3000000
+  },
+  "ending_balance": 5000000,
+  "gl_balance": 5000000,
+  "variance": 0
+}

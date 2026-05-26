@@ -1,6 +1,9 @@
-# Client Report
-
+---
+name: client-report
 description: Generate professional client-facing performance reports with portfolio returns, allocation breakdowns, and market commentary. Suitable for quarterly or annual distribution. Triggers on "client report", "performance report", "quarterly report for [client]", "generate reports", or "client statement".
+---
+
+# Client Report
 
 ## Workflow
 
@@ -71,7 +74,9 @@ Brief market summary tailored to the client's level of sophistication:
 
 ### Step 8: Output
 
-- **Opencode Web / Chat**: Display content directly with proper markdown formatting — structured sections, tables, and charts described in text. Do NOT generate PDF, Word, or Excel files.
+- PDF report (8-12 pages) with firm branding
+- Word document for customization
+- Excel data appendix (optional)
 
 **Report Structure:**
 1. Cover page (client name, period, firm logo)

@@ -120,7 +120,7 @@ The earnings update process follows 5 phases:
 
 **BEFORE STARTING - COMPLETE THESE 4 STEPS IN ORDER:**
 1. **CHECK TODAY'S DATE** - Write down the current date
-2. **SEARCH FOR LATEST** - Use DDG MCP (`ddg-search_search`): "[Company] latest earnings results"
+2. **SEARCH FOR LATEST** - Use web search: "[Company] latest earnings results"
 3. **VERIFY THE DATE** - Confirm earnings release is within last 3 months
 4. **CHECK TRANSCRIPT DATE** - Verify transcript date matches release date
 
@@ -176,11 +176,9 @@ Verify content, formatting, accuracy, and timeliness before delivery.
 
 ## Output Specification
 
-**For Opencode Web**: Display content directly with proper markdown formatting — structured as a professional research note with sections, tables, and key findings. Do NOT generate DOCX files.
-
-**For Headless/CMA mode**: Display content directly with proper markdown formatting. Do NOT generate files.
-
-**IMPORTANT — Do NOT include a "Next Steps", "Recommended Next Steps", or any similar advisory section at the end of earnings outputs.** Such sections are not part of institutional equity research format and should never be appended to earnings notes. End the output with the valuation/estimates section or a brief closing paragraph — nothing that instructs the reader to take further action.
+**Primary Deliverable**: DOCX report (8-12 pages)
+**File Name**: `[Company]_Q[Quarter]_[Year]_Earnings_Update.docx`
+**Example**: `Nike_Q2_FY24_Earnings_Update.docx`
 
 **Contents:**
 - Page 1: Summary with rating, price target, key takeaways

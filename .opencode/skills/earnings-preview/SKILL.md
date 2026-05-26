@@ -1,13 +1,16 @@
-# Earnings Preview
-
+---
+name: earnings-preview
 description: Build pre-earnings analysis with estimate models, scenario frameworks, and key metrics to watch. Use before a company reports quarterly earnings to prepare positioning notes, set up bull/bear scenarios, and identify what will move the stock. Triggers on "earnings preview", "what to watch for [company] earnings", "pre-earnings", "earnings setup", or "preview Q[X] for [company]".
+---
+
+# Earnings Preview
 
 ## Workflow
 
 ### Step 1: Gather Context
 
 - Identify the company and reporting quarter
-- Pull consensus estimates via DDG MCP (`ddg-search_search`) (revenue, EPS, key segment metrics)
+- Pull consensus estimates via web search (revenue, EPS, key segment metrics)
 - Find the earnings date and time (pre-market vs. after-hours)
 - Review the company's prior quarter earnings call for any guidance or commentary
 

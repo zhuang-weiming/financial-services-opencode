@@ -1,0 +1,15 @@
+{
+  "company": "Sample Corp",
+  "ticker": "SMPL-US",
+  "analyst": "J. Smith",
+  "model_date": "2024-03-15",
+  "assumptions": {
+    "revenue_growth": 0.08,
+    "ebitda_margin": 0.24,
+    "tax_rate": 0.21,
+    "capex_pct_revenue": 0.08,
+    "working_capital_pct_revenue": 0.07
+  },
+  "forecast_horizon": 5,
+  "notes": "Consumer discretionary, US-centric"
+}

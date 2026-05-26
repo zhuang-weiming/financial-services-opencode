@@ -1,0 +1,21 @@
+{
+  "sector": "Cloud Infrastructure",
+  "report_date": "2024-03-15",
+  "analyst": "S. Park",
+  "key_themes": [
+    "AI driving infrastructure demand",
+    "Multi-cloud adoption加速",
+    "Edge computing growth",
+    "Security spending secular"
+  ],
+  "market_size": {
+    "current": 180000000000,
+    "fy27": 320000000000,
+    "cagr": 0.12
+  },
+  "competitive_landscape": {
+    "leaders": ["AWS", "Azure", "GCP"],
+    "challengers": ["Snowflake", "Datadog", "Cloudflare"],
+    "trend": "Fragmentation"
+  }
+}

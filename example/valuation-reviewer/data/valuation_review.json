@@ -1,0 +1,31 @@
+{
+  "review_id": "VAL-2024-Q1-DDO",
+  "company": "Datadog Inc",
+  "ticker": "DDOG-US",
+  "analyst": "J. Chen",
+  "review_date": "2024-03-15",
+  "base_case": {
+    "dcf_value": 140,
+    "wacc": 0.105,
+    "terminal_growth": 0.045
+  },
+  "bear_case": {
+    "dcf_value": 115,
+    "wacc": 0.115,
+    "terminal_growth": 0.040
+  },
+  "bull_case": {
+    "dcf_value": 168,
+    "wacc": 0.095,
+    "terminal_growth": 0.050
+  },
+  "key_assumptions": [
+    "Revenue growth deceleration from 45% to 25% over 5 years",
+    "EBITDA margin expansion from 22% to 28%",
+    "WACC stable at 10.5%"
+  ],
+  "flags": [
+    "Terminal growth rate at upper end of range",
+    "Margin expansion assumption aggressive"
+  ]
+}

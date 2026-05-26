@@ -1,6 +1,9 @@
-# Returns Analysis
-
+---
+name: returns-analysis
 description: Build quick IRR/MOIC sensitivity tables for PE deal evaluation. Models returns across entry multiple, leverage, exit multiple, growth, and hold period scenarios. Use when sizing up a deal, stress-testing assumptions, or preparing IC returns exhibits. Triggers on "returns analysis", "IRR sensitivity", "MOIC table", "what's the return at", "model the returns", or "back of the envelope".
+---
+
+# Returns Analysis
 
 ## Workflow
 
@@ -61,8 +64,8 @@ Show the returns waterfall:
 Build 2-way sensitivity matrices:
 
 **Entry Multiple vs. Exit Multiple**
-| Entry Multiple | Exit 6x | Exit 7x | Exit 8x | Exit 9x | Exit 10x |
-|---------------|---------|---------|---------|---------|----------|
+| | Exit 6x | Exit 7x | Exit 8x | Exit 9x | Exit 10x |
+|---|---------|---------|---------|---------|----------|
 | Entry 7x | | | | | |
 | Entry 8x | | | | | |
 | Entry 9x | | | | | |
@@ -80,8 +83,8 @@ Show both IRR and MOIC in each cell (IRR / MOIC format).
 
 Build 3 scenarios:
 
-| Metric | Bull | Base | Bear |
-|--------|------|------|------|
+| | Bull | Base | Bear |
+|---|------|------|------|
 | Revenue CAGR | | | |
 | Exit EBITDA margin | | | |
 | Exit multiple | | | |
@@ -91,8 +94,7 @@ Build 3 scenarios:
 
 ### Step 5: Output
 
-- **Opencode Web / Chat**: Display returns analysis directly in chat with markdown tables (assumptions, returns calculation, sensitivity matrices, scenario summary).
-- **Headless / CMA mode**: Excel workbook with:
+- Excel workbook with:
   - Assumptions tab
   - Returns calculation
   - Sensitivity tables (formatted with conditional coloring)

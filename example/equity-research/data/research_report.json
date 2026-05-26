@@ -1,0 +1,14 @@
+{
+  "report_id": "EQ-2024-Q1-DDO",
+  "company": "Datadog Inc",
+  "ticker": "DDOG-US",
+  "analyst": "J. Chen",
+  "date": "2024-03-15",
+  "rating": "Buy",
+  "target_price": 140,
+  "current_price": 118,
+  "upside": "18.6%",
+  "key_thesis": "Cloud observability secular tailwind, operating leverage emerging",
+  "bull_case": "Enterprise adoption accelerating, NRR >115%",
+  "bear_case": "Competition from legacy APM players, macro headwinds"
+}

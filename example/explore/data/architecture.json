@@ -1,0 +1,26 @@
+{
+  "repository": "financial-services-monorepo",
+  "architecture_pattern": "modular-monorepo",
+  "layers": [
+    {
+      "name": "Presentation",
+      "technologies": ["React", "TypeScript", "TailwindCSS"],
+      "component_count": 145
+    },
+    {
+      "name": "Business Logic",
+      "technologies": ["Python", "FastAPI", "Pydantic"],
+      "service_count": 23
+    },
+    {
+      "name": "Data",
+      "technologies": ["PostgreSQL", "Redis", "Kafka"],
+      "model_count": 67
+    }
+  ],
+  "key_files": [
+    {"path": "src/services/pricing.py", "complexity": "high", "lines": 892},
+    {"path": "src/models/portfolio.py", "complexity": "medium", "lines": 445},
+    {"path": "src/api/orders.py", "complexity": "high", "lines": 623}
+  ]
+}

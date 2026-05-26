@@ -1,6 +1,9 @@
-# Investment Proposal
-
+---
+name: investment-proposal
 description: Create professional investment proposals for prospective clients. Covers the firm's approach, proposed allocation, expected outcomes, and fee structure. Use when pitching new clients or presenting a new investment strategy. Triggers on "investment proposal", "prospect presentation", "pitch new client", "proposal for [client]", or "new client presentation".
+---
+
+# Investment Proposal
 
 ## Workflow
 
@@ -71,7 +74,9 @@ Proposed allocation:
 
 ### Step 4: Output
 
-- **Opencode Web / Chat**: Display content directly with proper markdown formatting — structured sections with tables and bullet points. Do NOT generate PDF or PowerPoint files.
+- PowerPoint presentation (12-15 slides) with firm branding
+- PDF leave-behind version
+- One-page summary for follow-up email
 
 ## Important Notes
 

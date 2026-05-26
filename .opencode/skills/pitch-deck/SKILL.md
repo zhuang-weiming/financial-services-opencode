@@ -35,27 +35,14 @@ description: "Populates investment banking pitch deck templates with data from s
 
 ---
 
-## Environment Detection
+## ⚠️ Critical Rendering Limitation
 
-**Check which environment you're in before deciding output format:**
+**LibreOffice is used for validation but DOES NOT render PowerPoint files accurately.** It will mangle fonts, gradients, shape positions, text wrapping, and some table formatting.
 
-- **Opencode Web / Chat Interface**: Display populated content directly in chat with proper markdown formatting. Structure as slide-by-slide presentation outline. Do NOT write to disk.
-
----
-
-## ⚠️ Rendering Validation
-
-**If LibreOffice is available:** It can be used for validation but DOES NOT render PowerPoint files accurately. It will mangle fonts, gradients, shape positions, text wrapping, and some table formatting.
-
-**If LibreOffice is not available (common on macOS without installation):** Skip the PDF/image conversion step. Perform validation through structural checks and XML inspection instead.
-
-**Validation approach when LibreOffice is unavailable:**
-- Inspect the .pptx file as a ZIP archive to verify slide XML structure
-- Check table objects via XML rather than visual rendering
-- Verify formatting through the XML rather than converted images
+**What this means:** A slide that passes visual validation in LibreOffice may still have issues in Microsoft PowerPoint. The validation loop catches structural issues (missing content, broken tables, placeholder formatting retained) but **cannot** catch font substitution, subtle alignment shifts, or gradient problems.
 
 **Required action:** Always include this statement when delivering output:
-> "Please review in Microsoft PowerPoint before distribution, as rendering may differ across platforms."
+> "This file was validated using LibreOffice. Please review in Microsoft PowerPoint before distribution, as rendering differences may exist."
 
 ---
 
@@ -73,7 +60,7 @@ Pitch Deck Progress:
 ```
 
 ### Phase 1: Data Extraction
-1. **Create backup** of original template before any modifications — copy to `[filename]_backup.pptx`. Direct XML editing or unexpected errors can corrupt files. **This step applies to headless/CMA file-output mode only.**
+1. **Create backup** of original template before any modifications — copy to `[filename]_backup.pptx`. Direct XML editing or unexpected errors can corrupt files.
 2. Identify all source materials (Excel, CSV, PDF reports, Word documents, databases, web sources)
 3. Extract relevant data points from each source
 4. Validate all numbers against original sources
@@ -99,21 +86,13 @@ Pitch Deck Progress:
 
 **This is a feedback loop. Repeat until all checks pass OR escalation is triggered.**
 
-**Option 1: LibreOffice available (Linux or installed)**
 ```bash
 # Convert to images for visual validation
 soffice --headless --convert-to pdf presentation.pptx
 pdftoppm -jpeg -r 150 presentation.pdf slide
 ```
 
-**Option 2: LibreOffice NOT available (macOS default)**
-Skip PDF conversion. Perform structural validation:
-- Open the .pptx as a ZIP archive
-- Navigate to `ppt/slides/` to inspect individual slide XML
-- Verify table structures in XML (look for `<a:tbl>` elements)
-- Check text content in `<a:t>` elements
-
-**Validation checklist:**
+**Validation checklist (check each slide image):**
 - [ ] Text readable against background?
 - [ ] Tables are actual objects (columns aligned, NOT pipe/tab-separated text)?
 - [ ] Charts/tables fill designated areas?
@@ -145,51 +124,12 @@ Run through the [Final Quality Checklist](#final-quality-checklist) before deliv
 
 ---
 
-## Output Format for Opencode Web
-
-When displaying in Opencode Web chat, structure the populated deck as a slide-by-slide outline:
-
-```
-## Deck: [Company Name] — [Presentation Title]
-
----
-
-### Slide 1: [Title]
-
-**[Takeaway Statement]**
-
-**Content:**
-- [Bullet 1]
-- [Bullet 2]
-
-**Data Table:**
-| Metric | Value | Source |
-|--------|-------|--------|
-| Revenue | $485M | FY24 Annual Report |
-| Growth | +15% YoY | Calculated |
-
----
-
-### Slide 2: [Title]
-
-... continue with same structure ...
-
----
-
-## Validation Summary
-- [ ] All figures match source documents
-- [ ] No placeholder text remaining
-- [ ] Formatting consistent across slides
-```
-
----
-
 ## Quick Reference Tables
 
 ### Bullet Symbols
 
 | Context | Symbol | Usage |
-|--------|--------|-------|
+|---------|--------|-------|
 | Included/Positive | ✓ | Items within scope, features present |
 | Excluded/Negative | × | Items outside scope, features absent |
 | Neutral list | • | General enumeration, commentary |
@@ -355,14 +295,13 @@ For detailed explanations of the most critical failures, see [Critical Anti-Patt
 ## Error Handling
 
 **If PDF/image conversion fails:**
-1. Check if LibreOffice is available: `which soffice` (returns path if installed)
-2. If LibreOffice is available: Try `libreoffice --headless --convert-to pdf presentation.pptx`
-3. If LibreOffice is NOT available: Use structural/XML validation instead
-4. If conversion still fails despite LibreOffice being installed, proceed with XML-based validation
+1. Check LibreOffice is installed: `which soffice`
+2. Try alternative: `libreoffice --headless --convert-to pdf presentation.pptx`
+3. If still failing, open in PowerPoint/LibreOffice manually and export
 
 **If source data has inconsistencies or conflicts:**
 1. **Priority order**: Use data explicitly provided in the task files first
-2. If using data from other sources (DDG search, external documents), flag this to the user
+2. If using data from other sources (web search, external documents), flag this to the user
 3. Document any discrepancies explicitly
 4. Add footnote explaining data source choice
 

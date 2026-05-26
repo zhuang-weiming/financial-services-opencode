@@ -1,6 +1,9 @@
-# Morning Note
-
+---
+name: morning-note
 description: Draft concise morning meeting notes summarizing overnight developments, trade ideas, and key events for coverage stocks. Designed for the 7am morning meeting format — tight, opinionated, actionable. Triggers on "morning note", "morning meeting", "what happened overnight", "trade idea", "morning call prep", or "daily note".
+---
+
+# Morning Note
 
 ## Workflow
 
@@ -72,9 +75,8 @@ If a coverage company reported, provide a quick reaction:
 
 ### Step 4: Output
 
-- **Opencode Web / Chat**: Display directly in chat with markdown formatting.
 - Markdown text for email/Slack distribution
-- Word document only if formal distribution outside Opencode is needed
+- Word document if formal distribution is needed
 - Keep to 1 page max — PMs and traders won't read more
 
 ## Important Notes

@@ -1,0 +1,4 @@
+client_id,client_name,total_assets,risk_tolerance,account_type
+CLI-001,Harborview Endowment,28000000,Moderate,Institutional
+CLI-002,Meridian Family Office,8500000,Moderate,Family Office
+CLI-003,Pacific Trust,15000000,Conservative,Trust

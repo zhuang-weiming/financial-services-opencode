@@ -1,0 +1,27 @@
+{
+  "close_date": "2024-03-31",
+  "status": "in_progress",
+  "accounts": 12,
+  "completed": 9,
+  "pending": 3,
+  "variance_count": 2,
+  "variance_threshold": 1000,
+  "items_pending": [
+    {
+      "account": "Accrued Expenses",
+      "variance": 5000,
+      "status": "investigating"
+    },
+    {
+      "account": "Prepaid Assets",
+      "variance": 2500,
+      "status": "pending_reclassification"
+    }
+  ],
+  "checklist": {
+    "accruals_posted": true,
+    "reconciliations_complete": true,
+    "jv_approved": false,
+    "flash_report_ready": false
+  }
+}

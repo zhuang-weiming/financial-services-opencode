@@ -1,0 +1,33 @@
+{
+  "memo_id": "IC-2024-Q1-01",
+  "company": "CloudSoft Corporation",
+  "deal_type": "Growth Buyout",
+  "investment_date": "2024-01-15",
+  "sector": "Cloud SaaS",
+  "deal_summary": {
+    "enterprise_value": 420000000,
+    "revenue_multiple": 8.2x,
+    "equity_check": 150000000
+  },
+  "financial_summary": {
+    "revenue_fy0": 51200000,
+    "ebitda_fy0": 8200000,
+    "revenue_growth": 0.50,
+    "ebitda_margin": 0.16
+  },
+  "investment_thesis": [
+    "Cloud infrastructure secular growth",
+    "Enterprise sales expansion",
+    "Operating leverage emerging"
+  ],
+  "risks": [
+    "Competition from hyperscalers",
+    "Customer concentration top 10",
+    "Margin pressure from invest growth"
+  ],
+  "returns": {
+    "irr_target": 0.25,
+    "moic_target": 3.0x,
+    "exit_multiple": "10-12x"
+  }
+}

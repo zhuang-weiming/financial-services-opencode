@@ -1,6 +1,9 @@
-# Client Review Prep
-
+---
+name: client-review
 description: Prepare for client review meetings with portfolio performance summary, allocation analysis, talking points, and action items. Pulls together account data into a concise meeting-ready format. Use before quarterly reviews, annual checkups, or ad-hoc client meetings. Triggers on "client review", "meeting prep for [client]", "quarterly review", "prep for [client name]", or "client meeting".
+---
+
+# Client Review Prep
 
 ## Workflow
 
@@ -71,8 +74,7 @@ Based on the review, suggest:
 
 ### Step 6: Output
 
-- **Opencode Web / Chat**: Display directly in chat with markdown formatting.
-- One-page client review summary (Word or PDF for headless/CMA mode)
+- One-page client review summary (Word or PDF)
 - Performance table with benchmarks
 - Allocation pie chart (current vs. target)
 - Recommended action items

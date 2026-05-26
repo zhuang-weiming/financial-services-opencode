@@ -1,6 +1,9 @@
-# Investment Committee Memo
-
+---
+name: ic-memo
 description: Draft a structured investment committee memo for PE deal approval. Synthesizes due diligence findings, financial analysis, and deal terms into a professional IC-ready document. Use when preparing for investment committee, writing up a deal, or creating a formal recommendation. Triggers on "write IC memo", "investment committee memo", "deal write-up", "prepare IC materials", or "recommendation memo".
+---
+
+# Investment Committee Memo
 
 ## Workflow
 
@@ -72,7 +75,9 @@ Standard IC memo format:
 
 ### Step 3: Output Format
 
-- **Opencode Web / Chat**: Display content directly with proper markdown formatting — use headings, tables, and structured text. Do NOT generate Word documents.
+- Default: Word document (.docx) with professional formatting
+- Alternative: Markdown for quick review
+- Include tables for financials and returns, not just prose
 
 ## Important Notes
 

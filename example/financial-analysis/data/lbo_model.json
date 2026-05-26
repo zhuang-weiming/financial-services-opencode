@@ -1,0 +1,22 @@
+{
+  "company": "Delta Air Lines",
+  "ticker": "DAL-US",
+  "deal_type": "LBO",
+  "purchase_multiple": "8.5x EV/EBITDA",
+  "entry_date": "2024-01-01",
+  "hold_period": 5,
+  "leverage": {
+    "senior_debt": 0.50,
+    "junior_debt": 0.20,
+    "equity": 0.30
+  },
+  "assumptions": {
+    "ebitda_margin_improvement": 0.02,
+    "revenue_cagr": 0.06,
+    "exit_multiple": "9.0x"
+  },
+  "returns": {
+    "irr": 0.18,
+    "moic": 2.3
+  }
+}

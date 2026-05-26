@@ -7,10 +7,18 @@ description: Root-cause a reconciliation break to its source transaction or post
 
 Given a single break row (key, GL values, subledger values, bucket, likely cause), trace it to source and produce a root-cause statement.
 
+## Required Inputs
+
+| Input | Format | Example |
+|-------|--------|---------|
+| **Break row** | JSON object with: key, GL_values, subledger_values, bucket, likely_cause | See output from gl-recon |
+| **GL data** | Ask user to provide or pull from available MCPs | entry id, posting date, source system, batch id, preparer |
+| **Subledger data** | Ask user to provide or pull from available MCPs | trade id, trade/settle dates, counterparty, source feed, FX rate |
+
 ## Trace path
 
-1. **Pull the GL side** — via the internal-gl MCP, fetch the journal entry or posting that produced this GL line: entry id, posting date, source system, batch id, preparer.
-2. **Pull the subledger side** — via the subledger MCP, fetch the matching transaction: trade id, trade/settle dates, counterparty, source feed, FX rate used.
+1. **Pull the GL side** — ask the user to provide the journal entry or posting data that produced this GL line: entry id, posting date, source system, batch id, preparer.
+2. **Pull the subledger side** — ask the user to provide the matching transaction data: trade id, trade/settle dates, counterparty, source feed, FX rate used.
 3. **Diff the attributes** — line up posting date, FX rate/date, account mapping, quantity sign, amount sign. The differing attribute is usually the cause.
 
 ## Cause → statement
@@ -37,3 +45,12 @@ For each traced break, return:
 ```
 
 Only the resolver writes adjustments — this skill diagnoses, it does not post.
+
+## Error Handling
+
+| Error | Response |
+|-------|----------|
+| Cannot find GL entry for break key | Flag "GL entry not found — escalate to upstream-system for research" |
+| Cannot find subledger transaction | Flag "Subledger transaction not found — escalate to ops for feed investigation" |
+| Both GL and subledger data unavailable | Flag "Insufficient data to trace — escalate" |
+| Break key not provided | Return error "Break row with key is required" |

@@ -10,7 +10,7 @@ Training data is OUTDATED. Actively search for and retrieve the MOST RECENT earn
 
 **BEFORE STARTING:**
 1. **CHECK TODAY'S DATE** - Write down the current date
-2. **SEARCH FOR LATEST** - Use DDG MCP (`ddg-search_search`) to find the most recent earnings
+2. **SEARCH FOR LATEST** - Use web search to find the most recent earnings
 3. **VERIFY THE DATE** - Confirm the earnings release is within the last 3 months
 4. **IF OLDER THAN 3 MONTHS** - Wrong quarter obtained, search again
 
@@ -31,7 +31,7 @@ Training data is OUTDATED. Actively search for and retrieve the MOST RECENT earn
 - **Example**: "Today is October 29, 2024"
 
 **MANDATORY STEP 2: SEARCH FOR "LATEST EARNINGS"**
-- **Use DDG MCP (`ddg-search_search`)** with queries like:
+- **Use web search** with queries like:
   - `[Company name] latest earnings results`
   - `[Company name] most recent quarterly earnings`
   - `[Ticker symbol] earnings latest quarter`
@@ -67,9 +67,9 @@ Training data is OUTDATED. Actively search for and retrieve the MOST RECENT earn
 - **Verify both the quarter name AND the date are recent**
 
 3. **Alternative search methods if IR site is unclear:**
-   - DDG MCP (`ddg-search_search`): `[Company name] latest earnings results`
-   - DDG MCP (`ddg-search_search`): `[Company name] most recent quarterly earnings`
-   - DDG MCP (`ddg-search_search`): `[Ticker symbol] earnings latest quarter`
+   - Web search: `[Company name] latest earnings results`
+   - Web search: `[Company name] most recent quarterly earnings`
+   - Web search: `[Ticker symbol] earnings latest quarter`
    - SEC EDGAR: Search for company and look at most recent 10-Q or 10-K filing date
 
 **Example searches that find latest data:**
@@ -161,7 +161,7 @@ After SEARCHING FOR and confirming the latest quarter, collect the following:
     - ✅ **The transcript date MUST match the earnings release date from Step 1**
     - ✅ **If transcript says "Q2 2023" but release was "Q3 2024", WRONG transcript obtained**
     - 🚨 **Common mistake**: Grabbing an old transcript without checking the date
-  - If transcript not yet available, listen to webcast replay or proceed with the press release and supplemental materials only — flag the transcript gap in the report
+  - If transcript not yet available, listen to webcast replay or note to wait for transcript
 
 **Supplemental Materials (if available):**
 - **Investor presentation/slides** - Often posted on IR site alongside press release
@@ -498,9 +498,6 @@ Before publishing, verify:
 
 Provide user with:
 
-**For Opencode Web:** Display the full report directly in chat with markdown formatting (sections, tables, key findings, and charts described in text).
-
-**For Headless / CMA mode:**
 1. **DOCX file**: `[Company]_Q[X]_[Year]_Earnings_Update.docx`
 2. **Chart files**: All PNG/JPG charts (for reference)
 3. **Optional XLS**: Updated financial model if maintained
@@ -527,5 +524,3 @@ Price Target: $XXX (prior: $XXX) - [+/-]XX% upside
 
 Deliverable: 8-12 page earnings update report with updated estimates and valuation.
 ```
-
-**⚠️ IMPORTANT — Do NOT append a "Next Steps", "Recommended Next Steps", "Suggested Next Steps", or any similar advisory section.** Such sections are not part of institutional equity research format and must never appear in earnings outputs. End with the valuation/estimates section or a brief closing paragraph only.

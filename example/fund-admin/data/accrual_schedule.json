@@ -1,0 +1,27 @@
+{
+  "accrual_id": "ACC-2024-0315",
+  "period": "March 2024",
+  "entries": [
+    {
+      "account": "Management Fee",
+      "description": "Q1 2024 management fee accrual",
+      "amount": 125000,
+      "entry_date": "2024-03-31",
+      "status": "pending"
+    },
+    {
+      "account": "Audit Fee",
+      "description": "Annual audit fee pro-rata",
+      "amount": 45000,
+      "entry_date": "2024-03-31",
+      "status": "approved"
+    },
+    {
+      "account": "Legal Fee",
+      "description": "IP rights amortization",
+      "amount": 15000,
+      "entry_date": "2024-03-31",
+      "status": "pending"
+    }
+  ]
+}

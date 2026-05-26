@@ -9,13 +9,12 @@ Perform comprehensive QC on the presentation across four dimensions. Read every 
 
 ## Environment check
 
-This skill works in all environments:
+This skill works in both the PowerPoint add-in and chat. Identify which you're in before starting:
 
-- **Opencode Web / Chat**: Display findings directly in chat with proper markdown formatting and structured output.
-- **PowerPoint add-in**: read from the live open deck.
-- **Chat with file upload**: read from the uploaded `.pptx` file or from displayed content.
+- **Add-in** — read from the live open deck.
+- **Chat** — read from the uploaded `.pptx` file.
 
-This is read-and-report only — no edits — so the workflow is identical in all environments.
+This is read-and-report only — no edits — so the workflow is identical in both.
 
 ## Workflow
 
@@ -38,7 +37,7 @@ The script expects markdown-ish input with slide markers. Format as:
 Run the extraction script on what you collected:
 
 ```bash
-python .opencode/skills/ib-check-deck/scripts/extract_numbers.py /tmp/deck_content.md --check
+python scripts/extract_numbers.py /tmp/deck_content.md --check
 ```
 
 It normalizes units ($500M vs $500MM vs $500,000,000 → same number), categorizes values (revenue, EBITDA, multiples, margins), and flags when the same metric category shows conflicting values on different slides. This is the part most likely to catch something a human missed on the fifth read-through.
@@ -77,26 +76,3 @@ Use `references/report-format.md` as the structure. Categorize by severity:
 - **Minor** — font sizes, spacing, date formats. Polish.
 
 Lead with criticals. If there aren't any, say so explicitly — "no number inconsistencies found" is a finding, not an absence of one.
-
-## Output Format for Opencode Web
-
-When displaying in chat, structure findings as:
-
-```
-## Deck QC Report
-
-### Critical Issues
-| Slide | Issue | Finding |
-|-------|-------|---------|
-| 3 | Revenue mismatch | Shows $500M but source shows $485M |
-
-### Important Issues
-| Slide | Issue | Recommendation |
-|-------|-------|----------------|
-| 7 | Missing axis label | Add "Revenue ($M)" label |
-
-### Minor Issues
-| Slide | Issue | Note |
-|-------|-------|------|
-| 12 | Date format | Use "FY24" consistently |
-```

@@ -1,0 +1,4 @@
+ticker,company_name,earnings_date,period,revenue_actual,revenue_estimate,eps_actual,eps_estimate,beat_miss
+AAPL-US,Apple Inc,2024-02-01,Q1 FY24,119575000000,117913000000,2.18,2.10,Beat
+MSFT-US,Microsoft,2024-01-23,CQ4 FY23,62020000000,61200000000,2.93,2.77,Beat
+GOOGL-US,Alphabet,2024-02-01,CQ4 FY23,76050000000,76080000000,1.64,1.85,Miss

@@ -1,0 +1,5 @@
+company,company_id,sector,ai_readiness_score,ai_priority,quick_wins,estimated_hours
+TechCorp A,TC-A,Software,7.5,High,"Invoice automation, Support chatbot",40
+TechCorp B,TC-B,Healthcare,4.2,Low,"Reporting dashboards",20
+TechCorp C,TC-C,FinTech,8.2,Critical,"Loan processing automation, Fraud detection",80
+TechCorp D,TC-D,Logistics,5.8,Medium,"Route optimization, Inventory AI",35

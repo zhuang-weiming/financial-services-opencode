@@ -1,0 +1,6 @@
+file,language,lines,complexity,last_modified
+pricing_service.py,Python,892,high,2024-03-10
+portfolio_model.py,Python,445,medium,2024-03-08
+order_api.py,Python,623,high,2024-03-12
+risk_calculator.py,Python,312,medium,2024-02-28
+trade_executor.py,Python,567,high,2024-03-15

@@ -5,7 +5,7 @@ description: Tie an LP statement to the fund's NAV pack — recompute the LP's c
 
 # NAV tie-out
 
-Given a generated LP statement and the period's NAV pack (via the nav MCP), independently recompute the LP's capital account and compare line by line.
+Given a generated LP statement and the period's NAV pack (ask the user to provide the NAV pack file or data), independently recompute the LP's capital account and compare line by line.
 
 > **The generated statement is the thing under test.** The NAV pack is the source of truth.
 

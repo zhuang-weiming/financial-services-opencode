@@ -1,0 +1,17 @@
+{
+  "meeting_id": "mtg-2024-0415",
+  "company": "Apple Inc",
+  "ticker": "AAPL-US",
+  "meeting_date": "2024-04-15",
+  "meeting_type": "Q1 FY24 Earnings Review",
+  "attendees": {
+    "client": "Meridian Family Office",
+    "issuer": "Apple IR"
+  },
+  "discussion_points": [
+    "Q1 results vs expectations",
+    "Services growth acceleration",
+    "China headwinds",
+    "Capital return program"
+  ]
+}

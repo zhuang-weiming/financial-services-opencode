@@ -1,22 +1,6 @@
 ---
 name: comps-analysis
-description: |
-  Build institutional-grade comparable company analyses with operating metrics, valuation multiples, and statistical benchmarking in Excel/spreadsheet format.
-
-  **Perfect for:**
-  - Public company valuation (M&A, investment analysis)
-  - Benchmarking performance vs. industry peers
-  - Pricing IPOs or funding rounds
-  - Identifying valuation outliers (over/under-valued)
-  - Supporting investment committee presentations
-  - Creating sector overview reports
-
-  **Not ideal for:**
-  - Private companies without comparable public peers
-  - Highly diversified conglomerates
-  - Distressed/bankrupt companies
-  - Pre-revenue startups
-  - Companies with unique business models
+description: Build institutional-grade comparable company analyses with operating metrics, valuation multiples, and statistical benchmarking in Excel/spreadsheet format.
 ---
 
 # Comparable Company Analysis
@@ -25,21 +9,17 @@ description: |
 
 **ALWAYS follow this data source hierarchy:**
 
-1. **FIRST: Check for MCP data sources** - If S&P Kensho MCP, FactSet MCP, or Daloopa MCP are available, use them exclusively for financial and trading information
-2. **DO NOT use DDG web search (`ddg-search_search`)** if the above MCP data sources are available
+1. **FIRST: Check for MCP data sources** - If Morningstar MCP, FactSet MCP, or DDG Search are available, use them exclusively for financial and trading information
+2. **DO NOT use web search** if the above MCP data sources are available
 3. **ONLY if MCPs are unavailable:** Then use Bloomberg Terminal, SEC EDGAR filings, or other institutional sources
-4. **NEVER use DDG web search (`ddg-search_search`) as a primary data source** - it lacks the accuracy, audit trails, and reliability required for institutional-grade analysis
+4. **NEVER use web search as a primary data source** - it lacks the accuracy, audit trails, and reliability required for institutional-grade analysis
 
-**Why this matters:** MCP sources provide verified, institutional-grade data with proper citations. DDG web search results can be outdated, inaccurate, or unreliable for financial analysis.
+**Why this matters:** MCP sources provide verified, institutional-grade data with proper citations. Web search results can be outdated, inaccurate, or unreliable for financial analysis.
 
 ---
 
 ## Overview
-This skill builds institutional-grade comparable company analyses that combine operating metrics, valuation multiples, and statistical benchmarking.
-
-**Output Format:**
-- **Opencode Web / Chat**: Display comps table directly in chat using markdown tables. Structure as: peer list table, operating metrics table, valuation multiples table, summary statistics, and key takeaways.
-- **Headless / CMA mode**: Display comps content directly in chat as structured markdown. Do NOT generate .xlsx files.
+This skill teaches Claude to build institutional-grade comparable company analyses that combine operating metrics, valuation multiples, and statistical benchmarking. The output is a structured Excel/spreadsheet that enables informed investment decisions through peer comparison.
 
 **Reference Material & Contextualization:**
 
@@ -273,10 +253,10 @@ Same structure as operating section: Max, 75th, Median, 25th, Min for every metr
 ### Required Components
 
 **Data Sources & Quality:**
-- Where did the data come from? (S&P Kensho MCP, FactSet MCP, Daloopa MCP, Bloomberg, SEC filings)
+- Where did the data come from? (Morningstar MCP, FactSet MCP, Bloomberg, SEC filings)
 - What period does it cover? (Q4 2024, audited figures)
 - How was it verified? (Cross-checked against 10-K/10-Q)
-- Note: Prioritize MCP data sources (S&P Kensho, FactSet, Daloopa) if available for better accuracy and traceability
+- Note: Prioritize MCP data sources (Morningstar, FactSet) if available for better accuracy and traceability
 
 **Key Definitions:**
 - EBITDA calculation method (Gross Profit + D&A, or Operating Income + D&A)
@@ -444,7 +424,7 @@ This helps answer: "Is our target company trading rich or cheap vs. peers?"
    - Lock in units and date references
 
 2. **Gather data** (60-90 minutes)
-   - Pull from primary sources (S&P Kensho MCP, FactSet MCP, Daloopa MCP if available; otherwise Bloomberg, SEC)
+   - Pull from primary sources (Morningstar MCP, FactSet MCP if available; otherwise Bloomberg, SEC)
    - Input all raw numbers in blue
    - Document sources in notes section
 
