@@ -48,3 +48,10 @@ Please:
 3) Identify variance driver
 4) Propose adjustment
 ```
+
+---
+
+## Question 3: ['Run', 'the', 'variance', 'commentary', 'for', 'the']
+```
+Run the variance commentary for the income statement vs. budget.
+```

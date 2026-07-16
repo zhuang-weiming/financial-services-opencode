@@ -47,3 +47,10 @@ Please:
 3. Identify underperformers
 4) Recommend portfolio actions
 ```
+
+---
+
+## Question 3: ['Screen', 'inbound', 'deals', 'from', 'this', "week's"]
+```
+Screen inbound deals from this week's batch against our thesis.
+```

@@ -47,3 +47,10 @@ Please:
 3) Identify root cause of $50K variance
 4) Propose fix to reconcile
 ```
+
+---
+
+## Question 3: ['Audit', 'the', 'LP', 'capital', 'accounts', 'for']
+```
+Audit the LP capital accounts for the fund against the NAV pack.
+```

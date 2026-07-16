@@ -63,3 +63,10 @@ Please:
 4) Calculate expected tax benefit
 5) Draft harvesting plan with timeline
 ```
+
+---
+
+## Question 3: ['Run', 'tax-loss', 'harvesting', 'analysis', 'on', 'the']
+```
+Run tax-loss harvesting analysis on the taxable account.
+```

@@ -48,3 +48,10 @@ Please:
 3) Set milestones and check-ins
 4) Draft stakeholder communication
 ```
+
+---
+
+## Question 3: ['Run', 'an', 'AI', 'readiness', 'scan', 'across']
+```
+Run an AI readiness scan across the portfolio.
+```

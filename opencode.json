@@ -1,7 +1,10 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "default_agent": "wealth-guide",
   "instructions": [
-    ".opencode/instructions/data-priority.md"
+    ".opencode/instructions/data-priority.md",
+    ".opencode/instructions/quant-research.md",
+    ".opencode/instructions/wealth-guide-router.md"
   ],
   "mcp": {
     "morningstar": {
@@ -16,6 +19,104 @@
       "type": "local",
       "command": ["uvx", "duckduckgo-mcp-server"],
       "enabled": true
+    }
+  },
+  "agent": {
+    "wealth-guide": {
+      "mode": "all",
+      "permission": {
+        "task": {
+          "*": "allow"
+        }
+      }
+    },
+    "alpha-researcher": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "backtest-builder": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "earnings-reviewer": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "equity-research": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "factor-researcher": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "financial-analysis": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "fund-admin": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "gl-reconciler": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "investment-banking": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "kyc-screener": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "market-researcher": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "market-router": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "meeting-prep-agent": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "model-builder": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "month-end-closer": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "operations": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "pitch-agent": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "private-equity": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "statement-auditor": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "swarm-orchestrator": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "valuation-reviewer": {
+      "mode": "subagent",
+      "hidden": true
+    },
+    "wealth-management": {
+      "mode": "subagent",
+      "hidden": true
     }
   }
 }

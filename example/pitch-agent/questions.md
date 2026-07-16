@@ -47,3 +47,10 @@ Please:
 3) Recommend top 2 names
 4) Suggest allocation weights
 ```
+
+---
+
+## Question 3: ['Build', 'a', 'football', 'field', 'valuation', 'for']
+```
+Build a football field valuation for the target.
+```

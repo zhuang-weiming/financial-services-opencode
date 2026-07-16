@@ -46,3 +46,10 @@ Please:
 3) Identify winner/loser trends
 4) Draft sector allocation view
 ```
+
+---
+
+## Question 3: ['What', 'are', 'the', 'top', '5', 'themes']
+```
+What are the top 5 themes driving the cloud infrastructure sector?
+```

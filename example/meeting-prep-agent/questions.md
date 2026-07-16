@@ -46,3 +46,10 @@ Please:
 3) Set up bull/bear scenarios
 4) Prepare questions for management
 ```
+
+---
+
+## Question 3: ['Build', 'a', 'briefing', 'pack', 'for', 'the']
+```
+Build a briefing pack for the upcoming LP advisory board meeting.
+```

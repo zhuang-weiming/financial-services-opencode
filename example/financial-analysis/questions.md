@@ -45,3 +45,10 @@ Please:
 3) Stress-test leverage assumptions
 4) Assess downside protection
 ```
+
+---
+
+## Question 3: ['Stress-test', 'the', 'DCF', 'model', 'under', 'a']
+```
+Stress-test the DCF model under a recession scenario (-200bps GDP).
+```

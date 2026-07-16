@@ -50,3 +50,10 @@ Please:
 3) Flag any assumption changes
 4) Update model if needed
 ```
+
+---
+
+## Question 3: ['Build', 'an', 'LBO', 'model', 'with', '6.0x']
+```
+Build an LBO model with 6.0x leverage for the target.
+```

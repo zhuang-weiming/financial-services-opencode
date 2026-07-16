@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vibe-trading-quanta"
+version = "0.1.0"
+description = "Multi-market quantitative research engine — vendored from HKUDS Vibe-Trading v0.1.11"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+    "scipy>=1.11",
+    "scikit-learn>=1.3",
+    "statsmodels>=0.14",
+    "python-dotenv>=1.0",
+    "requests>=2.31",
+    "httpx>=0.25",
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+]
+
+[project.scripts]
+vibe-trading-quanta = "vibe_trading_quanta.__init__:main"
+
+[tool.setuptools.packages.find]
+include = ["vibe_trading_quanta*"]
+
+[tool.setuptools.package-data]
+vibe_trading_quanta = ["swarm/presets/*.yaml", "loaders/*.py", "factors/zoo/**/*.py"]

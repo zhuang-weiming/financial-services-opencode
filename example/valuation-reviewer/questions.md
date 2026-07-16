@@ -47,3 +47,10 @@ Please:
 3) Identify best risk/reward
 4) Draft allocation recommendation
 ```
+
+---
+
+## Question 3: ['Stress-test', 'the', 'DCF', 'model', 'with', 'a']
+```
+Stress-test the DCF model with a -100bps WACC adjustment.
+```

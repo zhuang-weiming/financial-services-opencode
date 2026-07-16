@@ -52,3 +52,10 @@ Please:
 3) Determine required documentation
 4) Draft escalation if needed
 ```
+
+---
+
+## Question 3: ['What', 'is', 'the', "firm's", 'enhanced', 'due']
+```
+What is the firm's enhanced due diligence procedure for PEPs?
+```

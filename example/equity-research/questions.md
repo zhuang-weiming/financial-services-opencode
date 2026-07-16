@@ -51,3 +51,10 @@ Please:
 3) Recommend sector weighting
 4) Identify best-in-class entry point
 ```
+
+---
+
+## Question 3: ['Run', 'a', 'quick', 'comparable', 'analysis', 'on']
+```
+Run a quick comparable analysis on the SaaS coverage universe.
+```

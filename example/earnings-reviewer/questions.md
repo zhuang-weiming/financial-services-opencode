@@ -43,3 +43,10 @@ Please:
 3) Set up bull/bear scenarios
 4) Draft positioning notes
 ```
+
+---
+
+## Question 3: ['Compare', 'Q1', '2024', 'actuals', 'to', 'consensus']
+```
+Compare Q1 2024 actuals to consensus estimates across the coverage list.
+```
