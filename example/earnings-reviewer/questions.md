@@ -1,8 +1,10 @@
-# Earnings-Reviewer Agent Example Questions
+# Earnings-Reviewer Agent — Example Questions
+
+> **Routing trigger keywords:** earnings, post-earnings, quarterly results, Q1/Q2/Q3/Q4, earnings update, quarterly update
 
 **Data Files:**
-- `data/earnings_actuals.csv` - Actual earnings results
-- `data/earnings_season.json` - Earnings calendar
+- `data/earnings_actuals.csv` — Actual earnings results
+- `data/earnings_season.json` — Earnings calendar
 
 ---
 
@@ -24,8 +26,6 @@ Please:
 4) Draft brief client note
 ```
 
----
-
 ## Question 2: Earnings Season Prep
 ```
 Prepare coverage notes for upcoming earnings season.
@@ -44,9 +44,15 @@ Please:
 4) Draft positioning notes
 ```
 
----
-
-## Question 3: ['Compare', 'Q1', '2024', 'actuals', 'to', 'consensus']
+## Question 3: Compare Q1 actuals to consensus
 ```
 Compare Q1 2024 actuals to consensus estimates across the coverage list.
+
+Reference: data/earnings_actuals.csv
+
+Please:
+1) Calculate surprise percentage for each name
+2) Flag positive/negative surprises
+3) Identify trend changes from prior quarters
+4) Highlight names requiring model updates
 ```

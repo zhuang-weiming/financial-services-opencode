@@ -1,8 +1,10 @@
-# KYC-Screener Agent Example Questions
+# KYC-Screener Agent — Example Questions
+
+> **Routing trigger keywords:** KYC, onboarding, AML screening, AML, watchlist screening, enhanced due diligence, client screening
 
 **Data Files:**
-- `data/client_onboarding.csv` - Client onboarding records
-- `data/watchlist_results.json` - Watchlist screening results
+- `data/client_onboarding.csv` — Client onboarding records
+- `data/watchlist_results.json` — Watchlist screening results
 
 ---
 
@@ -31,8 +33,6 @@ Please:
 4) Flag any items requiring enhanced due diligence
 ```
 
----
-
 ## Question 2: Enhanced Due Diligence Review
 ```
 Review Alpha Trading Ltd for potential high-risk designation.
@@ -53,9 +53,15 @@ Please:
 4) Draft escalation if needed
 ```
 
----
-
-## Question 3: ['What', 'is', 'the', "firm's", 'enhanced', 'due']
+## Question 3: What is the firm's EDD procedure for PEPs?
 ```
-What is the firm's enhanced due diligence procedure for PEPs?
+What is the firm's enhanced due diligence procedure for Politically Exposed Persons (PEPs)?
+
+Reference: data/watchlist_results.json
+
+Please:
+1) Locate the PEP policy in the firm's KYC rules
+2) Summarize the enhanced documentation requirements
+3) List additional screening steps required
+4) Flag any jurisdictions with automatic escalation
 ```

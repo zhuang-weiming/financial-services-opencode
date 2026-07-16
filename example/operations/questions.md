@@ -1,8 +1,10 @@
-# Operations Agent Example Questions
+# Operations Agent — Example Questions
+
+> **Routing trigger keywords:** AI readiness, AI opportunity scan, portfolio monitoring, DD checklist, due diligence, deal sourcing, value creation plan, operations review
 
 **Data Files:**
-- `data/portfolio_companies.csv` - Portfolio company data
-- `data/ai_readiness.json` - AI readiness assessment
+- `data/portfolio_companies.csv` — Portfolio company data
+- `data/ai_readiness.json` — AI readiness assessment
 
 ---
 
@@ -26,10 +28,8 @@ Please:
 1) Rank companies by AI readiness
 2) Identify highest-leverage quick wins
 3) Estimate deployment hours
-4) Draft deployment优先级 recommendation
+4) Draft deployment priority recommendation
 ```
-
----
 
 ## Question 2: Quarterly AI Roadmap
 ```
@@ -49,9 +49,15 @@ Please:
 4) Draft stakeholder communication
 ```
 
----
-
-## Question 3: ['Run', 'an', 'AI', 'readiness', 'scan', 'across']
+## Question 3: Run an AI readiness scan across the portfolio
 ```
-Run an AI readiness scan across the portfolio.
+Run an AI readiness scan across the full portfolio. Identify which companies have the highest potential for AI-driven value creation.
+
+Reference: data/portfolio_companies.csv, data/ai_readiness.json
+
+Please:
+1) Score each company on data readiness, technical talent, and use-case potential
+2) Produce a ranked action list for operating partner time allocation
+3) Estimate quick-win vs 6-month deployment timelines
+4) Flag companies not yet ready and what they need
 ```

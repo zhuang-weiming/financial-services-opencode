@@ -1,8 +1,10 @@
-# Private-Equity Example Questions
+# Private-Equity Agent — Example Questions
+
+> **Routing trigger keywords:** IC memo, deal screen, deal sourcing, DD checklist, due diligence, buyer list, returns analysis, unit economics, value creation plan
 
 **Data Files:**
-- `data/portfolio_performance.csv` - Portfolio performance data
-- `data/ic_memo.json` - IC memo for CloudSoft
+- `data/portfolio_performance.csv` — Portfolio performance data
+- `data/ic_memo.json` — IC memo for CloudSoft
 
 ---
 
@@ -28,8 +30,6 @@ Please:
 4) Make investment recommendation
 ```
 
----
-
 ## Question 2: Portfolio Returns Analysis
 ```
 Analyze portfolio performance across holdings.
@@ -43,14 +43,20 @@ From data/portfolio_performance.csv:
 
 Please:
 1) Build IRR waterfall
-2. Calculate weighted avg returns
-3. Identify underperformers
+2) Calculate weighted avg returns
+3) Identify underperformers
 4) Recommend portfolio actions
 ```
 
----
-
-## Question 3: ['Screen', 'inbound', 'deals', 'from', 'this', "week's"]
+## Question 3: Screen inbound deals from this week
 ```
-Screen inbound deals from this week's batch against our thesis.
+Screen inbound deals from this week's batch against our investment thesis.
+
+Reference: data/ic_memo.json
+
+Please:
+1) Extract key deal metrics from each opportunity
+2) Run pass/fail against our fund criteria
+3) Flag any that merit a first call
+4) Output a one-page screening memo for each
 ```

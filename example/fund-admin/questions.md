@@ -1,11 +1,13 @@
-# Fund-Admin Agent Example Questions
+# Fund-Admin Agent — Example Questions
+
+> **Routing trigger keywords:** NAV tie-out, NAV tieout, accrual schedule, roll-forward, variance commentary, fund admin, fund administration, cash flow projection
 
 **Data Files:**
-- `data/lp_capital_accounts.csv` - LP capital accounts
-- `data/accrual_schedule.json` - Accrual schedule
-- `data/nav_tieout.json` - NAV tieout
-- `data/roll_forward.json` - Roll-forward
-- `data/cash_flow_projection.json` - Cash flow projection
+- `data/lp_capital_accounts.csv` — LP capital accounts
+- `data/accrual_schedule.json` — Accrual schedule
+- `data/nav_tieout.json` — NAV tieout
+- `data/roll_forward.json` — Roll-forward
+- `data/cash_flow_projection.json` — Cash flow projection
 
 ---
 
@@ -32,8 +34,6 @@ Please:
 4) Confirm final NAV
 ```
 
----
-
 ## Question 2: Accrual Schedule Review
 ```
 Review March accrual schedule.
@@ -52,22 +52,15 @@ Please:
 4) Flag for controller approval
 ```
 
----
-
-## Question 3: Cash Flow Projection
+## Question 3: Build accrual schedule for month-end close
 ```
-Review Q2 cash flow projection.
+Build the period-end accrual schedule for month-end close. For each accrual, compute the entry, cite the support, and draft the journal entry.
 
-Reference: data/cash_flow_projection.json
-
-From data/cash_flow_projection.json:
-- Q1 Ending Cash: $13.3M
-- Q2 Projected: $13.8M
-- Assumptions: 6% growth, 18% margin
+Reference: data/accrual_schedule.json, data/roll_forward.json
 
 Please:
-1) Validate assumptions
-2) Check cash sufficiency for commitments
-3) Flag any concerns
-4) Update projection if needed
+1) List all required accruals for the period
+2) Compute each accrual amount with supporting documentation
+3) Draft journal entries for controller approval
+4) Flag any items requiring manual review
 ```

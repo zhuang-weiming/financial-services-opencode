@@ -231,16 +231,20 @@ _LOADER_CACHE_VERSION = 3
 
 def loader_cache_enabled() -> bool:
     """Return whether the local market-data cache is explicitly enabled."""
-    from src.config.accessor import get_env_config
-
-    return get_env_config().data.vibe_trading_data_cache
+    try:
+        from src.config.accessor import get_env_config
+        return get_env_config().data.vibe_trading_data_cache
+    except ModuleNotFoundError:
+        return False
 
 
 def loader_cache_root() -> Path:
     """Return the root directory for opt-in loader cache files."""
-    from src.config.accessor import get_env_config
-
-    root = get_env_config().data.vibe_trading_data_cache_root
+    try:
+        from src.config.accessor import get_env_config
+        root = get_env_config().data.vibe_trading_data_cache_root
+    except ModuleNotFoundError:
+        root = ""
     if root and root.strip():
         return Path(root).expanduser()
     return Path.home() / ".vibe-trading" / "cache" / "loaders"

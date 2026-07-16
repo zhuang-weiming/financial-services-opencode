@@ -1,8 +1,10 @@
-# Wealth-Management Agent Example Questions
+# Wealth-Management Agent — Example Questions
+
+> **Routing trigger keywords:** client report, client review, financial plan, retirement plan, investment proposal, portfolio rebalance, tax-loss harvesting, wealth management
 
 **Data Files:**
-- `data/client_profiles.csv` - Client profiles
-- `data/meeting_prep.json` - Meeting preparation data
+- `data/client_profiles.csv` — Client profiles
+- `data/meeting_prep.json` — Meeting preparation data
 
 ---
 
@@ -43,8 +45,6 @@ Please:
 4) Identify action items for follow-up
 ```
 
----
-
 ## Question 2: Tax-Loss Harvesting
 ```
 Identify tax-loss harvesting opportunities from the portfolio.
@@ -64,9 +64,15 @@ Please:
 5) Draft harvesting plan with timeline
 ```
 
----
-
-## Question 3: ['Run', 'tax-loss', 'harvesting', 'analysis', 'on', 'the']
+## Question 3: Run tax-loss harvesting on taxable account
 ```
-Run tax-loss harvesting analysis on the taxable account.
+Run tax-loss harvesting analysis on the taxable account, flagging any wash sale risks.
+
+Reference: data/meeting_prep.json
+
+Please:
+1) Scan all taxable positions for unrealized losses
+2) Prioritize losses by size and tax benefit
+3) Suggest suitable replacement ETFs/stocks
+4) Build a harvesting schedule respecting wash sale rules
 ```

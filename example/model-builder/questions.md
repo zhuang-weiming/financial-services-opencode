@@ -1,8 +1,10 @@
-# Model-Builder Agent Example Questions
+# Model-Builder Agent — Example Questions
+
+> **Routing trigger keywords:** DCF, LBO, 3-statement model, 3 statement model, comps, trading comps, valuation model
 
 **Data Files:**
-- `data/historical_data.csv` - Historical financial data
-- `data/model_assumptions.json` - Model assumptions
+- `data/historical_data.csv` — Historical financial data
+- `data/model_assumptions.json` — Model assumptions
 
 ---
 
@@ -31,8 +33,6 @@ Please:
 4) Add ratio analysis
 ```
 
----
-
 ## Question 2: Forecast Validation
 ```
 Validate the Q1 FY24 forecast assumptions.
@@ -51,9 +51,15 @@ Please:
 4) Update model if needed
 ```
 
----
-
-## Question 3: ['Build', 'an', 'LBO', 'model', 'with', '6.0x']
+## Question 3: Build an LBO model with 6x leverage
 ```
-Build an LBO model with 6.0x leverage for the target.
+Build an LBO model with 6.0x leverage for the target company.
+
+Reference: data/historical_data.csv, data/model_assumptions.json
+
+Please:
+1) Structure debt financing at 6.0x EBITDA
+2) Model debt repayment schedule
+3) Calculate IRR and MOIC across exit years
+4) Show sensitivity to entry/exit multiples
 ```

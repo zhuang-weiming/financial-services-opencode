@@ -12,40 +12,76 @@ opencode --agent wealth-guide
 
 Wealth-Guide will route your question to the appropriate subagent(s).
 
-## Available Cookbooks
+---
 
-### Institutional (18)
-| Cookbook | Routes to subagent |
-|---|---|
-| `earnings-reviewer/` | earnings-reviewer |
-| `equity-research/` | equity-research |
-| `financial-analysis/` | financial-analysis |
-| `fund-admin/` | fund-admin |
-| `gl-reconciler/` | gl-reconciler |
-| `investment-banking/` | investment-banking |
-| `kyc-screener/` | kyc-screener |
-| `market-researcher/` | market-researcher |
-| `meeting-prep-agent/` | meeting-prep-agent |
-| `model-builder/` | model-builder |
-| `month-end-closer/` | month-end-closer |
-| `operations/` | operations |
-| `pitch-agent/` | pitch-agent |
-| `private-equity/` | private-equity |
-| `statement-auditor/` | statement-auditor |
-| `valuation-reviewer/` | valuation-reviewer |
-| `wealth-management/` | wealth-management |
-| `explore/` | (generic code exploration) |
+## Cookbook Index
 
-### Quantitative Research (5 — New)
-| Cookbook | Routes to subagent |
-|---|---|
-| `alpha-researcher/` | alpha-researcher |
-| `backtest-builder/` | backtest-builder |
-| `factor-researcher/` | factor-researcher |
-| `market-router/` | market-router |
-| `swarm-orchestrator/` | swarm-orchestrator |
+### Institutional (17 subagents)
 
-### End-to-End (1 — New)
-| Cookbook | Description |
-|---|---|
-| `wealth-guide-e2e/` | Cross-domain questions requiring multiple subagents |
+| # | Cookbook | Routes to subagent | Trigger keywords |
+|---|:---|---|:---|
+| 1 | `earnings-reviewer/` | `earnings-reviewer` | earnings, quarterly results, Q1/Q2/Q3/Q4, post-earnings |
+| 2 | `equity-research/` | `equity-research` | initiating coverage, model update, catalyst calendar, thesis track |
+| 3 | `financial-analysis/` | `financial-analysis` | 3-statement model, DCF, LBO, comps, competitive analysis |
+| 4 | `fund-admin/` | `fund-admin` | NAV tie-out, accrual schedule, roll-forward, variance commentary |
+| 5 | `gl-reconciler/` | `gl-reconciler` | GL recon, break trace, reconciliation |
+| 6 | `investment-banking/` | `investment-banking` | pitch deck, CIM, teaser, process letter, buyer list, merger model |
+| 7 | `kyc-screener/` | `kyc-screener` | KYC, onboarding, AML screening, watchlist |
+| 8 | `market-researcher/` | `market-researcher` | sector overview, industry deep dive, competitive landscape |
+| 9 | `meeting-prep-agent/` | `meeting-prep-agent` | client review, meeting prep, briefing pack, investment proposal |
+| 10 | `model-builder/` | `model-builder` | DCF model, LBO model, 3-statement model, trading comps |
+| 11 | `month-end-closer/` | `month-end-closer` | month-end close, close package, accrual schedule |
+| 12 | `operations/` | `operations` | AI readiness, DD checklist, deal sourcing, value creation plan |
+| 13 | `pitch-agent/` | `pitch-agent` | pitch deck, comps analysis, DCF, LBO, IB check deck |
+| 14 | `private-equity/` | `private-equity` | IC memo, deal screen, deal sourcing, buyer list |
+| 15 | `statement-auditor/` | `statement-auditor` | statement audit, LP statement, model audit, NAV tie-out |
+| 16 | `valuation-reviewer/` | `valuation-reviewer` | valuation review, returns analysis, stress-test |
+| 17 | `wealth-management/` | `wealth-management` | client report, financial plan, portfolio rebalance, tax-loss harvesting |
+
+### Quantitative Research (5 subagents)
+
+| # | Cookbook | Routes to subagent | Trigger keywords |
+|---|:---|---|:---|
+| 18 | `alpha-researcher/` | `alpha-researcher` | alpha zoo, factor bench, alpha family, IC/IR |
+| 19 | `backtest-builder/` | `backtest-builder` | backtest, strategy backtest, walk-forward, signal test |
+| 20 | `factor-researcher/` | `factor-researcher` | factor analysis, IC/IR, quantile backtest, factor decomposition |
+| 21 | `market-router/` | `market-router` | crypto (BTC/ETH), A-share (600519), forex (EURUSD), multi-market |
+| 22 | `swarm-orchestrator/` | `swarm-orchestrator` | swarm, investment committee, multi-agent team, macro forum |
+
+### Utility (2)
+
+| # | Cookbook | Description |
+|---|:---|---|
+| 23 | `explore/` | Codebase exploration (not a routed subagent) |
+| 24 | `wealth-guide-e2e/` | Cross-domain questions requiring multiple subagents in parallel |
+
+---
+
+## Routing Verification
+
+Each `questions.md` file includes a header line noting the **routing trigger keywords** that Wealth-Guide uses to dispatch the question to the correct subagent. To verify routing:
+
+1. Read the trigger keywords in the header
+2. Check that the questions contain those keywords
+3. Confirm against the [routing decision matrix](../.opencode/instructions/wealth-guide-router.md)
+
+### Example routing trace
+
+```
+User: "Run a backtest on CSI 300 momentum strategy from 2023 to 2025"
+                              ^^^^^^^^
+Wealth-Guide sees "backtest" → routes to backtest-builder ✅
+```
+
+```
+User: "Review CloudSoft IC memo for investment committee"
+                              ^^^^^^^^
+Wealth-Guide sees "IC memo" → routes to private-equity ✅
+```
+
+## Parallel Dispatch (Cross-Domain)
+
+For questions spanning multiple domains, Wealth-Guide dispatches to multiple subagents simultaneously. See `wealth-guide-e2e/questions.md` for examples.
+
+Example: *"Analyze NVDA's latest earnings, build a DCF model, and compare against AMD"*
+→ dispatches to `earnings-reviewer` + `model-builder` + `market-researcher` in parallel.

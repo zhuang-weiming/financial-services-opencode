@@ -1,8 +1,10 @@
-# Financial-Analysis Example Questions
+# Financial-Analysis Agent — Example Questions
+
+> **Routing trigger keywords:** 3-statement model, DCF, LBO, comps, comparable analysis, competitive analysis, financial model
 
 **Data Files:**
-- `data/airline_comps.csv` - Airline comparable companies
-- `data/lbo_model.json` - LBO model data
+- `data/airline_comps.csv` — Airline comparable companies
+- `data/lbo_model.json` — LBO model data
 
 ---
 
@@ -25,8 +27,6 @@ Please:
 4) Recommend sector positioning
 ```
 
----
-
 ## Question 2: Delta LBO Returns Analysis
 ```
 Analyze Delta LBO returns sensitivity.
@@ -46,9 +46,15 @@ Please:
 4) Assess downside protection
 ```
 
----
-
-## Question 3: ['Stress-test', 'the', 'DCF', 'model', 'under', 'a']
+## Question 3: Stress-test the DCF model under recession
 ```
-Stress-test the DCF model under a recession scenario (-200bps GDP).
+Stress-test the DCF model under a recession scenario (-200bps GDP impact).
+
+Reference: data/airline_comps.csv, data/lbo_model.json
+
+Please:
+1) Adjust revenue growth assumptions downward
+2) Recalculate WACC with higher risk premium
+3) Show impact on terminal value
+4) Present a revised valuation range
 ```

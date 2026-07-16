@@ -1,8 +1,10 @@
-# Equity-Research Agent Example Questions
+# Equity-Research Agent — Example Questions
+
+> **Routing trigger keywords:** earnings analysis, initiating coverage, coverage initiation, morning note, thesis track, catalyst calendar, model update, coverage update
 
 **Data Files:**
-- `data/coverage_universe.csv` - Coverage universe with valuation metrics
-- `data/research_report.json` - Sample research report
+- `data/coverage_universe.csv` — Coverage universe with valuation metrics
+- `data/research_report.json` — Sample research report
 
 ---
 
@@ -32,8 +34,6 @@ Please:
 4) Make investment recommendation
 ```
 
----
-
 ## Question 2: Compare Cloud Infrastructure Plays
 ```
 Compare Snowflake vs Datadog vs Elastic for sector allocation.
@@ -52,9 +52,15 @@ Please:
 4) Identify best-in-class entry point
 ```
 
----
-
-## Question 3: ['Run', 'a', 'quick', 'comparable', 'analysis', 'on']
+## Question 3: Run a quick comparable analysis
 ```
-Run a quick comparable analysis on the SaaS coverage universe.
+Run a quick comparable analysis on the SaaS coverage universe to identify relative value.
+
+Reference: data/coverage_universe.csv
+
+Please:
+1) Calculate EV/Revenue and EV/EBITDA multiples
+2) Sort by growth-adjusted valuation
+3) Flag outliers on either cheap/expensive side
+4) Recommend top pick based on risk/reward
 ```

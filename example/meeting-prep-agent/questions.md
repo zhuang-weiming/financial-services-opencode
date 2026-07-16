@@ -1,8 +1,10 @@
-# Meeting-Prep-Agent Example Questions
+# Meeting-Prep-Agent Agent — Example Questions
+
+> **Routing trigger keywords:** client review, client meeting, meeting prep, briefing pack, quarterly review, investment proposal
 
 **Data Files:**
-- `data/company_data.csv` - Company trading data
-- `data/meeting_brief.json` - Meeting brief
+- `data/company_data.csv` — Company trading data
+- `data/meeting_brief.json` — Meeting brief
 
 ---
 
@@ -28,8 +30,6 @@ Please:
 4) Draft talking points
 ```
 
----
-
 ## Question 2: Earnings Preview Setup
 ```
 Set up pre-earnings analysis for AAPL Q2.
@@ -47,9 +47,15 @@ Please:
 4) Prepare questions for management
 ```
 
----
-
-## Question 3: ['Build', 'a', 'briefing', 'pack', 'for', 'the']
+## Question 3: Build a briefing pack for LP advisory
 ```
 Build a briefing pack for the upcoming LP advisory board meeting.
+
+Reference: data/meeting_brief.json
+
+Please:
+1) Summarize fund performance for the period
+2) Highlight top/bottom holdings
+3) Outline key developments since last meeting
+4) Prepare Q&A on portfolio outlook
 ```

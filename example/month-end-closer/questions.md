@@ -1,8 +1,10 @@
-# Month-End-Closer Example Questions
+# Month-End-Closer Agent — Example Questions
+
+> **Routing trigger keywords:** month-end close, close package, accrual schedule, roll-forward, variance commentary, month end
 
 **Data Files:**
-- `data/accrual_schedule.csv` - Accrual schedule
-- `data/close_package.json` - Close status
+- `data/accrual_schedule.csv` — Accrual schedule
+- `data/close_package.json` — Close status
 
 ---
 
@@ -30,11 +32,9 @@ Please:
 4) Update close status
 ```
 
----
-
 ## Question 2: Accrual Schedule Review
 ```
-Validate the accrual schedule.
+Validate the accrual schedule for March.
 
 Reference: data/accrual_schedule.csv
 
@@ -49,9 +49,15 @@ Please:
 4) Propose adjustment
 ```
 
----
-
-## Question 3: ['Run', 'the', 'variance', 'commentary', 'for', 'the']
+## Question 3: Run variance commentary for income statement
 ```
-Run the variance commentary for the income statement vs. budget.
+Run the variance commentary for the income statement vs budget for March.
+
+Reference: data/close_package.json, data/accrual_schedule.csv
+
+Please:
+1) Compare actual P&L to budget by line item
+2) Flag items exceeding 10% variance
+3) Explain key drivers of significant variances
+4) Draft commentary for management review
 ```

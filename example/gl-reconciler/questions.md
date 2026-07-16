@@ -1,4 +1,6 @@
-# GL-Reconciler Agent Example Questions
+# GL-Reconciler Agent — Example Questions
+
+> **Routing trigger keywords:** GL recon, GL reconciliation, break trace, reconciliation, general ledger, subledger, position mismatch, trade date reconciliation
 
 **Data Files:**
 - `data/recon_data.csv` - Trade reconciliation data for trade date 2024-03-15

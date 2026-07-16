@@ -1,8 +1,10 @@
-# Pitch-Agent Example Questions
+# Pitch-Agent Agent — Example Questions
+
+> **Routing trigger keywords:** pitch deck, pitch, comps analysis, DCF model, LBO model, buy-side pitch, deck refresh, IB check deck
 
 **Data Files:**
-- `data/growth_equity_deals.csv` - Growth equity comps
-- `data/pitch_content.json` - Pitch content for Cloudflare
+- `data/growth_equity_deals.csv` — Growth equity comps
+- `data/pitch_content.json` — Pitch content for Cloudflare
 
 ---
 
@@ -28,8 +30,6 @@ Please:
 4) Outline risk factors
 ```
 
----
-
 ## Question 2: Comp Set Analysis
 ```
 Compare growth equity opportunities.
@@ -48,9 +48,15 @@ Please:
 4) Suggest allocation weights
 ```
 
----
-
-## Question 3: ['Build', 'a', 'football', 'field', 'valuation', 'for']
+## Question 3: Build a football field valuation
 ```
-Build a football field valuation for the target.
+Build a football field valuation for the target, showing DCF, comps, and LBO ranges.
+
+Reference: data/growth_equity_deals.csv, data/pitch_content.json
+
+Please:
+1) Calculate DCF-derived valuation range
+2) Add trading comps range
+3) Add transaction comps range
+4) Show final football field with weighted recommendation
 ```

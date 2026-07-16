@@ -1,8 +1,10 @@
-# Valuation-Reviewer Agent Example Questions
+# Valuation-Reviewer Agent — Example Questions
+
+> **Routing trigger keywords:** valuation review, returns analysis, portfolio monitoring, IC memo review, LP reporting, GP package, stress-test valuation
 
 **Data Files:**
-- `data/valuation_data.csv` - Valuation comps
-- `data/valuation_review.json` - Detailed valuation review
+- `data/valuation_data.csv` — Valuation comps
+- `data/valuation_review.json` — Detailed valuation review
 
 ---
 
@@ -28,8 +30,6 @@ Please:
 4) Assess if current price reflects risk
 ```
 
----
-
 ## Question 2: Cloud Comp Set Valuation
 ```
 Compare valuations across cloud infrastructure comps.
@@ -48,9 +48,15 @@ Please:
 4) Draft allocation recommendation
 ```
 
----
-
-## Question 3: ['Stress-test', 'the', 'DCF', 'model', 'with', 'a']
+## Question 3: Stress-test the DCF model with WACC adjustment
 ```
-Stress-test the DCF model with a -100bps WACC adjustment.
+Stress-test the DCF model with a -100bps WACC adjustment to see valuation impact.
+
+Reference: data/valuation_data.csv, data/valuation_review.json
+
+Please:
+1) Recalculate DCF value with lower WACC
+2) Show sensitivity table (WACC ± 200bps × terminal growth ± 1%)
+3) Identify which assumption has the highest leverage
+4) Flag if the base case is too aggressive
 ```

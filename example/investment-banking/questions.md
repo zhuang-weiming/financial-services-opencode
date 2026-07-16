@@ -1,8 +1,10 @@
-# Investment-Banking Example Questions
+# Investment-Banking Agent — Example Questions
+
+> **Routing trigger keywords:** pitch deck, pitch-deck, CIM, teaser, buyer list, deal tracker, process letter, merger model, datapack, sell-side, M&A, buy-side
 
 **Data Files:**
-- `data/precedent_transactions.csv` - Precedent transactions
-- `data/process_data.json` - Process timeline data
+- `data/precedent_transactions.csv` — Precedent transactions
+- `data/process_data.json` — Process timeline data
 
 ---
 
@@ -27,8 +29,6 @@ Please:
 4) Track participant status
 ```
 
----
-
 ## Question 2: Valuation Benchmarking
 ```
 Benchmark CloudSoft against precedent transactions.
@@ -45,4 +45,17 @@ Please:
 2) Compare growth profiles
 3) Recommend valuation range
 4) Flag any anomalies
+```
+
+## Question 3: Build a buyer list for sell-side mandate
+```
+Build a buyer list of potential acquirers for CloudSoft's sell-side process. Identify strategic and financial buyers, assess fit, and prioritize outreach.
+
+Reference: data/precedent_transactions.csv, data/process_data.json
+
+Please:
+1) Identify strategic acquirers in the cloud/SaaS space
+2) Add financial sponsors with relevant deal history
+3) Score each buyer by strategic fit and ability to pay
+4) Recommend outreach sequence
 ```

@@ -1,8 +1,10 @@
-# Statement-Auditor Agent Example Questions
+# Statement-Auditor Agent — Example Questions
+
+> **Routing trigger keywords:** statement audit, LP statement, capital account, audit model, model audit, audit financials, NAV tie-out
 
 **Data Files:**
-- `data/audit_results.json` - Audit results
-- `data/model_errors.csv` - Model errors detail
+- `data/audit_results.json` — Audit results
+- `data/model_errors.csv` — Model errors detail
 
 ---
 
@@ -30,8 +32,6 @@ Please:
 4) Flag model for re-audit after fixes
 ```
 
----
-
 ## Question 2: Cross-Statement Consistency
 ```
 Check 3-statement model for consistency.
@@ -48,9 +48,15 @@ Please:
 4) Propose fix to reconcile
 ```
 
----
-
-## Question 3: ['Audit', 'the', 'LP', 'capital', 'accounts', 'for']
+## Question 3: Audit the LP capital accounts
 ```
 Audit the LP capital accounts for the fund against the NAV pack.
+
+Reference: data/audit_results.json
+
+Please:
+1) Recompute each LP's capital account from NAV components
+2) Flag any line items that don't tie out
+3) Trace breaks to their source transaction
+4) Produce an exceptions report for the GP
 ```

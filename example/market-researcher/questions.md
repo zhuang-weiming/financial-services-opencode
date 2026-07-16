@@ -1,8 +1,10 @@
-# Market-Researcher Example Questions
+# Market-Researcher Agent — Example Questions
+
+> **Routing trigger keywords:** sector overview, industry overview, sector research, competitive landscape, market landscape, competitive analysis, industry deep dive, thematic research, idea generation
 
 **Data Files:**
-- `data/sector_comps.csv` - Sector comparable companies
-- `data/sector_research.json` - Sector research
+- `data/sector_comps.csv` — Sector comparable companies
+- `data/sector_research.json` — Sector research
 
 ---
 
@@ -28,8 +30,6 @@ Please:
 4) Recommend sector weighting
 ```
 
----
-
 ## Question 2: Competitive Analysis
 ```
 Analyze competitive dynamics in cloud infra.
@@ -47,9 +47,15 @@ Please:
 4) Draft sector allocation view
 ```
 
----
-
-## Question 3: ['What', 'are', 'the', 'top', '5', 'themes']
+## Question 3: What are the top 5 themes
 ```
-What are the top 5 themes driving the cloud infrastructure sector?
+What are the top 5 themes driving the cloud infrastructure sector in 2026?
+
+Reference: data/sector_research.json
+
+Please:
+1) Rank themes by revenue impact
+2) Identify which are accelerating vs maturing
+3) Map each theme to listed beneficiaries
+4) Recommend how to position for them
 ```
