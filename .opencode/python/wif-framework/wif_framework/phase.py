@@ -28,8 +28,16 @@ def compute_csi(prices: pd.DataFrame) -> pd.Series:
     z_vixt = (vixt - vixt.rolling(60).mean()) / vixt.rolling(60).std().replace(0, np.nan)
 
     corr_cols = [c for c in prices.columns if c in ("SPY", "BND", "GLD", "TLT")]
-    rolling_corr = prices[corr_cols].pct_change().rolling(60).corr().mean(axis=1) if len(corr_cols) >= 2 else pd.Series(0, index=prices.index)
-    z_corr = (rolling_corr - rolling_corr.rolling(60).mean()) / rolling_corr.rolling(60).std().replace(0, np.nan)
+    if len(corr_cols) >= 2:
+        returns = prices[corr_cols].pct_change()
+        pairwise_corrs = []
+        for i in range(len(corr_cols)):
+            for j in range(i + 1, len(corr_cols)):
+                pairwise_corrs.append(returns[corr_cols[i]].rolling(60).corr(returns[corr_cols[j]]))
+        avg_corr = pd.concat(pairwise_corrs, axis=1).mean(axis=1) if pairwise_corrs else pd.Series(0, index=prices.index)
+    else:
+        avg_corr = pd.Series(0, index=prices.index)
+    z_corr = (avg_corr - avg_corr.rolling(60).mean()) / avg_corr.rolling(60).std().replace(0, np.nan)
 
     csi = (0.45 * z_f29.fillna(0) + 0.35 * z_vixt.fillna(0) + 0.20 * z_corr.fillna(0))
     return csi.fillna(0)

@@ -6,9 +6,10 @@ from typing import Optional
 
 import pandas as pd
 
+_env_path = os.environ.get("WIF_DATA_DIR", "")
 DATA_DIR = (
-    Path(os.environ.get("WIF_DATA_DIR", ""))
-    or Path(__file__).resolve().parents[4] / "example" / "wif-framework" / "data"
+    Path(_env_path).expanduser().resolve() if _env_path
+    else Path(__file__).resolve().parents[4] / "example" / "wif-framework" / "data"
 )
 
 
@@ -45,9 +46,28 @@ def load_prices(data_dir: Optional[Path] = None) -> pd.DataFrame:
     merged = base / "_merged_prices_20260716.csv"
     if merged.exists():
         df = pd.read_csv(merged, parse_dates=["Date"], index_col="Date")
-        return df
+    else:
+        csvs = sorted(base.glob("_merged_prices_*.csv"))
+        if not csvs:
+            raise FileNotFoundError(f"No _merged_prices_*.csv found in {base}")
+        df = pd.read_csv(csvs[-1], parse_dates=["Date"], index_col="Date")
 
-    csvs = sorted(base.glob("_merged_prices_*.csv"))
-    if not csvs:
-        raise FileNotFoundError(f"No _merged_prices_*.csv found in {base}")
-    return pd.read_csv(csvs[-1], parse_dates=["Date"], index_col="Date")
+    ticker_dir = base / "tickers_20260716"
+    extra_sources = {
+        "DGS10": ("DGS10", "Close"),
+        "T10YIE": ("T10YIE", "Close"),
+        "BAMLH0A0HYM2": ("BAMLH0A0HYM2", "Close"),
+    }
+    for col_name, (prefix, col) in extra_sources.items():
+        fp = ticker_dir / f"{prefix}_*.csv"
+        matches = list(ticker_dir.glob(f"{prefix}_*.csv"))
+        if matches:
+            src = pd.read_csv(sorted(matches)[-1], parse_dates=["Date"], index_col="Date")
+            df[col_name] = src[col].reindex(df.index).ffill()
+
+    credit_path = ticker_dir / "CreditSpread_BAA_1986_2026.csv"
+    if credit_path.exists():
+        cred = pd.read_csv(credit_path, parse_dates=["Date"], index_col="Date")
+        df["F29_bp"] = cred["CreditSpread_bp"].reindex(df.index).ffill()
+
+    return df
