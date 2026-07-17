@@ -51,23 +51,33 @@ def load_prices(data_dir: Optional[Path] = None) -> pd.DataFrame:
         if not csvs:
             raise FileNotFoundError(f"No _merged_prices_*.csv found in {base}")
         df = pd.read_csv(csvs[-1], parse_dates=["Date"], index_col="Date")
+    return df
 
+
+def load_fred_series(data_dir: Optional[Path] = None) -> dict[str, pd.Series]:
+    base = data_dir or DATA_DIR
     ticker_dir = base / "tickers_20260716"
-    extra_sources = {
-        "DGS10": ("DGS10", "Close"),
-        "T10YIE": ("T10YIE", "Close"),
-        "BAMLH0A0HYM2": ("BAMLH0A0HYM2", "Close"),
+    result = {}
+    fred_map = {
+        "DGS10": "Close",
+        "T10YIE": "Close",
+        "BAMLH0A0HYM2": "Close",
     }
-    for col_name, (prefix, col) in extra_sources.items():
-        fp = ticker_dir / f"{prefix}_*.csv"
-        matches = list(ticker_dir.glob(f"{prefix}_*.csv"))
+    for prefix, col in fred_map.items():
+        matches = sorted(ticker_dir.glob(f"{prefix}_*.csv"))
         if matches:
-            src = pd.read_csv(sorted(matches)[-1], parse_dates=["Date"], index_col="Date")
-            df[col_name] = src[col].reindex(df.index).ffill()
+            src = pd.read_csv(matches[-1], parse_dates=["Date"], index_col="Date")
+            result[prefix] = src[col]
+    cp = ticker_dir / "CreditSpread_BAA_1986_2026.csv"
+    if cp.exists():
+        cred = pd.read_csv(cp, parse_dates=["Date"], index_col="Date")
+        result["F29_bp"] = cred["CreditSpread_bp"]
+    return result
 
-    credit_path = ticker_dir / "CreditSpread_BAA_1986_2026.csv"
-    if credit_path.exists():
-        cred = pd.read_csv(credit_path, parse_dates=["Date"], index_col="Date")
-        df["F29_bp"] = cred["CreditSpread_bp"].reindex(df.index).ffill()
 
+def load_prices_with_fred(data_dir: Optional[Path] = None) -> pd.DataFrame:
+    df = load_prices(data_dir)
+    fred = load_fred_series(data_dir)
+    for key, series in fred.items():
+        df[key] = series.reindex(df.index).ffill()
     return df

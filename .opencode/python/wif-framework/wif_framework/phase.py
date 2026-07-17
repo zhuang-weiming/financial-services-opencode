@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from typing import Optional
 
 CSI_COMPONENTS = {
     "F29_weight": 0.45,
@@ -16,36 +17,50 @@ def _cap(s: pd.Series) -> pd.Series:
     return np.sign(s) * np.minimum(np.abs(s), 5.0)
 
 
+def _zscore(s: pd.Series, window: int = 60) -> pd.Series:
+    ma = s.rolling(window).mean()
+    std = s.rolling(window).std().replace(0, np.nan)
+    return ((s - ma) / std).fillna(0)
+
+
 def compute_csi(prices: pd.DataFrame) -> pd.Series:
+    n_components = 0
+    csi = pd.Series(0.0, index=prices.index)
+
     f29 = prices.get("F29_bp", prices.get("F29", None))
-    if f29 is None:
-        raise ValueError("prices must contain 'F29_bp' or 'F29' column")
-    z_f29 = (f29 - f29.rolling(60).mean()) / f29.rolling(60).std().replace(0, np.nan)
+    if f29 is not None and f29.notna().sum() > 60:
+        csi += 0.45 * _zscore(f29)
+        n_components += 1
 
     vixt = prices.get("VIXTERM", None)
-    if vixt is None:
-        raise ValueError("prices must contain 'VIXTERM' column")
-    z_vixt = (vixt - vixt.rolling(60).mean()) / vixt.rolling(60).std().replace(0, np.nan)
+    if vixt is not None and vixt.notna().sum() > 60:
+        csi += 0.35 * _zscore(vixt)
+        n_components += 1
 
     corr_cols = [c for c in prices.columns if c in ("SPY", "BND", "GLD", "TLT")]
     if len(corr_cols) >= 2:
         returns = prices[corr_cols].pct_change()
-        pairwise_corrs = []
+        pairwise = []
         for i in range(len(corr_cols)):
             for j in range(i + 1, len(corr_cols)):
-                pairwise_corrs.append(returns[corr_cols[i]].rolling(60).corr(returns[corr_cols[j]]))
-        avg_corr = pd.concat(pairwise_corrs, axis=1).mean(axis=1) if pairwise_corrs else pd.Series(0, index=prices.index)
-    else:
-        avg_corr = pd.Series(0, index=prices.index)
-    z_corr = (avg_corr - avg_corr.rolling(60).mean()) / avg_corr.rolling(60).std().replace(0, np.nan)
+                pairwise.append(returns[corr_cols[i]].rolling(60).corr(returns[corr_cols[j]]))
+        if pairwise:
+            avg_corr = pd.concat(pairwise, axis=1).mean(axis=1)
+            csi += 0.20 * _zscore(avg_corr)
+            n_components += 1
 
-    csi = (0.45 * z_f29.fillna(0) + 0.35 * z_vixt.fillna(0) + 0.20 * z_corr.fillna(0))
-    return csi.fillna(0)
+    if n_components == 0:
+        return pd.Series(0.0, index=prices.index)
+
+    weight_sum = sum(CSI_COMPONENTS[k] for k in ["F29_weight", "VIXTERM_weight", "correlation_weight"][:n_components])
+    return csi.fillna(0) / (weight_sum / max(n_components, 1))
 
 
-def phase1_status(prices: pd.DataFrame, csi: pd.Series | None = None) -> pd.Series:
+def phase1_status(prices: pd.DataFrame, csi: Optional[pd.Series] = None) -> pd.Series:
     if csi is None:
         csi = compute_csi(prices)
+    if csi.index.dtype != prices.index.dtype:
+        csi.index = prices.index
     df = prices.copy()
     df["CSI"] = csi
 
@@ -59,13 +74,15 @@ def phase1_status(prices: pd.DataFrame, csi: pd.Series | None = None) -> pd.Seri
     df["EMERGENCY_3d"] = (df["EMERGENCY_persist"] == 3).astype(int)
     df["WARNING_3d"] = (df["WARNING_persist"] == 3).astype(int)
 
-    vixt = df.get("VIXTERM", pd.Series(0, index=df.index))
-    df["VIX_10d_return"] = df["VIX"].pct_change(10).fillna(0) if "VIX" in df.columns else 0
-    df["F33b_trigger"] = ((df["VIX"] > F33B_VIX_THRESHOLD) & (df["VIX_10d_return"] > F33B_VIX_10D_RETURN)).astype(int) if "VIX" in df.columns else 0
-    df["F33b_EMERGENCY_override"] = ((df["CSI"] <= 2.0) & (df["F33b_trigger"] == 1)).astype(int)
+    if "VIX" in df.columns:
+        df["VIX_10d_return"] = df["VIX"].pct_change(10).fillna(0)
+        df["F33b_trigger"] = ((df["VIX"] > F33B_VIX_THRESHOLD) & (df["VIX_10d_return"] > F33B_VIX_10D_RETURN)).astype(int)
+        df["F33b_EMERGENCY_override"] = ((df["CSI"] <= 2.0) & (df["F33b_trigger"] == 1)).astype(int)
+    else:
+        df["F33b_EMERGENCY_override"] = 0
 
-    f29 = df.get("F29_bp", df.get("F29", pd.Series(0, index=df.index)))
-    if isinstance(f29, pd.Series):
+    f29 = df.get("F29_bp", df.get("F29", None))
+    if f29 is not None and isinstance(f29, pd.Series):
         df["F29_hard_trigger"] = (f29 > F29_EMERGENCY_THRESHOLD_BP).astype(int)
     else:
         df["F29_hard_trigger"] = 0
@@ -88,9 +105,10 @@ def macro_quadrant(prices: pd.DataFrame) -> pd.Series:
     has_real = "DFII10" in prices.columns or ("DGS10" in prices.columns and "T10YIE" in prices.columns)
     if has_real:
         real = prices.get("DFII10", prices["DGS10"] - prices["T10YIE"])
+        inf = prices.get("T10YIE", pd.Series(2.5, index=prices.index))
     else:
-        real = pd.Series(0, index=prices.index)
-    inf = prices.get("T10YIE", pd.Series(2.5, index=prices.index))
+        return pd.Series(2, index=prices.index)
+
     real_delta = real.diff(60)
     inf_delta = inf.diff(60)
     quad = np.select(
@@ -131,5 +149,6 @@ def current_phase(prices: pd.DataFrame) -> dict:
 
     for col in ("F29_bp", "F29", "VIX", "VIXTERM", "DGS10", "T10YIE"):
         if col in prices.columns:
-            result[col.lower()] = round(float(prices[col].iloc[-1]), 2) if pd.notna(prices[col].iloc[-1]) else None
+            raw = prices[col].iloc[-1]
+            result[col.lower()] = round(float(raw), 2) if pd.notna(raw) else None
     return result
