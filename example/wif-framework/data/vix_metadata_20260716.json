@@ -1,0 +1,15 @@
+{
+  "data_update_date": "2026-07-16",
+  "data_sources": {
+    "VIX_spot": "FRED VIXCLS (CBOE VIX official daily close)",
+    "VIX3M_proxy": "Morningstar MCP F00000LI7D (ProShares VIX Mid-Term Futures ETF, NOT ^VIX3M index itself)",
+    "VIXTERM_formula": "VIX_spot - VIX3M_proxy (per WIF v5.9)"
+  },
+  "caveats": [
+    "FRED VIXCLS has data up to 2026-07-15 only (2026-07-16 not yet published as of pull time)",
+    "Morningstar MCP does not support ^VIX3M ticker (the actual CBOE index)",
+    "VIX3M_proxy uses ProShares VIXM ETF price as a substitute; the historical correlation is high but not 1:1",
+    "VIXM ETF price (mid-teens range) is not the same scale as ^VIX3M index (typically slightly higher than spot VIX)",
+    "For production use, replace VIX3M_proxy with ^VIX3M data from CBOE/FRED when available"
+  ]
+}

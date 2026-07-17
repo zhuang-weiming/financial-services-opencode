@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WIF v5.9 / v6.8.1 对比报告（2026-06-09 · P0修复版 · CSI Hysteresis + F29>500bp）</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'PingFang SC','Microsoft YaHei',-apple-system,sans-serif; background:#f0f2f5; color:#1a1a2e; }
+        .header { background:linear-gradient(135deg,#1565c0 0%,#7209b7 100%); color:white; padding:36px 48px; }
+        .header h1 { font-size:1.6rem; font-weight:700; margin-bottom:6px; }
+        .header p { opacity:0.85; font-size:0.88rem; }
+        .badge { display:inline-block; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.35);
+                  padding:3px 12px; border-radius:20px; font-size:0.78rem; margin-top:8px; }
+        .container { max-width:1180px; margin:0 auto; padding:28px 20px; }
+        .section { margin-bottom:36px; }
+        .section-title { font-size:1.1rem; font-weight:700; color:#1565c0; border-left:4px solid #1565c0;
+                          padding-left:10px; margin-bottom:16px; }
+        table { border-collapse:collapse; width:100%; font-size:0.85rem; }
+        th { background:#1565c0; color:white; padding:9px 12px; text-align:center; font-weight:600; white-space:nowrap; }
+        th.v67 { background:#7b1fa2; }
+        td { padding:8px 12px; text-align:center; border-bottom:1px solid #f0f0f0; }
+        tr:last-child td { border-bottom:none; }
+        tr:hover td { background:#f5f5f5; }
+        .pos { color:#c62828; font-weight:600; }
+        .neg { color:#2e7d32; font-weight:600; }
+        .note-box { background:#fff8e1; border-left:4px solid #f9a825; padding:14px 18px;
+                     border-radius:0 6px 6px 0; font-size:0.84rem; line-height:1.75; margin-top:16px; }
+        .data-note { background:#e8f5e9; border-left:4px solid #2e7d32; padding:13px 18px;
+                      border-radius:0 6px 6px 0; font-size:0.84rem; margin-top:16px; }
+        .warning-box { background:#fff3cd; border:1px solid #ffc107; border-radius:8px;
+                       padding:14px; margin:16px 0; font-size:0.85rem; }
+        .warning-box h4 { margin:0 0 6px; color:#856404; }
+        .cost-box { background:#e3f2fd; border-left:4px solid #1565c0; padding:13px 18px;
+                     border-radius:0 6px 6px 0; font-size:0.84rem; margin-top:12px; }
+        .tag-v59 { display:inline-block; background:#e3f2fd; color:#1565c0; padding:1px 7px;
+                    border-radius:4px; font-size:0.78rem; font-weight:600; }
+        .tag-v68b { display:inline-block; background:#f3e5f5; color:#7b1fa2; padding:1px 7px;
+                   border-radius:3px; font-size:0.85em; }
+        .tag-v68b { display:inline-block; background:#e8f5e9; color:#2e7d32; padding:1px 7px;
+                    border-radius:4px; font-size:0.78rem; font-weight:600; }
+        .trade-table { font-size:0.8rem; }
+        .trade-table th { background:#37474f; }
+        .trade-table td { padding:6px 10px; }
+        .filter-bar { display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap; align-items:center; }
+        .filter-bar select { padding:5px 10px; border:1px solid #ccc; border-radius:6px; font-size:0.84rem; }
+        .filter-bar label { font-size:0.84rem; color:#555; }
+        .section-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+        .section-header h2 { margin:0; font-size:1.1rem; }
+        .count-badge { background:#e0e0e0; padding:2px 8px; border-radius:10px; font-size:0.75rem; color:#666; }
+        .key-fix { background:#e8f5e9; border-left:4px solid #2e7d32; padding:13px 18px;
+                    border-radius:0 6px 6px 0; font-size:0.84rem; margin:16px 0; }
+        .key-fix h4 { margin:0 0 8px; color:#1b5e20; }
+        .chart-container { position:relative; width:100%; height:420px; }
+        @media(max-width:768px) { .header { padding:20px; } table { font-size:0.78rem; } .chart-container { height:300px; } }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <h1>WIF v5.9 / v6.8.1 完整回测报告（2007-2026 · P0修复版 · CSI Hysteresis + F29>500bp + Q3 滞胀≤30%）</h1>
+    <p>Wealth Investment Framework · v5.9 P0修复版（CSI Hysteresis + F29>500bp + Q3 滞胀≤30%） · v6.8.1 框架 · 数据范围 2007-01-03 ~ 2026-07-16</p>
+    <span class="badge">4926 交易日 · CSI复合压力指数 · 方案C信号/执行分离 · HSBC渠道成本已扣除</span>
+</div>
+
+<div class="container">
+
+    <!-- 执行摘要 -->
+    <div class="section">
+        <div class="section-title">执行摘要</div>
+        <div class="key-fix">
+            <h4>🔧 2026-06-09 v5.9 / v6.8.1 P0 修复 + Q3 修复</h4>
+            <ul style="margin:0 0 0 18px; line-height:1.9;">
+                <li><strong>① CSI复合压力指数</strong>：Z(F29)×0.45 + Z(VIXTERM)×0.35 + Z(相关性崩塌)×0.20，统一的连续值度量衡，消除布尔悬崖</li>
+                <li><strong>② CSI阈值</strong>：CSI>2.0→EMERGENCY | CSI 1.0-2.0→WARNING | CSI<1.0连5日→HEALTHY退出</li>
+                <li><strong>③ F33b EMERGENCY override（独立安全气囊）</strong>：
+                    VIX>40且10日涨幅>100% → 强制EMERGENCY（不受CSI阈值限制）
+                    <br>　★ F33b负责"第一时间拉闸"（VIX动量领先信用利差），CSI负责"持续压力判断"，两者互补
+                </li>
+                <li><strong>④ 方案C：信号层与执行层分离</strong>
+                    <br>　非触发日跳过detect_trades（保持持仓，不产生活跃换手）
+                    <br>　三触发：因子切换 | 状态切换 | 新品类首次建仓
+                </li>
+                <li><strong>⑤ E04动量窗口</strong>：126日→252日（学术标准12+1月）</li>
+            </ul>
+        </div>
+        <div class="warning-box">
+            <h4>⚠️ 存活者偏差警告</h4>
+            v6.8.1 因子ETF池（QUAL/IJR/MTUM/VIG等）存在存活者偏差——历史已退市、合并的ETF不在数据中，导致2013年后收益明显高估。<strong>v5.9仅用VTI/QQQ，无此偏差</strong>。
+        </div>
+        <div class="cost-box">
+            <strong>💰 HSBC渠道成本模型</strong>
+            <ul style="margin:6px 0 0 18px; line-height:1.9;">
+                <li>股票型/均衡型：初始建仓 3% | 追加/切换 3%</li>
+                <li>债券型：初始建仓 2% | 追加/切换 3%</li>
+                <li>商品型（GLD/PDBC）：初始建仓 2% | 追加/切换 3%</li>
+                <li>赎回费：0% | 最低门槛：建仓10万RMB / 追加1万RMB</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 折线图：v5.9 / v6.8.1 / SP500 累计收益对比 -->
+    <div class="section">
+        <div class="section-title">累计收益走势对比（v5.9 / v6.8.1 / SP500 · 2007-2026）</div>
+        <div style="background:#fff; border-radius:8px; padding:18px; box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+            <div class="chart-container">
+                <canvas id="perfChart"></canvas>
+            </div>
+            <div style="display:flex; gap:18px; margin-top:10px; font-size:0.78rem; color:#666; flex-wrap:wrap; justify-content:center;">
+                <span>📅 时间范围: 2007-01-31 ~ 2026-05-31（235 个月度点）</span>
+                <span>📊 数据源: WIF_v59_nav_20260608.csv</span>
+                <span>🔄 累计收益% = (NAV - 1) × 100%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- KPI 核心指标 -->
+    <div class="section">
+        <div class="section-title">核心指标对比（有摩擦 vs 无摩擦 · HSBC渠道）</div>
+        <table>
+            <tr>
+                <th style="background:#546e7a">指标</th>
+                <th><span class="tag-v59">v5.9</span><br>有摩擦</th>
+                <th><span class="tag-v59">v5.9</span><br>无摩擦</th>
+                <th><span class="tag-v68b">v6.8.1</span><br>有摩擦</th>
+                <th><span class="tag-v68b">v6.8.1</span><br>无摩擦</th>
+                <th>SPY 基准</th>
+            </tr>
+            <tr>
+                <td>累计收益</td>
+                <td class="pos"><b>+1332.4%</b></td>
+                <td class="pos">+1349.7%</td>
+                <td class="pos"><b>+991.3%*</b></td>
+                <td class="pos">+1019.5%</td>
+                <td class="pos">+1283.0%</td>
+            </tr>
+            <tr>
+                <td>年化收益</td>
+                <td class="pos">+14.61%</td>
+                <td class="pos">+14.67%</td>
+                <td class="pos">+13.42%</td>
+                <td class="pos">+13.55%</td>
+                <td class="pos">+16.48%</td>
+            </tr>
+            <tr>
+                <td>年化波动率</td>
+                <td>14.58%</td>
+                <td>14.57%</td>
+                <td>16.98%</td>
+                <td>16.97%</td>
+                <td>26.90%</td>
+            </tr>
+            <tr>
+                <td>夏普比率</td>
+                <td><b>1.00</b></td>
+                <td>1.01</td>
+                <td><b>0.79</b></td>
+                <td>0.80</td>
+                <td>0.61</td>
+            </tr>
+            <tr>
+                <td>最大回撤(MDD)</td>
+                <td>-21.1%</td>
+                <td>-21.1%</td>
+                <td>-30.1%</td>
+                <td>-30.1%</td>
+                <td>-55.2%</td>
+            </tr>
+            <tr>
+                <td>vs SPY 倍数（有摩擦）</td>
+                <td><b>1.04x</b></td>
+                <td>—</td>
+                <td><b>0.77x</b></td>
+                <td>—</td>
+                <td>1.00x</td>
+            </tr>
+            <tr>
+                <td>累计调仓次数</td>
+                <td colspan="2">4 次</td>
+                <td colspan="2">4 次</td>
+                <td>—</td>
+            </tr>
+            <tr>
+                <td>累计成本损耗</td>
+                <td style="background:#fff3cd">$113,888</td>
+                <td>$0</td>
+                <td style="background:#fff3cd">$230,359</td>
+                <td>$0</td>
+                <td>—</td>
+            </tr>
+        </table>
+        <p style="font-size:12px; color:#999; margin-top:10px;">* v6.8.1含存活者偏差，夏普比为核心评价指标。</p>
+    </div>
+
+    <!-- 年度收益 -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title" style="margin:0; border:none; padding:0;">年度收益对比</h2>
+        </div>
+        <table>
+            <tr>
+                <th>年份</th>
+                <th><span class="tag-v59">v5.9</span> 年收益</th>
+                <th><span class="tag-v68b">v6.8.1</span> 年收益</th>
+                <th>SPY 年收益</th>
+                <th>v5.9 调仓</th>
+                <th>v6.8.1 调仓</th>
+            </tr>
+            <tr style="background:#fff8f0">
+        <td>2007</td>
+        <td class="pos">+12.2%</td>
+        <td class="pos">+11.9%</td>
+        <td class="pos">+5.3%</td>
+        <td>1</td>
+        <td>1</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2008</td>
+        <td class="neg">-6.5%</td>
+        <td class="neg">-18.5%</td>
+        <td class="neg">-36.8%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2009</td>
+        <td class="pos">+24.0%</td>
+        <td class="pos">+21.2%</td>
+        <td class="pos">+26.4%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#f0f4ff">
+        <td>2010</td>
+        <td class="pos">+14.2%</td>
+        <td class="pos">+14.7%</td>
+        <td class="pos">+15.1%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2011</td>
+        <td class="pos">+10.5%</td>
+        <td class="pos">+9.6%</td>
+        <td class="pos">+1.9%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#f0f4ff">
+        <td>2012</td>
+        <td class="pos">+10.2%</td>
+        <td class="pos">+10.8%</td>
+        <td class="pos">+16.0%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2013</td>
+        <td class="pos">+19.0%</td>
+        <td class="pos">+15.3%</td>
+        <td class="pos">+32.3%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#f0f4ff">
+        <td>2014</td>
+        <td class="pos">+10.7%</td>
+        <td class="pos">+12.0%</td>
+        <td class="pos">+13.5%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#f0f4ff">
+        <td>2015</td>
+        <td class="neg">-2.8%</td>
+        <td class="pos">+1.7%</td>
+        <td class="pos">+1.3%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2016</td>
+        <td class="pos">+9.8%</td>
+        <td class="pos">+7.8%</td>
+        <td class="pos">+12.0%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2017</td>
+        <td class="pos">+21.5%</td>
+        <td class="pos">+15.3%</td>
+        <td class="pos">+21.7%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2018</td>
+        <td class="pos">+0.1%</td>
+        <td class="neg">-0.7%</td>
+        <td class="neg">-4.6%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#f0f4ff">
+        <td>2019</td>
+        <td class="pos">+21.8%</td>
+        <td class="pos">+22.1%</td>
+        <td class="pos">+31.2%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#f0f4ff">
+        <td>2020</td>
+        <td class="pos">+32.1%</td>
+        <td class="pos">+33.3%</td>
+        <td class="pos">+18.4%</td>
+        <td>1</td>
+        <td>1</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2021</td>
+        <td class="pos">+18.3%</td>
+        <td class="pos">+14.7%</td>
+        <td class="pos">+28.7%</td>
+        <td>1</td>
+        <td>1</td>
+    </tr><tr style="background:#f0f4ff">
+        <td>2022</td>
+        <td class="neg">-14.8%</td>
+        <td class="neg">-13.7%</td>
+        <td class="neg">-18.2%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2023</td>
+        <td class="pos">+28.0%</td>
+        <td class="pos">+20.4%</td>
+        <td class="pos">+26.2%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2024</td>
+        <td class="pos">+23.8%</td>
+        <td class="pos">+12.9%</td>
+        <td class="pos">+24.9%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#fff8f0">
+        <td>2025</td>
+        <td class="pos">+19.8%</td>
+        <td class="pos">+15.5%</td>
+        <td class="pos">+17.7%</td>
+        <td>0</td>
+        <td>0</td>
+    </tr><tr style="background:#f0f4ff">
+        <td>2026</td>
+        <td class="pos">+50.4%</td>
+        <td class="pos">+72.6%</td>
+        <td class="pos">+101.5%</td>
+        <td>1</td>
+        <td>1</td>
+    </tr>
+        </table>
+    </div>
+
+    <!-- 调仓成本年度汇总 -->
+    <div class="section">
+        <div class="section-title">调仓成本年度汇总（HSBC渠道）</div>
+        <table>
+            <tr>
+                <th>年份</th>
+                <th><span class="tag-v59">v5.9</span> 调仓</th>
+                <th><span class="tag-v59">v5.9</span> 成本</th>
+                <th><span class="tag-v68b">v6.8.1</span> 调仓</th>
+                <th><span class="tag-v68b">v6.8.1</span> 成本</th>
+            </tr>
+            <tr>
+        <td>2007</td>
+        <td>1</td>
+        <td style="background:#fff3cd">3.00%</td>
+        <td>1</td>
+        <td style="background:#fff3cd">3.00%</td>
+    </tr><tr>
+        <td>2008</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2009</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2010</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2011</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2012</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2013</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2014</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2015</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2016</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2017</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2018</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2019</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2020</td>
+        <td>1</td>
+        <td style="background:#fff3cd">1.73%</td>
+        <td>1</td>
+        <td style="background:#fff3cd">1.52%</td>
+    </tr><tr>
+        <td>2021</td>
+        <td>1</td>
+        <td style="background:#fff3cd">2.41%</td>
+        <td>1</td>
+        <td style="background:#fff3cd">2.13%</td>
+    </tr><tr>
+        <td>2022</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2023</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2024</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2025</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+        <td>0</td>
+        <td style="background:transparent">0.00%</td>
+    </tr><tr>
+        <td>2026</td>
+        <td>1</td>
+        <td style="background:#fff3cd">4.25%</td>
+        <td>1</td>
+        <td style="background:#fff3cd">16.38%</td>
+    </tr>
+            <tr style="background:#e8f5e9;font-weight:600">
+                <td>合计</td>
+                <td>4</td>
+                <td>$113,888</td>
+                <td>4</td>
+                <td>$230,359</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 方案C 触发信号统计 -->
+    <div class="section">
+        <div class="section-title">方案C 触发信号统计（信号层与执行层分离）</div>
+        <table>
+            <tr><th>触发类型</th><th>触发次数</th><th>说明</th></tr>
+            <tr>
+                <td><strong>因子切换</strong></td>
+                <td>4 天</td>
+                <td>每三周末评分日选出不同因子时触发 · 触发detect_trades(force=True)</td>
+            </tr>
+            <tr>
+                <td><strong>状态切换</strong></td>
+                <td>3 天</td>
+                <td>Phase1状态变化（HEALTHY↔WARNING↔EMERGENCY）时触发</td>
+            </tr>
+            <tr>
+                <td><strong>新品类首次建仓</strong></td>
+                <td>1 次</td>
+                <td>某资产类别（EQUITY/FIXED_INCOME/COMMODITY）首次获得配置时触发</td>
+            </tr>
+            <tr style="background:#e8f5e9;font-weight:600">
+                <td>合计有效触发</td>
+                <td colspan="2">非初始建仓日，约 8 次（含重叠）</td>
+            </tr>
+        </table>
+        <div class="note-box">
+            <strong>📌 方案C核心逻辑</strong>：三轨HRP每日"体检报告"仅决定目标配置，但不开药。<br>
+            detect_trades()仅在三触发条件之一满足时才执行全量调仓（force=True，跳过dynamic_band）。<br>
+            非触发日：传入holdings=当前持仓→detect_trades返回空→保持不变→零换手。
+        </div>
+    </div>
+
+    <!-- Phase 1 状态分布 -->
+    <div class="section">
+        <div class="section-title">Phase 1 状态分布</div>
+        <table>
+            <tr><th>状态</th><th>天数</th><th>占比</th><th>含义</th></tr>
+            <tr><td>HEALTHY</td><td>4723</td><td>95.9%</td></tr><tr><td>WARNING</td><td>176</td><td>3.6%</td></tr><tr><td>EMERGENCY</td><td>27</td><td>0.5%</td></tr>
+        </table>
+    </div>
+
+    <!-- v5.9 交易日志 -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title" style="margin:0; border:none; padding:0;">
+                <span class="tag-v59">v5.9</span> 交易日志（共 4 条调仓）
+            </h2>
+            <span class="count-badge">4 条已展示</span>
+        </div>
+        <table class="trade-table">
+            <tr>
+                <th>调仓日期</th>
+                <th>Phase1 / 象限 / 信号</th>
+                <th>MCI值 / 因子</th>
+                <th>交易明细</th>
+                <th>成本</th>
+            </tr>
+            <tr>
+            <td style="text-align:left">2007-01-03</td>
+            <td><span style='background:#e8f5e9;padding:1px 6px;border-radius:3px;font-size:11px'>HEALTHY</span> <span style='background:#e3f2fd;padding:1px 6px;border-radius:3px;font-size:11px'>Q1</span> <span style='background:#f3e5f5;padding:1px 6px;border-radius:3px;font-size:11px'>SHV_prefer</span></td>
+            <td><span style='background:#ffcccc;padding:1px 6px;border-radius:3px;font-size:11px'>MCI=nan</span> <span style='background:#fff8e1;padding:1px 6px;border-radius:3px;font-size:11px'>VTI+QQQ</span></td>
+            <td style="text-align:left;font-size:11px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                title="SHV BUY($315,000≈¥2,397,150, 3%费) | TLT BUY($135,000≈¥1,027,350, 3%费) | VTI BUY($180,000≈¥1,369,800, 3%费) | QQQ BUY($120,000≈¥913,200, 3%费) | GLD BUY($250,000≈¥1,902,500, 3%费)">SHV BUY($315,000≈¥2,397,150, 3%费) | TLT BUY($135,000≈¥1,027,350, 3%费) | VTI BUY($180,000≈¥1,369,800, 3%费) | QQQ BUY($120,000≈¥913,200, 3%费) | GLD BUY($250,000≈¥1,902,500, 3%费)</td>
+            <td style="background:#ffcccc">$30,000</td>
+        </tr><tr>
+            <td style="text-align:left">2020-02-11</td>
+            <td><span style='background:#e8f5e9;padding:1px 6px;border-radius:3px;font-size:11px'>HEALTHY</span> <span style='background:#e3f2fd;padding:1px 6px;border-radius:3px;font-size:11px'>Q4</span> <span style='background:#f3e5f5;padding:1px 6px;border-radius:3px;font-size:11px'>SHV_prefer</span></td>
+            <td><span style='background:#ffcccc;padding:1px 6px;border-radius:3px;font-size:11px'>MCI=nan</span> <span style='background:#fff8e1;padding:1px 6px;border-radius:3px;font-size:11px'>VTI</span></td>
+            <td style="text-align:left;font-size:11px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                title="VTI BUY($230,613≈¥1,591,235, 3%费) | GLD SELL($192,178≈¥1,326,029, 0%费) | SHV SELL($269,049≈¥1,856,441, 0%费) | TLT SELL($115,306≈¥795,617, 0%费) | QQQ BUY($345,920≈¥2,386,853, 3%费)">VTI BUY($230,613≈¥1,591,235, 3%费) | GLD SELL($192,178≈¥1,326,029, 0%费) | SHV SELL($269,049≈¥1,856,441, 0%费) | TLT SELL($115,306≈¥795,617, 0%费) | QQQ BUY($345,920≈¥2,386,853, 3%费)</td>
+            <td style="background:#ffcccc">$17,296</td>
+        </tr><tr>
+            <td style="text-align:left">2021-10-11</td>
+            <td><span style='background:#e8f5e9;padding:1px 6px;border-radius:3px;font-size:11px'>HEALTHY</span> <span style='background:#e3f2fd;padding:1px 6px;border-radius:3px;font-size:11px'>Q4</span> <span style='background:#f3e5f5;padding:1px 6px;border-radius:3px;font-size:11px'>SHV_prefer</span></td>
+            <td><span style='background:#ffcccc;padding:1px 6px;border-radius:3px;font-size:11px'>MCI=nan</span> <span style='background:#fff8e1;padding:1px 6px;border-radius:3px;font-size:11px'>VTI</span></td>
+            <td style="text-align:left;font-size:11px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                title="VTI BUY($321,416≈¥2,073,139, 3%费) | GLD SELL($267,847≈¥1,727,616, 0%费) | SHV SELL($482,125≈¥3,109,708, 0%费) | TLT SELL($53,569≈¥345,523, 0%费) | QQQ BUY($482,125≈¥3,109,708, 3%费)">VTI BUY($321,416≈¥2,073,139, 3%费) | GLD SELL($267,847≈¥1,727,616, 0%费) | SHV SELL($482,125≈¥3,109,708, 0%费) | TLT SELL($53,569≈¥345,523, 0%费) | QQQ BUY($482,125≈¥3,109,708, 3%费)</td>
+            <td style="background:#ffcccc">$24,106</td>
+        </tr><tr>
+            <td style="text-align:left">2026-06-10</td>
+            <td><span style='background:#e8f5e9;padding:1px 6px;border-radius:3px;font-size:11px'>HEALTHY</span> <span style='background:#e3f2fd;padding:1px 6px;border-radius:3px;font-size:11px'>Q4</span> <span style='background:#f3e5f5;padding:1px 6px;border-radius:3px;font-size:11px'>TLT_prefer</span></td>
+            <td><span style='background:#ffcccc;padding:1px 6px;border-radius:3px;font-size:11px'>MCI=nan</span> <span style='background:#fff8e1;padding:1px 6px;border-radius:3px;font-size:11px'>QUAL</span></td>
+            <td style="text-align:left;font-size:11px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                title="VTI SELL($849,718≈¥5,778,082, 0%费) | GLD BUY($1,416,196≈¥9,630,138, 3%费) | QQQ SELL($566,478≈¥3,852,055, 0%费)">VTI SELL($849,718≈¥5,778,082, 0%费) | GLD BUY($1,416,196≈¥9,630,138, 3%费) | QQQ SELL($566,478≈¥3,852,055, 0%费)</td>
+            <td style="background:#ffcccc">$42,486</td>
+        </tr>
+        </table>
+    </div>
+
+    <!-- v6.8.1 交易日志 -->
+    <div class="section">
+        <div class="section-header">
+            <h2 class="section-title" style="margin:0; border:none; padding:0;">
+                <span class="tag-v68b">v6.8.1</span> 交易日志（共 4 条调仓）
+            </h2>
+            <span class="count-badge">4 条已展示</span>
+        </div>
+        <table class="trade-table">
+            <tr>
+                <th>调仓日期</th>
+                <th>Phase1 / 象限 / 信号</th>
+                <th>MCI值 / 因子</th>
+                <th>交易明细</th>
+                <th>成本</th>
+            </tr>
+            <tr>
+            <td style="text-align:left">2007-01-03</td>
+            <td><span style='background:#e8f5e9;padding:1px 6px;border-radius:3px;font-size:11px'>HEALTHY</span> <span style='background:#e3f2fd;padding:1px 6px;border-radius:3px;font-size:11px'>Q1</span> <span style='background:#f3e5f5;padding:1px 6px;border-radius:3px;font-size:11px'>SHV_prefer</span></td>
+            <td><span style='background:#ffcccc;padding:1px 6px;border-radius:3px;font-size:11px'>MCI=nan</span> <span style='background:#fff8e1;padding:1px 6px;border-radius:3px;font-size:11px'>VTI+QQQ</span></td>
+            <td style="text-align:left;font-size:11px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                title="SHV BUY($281,500≈¥2,142,215, 3%费) | TLT BUY($120,600≈¥917,766, 3%费) | VTI BUY($309,300≈¥2,353,773, 3%费) | XLE BUY($30,900≈¥235,149, 3%费) | QQQ BUY($206,200≈¥1,569,182, 3%费) | GLD BUY($51,500≈¥391,915, 3%费)">SHV BUY($281,500≈¥2,142,215, 3%费) | TLT BUY($120,600≈¥917,766, 3%费) | VTI BUY($309,300≈¥2,353,773, 3%费) | XLE BUY($30,900≈¥235,149, 3%费) | QQQ BUY($206,200≈¥1,569,182, 3%费) | GLD BUY($51,500≈¥391,915, 3%费)</td>
+            <td style="background:#ffcccc">$30,000</td>
+        </tr><tr>
+            <td style="text-align:left">2020-02-11</td>
+            <td><span style='background:#e8f5e9;padding:1px 6px;border-radius:3px;font-size:11px'>HEALTHY</span> <span style='background:#e3f2fd;padding:1px 6px;border-radius:3px;font-size:11px'>Q4</span> <span style='background:#f3e5f5;padding:1px 6px;border-radius:3px;font-size:11px'>SHV_prefer</span></td>
+            <td><span style='background:#ffcccc;padding:1px 6px;border-radius:3px;font-size:11px'>MCI=nan</span> <span style='background:#fff8e1;padding:1px 6px;border-radius:3px;font-size:11px'>VTI</span></td>
+            <td style="text-align:left;font-size:11px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                title="GLD SELL($316,967≈¥2,187,072, 0%费) | SHV BUY($355,089≈¥2,450,115, 3%费) | TLT BUY($152,181≈¥1,050,049, 3%费) | XLE SELL($190,303≈¥1,313,092, 0%费)">GLD SELL($316,967≈¥2,187,072, 0%费) | SHV BUY($355,089≈¥2,450,115, 3%费) | TLT BUY($152,181≈¥1,050,049, 3%费) | XLE SELL($190,303≈¥1,313,092, 0%费)</td>
+            <td style="background:#ffcccc">$15,218</td>
+        </tr><tr>
+            <td style="text-align:left">2021-10-11</td>
+            <td><span style='background:#e8f5e9;padding:1px 6px;border-radius:3px;font-size:11px'>HEALTHY</span> <span style='background:#e3f2fd;padding:1px 6px;border-radius:3px;font-size:11px'>Q4</span> <span style='background:#f3e5f5;padding:1px 6px;border-radius:3px;font-size:11px'>SHV_prefer</span></td>
+            <td><span style='background:#ffcccc;padding:1px 6px;border-radius:3px;font-size:11px'>MCI=nan</span> <span style='background:#fff8e1;padding:1px 6px;border-radius:3px;font-size:11px'>VTI</span></td>
+            <td style="text-align:left;font-size:11px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                title="GLD SELL($444,220≈¥2,865,224, 0%费) | SHV BUY($497,647≈¥3,209,829, 3%费) | TLT BUY($213,277≈¥1,375,641, 3%费) | XLE SELL($266,704≈¥1,720,246, 0%费)">GLD SELL($444,220≈¥2,865,224, 0%费) | SHV BUY($497,647≈¥3,209,829, 3%费) | TLT BUY($213,277≈¥1,375,641, 3%费) | XLE SELL($266,704≈¥1,720,246, 0%费)</td>
+            <td style="background:#ffcccc">$21,328</td>
+        </tr><tr>
+            <td style="text-align:left">2026-06-10</td>
+            <td><span style='background:#e8f5e9;padding:1px 6px;border-radius:3px;font-size:11px'>HEALTHY</span> <span style='background:#e3f2fd;padding:1px 6px;border-radius:3px;font-size:11px'>Q4</span> <span style='background:#f3e5f5;padding:1px 6px;border-radius:3px;font-size:11px'>TLT_prefer</span></td>
+            <td><span style='background:#ffcccc;padding:1px 6px;border-radius:3px;font-size:11px'>MCI=nan</span> <span style='background:#fff8e1;padding:1px 6px;border-radius:3px;font-size:11px'>QUAL</span></td>
+            <td style="text-align:left;font-size:11px;max-width:400px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"
+                title="VTI SELL($3,276,257≈¥22,278,552, 0%费) | QUAL BUY($5,460,429≈¥37,130,920, 3%费) | QQQ SELL($2,184,171≈¥14,852,368, 0%费)">VTI SELL($3,276,257≈¥22,278,552, 0%费) | QUAL BUY($5,460,429≈¥37,130,920, 3%费) | QQQ SELL($2,184,171≈¥14,852,368, 0%费)</td>
+            <td style="background:#ffcccc">$163,813</td>
+        </tr>
+        </table>
+    </div>
+
+    <!-- 因子ETF路由分布（v6.8.1） -->
+    <div class="section">
+        <div class="section-title">因子 ETF 路由分布（v6.8.1 Phase 4）</div>
+        <table>
+            <tr><th>因子</th><th>被选天数</th><th>占%</th></tr>
+            <tr><td>VTI</td><td>4710</td><td>157000.0%</td></tr><tr><td>VTI+QQQ</td><td>190</td><td>6333.3%</td></tr><tr><td>QUAL</td><td>26</td><td>866.7%</td></tr>
+        </table>
+        <div class="note-box">
+            <strong>📌 v6.8.1 路由逻辑</strong>：WARNING期→VTI+QQQ（不走因子）；MCI&lt;+5→强制VTI；HEALTHY+MCI≥+5→每三周末评分选因子。
+        </div>
+    </div>
+
+    <!-- equity_ticker分布 -->
+    <div class="section">
+        <div class="section-title">v6.8.1 equity_ticker 分布</div>
+        <table>
+            <tr><th>ticker</th><th>天数</th><th>占比</th></tr>
+            <tr><td>VTI+QQQ</td><td>4873</td><td>98.9%</td></tr><tr><td>SHV</td><td>27</td><td>0.5%</td></tr><tr><td>QUAL</td><td>26</td><td>0.5%</td></tr>
+        </table>
+    </div>
+
+    <!-- 因子ETF可用性 -->
+    <div class="section">
+        <div class="section-title">因子ETF 可用性（存活者偏差根源）</div>
+        <table>
+            <tr><th>因子ETF</th><th>可用天数</th><th>最早日期</th><th>最晚日期</th></tr>
+            <tr><td>QUAL</td><td>26</td><td>2026-06-09</td><td>2026-07-16</td></tr><tr><td>VIG</td><td>26</td><td>2026-06-09</td><td>2026-07-16</td></tr><tr><td>MOAT</td><td>26</td><td>2026-06-09</td><td>2026-07-16</td></tr><tr><td>USMV</td><td>26</td><td>2026-06-09</td><td>2026-07-16</td></tr><tr><td>SPLV</td><td>26</td><td>2026-06-09</td><td>2026-07-16</td></tr><tr><td>MTUM</td><td>26</td><td>2026-06-09</td><td>2026-07-16</td></tr><tr><td>VB</td><td>26</td><td>2026-06-09</td><td>2026-07-16</td></tr><tr><td>IJR</td><td>26</td><td>2026-06-09</td><td>2026-07-16</td></tr>
+        </table>
+    </div>
+
+    <!-- 框架差异对照 -->
+    <div class="section">
+        <div class="section-title">两版本核心差异</div>
+        <table>
+            <tr><th>维度</th><th><span class="tag-v59">v5.9</span></th><th><span class="tag-v68b">v6.8.1</span></th></tr>
+            <tr><td><strong>权益实现</strong></td><td>VTI/QQQ 126日动量（60/40）</td><td>CSI统一Z-score复合指数（连续值）</td></tr>
+            <tr><td><strong>WARNING权益</strong></td><td>VTI/QQQ</td><td>VTI+QQQ 60/40（与v5.9同）</td></tr>
+            <tr><td><strong>Phase1触发</strong></td><td>F33/F33b/F33c三重布尔</td><td>CSI>2.0→EMERGENCY；CSI>1.0→WARNING；F33b(VIX>40且VIX_10d>100%)→EMERGENCY硬覆盖</td></tr>
+            <tr><td><strong>MCI门控</strong></td><td>无</td><td>MCI≥+5才执行因子评分（0天=占比0.0%）</td></tr>
+            <tr><td><strong>评分频率</strong></td><td>每日动量</td><td>仅每三周末（15交易日周期）</td></tr>
+            <tr><td><strong>另类桶</strong></td><td>GLD</td><td>GLD + XLE + PDBC</td></tr>
+            <tr><td><strong>存活者偏差</strong></td><td>✅ 无</td><td>⚠️ 有</td></tr>
+            <tr><td><strong>调仓次数</strong></td><td>4次</td><td>4次</td></tr>
+        </table>
+    </div>
+
+    <div class="data-note">
+        <strong>✅ 数据说明</strong><br>
+        数据来自 <code>US2007_2026/_merged_prices.csv</code>，因子ETF来自同目录 Individual ETF CSV。<br>
+        SHV 使用真实数据（2007-01-11 起）。交易成本已实时扣除。
+    </div>
+
+</div>
+
+
+<script>
+(function() {
+    const chartData = {"dates": ["2007-01-31", "2007-02-28", "2007-03-31", "2007-04-30", "2007-05-31", "2007-06-30", "2007-07-31", "2007-08-31", "2007-09-30", "2007-10-31", "2007-11-30", "2007-12-31", "2008-01-31", "2008-02-29", "2008-03-31", "2008-04-30", "2008-05-31", "2008-06-30", "2008-07-31", "2008-08-31", "2008-09-30", "2008-10-31", "2008-11-30", "2008-12-31", "2009-01-31", "2009-02-28", "2009-03-31", "2009-04-30", "2009-05-31", "2009-06-30", "2009-07-31", "2009-08-31", "2009-09-30", "2009-10-31", "2009-11-30", "2009-12-31", "2010-01-31", "2010-02-28", "2010-03-31", "2010-04-30", "2010-05-31", "2010-06-30", "2010-07-31", "2010-08-31", "2010-09-30", "2010-10-31", "2010-11-30", "2010-12-31", "2011-01-31", "2011-02-28", "2011-03-31", "2011-04-30", "2011-05-31", "2011-06-30", "2011-07-31", "2011-08-31", "2011-09-30", "2011-10-31", "2011-11-30", "2011-12-31", "2012-01-31", "2012-02-29", "2012-03-31", "2012-04-30", "2012-05-31", "2012-06-30", "2012-07-31", "2012-08-31", "2012-09-30", "2012-10-31", "2012-11-30", "2012-12-31", "2013-01-31", "2013-02-28", "2013-03-31", "2013-04-30", "2013-05-31", "2013-06-30", "2013-07-31", "2013-08-31", "2013-09-30", "2013-10-31", "2013-11-30", "2013-12-31", "2014-01-31", "2014-02-28", "2014-03-31", "2014-04-30", "2014-05-31", "2014-06-30", "2014-07-31", "2014-08-31", "2014-09-30", "2014-10-31", "2014-11-30", "2014-12-31", "2015-01-31", "2015-02-28", "2015-03-31", "2015-04-30", "2015-05-31", "2015-06-30", "2015-07-31", "2015-08-31", "2015-09-30", "2015-10-31", "2015-11-30", "2015-12-31", "2016-01-31", "2016-02-29", "2016-03-31", "2016-04-30", "2016-05-31", "2016-06-30", "2016-07-31", "2016-08-31", "2016-09-30", "2016-10-31", "2016-11-30", "2016-12-31", "2017-01-31", "2017-02-28", "2017-03-31", "2017-04-30", "2017-05-31", "2017-06-30", "2017-07-31", "2017-08-31", "2017-09-30", "2017-10-31", "2017-11-30", "2017-12-31", "2018-01-31", "2018-02-28", "2018-03-31", "2018-04-30", "2018-05-31", "2018-06-30", "2018-07-31", "2018-08-31", "2018-09-30", "2018-10-31", "2018-11-30", "2018-12-31", "2019-01-31", "2019-02-28", "2019-03-31", "2019-04-30", "2019-05-31", "2019-06-30", "2019-07-31", "2019-08-31", "2019-09-30", "2019-10-31", "2019-11-30", "2019-12-31", "2020-01-31", "2020-02-29", "2020-03-31", "2020-04-30", "2020-05-31", "2020-06-30", "2020-07-31", "2020-08-31", "2020-09-30", "2020-10-31", "2020-11-30", "2020-12-31", "2021-01-31", "2021-02-28", "2021-03-31", "2021-04-30", "2021-05-31", "2021-06-30", "2021-07-31", "2021-08-31", "2021-09-30", "2021-10-31", "2021-11-30", "2021-12-31", "2022-01-31", "2022-02-28", "2022-03-31", "2022-04-30", "2022-05-31", "2022-06-30", "2022-07-31", "2022-08-31", "2022-09-30", "2022-10-31", "2022-11-30", "2022-12-31", "2023-01-31", "2023-02-28", "2023-03-31", "2023-04-30", "2023-05-31", "2023-06-30", "2023-07-31", "2023-08-31", "2023-09-30", "2023-10-31", "2023-11-30", "2023-12-31", "2024-01-31", "2024-02-29", "2024-03-31", "2024-04-30", "2024-05-31", "2024-06-30", "2024-07-31", "2024-08-31", "2024-09-30", "2024-10-31", "2024-11-30", "2024-12-31", "2025-01-31", "2025-02-28", "2025-03-31", "2025-04-30", "2025-05-31", "2025-06-30", "2025-07-31", "2025-08-31", "2025-09-30", "2025-10-31", "2025-11-30", "2025-12-31", "2026-01-31", "2026-02-28", "2026-03-31", "2026-04-30", "2026-05-31", "2026-06-30", "2026-07-31"], "v59": [0.983106673070575, 0.9913815493765099, 0.9913815493765099, 1.0070134831135757, 1.0089246340059415, 1.0089246340059415, 1.0026299246904429, 1.0170198656202127, 1.0170198656202127, 1.115712005891287, 1.072682442047311, 1.0882063828226793, 1.083744222499914, 1.0838940698007606, 1.0865737644935696, 1.091492380948898, 1.091492380948898, 1.0905410269568163, 1.0800877922219718, 1.0800877922219718, 1.007211692997268, 0.9190858307698827, 0.9190858307698827, 1.0178955084740968, 1.0178955084740968, 1.0178955084740968, 1.0081288017582553, 1.0288029696251544, 1.0288029696251544, 1.0555610063039111, 1.1242075620256955, 1.1452279235570473, 1.199493822156827, 1.199493822156827, 1.2469970532659764, 1.2626626322175025, 1.2626626322175025, 1.2626626322175025, 1.3267463682247598, 1.3619655274110782, 1.3619655274110782, 1.2369050372722463, 1.2369050372722463, 1.2978891401986097, 1.3533995097653577, 1.3533995097653577, 1.3840230864782612, 1.4417366016670907, 1.4420710550860485, 1.4923848617425843, 1.496029645812277, 1.496029645812277, 1.5340877614924178, 1.5059427696283114, 1.5059427696283114, 1.5689279782654784, 1.5454542263164874, 1.6081895626298737, 1.6302131176823595, 1.6302131176823595, 1.6708064470763095, 1.6892961543983198, 1.6892961543983198, 1.7221614746059888, 1.6245272079263493, 1.6245272079263493, 1.690794232150015, 1.7571468268881345, 1.7571468268881345, 1.7458097492068054, 1.7562583880829494, 1.7554483608389413, 1.795059549889729, 1.7957354498142362, 1.7957354498142362, 1.8554389845149173, 1.874317432512951, 1.874317432512951, 1.9168324613935261, 1.9168324613935261, 1.9596051594176742, 2.028273103841027, 2.028273103841027, 2.0896379011988975, 2.0714834469294594, 2.160879516643993, 2.1234092719003756, 2.1269998478029843, 2.1269998478029843, 2.238582259668777, 2.222406278104422, 2.222406278104422, 2.245177279661897, 2.2675648646682105, 2.2675648646682105, 2.31236180621278, 2.31236180621278, 2.31236180621278, 2.351861017808744, 2.3705778075558026, 2.3705778075558026, 2.3556717655893493, 2.3921608902979323, 2.284560315378141, 2.2577054715457834, 2.2577054715457834, 2.272845215325718, 2.2478114337498303, 2.2478114337498303, 2.3131141706893747, 2.3572068535445156, 2.3572068535445156, 2.3721284737788486, 2.4275331473146435, 2.4275331473146435, 2.5170069219924933, 2.5437763224838563, 2.493146212284723, 2.4475232571724184, 2.4475232571724184, 2.559789921942368, 2.6520784627677796, 2.6746839766304347, 2.6746839766304347, 2.7597621216202555, 2.7293038714330264, 2.801284363369855, 2.857754773637499, 2.857754773637499, 2.9083077205591175, 2.9637060102638784, 2.9637060102638784, 3.16174694870731, 3.10314025872311, 3.10314025872311, 3.045526996844194, 3.1436447254884934, 3.1436447254884934, 3.2090204375542575, 3.3156638987791514, 3.3156638987791514, 3.1606453672132915, 3.1830192049014476, 3.000189395334507, 3.125982960847309, 3.146441115743385, 3.146441115743385, 3.214103454429448, 3.085500083185862, 3.085500083185862, 3.3400232141687454, 3.3400232141687454, 3.385752456912332, 3.4862610449318954, 3.4862610449318954, 3.6552357829596964, 3.7583947943865517, 3.7583947943865517, 3.725619077123827, 4.03985707617855, 4.03985707617855, 4.2161630333235225, 4.438918833456718, 4.588434105523933, 4.4020245728797125, 4.4020245728797125, 4.613522494942765, 4.826865875539112, 4.826865875539112, 4.826865875539112, 4.904020334337075, 5.1322357459915855, 5.1322357459915855, 5.285583221365716, 5.285583221365716, 5.547772260335651, 5.324620008061474, 5.324620008061474, 5.585542598646613, 5.710603444687182, 5.4007587300262845, 5.300071729737509, 5.587351916144475, 5.587351916144475, 5.027732295954945, 4.863723249646071, 4.863723249646071, 4.8099448303140075, 4.5794926502892, 4.6171461488760475, 4.908576334425816, 4.908576334425816, 5.191398300415521, 5.089861373667624, 5.409853842223146, 5.409853842223146, 5.6001743284897145, 5.8029985320663515, 5.974725239194732, 5.888164011885722, 5.888164011885722, 5.499973827523025, 5.95860814326263, 5.95860814326263, 6.285215787476111, 6.534426571080217, 6.534426571080217, 6.58493599627151, 6.858973155970678, 6.858973155970678, 7.1939124634670195, 7.1939124634670195, 7.537084979462962, 7.5853499814547485, 7.5853499814547485, 7.710370726789412, 7.948140844053811, 7.842764587302551, 7.55636685456319, 7.662594024305578, 7.662594024305578, 8.087409258154434, 8.208856969576733, 8.208856969576733, 8.83127001229946, 9.139272840537172, 9.139272840537172, 9.235854529304733, 9.235854529304733, 9.235854529304733, 9.198622553996115, 9.922551824363724, 9.922551824363724, 14.08644998289778, 14.08644998289778], "v681": [0.9805104401376257, 0.9788993302490463, 0.9788993302490463, 1.0103353625922618, 1.0271575038113883, 1.0271575038113883, 1.0152896597084342, 1.0321876917443296, 1.0321876917443296, 1.10368549533121, 1.081234664707129, 1.0855783872663114, 1.0384618648467678, 1.023301498382113, 1.0362597338801853, 1.066669513574798, 1.066669513574798, 1.0446570044937358, 1.0267367484522516, 1.0267367484522516, 0.9644132505843427, 0.8514770208476059, 0.8514770208476059, 0.8851961497615305, 0.8851961497615305, 0.8851961497615305, 0.8581740935249897, 0.9065910955141527, 0.9065910955141527, 0.9356344584872148, 0.9784896963616907, 0.9938959134991554, 1.0275231648873884, 1.0275231648873884, 1.0617804809462823, 1.0729273203038128, 1.0729273203038128, 1.0729273203038128, 1.1092451994068218, 1.1309592085095241, 1.1309592085095241, 1.0761872769997722, 1.0761872769997722, 1.0980480496329303, 1.165670485567225, 1.165670485567225, 1.1970105759275722, 1.2311012594605548, 1.2412121350591083, 1.2718812792232, 1.2738287925662792, 1.2738287925662792, 1.2978403994411827, 1.2788090947312014, 1.2788090947312014, 1.2861173703787627, 1.2698268814882832, 1.3440358876504923, 1.351820196447356, 1.351820196447356, 1.406397735966032, 1.4422160367946533, 1.4422160367946533, 1.4665718765586144, 1.4207833897739466, 1.4207833897739466, 1.4676290446324278, 1.5019237383654058, 1.5019237383654058, 1.487395716270629, 1.4971076176940623, 1.495816802662479, 1.5305982610860092, 1.5415445268798815, 1.5415445268798815, 1.588780003780829, 1.5955492647829428, 1.5955492647829428, 1.6180347790264429, 1.6180347790264429, 1.642277377181987, 1.6867789249470924, 1.6867789249470924, 1.7239654483525142, 1.7164370048159916, 1.778250284303239, 1.7652618879722772, 1.7717760688889874, 1.7717760688889874, 1.8456294595978695, 1.835665539747084, 1.835665539747084, 1.8643064460132743, 1.8983964576005161, 1.8983964576005161, 1.9304703303162352, 1.9304703303162352, 1.9304703303162352, 1.9646019518286946, 1.9747439694307003, 1.9747439694307003, 1.9488220306285235, 1.9835714338019839, 1.9051396596074626, 1.8883505921170205, 1.8883505921170205, 1.9895554535783275, 1.9630481103596025, 1.9630481103596025, 1.9218365080034263, 1.9968189304237416, 1.9968189304237416, 2.0208055998376837, 2.052880682068641, 2.052880682068641, 2.1207620302655883, 2.135992676085715, 2.1004444104641573, 2.0993865874159012, 2.0993865874159012, 2.164217969084368, 2.216137589879162, 2.227325976457284, 2.227325976457284, 2.277143112408643, 2.2653472610629937, 2.305306073660597, 2.331251371969665, 2.331251371969665, 2.379461989539368, 2.4171737743698887, 2.4171737743698887, 2.5281447267285957, 2.4770897035880615, 2.4770897035880615, 2.4693146058927975, 2.531972390942886, 2.531972390942886, 2.5756535285853244, 2.637915432706142, 2.637915432706142, 2.490573451989808, 2.512438795600359, 2.4218902072131407, 2.5481480109516634, 2.5886097622285593, 2.5886097622285593, 2.698745662566373, 2.6085665879908158, 2.6085665879908158, 2.755969500968114, 2.755969500968114, 2.802287583971976, 2.852049681774967, 2.852049681774967, 2.9564656376154304, 2.9991434585396304, 2.9991434585396304, 3.007740414429266, 3.292183503930275, 3.292183503930275, 3.4825211850224345, 3.6362867090855424, 3.7849247469252445, 3.671960164091024, 3.671960164091024, 3.832581467074892, 3.9412146746159107, 3.9412146746159107, 3.9412146746159107, 3.9857749503274618, 4.116705780518285, 4.116705780518285, 4.233437364277201, 4.233437364277201, 4.3730126478102775, 4.2492476512398305, 4.2492476512398305, 4.468225914428007, 4.520868667551355, 4.342395259416233, 4.27561346807974, 4.420147935255677, 4.420147935255677, 4.106886672604344, 3.905495247940139, 3.905495247940139, 4.020927874773131, 3.7672206902383802, 3.899841499550885, 4.062068267659855, 4.062068267659855, 4.122380171819578, 4.045051220432539, 4.230761979484014, 4.230761979484014, 4.329985152369093, 4.47940606101781, 4.568717709208224, 4.513212197671333, 4.513212197671333, 4.245711345439435, 4.522677702005454, 4.522677702005454, 4.72170131275739, 4.8431619262453225, 4.8431619262453225, 4.802622851870471, 4.962058251122583, 4.962058251122583, 5.143468347460217, 5.143468347460217, 5.267426323484334, 5.237704009444323, 5.237704009444323, 5.308098431636448, 5.406850635894419, 5.391016284657602, 5.224208009382406, 5.293902657582271, 5.293902657582271, 5.686233370937202, 5.75166099312605, 5.75166099312605, 6.015702636085878, 6.152322610162259, 6.152322610162259, 6.1311173436270865, 6.1311173436270865, 6.1311173436270865, 6.0955647644794455, 6.47834800825277, 6.47834800825277, 10.575083399384383, 10.575083399384383], "spy": [1.0168352909687166, 0.9968875856577076, 0.9968875856577076, 1.0531237705881142, 1.088845852723299, 1.088845852723299, 1.0393046034638302, 1.052641787094022, 1.052641787094022, 1.108211579705191, 1.065287709431556, 1.0532157088153664, 0.9895371706942832, 0.9639650282364656, 0.9552590123293128, 1.0007888555556792, 1.0007888555556792, 0.9310891737202386, 0.9227226050706927, 0.9227226050706927, 0.8485560208685973, 0.7083859178768226, 0.7083859178768226, 0.6655598252801125, 0.6655598252801125, 0.6655598252801125, 0.5907875625168224, 0.6494799985165922, 0.6494799985165922, 0.6869813569025697, 0.738234135032609, 0.7655042101655841, 0.7926468674013775, 0.7926468674013775, 0.8253016062325123, 0.8410417670427179, 0.8410417670427179, 0.8410417670427179, 0.886660936215334, 0.9003776566816067, 0.9003776566816067, 0.7859515215317563, 0.7859515215317563, 0.8018654789048728, 0.8736755630274056, 0.8736755630274056, 0.9070517608259955, 0.9676829514753544, 0.9902301566271934, 1.0246281112441489, 1.024737679936808, 1.024737679936808, 1.042590791337435, 1.0249844124787355, 1.0249844124787355, 0.9492581260373845, 0.8833328336511258, 0.9797460947695152, 0.9757646564566198, 0.9757646564566198, 1.0316746529833287, 1.0764549265291203, 1.0764549265291203, 1.1036531174422717, 1.0373723840009212, 1.0373723840009212, 1.092184793656144, 1.1195469136047747, 1.1195469136047747, 1.1270441152506883, 1.1334228580330106, 1.1436217553478552, 1.2021640107826175, 1.2175022423166975, 1.2175022423166975, 1.2880168252946123, 1.3184265411725675, 1.3184265411725675, 1.368033681283675, 1.368033681283675, 1.3690444289977333, 1.4324404510059459, 1.4324404510059459, 1.513088249957392, 1.4597545312547746, 1.5261963835868062, 1.5388801183383893, 1.54957764335757, 1.54957764335757, 1.6182527775293496, 1.596507402478341, 1.596507402478341, 1.6366244707240722, 1.6751684639431597, 1.6751684639431597, 1.7167821411591673, 1.7167821411591673, 1.7167821411591673, 1.7318434783115335, 1.7488741534118526, 1.7488741534118526, 1.7357532318583537, 1.7741962584129176, 1.6653586547245156, 1.623741441177342, 1.623741441177342, 1.7686653862904531, 1.7382811066093276, 1.7382811066093276, 1.6503737063749926, 1.7613490145358668, 1.7613490145358668, 1.798372241004623, 1.804661907485462, 1.804661907485462, 1.8727201735891579, 1.872865981923849, 1.8403960451005161, 1.9081932905043617, 1.9081932905043617, 1.9817366431928205, 2.059602109863288, 2.062193265046403, 2.062193265046403, 2.1120553808303493, 2.125518274609331, 2.169206526540683, 2.175535613136072, 2.175535613136072, 2.271649918676861, 2.341084755778609, 2.341084755778609, 2.5029171105709356, 2.4119100144965215, 2.4119100144965215, 2.357909695095984, 2.4152283572997804, 2.4152283572997804, 2.5191193462036066, 2.599529155782617, 2.599529155782617, 2.4342847369435328, 2.4794390412680962, 2.2614065618841472, 2.4424674825922725, 2.521642048119029, 2.521642048119029, 2.6721082271093857, 2.5017047536782777, 2.5017047536782777, 2.7162613756848164, 2.7162613756848164, 2.7228058151483134, 2.7829925124135437, 2.7829925124135437, 2.96745677070101, 2.9662582080331226, 2.9662582080331226, 2.3909795113732395, 2.694594484824573, 2.694594484824573, 2.8731178864271065, 3.042322130874001, 3.2546660037228787, 3.132947003390253, 3.132947003390253, 3.387126495408816, 3.512673715695621, 3.512673715695621, 3.512673715695621, 3.7358119368642453, 3.9334754402986487, 3.9334754402986487, 4.048279074686136, 4.048279074686136, 4.270524923994657, 4.071623879684694, 4.071623879684694, 4.322293364937448, 4.522364859347738, 4.283849532316288, 4.157403083495296, 4.313536728068205, 4.313536728068205, 3.943824110178496, 3.6185797957914017, 3.6185797957914017, 3.790564251029888, 3.440253992453116, 3.7198625186886383, 3.926655321247885, 3.926655321247885, 3.93329424400553, 3.8344006522573357, 3.97675255792891, 3.97675255792891, 4.058931718729508, 4.322008082486763, 4.463481501718641, 4.390941030382625, 4.390941030382625, 4.092036194066317, 4.465818553256833, 4.465818553256833, 4.744111292118391, 4.991691652790691, 4.991691652790691, 4.947189861989257, 5.197417262674419, 5.197417262674419, 5.445963103394362, 5.445963103394362, 5.690299854567232, 5.6395219417549205, 5.6395219417549205, 5.8318104640753115, 5.988431909448737, 5.912409810169447, 5.582964747313328, 5.534559557688598, 5.534559557688598, 6.184695801859873, 6.327138500346757, 6.327138500346757, 6.686878448209404, 6.8462762532437464, 6.8462762532437464, 6.864918804344601, 6.864918804344601, 6.864918804344601, 6.565141386195034, 7.25482748808765, 7.25482748808765, 13.761788218613141, 13.761788218613141]};
+
+    const ctx = document.getElementById('perfChart').getContext('2d');
+
+    const v59Color = '#1565c0';
+    const v681Color = '#7b1fa2';
+    const spyColor = '#546e7a';
+
+    function makeGradient(ctx, color, height) {
+        const g = ctx.createLinearGradient(0, 0, 0, height);
+        g.addColorStop(0, color + '40');
+        g.addColorStop(1, color + '05');
+        return g;
+    }
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: chartData.dates,
+            datasets: [
+                {
+                    label: 'v5.9 (v5.8 + P0修复)',
+                    data: chartData.v59.map(v => +(v * 100).toFixed(2)),
+                    borderColor: v59Color,
+                    backgroundColor: makeGradient(ctx, v59Color, 420),
+                    borderWidth: 2.5,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: v59Color,
+                    tension: 0.1,
+                    fill: true,
+                },
+                {
+                    label: 'v6.8.1 (v6.8 + P0修复 + Q3 HEALTHY≤30%)',
+                    data: chartData.v681.map(v => +(v * 100).toFixed(2)),
+                    borderColor: v681Color,
+                    backgroundColor: 'transparent',
+                    borderWidth: 2,
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: v681Color,
+                    tension: 0.1,
+                    fill: false,
+                },
+                {
+                    label: 'SPY 基准',
+                    data: chartData.spy.map(v => +(v * 100).toFixed(2)),
+                    borderColor: spyColor,
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.8,
+                    borderDash: [5, 3],
+                    pointRadius: 0,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: spyColor,
+                    tension: 0.1,
+                    fill: false,
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                title: {
+                    display: true,
+                    text: '累计收益% (2007-01-31 ~ 2026-05-31, 月度采样)',
+                    font: { size: 14, weight: '600' },
+                    color: '#1a1a2e',
+                    padding: { top: 4, bottom: 16 }
+                },
+                legend: {
+                    position: 'top',
+                    labels: {
+                        boxWidth: 16,
+                        font: { size: 12 },
+                        usePointStyle: false,
+                        padding: 14
+                    }
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(26,26,46,0.95)',
+                    titleFont: { size: 13 },
+                    bodyFont: { size: 12 },
+                    padding: 12,
+                    callbacks: {
+                        label: function(ctx) {
+                            return ctx.dataset.label + ': ' + ctx.parsed.y.toFixed(1) + '%';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        maxTicksLimit: 12,
+                        font: { size: 10 },
+                        color: '#666'
+                    },
+                    grid: { display: false }
+                },
+                y: {
+                    ticks: {
+                        font: { size: 11 },
+                        color: '#666',
+                        callback: function(value) { return value + '%'; }
+                    },
+                    grid: { color: 'rgba(0,0,0,0.06)' }
+                }
+            }
+        }
+    });
+})();
+</script>
+</body>
+</html>

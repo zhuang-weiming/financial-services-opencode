@@ -1,0 +1,16 @@
+{
+  "data_update_date": "2026-07-16",
+  "data_sources": {
+    "DGS10": "FRED DGS10 (10-Year Treasury Constant Maturity Rate)",
+    "T10YIE": "FRED T10YIE (10-Year Breakeven Inflation Rate)",
+    "BAMLH0A0HYM2": "FRED BAMLH0A0HYM2 (ICE BofA US High Yield OAS)",
+    "BAA": "FRED BAA (Moody's Seasoned Baa Corporate Bond Yield, monthly, extrapolated to daily)",
+    "CreditSpread": "Computed: (BAA - DGS10) * 100 in basis points"
+  },
+  "critical_notes": [
+    "★ BAA 是月度数据（最新 2026-06-01 = 6.00%），v5.9 backtest 实际读取 CreditSpread_BAA_1986_2026.csv 的 CreditSpread_bp 列",
+    "★ 2026-07 整月的 BAA 数据尚未发布（最近发布点是 2026-06-01），所以 6月1日之后的日期都用 6.00% 外推",
+    "★ 这意味着 2026-07 的 F29 信用利差全部用 6.00% - DGS10 计算，7月 DGS10 平均约 4.20% → 利差约 180bp（远低于 500bp EMERGENCY 阈值，远低于 300bp WARNING 阈值）",
+    "★ 当前市场环境：信用利差正常偏低（约 180bp），健康"
+  ]
+}

@@ -37,23 +37,24 @@ Wealth-Guide will route your question to the appropriate subagent(s).
 | 15 | `statement-auditor/` | `statement-auditor` | statement audit, LP statement, model audit, NAV tie-out |
 | 16 | `valuation-reviewer/` | `valuation-reviewer` | valuation review, returns analysis, stress-test |
 | 17 | `wealth-management/` | `wealth-management` | client report, financial plan, portfolio rebalance, tax-loss harvesting |
+| 18 | `wif-framework/` | `wealth-management` | WIF, wealth investment framework, asset allocation portfolio, fund advisory methodology, portfolio health, phase assessment |
 
 ### Quantitative Research (5 subagents)
 
 | # | Cookbook | Routes to subagent | Trigger keywords |
 |---|:---|---|:---|
-| 18 | `alpha-researcher/` | `alpha-researcher` | alpha zoo, factor bench, alpha family, IC/IR |
-| 19 | `backtest-builder/` | `backtest-builder` | backtest, strategy backtest, walk-forward, signal test |
-| 20 | `factor-researcher/` | `factor-researcher` | factor analysis, IC/IR, quantile backtest, factor decomposition |
-| 21 | `market-router/` | `market-router` | crypto (BTC/ETH), A-share (600519), forex (EURUSD), multi-market |
-| 22 | `swarm-orchestrator/` | `swarm-orchestrator` | swarm, investment committee, multi-agent team, macro forum |
+| 19 | `alpha-researcher/` | `alpha-researcher` | alpha zoo, factor bench, alpha family, IC/IR |
+| 20 | `backtest-builder/` | `backtest-builder` | backtest, strategy backtest, walk-forward, signal test |
+| 21 | `factor-researcher/` | `factor-researcher` | factor analysis, IC/IR, quantile backtest, factor decomposition |
+| 22 | `market-router/` | `market-router` | crypto (BTC/ETH), A-share (600519), forex (EURUSD), multi-market |
+| 23 | `swarm-orchestrator/` | `swarm-orchestrator` | swarm, investment committee, multi-agent team, macro forum |
 
 ### Utility (2)
 
 | # | Cookbook | Description |
 |---|:---|---|
-| 23 | `explore/` | Codebase exploration (not a routed subagent) |
-| 24 | `wealth-guide-e2e/` | Cross-domain questions requiring multiple subagents in parallel |
+| 24 | `explore/` | Codebase exploration (not a routed subagent) |
+| 25 | `wealth-guide-e2e/` | Cross-domain questions requiring multiple subagents in parallel |
 
 ---
 
