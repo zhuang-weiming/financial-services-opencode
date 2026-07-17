@@ -1,0 +1,13 @@
+[project]
+name = "wif-framework"
+version = "5.9.0"
+description = "Wealth Investment Framework v5.9 — US market fund advisory methodology"
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.0",
+    "numpy>=1.24",
+]
+
+[project.urls]
+homepage = "https://github.com/anomalyco/financial-services-opencode"
+documentation = "example/wif-framework/README.md"
