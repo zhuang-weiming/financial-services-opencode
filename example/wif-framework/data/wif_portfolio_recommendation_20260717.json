@@ -1,0 +1,128 @@
+{
+  "update_date": "2026-07-17",
+  "recommendation_date": "2026-07-17",
+  "client_profile": {
+    "investment_amount_cny": 10000,
+    "currency": "CNY",
+    "target_market": "US",
+    "usd_cny_rate": 6.79,
+    "investment_amount_usd": 1475,
+    "investment_horizon": "Not specified (default: multi-year)",
+    "risk_tolerance": "Not specified (default: balanced)"
+  },
+  "wif_phase_context": {
+    "phase_number": 1,
+    "phase_name": "Rising",
+    "macro_quadrant": 4,
+    "macro_quadrant_label": "Overheat (Late-Cycle)",
+    "phase1_status": "HEALTHY",
+    "tilt_rationale": "Phase 1 Rising + Quadrant 4 Overheat → lower equity range, overweight real assets"
+  },
+  "portfolio_allocation": {
+    "summary": {
+      "total_cny": 10000,
+      "total_usd": 1475,
+      "equity_pct": 65,
+      "fixed_income_pct": 15,
+      "real_assets_pct": 20,
+      "num_etfs": 4
+    },
+    "holdings": [
+      {
+        "ticker": "VTI",
+        "name": "Vanguard Total Stock Market ETF",
+        "asset_class": "US Equity Core",
+        "allocation_pct": 50,
+        "amount_cny": 5000,
+        "amount_usd": 737,
+        "expense_ratio": 0.03,
+        "rationale": "Core US equity exposure; broad market diversification across all cap sizes and sectors"
+      },
+      {
+        "ticker": "GLD",
+        "name": "SPDR Gold Shares",
+        "asset_class": "Real Assets / Precious Metals",
+        "allocation_pct": 20,
+        "amount_cny": 2000,
+        "amount_usd": 295,
+        "expense_ratio": 0.40,
+        "rationale": "Overheat hedge; real rates rising (2.33%) makes gold attractive as store of value; geopolitical tailwind from Iran tensions"
+      },
+      {
+        "ticker": "SPLV",
+        "name": "Invesco S&P 500 Low Volatility ETF",
+        "asset_class": "US Equity Factor (Defensive)",
+        "allocation_pct": 15,
+        "amount_cny": 1500,
+        "amount_usd": 221,
+        "expense_ratio": 0.25,
+        "rationale": "Late-cycle defensive equity tilt; low-vol factor outperforms in rising-rate, late-cycle environments"
+      },
+      {
+        "ticker": "SHV",
+        "name": "iShares Short Treasury Bond ETF",
+        "asset_class": "Fixed Income / Cash Equivalents",
+        "allocation_pct": 15,
+        "amount_cny": 1500,
+        "amount_usd": 221,
+        "expense_ratio": 0.15,
+        "rationale": "Capital preservation in short-duration Treasuries; dry powder for volatility opportunities; safe haven if risk-off intensifies"
+      }
+    ]
+  },
+  "portfolio_characteristics": {
+    "estimated_yield_pct": 2.1,
+    "equity_beta_vs_sp500": 0.65,
+    "estimated_max_drawdown_pct": -15,
+    "currency_risk": "CNY/USD fluctuation; USD-strengthening favors this portfolio",
+    "rebalancing_frequency": "Quarterly (per WIF: phase switches or every 3 weeks; simplified to quarterly for small portfolio)"
+  },
+  "execution_notes": {
+    "chinese_investor_channel": "QDII fund-of-funds or offshore USD brokerage (Futu, LongBridge, Interactive Brokers)",
+    "fx_conversion_cost_pct": "0.3-0.5",
+    "approximate_share_prices_as_of_jul2026": {
+      "VTI": 270,
+      "GLD": 185,
+      "SPLV": 65,
+      "SHV": 110
+    },
+    "approximate_shares_for_1475_usd": {
+      "VTI": 2.7,
+      "GLD": 1.6,
+      "SPLV": 3.4,
+      "SHV": 2.0
+    },
+    "us_estate_tax_note": "Assets < $60k exempt from US estate tax; monitor if portfolio grows beyond threshold",
+    "broker_availability": "All 4 ETFs trade on NYSE Arca and accessible via major US/offshore brokers"
+  },
+  "scenario_sensitivity": [
+    {
+      "scenario": "FOMC Sep hike (80% prob)",
+      "impact": "Rates up further, growth underperforms",
+      "adjustment": "SPLV tilt already in place; extend duration later on rate peak"
+    },
+    {
+      "scenario": "Iran conflict escalation (Medium prob)",
+      "impact": "VIX spike, oil surge, risk-off globally",
+      "adjustment": "GLD + SHV buffer active; cash ready to deploy into equities at lower prices"
+    },
+    {
+      "scenario": "Recession / CPI cooling (Low-Med prob)",
+      "impact": "Bonds rally, equities bottom",
+      "adjustment": "Phase would shift to Phase 4 (Recover) → increase equity, reduce GLD, add TLT"
+    },
+    {
+      "scenario": "CNY appreciation vs USD (Medium prob)",
+      "impact": "USD-denominated portfolio loses CNY value",
+      "adjustment": "Consider FX hedge if portfolio grows > ¥50k; currently negligible"
+    }
+  ],
+  "data_sources": {
+    "macro_indicators": "FRED (DBAA, DGS10, DGS2, T10YIE, VIXCLS, VXVCLS, SP500)",
+    "vix_live": "Yahoo Finance ^VIX",
+    "fx": "China interbank FX midpoint (Gate News)",
+    "etf_information": "Morningstar / Vanguard / BlackRock / Invesco fund pages",
+    "wif_methodology": "WIF v5.9 as documented in wif-fund-advisory skill"
+  },
+  "disclaimer": "This is a draft advisory report for human review. WIF v5.9 backtest (2007-2026: +1332.4%, Sharpe 1.00, Max DD -21.1%) is not indicative of future results. No live-trade execution is authorized."
+}

@@ -1,0 +1,177 @@
+{
+  "update_date": "2026-07-17",
+  "assessment_date": "2026-07-17",
+  "data_sources": {
+    "FFR": "FRED DFEDTARU/DFEDTARL (Fed target range)",
+    "EFFR": "FRED DFF",
+    "SOFR": "FRED SOFR",
+    "BAA_corporate_yield": "FRED DBAA (daily series)",
+    "DGS10": "FRED DGS10 (10Y Treasury constant maturity)",
+    "DGS2": "FRED DGS2 (2Y Treasury constant maturity)",
+    "T10YIE": "FRED T10YIE (10Y breakeven inflation rate)",
+    "VIXCLS": "FRED VIXCLS (CBOE VIX official daily close)",
+    "VIX_live": "Yahoo Finance ^VIX",
+    "VXVCLS": "FRED VXVCLS (CBOE S&P 500 3-month volatility index)",
+    "SP500": "FRED SP500 (S&P 500 index)",
+    "NASDAQCOM": "FRED NASDAQCOM (NASDAQ Composite)",
+    "USD_CNY": "China interbank FX market midpoint rate",
+    "FOMC_schedule": "CME FedWatch / SF Fed FedViews"
+  },
+  "caveats": [
+    "BAA is Moody's seasoned Baa corporate bond yield, daily series from FRED DBAA",
+    "VXVCLS (VIX3M) FRED data has ~1-2 day lag; latest available is 2026-07-13",
+    "FFR target range last changed Dec 2025 (cut to 3.50-3.75%)",
+    "Market pricing ~80% probability of 25bp hike at Sep 2026 FOMC per CME FedWatch",
+    "DFII10 not directly fetched; real yield computed as DGS10 - T10YIE"
+  ],
+  "macro_indicators": {
+    "monetary_policy": {
+      "fed_target_range": "3.50% - 3.75%",
+      "effr": 3.63,
+      "sofr": 3.62,
+      "last_fomc_action": "Cut to current range — Dec 2025",
+      "next_fomc_meeting": "2026-07-28/29",
+      "market_pricing_sep2026": "~80% probability of 25bp hike"
+    },
+    "yields": {
+      "dgs10": {
+        "value": 4.57,
+        "date": "2026-07-16",
+        "one_month_change_bp": 38
+      },
+      "dgs2": {
+        "value": 4.16,
+        "date": "2026-07-16",
+        "one_month_change_bp": 69
+      },
+      "baa_corporate": {
+        "value": 6.16,
+        "date": "2026-07-16",
+        "source": "FRED DBAA"
+      },
+      "ten_year_tips_real_yield": {
+        "value": 2.33,
+        "computed_as": "DGS10 - T10YIE = 4.57 - 2.24"
+      }
+    },
+    "spreads": {
+      "f29": {
+        "value_bp": 159,
+        "computed_as": "BAA - DGS10 = 6.16 - 4.57",
+        "hard_trigger_bp": 500,
+        "status": "HEALTHY"
+      },
+      "yield_curve_2s10s": {
+        "value_bp": 41,
+        "computed_as": "DGS10 - DGS2 = 4.57 - 4.16",
+        "status": "POSITIVE (not inverted)"
+      },
+      "vix_term": {
+        "value": -0.73,
+        "computed_as": "VIX_spot - VIX3M = 18.77 - 19.50",
+        "status": "NORMAL CONTANGO"
+      }
+    },
+    "volatility": {
+      "vix_spot": {
+        "value": 18.77,
+        "date": "2026-07-17",
+        "one_day_change_pct": 12.19,
+        "one_month_low": 13.80,
+        "one_month_high": 18.77,
+        "hard_trigger_vix40": false,
+        "f33b_vix10d_pct": 24.9,
+        "f33b_vix10d_trigger_pct": 100,
+        "f33b_triggered": false
+      },
+      "vix3m": {
+        "value": 19.50,
+        "date": "2026-07-13",
+        "source": "FRED VXVCLS"
+      }
+    },
+    "equity_markets": {
+      "sp500": {
+        "value": 7457.69,
+        "date": "2026-07-17",
+        "one_day_change_pct": -1.01,
+        "one_month_change_pct": -0.71,
+        "ytd_change_pct": 7.5
+      },
+      "nasdaq": {
+        "value": 25520.24,
+        "date": "2026-07-17",
+        "one_day_change_pct": -1.40,
+        "one_month_change_pct": -3.25,
+        "ytd_change_pct": 9.80
+      }
+    },
+    "inflation": {
+      "t10yie_breakeven_10y": {
+        "value": 2.24,
+        "date": "2026-07-17",
+        "historical_percentile": 54.2,
+        "historical_average": 2.11,
+        "trend": "Falling (from ~2.40% early June)"
+      }
+    },
+    "fx": {
+      "usd_cny": 6.79,
+      "date": "2026-07-17",
+      "source": "China interbank FX midpoint (Gate News)"
+    }
+  },
+  "wif_phase_assessment": {
+    "layer1_csi": {
+      "phase1_status": "HEALTHY",
+      "f29_zscore_component": "159 bp, well below 500 bp hard trigger",
+      "vixterm_zscore_component": "-0.73, normal contango, no inversion",
+      "correlation_breakdown": "No signs of cross-asset correlation breakdown",
+      "hard_triggers": {
+        "f29_gt_500bp": false,
+        "vix_gt_40_and_vix10d_gt_100pct": false
+      }
+    },
+    "layer2_macro_quadrant": {
+      "real_rate_trend": "RISING",
+      "inflation_trend": "FALLING",
+      "quadrant": 4,
+      "quadrant_label": "Overheat (Late-Cycle)",
+      "justification": "Rising real yields (2.33%, up ~53bp from June) + falling breakeven inflation (2.24%, down from ~2.40%)"
+    },
+    "layer3_mci": {
+      "mci_level": "Moderate",
+      "delta_f29": "Recent widening from ~150bp to 159bp",
+      "delta_rates": "10Y up 38bp in one month — tightening financial conditions",
+      "delta_vix": "VIX spike on Jul 17 (+12%) from Iran tensions, but sub-20"
+    },
+    "final_phase": {
+      "phase_number": 1,
+      "phase_name": "Rising",
+      "typical_regime": "HEALTHY + Quadrant 2/4 (Recovery/Overheat)",
+      "allocation_range": {
+        "equity_pct": [65, 75],
+        "fixed_income_pct": [10, 15],
+        "real_assets_pct": [15, 25]
+      }
+    }
+  },
+  "risk_flags": [
+    "RISING REAL YIELDS — DGS10 up 38bp in 1 month to 4.57%, valuation headwind for growth/tech",
+    "VIX SPIKE — +12% on Jul 17 to 18.77 (Iran tensions, chip rout, Netflix guidance miss)",
+    "FOMC JUL 28-29 — Market pricing 80% chance of Sep hike; hawkish repricing risk",
+    "NASDAQ CORRECTION — -3.25% in 1 month, semiconductor selloff leadership",
+    "YIELD CURVE — Normal (+41bp) but steepening from tight spread; monitor inversion risk"
+  ],
+  "allocation_tilt_recommendation": {
+    "reasoning": "Phase 1 Rising + Quadrant 4 Overheat → take lower end of equity range (65%), overweight real assets (20%) as overheat hedge, keep fixed income buffer (15%)",
+    "equity_pct": 65,
+    "fixed_income_pct": 15,
+    "real_assets_pct": 20
+  },
+  "cross_validation": {
+    "multi_source_method": "FRED primary (macro) + Yahoo Finance (VIX live) + Morningstar/china interbank (FX)",
+    "date_reconciliation": "All indicators cross-referenced to Jul 16-17, 2026 close",
+    "source_3_internal_consistency": "VIXTERM = VIX - VIX3M consistent with WIF v5.9 formula"
+  }
+}
