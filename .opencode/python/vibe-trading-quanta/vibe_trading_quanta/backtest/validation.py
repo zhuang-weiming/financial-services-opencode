@@ -1,9 +1,11 @@
 """Statistical validation for backtest results.
 
-Three independent tools:
+Four independent tools:
   - Monte Carlo permutation test: is the strategy significantly better than random?
   - Bootstrap Sharpe CI: how stable is the risk-adjusted return?
   - Walk-Forward analysis: is performance consistent across time windows?
+  - Deflated Sharpe Ratio (López de Prado 2018): corrects Sharpe for the
+    number of configurations tried before declaring a winner.
 
 Usage: called automatically by BaseEngine.run_backtest when config[\"validation\"]
 is present, or invoked directly on backtest outputs.
@@ -253,6 +255,155 @@ def walk_forward_analysis(
     }
 
 
+# ─── Deflated Sharpe Ratio (López de Prado 2018, Eqs 12.7-12.8) ───
+
+
+def deflated_sharpe_ratio(
+    returns: pd.Series,
+    n_configs: int = 5,
+    rf_annual: float = 0.02,
+    bars_per_year: int = 12,
+    seed: int = 42,
+) -> Dict[str, Any]:
+    """Deflated Sharpe Ratio per López de Prado (2018) Eq 12.7-12.8.
+
+    Multiple-testing correction: when you tried N strategy variants before
+    declaring a "winner", even an excellent Sharpe may be an overfit extreme.
+    DSR compares the observed Sharpe to the benchmark ``sr_star`` — the
+    Sharpe you would expect under N IID trials by pure luck — and returns
+    P(observed SR > sr_star) as the deflated significance.
+
+    Args:
+        returns: Periodic returns. Frequency must match ``bars_per_year``.
+                 Monthly returns → ``bars_per_year=12``; daily returns → 252;
+                 crypto → 365.
+        n_configs: Number of independent strategy configurations tried
+                   before declaring "winner". Default 5.
+        rf_annual: Annualised risk-free rate. Default 0.02.
+        bars_per_year: Return-frequency → annualisation factor. 12 (monthly,
+                       A-share research default), 252 (daily, US/HK equity
+                       default), 365 (crypto).
+        seed: Reserved for future stochastic DSR variants. Current closed-form
+              implementation is deterministic.
+
+    Returns:
+        Dict with keys (all numeric rounded to 4 decimals):
+          - dsr           (float, [0,1])   Deflated Sharpe Ratio — probability
+                                          that observed SR exceeds the
+                                          multiple-test benchmark.
+          - sr_observed   (float)          Annualised Sharpe of input returns.
+          - sr_benchmark  (float, >=0)     sr_star — "would-be-lucky" Sharpe
+                                          threshold under n_configs trials.
+                                          If sr_observed <= sr_benchmark the
+                                          strategy is likely overfit.
+          - skewness      (float)          Pearson skewness of returns.
+          - kurtosis      (float)          Pearson total kurtosis (excess + 3).
+          - n_obs         (int)            Number of return observations.
+          - n_configs     (int)            Echo of input.
+          - bars_per_year (int)            Echo of input.
+          - rf_annual     (float)          Echo of input.
+
+    Examples:
+        >>> dsr = deflated_sharpe_ratio(monthly_returns, n_configs=5)
+        >>> dsr['dsr']
+        0.873
+
+        >>> dsr = deflated_sharpe_ratio(daily_returns, n_configs=10,
+        ...                              bars_per_year=252)
+
+    References:
+        López de Prado, M. (2018). *Advances in Financial Machine Learning*.
+        Chapter 14, Section 14.7 (The Deflated Sharpe Ratio), Eqs 12.7-12.8.
+    """
+    if (
+        isinstance(n_configs, bool)
+        or not isinstance(n_configs, Integral)
+        or n_configs < 1
+    ):
+        return {
+            "error": f"n_configs must be >= 1, got {n_configs}",
+            "dsr": float("nan"),
+        }
+    if (
+        isinstance(bars_per_year, bool)
+        or not isinstance(bars_per_year, Integral)
+        or bars_per_year < 1
+    ):
+        return {
+            "error": f"bars_per_year must be >= 1, got {bars_per_year}",
+            "dsr": float("nan"),
+        }
+    if isinstance(seed, bool) or not isinstance(seed, Integral) or seed < 0:
+        return {
+            "error": f"seed must be >= 0, got {seed}",
+            "dsr": float("nan"),
+        }
+    if (
+        isinstance(rf_annual, bool)
+        or not isinstance(rf_annual, Real)
+        or not math.isfinite(float(rf_annual))
+        or float(rf_annual) < 0.0
+    ):
+        return {
+            "error": f"rf_annual must be >= 0, got {rf_annual}",
+            "dsr": float("nan"),
+        }
+
+    rets = returns.dropna()
+    if len(rets) < 5:
+        return {
+            "error": "need at least 5 return observations for skew/kurtosis",
+            "dsr": float("nan"),
+        }
+
+    n = len(rets)
+    rf_periodic = float(rf_annual) / float(bars_per_year)
+    sr_periodic = (rets.mean() - rf_periodic) / rets.std()
+    sr_annual = float(sr_periodic * np.sqrt(float(bars_per_year)))
+    skew = float(rets.skew())
+    kurt = float(rets.kurtosis() + 3.0)
+
+    try:
+        from scipy import stats as sp_stats
+
+        e_max_z = sp_stats.norm.ppf(1.0 - 1.0 / (n_configs + 1))
+        var_sr_raw = max(
+            1e-9,
+            1.0 - skew * sr_annual + (kurt - 1.0) / 4.0 * sr_annual ** 2,
+        )
+        V_SR = var_sr_raw / (n - 1)
+        # LdP 2018 Eq 12.8: sr_star has two terms. The second term blows up when
+        # n_configs=1 (e_max_z=0); we treat that degenerate case as "no second
+        # term" since with a single trial the correction reduces to the standard
+        # SR p-value. The sr_star clamp below further absorbs any residual sign.
+        if e_max_z > 1e-9:
+            sr_star = (
+                e_max_z * np.sqrt(V_SR)
+                + (e_max_z ** 2 - 1.0) * V_SR / 2.0 / e_max_z
+            )
+        else:
+            sr_star = e_max_z * np.sqrt(V_SR)
+        sr_star = max(float(sr_star), 0.0)
+        dsr_val = sp_stats.norm.cdf(
+            (sr_annual - sr_star) * np.sqrt(n - 1) / np.sqrt(var_sr_raw)
+        )
+        dsr_val = float(np.clip(dsr_val, 0.0, 1.0))
+    except Exception as exc:
+        return {"error": f"DSR computation failed: {exc}", "dsr": float("nan")}
+
+    return {
+        "dsr":           round(dsr_val, 4),
+        "sr_observed":   round(sr_annual, 4),
+        "sr_benchmark":  round(sr_star, 4),
+        "skewness":      round(skew, 4),
+        "kurtosis":      round(kurt, 4),
+        "n_obs":         int(n),
+        "n_configs":     int(n_configs),
+        "bars_per_year": int(bars_per_year),
+        "rf_annual":     round(float(rf_annual), 6),
+    }
+
+
 # ─── Runner integration ───
 
 
@@ -269,6 +420,7 @@ def run_validation(
       - monte_carlo: {n_simulations, seed}
       - bootstrap: {n_bootstrap, confidence, seed}
       - walk_forward: {n_windows}
+      - deflated_sharpe: {n_configs, rf_annual, seed}
 
     Args:
         config: Backtest config (must contain "validation" key).
@@ -309,6 +461,20 @@ def run_validation(
             trades,
             n_windows=wf_cfg.get("n_windows", 5),
             bars_per_year=bars_per_year,
+        )
+
+    if "deflated_sharpe" in v_cfg:
+        ds_cfg = (
+            v_cfg["deflated_sharpe"]
+            if isinstance(v_cfg["deflated_sharpe"], dict)
+            else {}
+        )
+        results["deflated_sharpe"] = deflated_sharpe_ratio(
+            equity_curve.pct_change().dropna(),
+            n_configs=ds_cfg.get("n_configs", 5),
+            rf_annual=ds_cfg.get("rf_annual", 0.02),
+            bars_per_year=bars_per_year,
+            seed=ds_cfg.get("seed", 42),
         )
 
     return results
@@ -416,7 +582,7 @@ def write_validation_json(path: Path, results: Dict[str, Any]) -> Dict[str, Any]
 
 
 def main(run_dir: Path) -> Dict[str, Any]:
-    """Run all three validations on existing backtest artifacts.
+    """Run all four validations on existing backtest artifacts.
 
     Reads equity.csv, trades.csv, and config.json from run_dir.
 
@@ -426,21 +592,25 @@ def main(run_dir: Path) -> Dict[str, Any]:
     Returns:
         Validation results dict.
     """
-    # Load config for initial_cash
+    # Load config for initial_cash and bars_per_year
     config_path = run_dir / "config.json"
     if config_path.exists():
         config = json.loads(config_path.read_text(encoding="utf-8"))
     else:
         config = {}
     initial_capital = config.get("initial_cash", 1_000_000)
+    bars_per_year = config.get("bars_per_year", 252)
 
     equity = _load_equity(run_dir)
     trades = _load_trades(run_dir)
 
     results = {
-        "monte_carlo": monte_carlo_test(trades, initial_capital),
-        "bootstrap": bootstrap_sharpe_ci(equity),
-        "walk_forward": walk_forward_analysis(equity, trades),
+        "monte_carlo":     monte_carlo_test(trades, initial_capital),
+        "bootstrap":       bootstrap_sharpe_ci(equity, bars_per_year=bars_per_year),
+        "walk_forward":    walk_forward_analysis(equity, trades, bars_per_year=bars_per_year),
+        "deflated_sharpe": deflated_sharpe_ratio(
+            equity.pct_change().dropna(), bars_per_year=bars_per_year
+        ),
     }
 
     out = run_dir / "artifacts" / "validation.json"

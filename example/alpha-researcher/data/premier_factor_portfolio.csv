@@ -1,0 +1,8 @@
+Factor,WeightInPortfolio,AvgIC_CSI300,AvgIC_SP500,IsSignificant,Description,RecommendedETF
+动量因子,0.25,0.052,0.068,Yes,过去12个月收益率排名，去除最近1个月,MTUM
+价值因子,0.20,0.038,0.045,Yes,低PE/低PB/高股息率组合,VTV
+质量因子,0.20,0.061,0.072,Yes,高ROE/低杠杆/稳定盈利,QUAL
+规模因子,0.10,0.028,0.015,Partial,小市值跑赢大市值的效应，A股比美股显著,SIZE
+低波因子,0.15,0.042,0.055,Yes,过去12个月波动率最低的股票,USMV
+成长因子,0.10,0.022,0.038,Partial,营收和利润高速增长,VUG
+红利因子,0.00,0.035,0.048,Yes,持续派息且股息率稳定增长,HDV

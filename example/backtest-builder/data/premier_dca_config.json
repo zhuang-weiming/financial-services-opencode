@@ -1,0 +1,47 @@
+{
+  "strategy_name": "Premier 定投策略对比回测",
+  "benchmark": {
+    "ticker": "SPY",
+    "name": "标普 500 指数",
+    "start_date": "2015-01-01",
+    "end_date": "2026-06-30",
+    "initial_price": 205.0,
+    "final_price": 545.0
+  },
+  "dca_scenarios": [
+    {
+      "scenario_id": "dca_monthly",
+      "name": "每月固定定投",
+      "description": "每月初固定投入 10000 元，不择时",
+      "monthly_amount": 10000,
+      "rebalance_freq": "none"
+    },
+    {
+      "scenario_id": "dca_dip",
+      "name": "大跌加仓法",
+      "description": "每月定投 5000 元，当月跌幅 >5% 额外加仓 10000 元",
+      "monthly_amount": 5000,
+      "dip_threshold": -0.05,
+      "dip_extra": 10000,
+      "rebalance_freq": "none"
+    },
+    {
+      "scenario_id": "timing_ma",
+      "name": "均线择时法",
+      "description": "价格在 200 日均线上方时全仓，下方时持有现金",
+      "sma_period": 200,
+      "rebalance_freq": "daily_signal"
+    },
+    {
+      "scenario_id": "buy_hold",
+      "name": "一次性买入持有",
+      "description": "2015 年初一次性投入全部资金持有不动",
+      "lump_sum": 1200000,
+      "rebalance_freq": "none"
+    }
+  ],
+  "slippage": 0.001,
+  "fee_rate": 0.0003,
+  "tax_rate": 0.0,
+  "currency": "CNY"
+}

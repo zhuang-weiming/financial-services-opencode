@@ -80,3 +80,32 @@ Please:
 4) Determine which WIF risk regime we are in
 5) Flag any divergence between macro indicators and current Phase
 ```
+
+## Question 5: Premier 个人 WIF 资产配置方案
+```
+作为一位 Premier 客户，请使用 WIF v5.9 框架为我生成当前市场环境下的个人资产配置方案。
+
+Reference: data/_merged_prices_20260716.csv, data/WIF_v59_nav_20260716.csv
+
+我从您已有的数据理解，WIF 框架通过 F29/VIX/VIXTERM 判断 5 个市场阶段。
+
+Please:
+1) 判断当前处于哪个市场阶段（Phase 1-5），并列出 F29、VIX、VIXTERM 的具体数值
+2) 说明该阶段对应的默认资产配置比例（权益/固收/商品/REITs）
+3) 根据一个假设的 Premier 风险偏好（中等风险承受能力）微调配置比例
+4) 从 WIF 40-ETF 候选池中推荐具体 ETF 及配比
+5) 如果当前组合与此目标配置偏差超过 5%，给出再平衡交易指令
+6) 标注当前是否处于阶段转换预警区
+```
+
+## Question 6: WIF 框架在 A 股市场的适用性讨论
+```
+我是一位关注 A 股市场的 Premier 投资者。WIF 框架基于美国市场开发，请帮我分析如何将其应用于 A 股投资。
+
+Please:
+1) 分析 WIF 框架核心指标（F29/VIX/VIXTERM）在 A 股市场的适用性
+2) 如果 A 股没有合适的 VIX 替代指标，推荐哪些本土化指标（如 50ETF 期权隐含波动率/北向资金/融资融券比）
+3) 设计一个简化版 A 股 WIF 框架：用申万行业指数替换标普行业 ETF
+4) 回测思路：如何改造回测引擎对比 A 股 WIF 策略 vs 沪深 300 买入持有
+5) 给出 Premier 投资者在实际使用时应做的最小调整清单
+```

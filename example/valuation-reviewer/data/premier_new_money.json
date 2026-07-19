@@ -1,0 +1,21 @@
+{
+  "client_name": "Meridian Family Office",
+  "new_capital": 5000000,
+  "investment_goal": "长期增长+适度收入",
+  "time_horizon": "10-15年",
+  "risk_tolerance": "中等",
+  "liquidity_needs": {
+    "near_term_1yr": 150000,
+    "medium_term_3yr": 600000,
+    "long_term_5yr_plus": 1000000
+  },
+  "current_portfolio_value": 8900000,
+  "restrictions": {
+    "exclude_sectors": ["烟草", "武器"],
+    "max_single_stock": 0.10,
+    "max_single_industry": 0.25,
+    "esg_minimum_rating": "A"
+  },
+  "tax_status": "应税账户",
+  "currency_preference": "CNY/USD mix"
+}

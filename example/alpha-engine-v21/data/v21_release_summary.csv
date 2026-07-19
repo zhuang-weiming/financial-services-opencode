@@ -1,0 +1,16 @@
+metric,value,note
+period,2010-01 → 2026-06,192 months of A-share data
+Sharpe_annual,0.869,V21.0 release number with TC=off
+NAV,27.93,Cumulative growth of 1¥
+annual_return,0.231,23.1% / year
+max_drawdown,-0.346,-34.6% peak-to-trough
+positive_months,97/192,51% positive months
+avg_turnover,0.73,73% of portfolio per month
+IS_sharpe,0.665,2010-2017 in-sample
+OOS_sharpe,1.076,2018-2026 out-of-sample (OOS>IS is anti-overfit signal)
+Walk_Forward_mean,0.939,"13 windows, 36m train + 12m test, mean Sharpe"
+DSR,1.0,Deflated Sharpe Ratio under n_configs=5 (LdP 2018)
+p_bonferroni,0.0015,Bonferroni-corrected p-value
+bootstrap_CI_lower,0.564,Block bootstrap 95% CI lower bound
+avg_skill_port_Sharpe_TC_on,0.627,Same V21 logic with TC=ON (skill default)
+avg_skill_port_maxDD_TC_on,-0.408,TC=ON max drawdown

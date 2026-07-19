@@ -1,0 +1,62 @@
+{
+  "client_name": "Meridian Family Office",
+  "portfolio_value": 8900000,
+  "assessment_date": "2026-07-19",
+  "portfolio_components": [
+    {
+      "component": "核心权益持仓（个股）",
+      "current_method": "人工研究+主观决策",
+      "value": 4500000,
+      "ai_automation_potential": "中",
+      "estimated_savings_hours_year": 60,
+      "roi_estimate": "通过 AI 辅助研究扩大覆盖范围，减少信息盲区",
+      "priority": 1
+    },
+    {
+      "component": "ETF 配置与再平衡",
+      "current_method": "季度人工审查+手工交易",
+      "value": 2800000,
+      "ai_automation_potential": "高",
+      "estimated_savings_hours_year": 120,
+      "roi_estimate": "用系统化规则做再平衡，减少情绪化决策和交易成本",
+      "priority": 2
+    },
+    {
+      "component": "基金诊断与筛选",
+      "current_method": "阅读季报+晨星评级",
+      "value": 850000,
+      "ai_automation_potential": "高",
+      "estimated_savings_hours_year": 80,
+      "roi_estimate": "自动化基金风格分析、费率对比、持仓穿透",
+      "priority": 3
+    },
+    {
+      "component": "风险管理与合规检查",
+      "current_method": "月度人工检查报表",
+      "value": 750000,
+      "ai_automation_potential": "高",
+      "estimated_savings_hours_year": 100,
+      "roi_estimate": "实时监控组合风险敞口、自动预警偏离",
+      "priority": 4
+    },
+    {
+      "component": "客户报告生成",
+      "current_method": "手工制作 PPT",
+      "value": 0,
+      "ai_automation_potential": "高",
+      "estimated_savings_hours_year": 150,
+      "roi_estimate": "自动从持仓系统拉数据，一键盘生成客户报告",
+      "priority": 5
+    },
+    {
+      "component": "税务优化（TLH）",
+      "current_method": "年末一次性手动检查",
+      "value": 0,
+      "ai_automation_potential": "中",
+      "estimated_savings_hours_year": 50,
+      "roi_estimate": "持续监控未实现亏损，自动生成 TLH 建议",
+      "priority": 6
+    }
+  ],
+  "overall_score": 68
+}

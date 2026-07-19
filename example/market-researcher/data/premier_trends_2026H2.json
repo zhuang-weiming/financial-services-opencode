@@ -1,0 +1,60 @@
+{
+  "report_date": "2026-07-19",
+  "premier_trends": [
+    {
+      "trend_id": 1,
+      "trend_name": "AI 应用落地从基础设施走向终端",
+      "impact_level": "高",
+      "time_horizon": "6-18 个月",
+      "description": "AI 从硬件基础设施建设转向软件应用和终端产品落地，受益从 NVIDIA 扩散至软件/SAAS/终端设备",
+      "beneficiary_stocks": ["MSFT", "CRM", "ADBE", "NOW", "600570（恒生电子）"],
+      "beneficiary_etfs": ["QQQ", "IGV", "AIQ"],
+      "risk_factors": ["估值泡沫风险", "监管趋严", "商业化进度低于预期"],
+      "premier_action": "增持软件/AI 应用类 ETF，逐步减持纯硬件标的"
+    },
+    {
+      "trend_id": 2,
+      "trend_name": "全球利率下行周期启动",
+      "impact_level": "高",
+      "time_horizon": "12-24 个月",
+      "description": "美联储 2026 年下半年进入降息周期，全球利率中枢下行，利好长久期资产和成长股",
+      "beneficiary_assets": ["美国长久期国债", "成长股", "REITs", "新兴市场债券"],
+      "beneficiary_etfs": ["TLT", "BND", "VNQ", "EMB"],
+      "risk_factors": ["通胀反弹风险", "降息节奏不及预期", "日央行政策意外转向"],
+      "premier_action": "逐步增加债券久期，适度超配成长型 ETF"
+    },
+    {
+      "trend_id": 3,
+      "trend_name": "中国消费复苏与国货升级",
+      "impact_level": "中高",
+      "time_horizon": "12-36 个月",
+      "description": "中国消费温和复苏，国货品牌持续抢占份额，高端消费和性价比消费并存",
+      "beneficiary_stocks": ["600519（茅台）", "000858（五粮液）", "600887（伊利）", "300750（宁德时代）"],
+      "beneficiary_etfs": ["159928（消费 ETF）", "510050（上证 50）"],
+      "risk_factors": ["居民消费信心恢复缓慢", "地产财富效应消退", "地缘政治风险"],
+      "premier_action": "超配消费龙头，关注政策刺激力度信号"
+    },
+    {
+      "trend_id": 4,
+      "trend_name": "能源转型 2.0：从发电侧到电网侧",
+      "impact_level": "中",
+      "time_horizon": "24-48 个月",
+      "description": "能源转型焦点从风光发电转向电网基础设施、储能和电力市场化改革",
+      "beneficiary_stocks": ["600406（国电南瑞）", "300274（阳光电源）", "601985（中国核电）"],
+      "beneficiary_etfs": ["ICLN", "TAN", "159865（碳中和 ETF）"],
+      "risk_factors": ["电网投资进度缓慢", "储能成本下降不及预期", "政策补贴退坡"],
+      "premier_action": "从纯新能源发电转向电网+储能产业链"
+    },
+    {
+      "trend_id": 5,
+      "trend_name": "人口结构变化下的银发经济",
+      "impact_level": "中",
+      "time_horizon": "36-60 个月",
+      "description": "中国加速老龄化，银发经济（医疗/养老/保险/适老化产品）成为确定性增长赛道",
+      "beneficiary_stocks": ["300760（迈瑞医疗）", "601318（中国平安）", "600763（通策医疗）"],
+      "beneficiary_etfs": ["159883（医疗 ETF）", "159766（旅游 ETF 中的康养概念）"],
+      "risk_factors": ["政策集采风险", "支付能力不足", "服务标准不统一"],
+      "premier_action": "定投式建仓医疗健康+养老主题 ETF，作为长期底仓"
+    }
+  ]
+}

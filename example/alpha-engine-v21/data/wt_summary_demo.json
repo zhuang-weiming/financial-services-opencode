@@ -1,0 +1,20 @@
+{
+  "ticker": "FAKE-MOUTAI-LIKE-2001",
+  "source": "computed_n1_50_n2_105",
+  "n_obs": 5846,
+  "first_input_date": "2001-08-27",
+  "last_input_date": "2025-01-01",
+  "input_span_days": 8535,
+  "as_of": "2025-01-01",
+  "wt1": 35.42,
+  "wt2": 32.18,
+  "wt1_pct_rank_12m": 72.0,
+  "wt1_pct_rank_5y": 65.0,
+  "wt1_min": -68.4,
+  "wt1_max": 78.9,
+  "wt1_mean": 5.21,
+  "wt2_min": -55.7,
+  "wt2_max": 71.3,
+  "regime": "uptrend",
+  "_note": "Sample output demonstrating wave_trend.py --csv --json. The n_obs and span reflect the FULL history passed in (2001-2025, ~24 years). Truncating to 252 days would produce a wildly different WT1 value — see SKILL.md \"WaveTrend full-history principle\"."
+}

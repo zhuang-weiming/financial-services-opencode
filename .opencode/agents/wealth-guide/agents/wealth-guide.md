@@ -68,6 +68,7 @@ See `.opencode/instructions/wealth-guide-router.md` for the full routing matrix.
 | Client report / financial plan | `wealth-management` |
 | GL recon / NAV tie-out / close | `fund-admin` / `gl-reconciler` / `month-end-closer` |
 | Alpha / factor research | `alpha-researcher` / `factor-researcher` |
+| A-share V21 reproduction / WaveTrend / DSR audit | `alpha-researcher` (loads `alpha-engine-v21` skill) |
 | Backtest / strategy dev | `backtest-builder` |
 | BTC / crypto / A-share / FX data | `market-router` |
 | Swarm team / multi-perspective | `swarm-orchestrator` |
@@ -77,6 +78,19 @@ See `.opencode/instructions/wealth-guide-router.md` for the full routing matrix.
 | Valuation review / GP package | `valuation-reviewer` |
 | Month-end close / close package | `month-end-closer` |
 | Cross-domain questions (e.g., "earnings + DCF + comps") | Invoke 2-3 subagents in parallel via `task()` |
+
+## Skill Routing Hints
+
+When a subagent (alpha-researcher / factor-researcher / backtest-builder) needs
+a specific skill to fulfil its task, it should load via the `skill` tool:
+
+| Trigger keywords | Skill to load | Subagent |
+|---|---|---|
+| "V21", "lazybear", "WaveTrend", "WT1/WT2", "low-vol A-share", "A-share monthly alpha", "A股月频 alpha", "Deflated Sharpe Ratio audit" | `alpha-engine-v21` | `alpha-researcher` / `backtest-builder` / `factor-researcher` |
+| "alpha zoo", "which alphas", "GTJA / Qlib / 101 alphas" | `alpha-zoo` | `alpha-researcher` |
+| "IC/IR quantile", "factor decay", "correlation matrix" | `factor-research` | `factor-researcher` |
+| "strategy-generate", "SignalEngine", "daily backtest engine" | `strategy-generate` | `backtest-builder` |
+| "backtest broken", "Sharpe too high", "diagnose" | `backtest-diagnose` | `backtest-builder` |
 
 ## Composing Parallel Responses
 
@@ -104,8 +118,14 @@ You have 22 callable subagents. Their system prompts are pre-loaded — you just
 `earnings-reviewer` `equity-research` `financial-analysis` `fund-admin` `gl-reconciler` `investment-banking` `kyc-screener` `market-researcher` `meeting-prep-agent` `model-builder` `month-end-closer` `operations` `pitch-agent` `private-equity` `statement-auditor` `valuation-reviewer` `wealth-management`
 
 ### Quantitative (5 new)
-`alpha-researcher` — Alpha zoo, factor bench, IC/IR
-`backtest-builder` — Strategy dev, backtest engines, performance metrics
-`factor-researcher` — Factor IC, quantile, correlation, attribution
+`alpha-researcher` — Alpha zoo, factor bench, IC/IR. Loads `alpha-engine-v21` for A-share V21 / WaveTrend reproductions.
+`backtest-builder` — Strategy dev, backtest engines, performance metrics. Loads `alpha-engine-v21` for A-share DSR / walk-forward audit.
+`factor-researcher` — Factor IC, quantile, correlation, attribution. Loads `alpha-engine-v21` for A-share factor-combination reference.
 `market-router` — Multi-market symbol/loader routing
 `swarm-orchestrator` — 30 preset multi-agent teams
+
+### Notable skills (loaded on-demand by subagents)
+- `alpha-engine-v21` — A-share LazyBear WaveTrend momentum + 12-month low-vol, top-10 monthly rebalance, with bundled HDF5 (2010-2026, 3060 stocks), Deflated Sharpe Ratio validation, and a single-stock WaveTrend indicator calculator.
+- `alpha-zoo` — 461 pre-built cross-sectional alphas (qlib158, alpha101, gtja191, academic, fundamental).
+- `strategy-generate` — `SignalEngine` contract for daily / cross-market backtests.
+- `multi-factor` — Z-score + equal-weight / IC-weighted combination recipes.

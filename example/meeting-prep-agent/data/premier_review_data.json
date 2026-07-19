@@ -1,0 +1,39 @@
+{
+  "review_date": "2026-07-25",
+  "client_name": "Meridian Family Office",
+  "portfolio": {
+    "total_value": 8900000,
+    "ytd_return_pct": 6.8,
+    "benchmark_return_pct": 6.2,
+    "active_return_pct": 0.6,
+    "inception_date": "2020-01-01",
+    "inception_return_pct": 58.5,
+    "inception_benchmark_pct": 52.0
+  },
+  "current_allocation": {
+    "equity_us": {"target": 35, "actual": 38, "drift": 3},
+    "equity_intl": {"target": 20, "actual": 18, "drift": -2},
+    "emerging_market": {"target": 10, "actual": 8, "drift": -2},
+    "fixed_income": {"target": 25, "actual": 22, "drift": -3},
+    "alternatives": {"target": 10, "actual": 14, "drift": 4}
+  },
+  "top_holdings": [
+    {"ticker": "600519", "name": "贵州茅台", "allocation_pct": 12.5, "ytd_return": 18.2, "status": "持有"},
+    {"ticker": "AAPL", "name": "Apple Inc", "allocation_pct": 10.8, "ytd_return": 12.5, "status": "持有"},
+    {"ticker": "MSFT", "name": "Microsoft Corp", "allocation_pct": 8.5, "ytd_return": 15.2, "status": "持有"},
+    {"ticker": "SPY", "name": "SPDR S&P 500 ETF", "allocation_pct": 8.2, "ytd_return": 14.0, "status": "持有"},
+    {"ticker": "600036", "name": "招商银行", "allocation_pct": 5.5, "ytd_return": -3.5, "status": "观察"}
+  ],
+  "key_actions": [
+    "另类资产超配 4%，建议减仓 REITs 和私募债",
+    "招商银行年初至今 -3.5%，建议评估是否止损",
+    "现金比例较高（8%），建议适度配置到短期债券",
+    "客户表达了对 ESG 投资的兴趣，需要讨论整合方案"
+  ],
+  "client_updates": {
+    "son_college_start": "2027-09 需要 $60K/年",
+    "inheritance_received": 500000,
+    "esg_interest": "高",
+    "risk_tolerance_change": "不变（中等）"
+  }
+}

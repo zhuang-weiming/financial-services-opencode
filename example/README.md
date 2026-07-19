@@ -48,6 +48,7 @@ Wealth-Guide will route your question to the appropriate subagent(s).
 | 21 | `factor-researcher/` | `factor-researcher` | factor analysis, IC/IR, quantile backtest, factor decomposition |
 | 22 | `market-router/` | `market-router` | crypto (BTC/ETH), A-share (600519), forex (EURUSD), multi-market |
 | 23 | `swarm-orchestrator/` | `swarm-orchestrator` | swarm, investment committee, multi-agent team, macro forum |
+| 24 | `alpha-engine-v21/` | `alpha-researcher` + `alpha-engine-v21` skill | V21, lazybear, WaveTrend, WT1, WT2, low-vol A-share, Deflated Sharpe Ratio, 懒熊振荡器, 低波动 A 股 |
 
 ### Utility (2)
 

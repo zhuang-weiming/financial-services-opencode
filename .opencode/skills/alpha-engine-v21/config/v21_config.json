@@ -1,0 +1,24 @@
+{
+  "name": "V21",
+  "weights": {
+    "lv": 0.15,
+    "wt_mom": 0.85
+  },
+  "n_hold": 10,
+  "max_per_ind": 3,
+  "liq_filter_mcap": 2000000000.0,
+  "warmup": 4,
+  "ob_base": 53,
+  "ob_cap_adj": 40,
+  "transaction_cost": true,
+  "ob_filter": true,
+  "bad_return_threshold": 0.40,
+  "data_h5": "data/data_v20.h5",
+  "_notes": {
+    "strategy": "V21 = lv(0.15) + wt_mom(0.85) — see SKILL.md / README.md for design.",
+    "tc_default": "TRUE in this skill port (overrides V21.0 research default of false).",
+    "data_h5": "Relative to skill root. Override via $V21_DATA_H5 env var or --data-path CLI.",
+    "engine_timing_bug": "Original V21.0 timing bug fixed 2026-07-09 — see references/release-notes-en.md §Engine Fixes.",
+    "dsr_formula": "Original DSR formula bug fixed 2026-07-09 — now uses correct LdP (2018) Eq 12.7-12.8."
+  }
+}

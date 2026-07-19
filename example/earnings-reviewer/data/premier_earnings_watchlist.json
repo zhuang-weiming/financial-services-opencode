@@ -1,0 +1,59 @@
+{
+  "premier_client": {
+    "name": "Meridian Family Office",
+    "portfolio_value": 8500000,
+    "watchlist": [
+      {
+        "ticker": "600519",
+        "name": "贵州茅台",
+        "next_earnings": "2026-08-28",
+        "consensus_eps": 78.5,
+        "my_estimate_eps": 80.2,
+        "position_size": 1800000,
+        "allocation_pct": 21.2,
+        "avg_cost": 120.5,
+        "current_price": 145.8
+      },
+      {
+        "ticker": "AAPL",
+        "name": "Apple Inc",
+        "next_earnings": "2026-07-25",
+        "consensus_eps": 1.65,
+        "my_estimate_eps": 1.72,
+        "position_size": 1250000,
+        "allocation_pct": 14.7,
+        "avg_cost": 168.0,
+        "current_price": 195.0
+      },
+      {
+        "ticker": "MSFT",
+        "name": "Microsoft Corp",
+        "next_earnings": "2026-07-30",
+        "consensus_eps": 2.95,
+        "my_estimate_eps": 3.05,
+        "position_size": 980000,
+        "allocation_pct": 11.5,
+        "avg_cost": 350.0,
+        "current_price": 425.0
+      },
+      {
+        "ticker": "600036",
+        "name": "招商银行",
+        "next_earnings": "2026-08-19",
+        "consensus_eps": 5.85,
+        "my_estimate_eps": 5.60,
+        "position_size": 650000,
+        "allocation_pct": 7.6,
+        "avg_cost": 32.5,
+        "current_price": 36.8
+      }
+    ]
+  },
+  "market_calendar": {
+    "key_macro_events": [
+      {"date": "2026-07-29", "event": "FOMC 利率决议", "expected": "维持 4.50%"},
+      {"date": "2026-08-10", "event": "中国 CPI/PPI 数据", "expected": "CPI +0.3%"},
+      {"date": "2026-09-12", "event": "ECB 利率决议", "expected": "维持不变"}
+    ]
+  }
+}

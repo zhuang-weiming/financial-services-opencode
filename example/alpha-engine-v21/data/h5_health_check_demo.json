@@ -1,0 +1,13 @@
+{
+  "path": ".opencode/skills/alpha-engine-v21/data/data_v20.h5",
+  "exists": true,
+  "size_mb": 19.05,
+  "n_dates": 193,
+  "n_tickers": 3060,
+  "has_wt1": true,
+  "has_wt2": false,
+  "has_close_7d": true,
+  "has_bad_mask": true,
+  "n_universe_exclude": 870,
+  "_note": "V21 H5 has WT1 but not WT2 (WT2 is computed from WT1 on the fly when needed). 870 stocks excluded by data-quality / B-share rules."
+}

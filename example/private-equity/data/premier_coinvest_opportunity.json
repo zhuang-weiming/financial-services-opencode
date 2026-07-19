@@ -1,0 +1,48 @@
+{
+  "opportunity_id": "COINVEST-2026-001",
+  "deal_name": "DataInfra Co-investment",
+  "fund_sponsor": "HHH Technology Fund III",
+  "opportunity_type": "co-investment",
+  "target_company": {
+    "name": "DataInfra Inc.",
+    "sector": "企业级数据基础设施 SaaS",
+    "revenue_latest": 18500000,
+    "revenue_growth": 42,
+    "gross_margin": 0.78,
+    "ebitda_margin": -0.05,
+    "arr": 22000000,
+    "nrr": 1.25,
+    "burn_rate_monthly": 900000,
+    "cash_on_hand": 8500000
+  },
+  "deal_terms": {
+    "pre_money_valuation": 120000000,
+    "investment_amount": 5000000,
+    "equity_stake_pct": 4.0,
+    "liquidation_preference": "1x non-participating",
+    "board_seat": false,
+    "information_rights": true,
+    "pro_rata_rights": true,
+    "anti_dilution": "weighted_average"
+  },
+  "return_projections": {
+    "base_case": {"exit_year": 5, "exit_revenue": 82000000, "exit_multiple": 8.0, "moic": 2.8, "irr": 22.5},
+    "bull_case": {"exit_year": 5, "exit_revenue": 105000000, "exit_multiple": 10.0, "moic": 4.5, "irr": 35.0},
+    "bear_case": {"exit_year": 7, "exit_revenue": 50000000, "exit_multiple": 5.0, "moic": 0.9, "irr": -1.5}
+  },
+  "fund_details": {
+    "fund_name": "HHH Technology Fund III",
+    "fund_size": 500000000,
+    "vintage_year": 2024,
+    "committed_capital_remaining": 250000000,
+    "management_fee": 0.02,
+    "carry": 0.20,
+    "hurdle_rate": 0.08
+  },
+  "risks": [
+    "SaaS 市场增速放缓，获客成本上升",
+    "竞争加剧（Snowflake/Databricks 等巨头挤压）",
+    "尚未盈利，依赖融资续命",
+    "5 年退出周期内宏观不确定性"
+  ]
+}

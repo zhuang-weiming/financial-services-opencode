@@ -1,0 +1,6 @@
+RiskProfile,MaxEquityPct,MinBondPct,MaxAlternativesPct,MaxSingleStockPct,MinLiquidityPct,MaxEMExposurePct,AllowCrypto,AllowPE,AllowDerivatives,ReviewFrequency
+保守型,30,50,10,5,20,5,No,No,No,年度
+稳健型,50,30,15,8,15,10,No,Limited,No,半年
+均衡型,65,20,20,10,10,15,Limited,Limited,Limited,季度
+成长型,80,10,25,15,8,20,Yes,Yes,Yes,季度
+进取型,95,0,30,20,5,25,Yes,Yes,Yes,月度

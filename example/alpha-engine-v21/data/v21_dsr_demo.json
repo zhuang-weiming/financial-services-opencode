@@ -1,0 +1,53 @@
+{
+  "_note": "Toy DSR table — what DSR does when you sweep n_configs (López de Prado 2018 Eq 12.7-12.8). Real numbers from deflated_sharpe_ratio() in vibe_trading_quanta.backtest.validation.",
+  "strategy": "V21 (lv+wt, A-share monthly)",
+  "sr_observed_annual": 0.869,
+  "skewness": 0.85,
+  "kurtosis_total": 6.81,
+  "n_obs_months": 192,
+  "dsr_by_n_configs": [
+    {
+      "n_configs": 1,
+      "sr_benchmark": 0.0,
+      "dsr": 1.0,
+      "interpretation": "no multiple-test correction"
+    },
+    {
+      "n_configs": 5,
+      "sr_benchmark": 0.0831,
+      "dsr": 1.0,
+      "interpretation": "5 trials — V21 still extreme winner"
+    },
+    {
+      "n_configs": 10,
+      "sr_benchmark": 0.1157,
+      "dsr": 1.0,
+      "interpretation": "10 trials — still significant"
+    },
+    {
+      "n_configs": 50,
+      "sr_benchmark": 0.1845,
+      "dsr": 1.0,
+      "interpretation": "50 trials — still significant"
+    },
+    {
+      "n_configs": 100,
+      "sr_benchmark": 0.214,
+      "dsr": 1.0,
+      "interpretation": "100 trials — still significant"
+    },
+    {
+      "n_configs": 500,
+      "sr_benchmark": 0.298,
+      "dsr": 0.997,
+      "interpretation": "500 trials — borderline"
+    },
+    {
+      "n_configs": 1000,
+      "sr_benchmark": 0.341,
+      "dsr": 0.978,
+      "interpretation": "1000 trials — still passes"
+    }
+  ],
+  "caveat": "DSR tells you the strategy is unlikely to be pure luck. It says nothing about whether the alpha will persist. Always pair DSR with walk-forward OOS validation."
+}

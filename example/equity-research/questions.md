@@ -64,3 +64,45 @@ Please:
 3) Flag outliers on either cheap/expensive side
 4) Recommend top pick based on risk/reward
 ```
+
+## Question 4: Premier 持仓股深度覆盖——贵州茅台
+```
+作为一位持有贵州茅台的 Premier 投资者，请对该股做一次全面的首次覆盖级分析。
+
+Reference: data/premier_stock_data.csv (rows 1-4), data/research_report.json
+
+From data/premier_stock_data.csv:
+- 茅台近 4 年营收从 1275 亿增长至 1950 亿
+- ROE 稳定在 30-33%，PE 从 35x 压缩至 22x
+- 自由现金流充裕，股息率从 1.2% 升至 2.1%
+
+From data/research_report.json:
+- 参考格式：买入/卖出/持有评级、目标价、上行空间
+
+Please:
+1) 分析茅台的核心护城河（品牌/定价权/渠道/产能）
+2) 建立简化 DCF 估值模型（假设 FCF 增长 10%，WACC 9%，终值增长 4%）
+3) 与全球奢侈品同行（LVMH/Hermes/Diageo）做估值对比
+4) 当前 22x PE 在历史区间什么分位？是否合理？
+5) 给出明确的投资建议：买入/持有/减仓，说明条件
+6) 标注关键观察指标和危机关联
+```
+
+## Question 5: 构建 Premier 持仓催化剂日历
+```
+请为我的 Premier 投资组合构建未来 3 个月的催化剂日历。
+
+Reference: data/premier_stock_data.csv
+
+From data/premier_stock_data.csv:
+- 我的组合主要持有：贵州茅台、苹果等
+- 需要跟踪的催化剂类型：财报、股东大会、产品发布、分红除权、监管政策
+
+Please:
+1) 列出未来 3 个月（2026 年 7-9 月）每只持仓股的关键事件和时间线
+2) 对每个事件标注预期 Impact（高/中/低）和方向性倾向（正面/中性/负面）
+3) 标注哪些事件可能触发调仓决策
+4) 对即将到来的财报事件，给出预期的市场共识和我的看法
+5) 生成一个简洁的日历视图（表格或时间线格式）
+6) 标注需要特别关注的事件前准备动作
+```

@@ -76,3 +76,49 @@ Please:
 3) Suggest suitable replacement ETFs/stocks
 4) Build a harvesting schedule respecting wash sale rules
 ```
+
+## Question 4: 基金组合诊断与优化
+```
+作为一位 Premier 客户，请对我的基金持仓进行全面诊断并提出优化建议。
+
+Reference: data/premier_fund_holdings.csv, data/meeting_prep.json
+
+From data/premier_fund_holdings.csv:
+- 总持仓：8 只基金/ETF，覆盖混合型、指数型、QDII、行业主题
+- 配置比例从 8% 到 20% 不等
+- 部分基金有显著未实现盈亏
+
+From data/meeting_prep.json:
+- 总资产：$8.5M
+- 风险承受能力：中等
+
+Please:
+1) 分析当前组合的资产配置结构（权益/固收/海外/行业集中度）
+2) 评估每只基金的费率合理性（对比同类中位数）
+3) 检查风格箱分布和风格漂移风险
+4) 识别持仓重叠和行业集中风险
+5) 给出具体的调仓建议（卖出/持有/加仓）及理由
+6) 推荐替代基金或 ETF 方案
+```
+
+## Question 5: 投资理念诊断与行为偏误分析
+```
+请通过投资理念自测问卷分析我的投资风格，并结合实际持仓行为诊断潜在的行为偏误。
+
+Reference: data/premier_philosophy_quiz.json, data/premier_fund_holdings.csv
+
+From data/premier_philosophy_quiz.json:
+- 5 道自测题，覆盖风险偏好、选基逻辑、长期态度、创新接受度、收益预期
+- 输出维度：价值型 / 成长型 / 均衡型 / 趋势型 / 保守型
+
+From data/premier_fund_holdings.csv:
+- 当前持仓数据含每只基金的成本和盈亏
+
+Please:
+1) 根据我的回答计算各投资风格分数，判断主导风格
+2) 分析主导风格的特点和适用市场环境
+3) 对比我的实际持仓行为，检查是否知行合一
+4) 诊断可能存在的行为偏误（处置效应/过度自信/锚定效应/追涨杀跌）
+5) 给出针对性的行为矫正建议
+6) 提供与我的风格匹配的参考组合配置
+```

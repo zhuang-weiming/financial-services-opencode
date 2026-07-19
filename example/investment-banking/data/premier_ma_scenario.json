@@ -1,0 +1,43 @@
+{
+  "announcement_date": "2026-07-15",
+  "acquirer": {
+    "name": "TechGlobal Inc.",
+    "ticker": "TECH",
+    "pre_announcement_price": 85.00,
+    "sector": "企业软件"
+  },
+  "target": {
+    "name": "DataFlow Systems",
+    "ticker": "FLOW",
+    "pre_announcement_price": 32.00,
+    "sector": "数据基础设施"
+  },
+  "deal_terms": {
+    "type": "stock_and_cash",
+    "cash_per_share": 18.00,
+    "stock_ratio": 0.15,
+    "tech_stock_price_at_announcement": 85.00,
+    "implied_value_per_flow_share": 30.75,
+    "premium_to_pre_close": -3.9,
+    "premium_to_30day_vwap": 12.5,
+    "enterprise_value": 2800000000,
+    "ev_ebitda": 18.5,
+    "ev_revenue": 6.2,
+    "target_revenue": 452000000,
+    "target_ebitda": 151000000,
+    "target_ebitda_margin": 33.4
+  },
+  "synergies": {
+    "revenue_synergies_annual": 85000000,
+    "cost_synergies_annual": 120000000,
+    "integration_cost_one_time": 200000000,
+    "year_3_eps_accretion": 0.35,
+    "year_3_eps_dilution": null
+  },
+  "premier_holdings": {
+    "owns_tech": true,
+    "tech_cost_basis": 62.00,
+    "tech_position_size": 350000,
+    "owns_flow": false
+  }
+}
