@@ -45,6 +45,7 @@ Map user intent keywords to the most specific subagent:
 | "IC memo", "deal screen", "deal sourcing", "DD checklist" | `private-equity` |
 | "client report", "financial plan", "retirement plan", "rebalance" | `wealth-management` |
 | "WIF", "wealth investment framework", "fund advisory", "portfolio health status", "phase assessment", "F29", "VIXTERM", "WIF phase" | `wealth-management` |
+| "A股WIF", "MCI", "PMI M2", "MA60趋势", "沪深300配置", "A股象限", "Wealth Investment Framework A股", "A股资产配置" | `market-router` (data) or `wealth-management` → load `wif-ashare-advisory` |
 | "GL recon", "NAV tie-out", "accrual", "roll-forward" | `fund-admin` or `gl-reconciler` |
 | "KYC", "onboarding", "AML screening" | `kyc-screener` |
 | "alpha", "factor research", "IC/IR", "quantile" | `factor-researcher` or `alpha-researcher` |
@@ -106,6 +107,7 @@ below maps common triggers to the right skill.
 | Event-driven backtest (M&A, insider trades, regulatory) | `backtest-builder` | `event-driven` / `corporate-events` |
 | Cross-market multi-asset portfolio | `backtest-builder` | `cross-market-strategy` |
 | WIF 5-phase market timing, F29, VIXTERM | `wealth-management` | `wif-fund-advisory` |
+| A股WIF, MCI, PMI+M2象限, MA60趋势覆盖, A股一线三象限 | `wealth-management` | `wif-ashare-advisory` |
 | Hong Kong / A-share / ADR cross-listing arb | `market-router` / `factor-researcher` | `adr-hshare` |
 | Stock Connect flow / northbound / southbound | `market-router` | `hk-connect-flow` |
 | Convertible bond analysis (转股 / 纯债 / 期权) | `market-researcher` | `convertible-bond` |

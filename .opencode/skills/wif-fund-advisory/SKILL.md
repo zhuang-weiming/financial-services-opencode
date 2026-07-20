@@ -4,7 +4,8 @@ description: >
   WIF (Wealth Investment Framework) v5.9 fund advisory methodology for US market.
   Covers 5-phase market timing system (Rising/Panic/Fall/Recover/Transition) using
   FFR/F29/VIX/VIXTERM macro indicators, 40-ETF multi-asset universe, historical
-  backtest (2007-2026, +1332.4%, Sharpe 1.00, MDD -21.1%), and rebalancing engine.
+  backtest (2007-2026, gross +1095.7%, Sharpe 1.01, MDD -27.2%; net +399.6%,
+  Sharpe 0.67, MDD -31.0%), and rebalancing engine with real-holdings ledger.
   Triggers on "WIF", "wealth investment framework", "fund advisory methodology",
   "asset allocation portfolio", "portfolio health status", "phase assessment",
   "WIF phase", "F29 indicator", "VIXTERM", or "rebalancing recommendation".
@@ -16,15 +17,19 @@ description: >
 
 WIF v5.9 is a quantitative **multi-asset portfolio allocation methodology** for US-market fund advisory. It determines the current **market phase** (1-5) from three macro indicators, then maps each phase to a target ETF portfolio from a 40-ticker universe.
 
-### Key Metrics (2007-2026 Backtest)
+### Key Metrics (2007-2026 Backtest, 4926 trading days)
 
-| Metric | v5.9 (with friction) | SPY Buy-Hold |
-|--------|:---:|:---:|
-| Cumulative Return | **+1332.4%** | +1283.0% |
-| Sharpe Ratio | **1.00** | 0.61 |
-| Max Drawdown | **-21.1%** | -55.2% |
-| Trades | **4** | — |
-| Total Cost | $113,888 | — |
+| Metric | v5.9 Gross | v5.9 Net (HSBC costs) | SPY Buy-Hold |
+|--------|:---:|:---:|:---:|
+| Capital Cumulative Return | **+1095.7%** | **+399.6%** | +1283.0% |
+| Annualized Return | +13.54% | +9.10% | +16.48% |
+| Sharpe Ratio | **1.01** | **0.67** | 0.61 |
+| Max Drawdown | -27.2% | -31.0% | -55.2% |
+| Rebalance Events | — | 83 | — |
+| Asset-Level Fills | — | 414 | — |
+| Total Cost | — | $1,289,585 | — |
+
+*Capital return = final net NAV / 1.0 − 1 (includes initial fees); operating return = final net NAV / first post-fee NAV − 1 is ~12bp higher.*
 
 ### Data Location
 
@@ -33,7 +38,7 @@ All data files live at `example/wif-framework/data/`:
 - `tickers_20260716/` – 48 individual ticker CSVs
 - `WIF_v59_Backtest.py` – Full backtest engine (reference implementation)
 - `WIF_v59_nav_20260716.csv` – Historical NAV series
-- `WIF_v59_trade_log_20260716_HSCBC.csv` – 35-trade log
+- `WIF_v59_trade_log_20260716_HSCBC.csv` – Trade log (v5.9 + v6.8.1 combined)
 - `WIF_v59_Report_20260716.html` – HTML backtest report
 
 Python library interface: `.opencode/python/wif-framework/`
@@ -64,14 +69,18 @@ CSI < 1.0  → HEALTHY
 
 #### Layer 2: Macro Quadrant (Economic Regime)
 
-Four-quadrant mapping from Real Rate (DFII10) and Breakeven Inflation (T10YIE):
+The default uses SPY/TLT 126-day momentum (60-day rolling mean), matching the
+reference backtest. A real-rate-based fallback (DFII10 / T10YIE 60-day delta) is
+available via `macro_quadrant(..., fallback="real_rate")`.
 
-| Quadrant | Real Rate | Inflation | Label |
-|:--------:|:---------:|:---------:|:------|
-| 1 | Falling | Falling | **Recession** (defensive) |
-| 2 | Falling | Rising | **Recovery** (risk-on) |
-| 3 | Rising | Rising | **Stagflation** (commodities) |
-| 4 | Rising | Falling | **Overheat** (late-cycle) |
+| Quadrant | SPY 126d | TLT 126d | Label |
+|:--------:|:--------:|:--------:|:------|
+| 1 | Falling | Rising | **Recession** (defensive) |
+| 2 | Rising | Falling | **Recovery** (risk-on) |
+| 3 | Falling | Falling | **Stagflation** (commodities) |
+| 4 | Rising | Rising | **Overheat** (late-cycle) |
+
+Fallback (real-rate) quadrant mapping: Falling/Falling → Q1, Falling/Rising → Q2, etc.
 
 #### Layer 3: MCI (Market Condition Index)
 

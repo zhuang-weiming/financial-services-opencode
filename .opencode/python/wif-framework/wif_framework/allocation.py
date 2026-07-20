@@ -1,3 +1,16 @@
+def _normalized_weights(weights: dict[str, float], precision: int = 4) -> dict[str, float]:
+    cleaned = {key: max(0.0, float(value)) for key, value in weights.items()}
+    total = sum(cleaned.values())
+    if total <= 0:
+        raise ValueError("allocation weights must contain a positive value")
+    normalized = {key: value / total for key, value in cleaned.items()}
+    rounded = {key: round(value, precision) for key, value in normalized.items()}
+    residual = round(1.0 - sum(rounded.values()), precision)
+    residual_key = max(rounded, key=rounded.get)
+    rounded[residual_key] = round(rounded[residual_key] + residual, precision)
+    return rounded
+
+
 def triple_track_v59(phase1_status: str, macro_quadrant: int) -> tuple:
     if phase1_status == "EMERGENCY":
         return (0.15, 0.55, 0.30)
@@ -19,16 +32,18 @@ def calc_v68b(phase1_status: str, mci: float, macro_quadrant: int) -> dict:
     else:
         eq = min(1.0, max(0.0, 0.50 + max(0, mci) * 0.025))
         gld, xle, pdbc = 0.05, 0.03, 0.0
+
     alt = gld + xle + pdbc
     if eq + alt > 0.97 and alt > 0:
-        sc = (0.97 - eq) / alt
-        gld *= sc
-        xle *= sc
-        pdbc *= sc
+        available_for_alt = max(0.0, 0.97 - eq)
+        scale = available_for_alt / alt
+        gld *= scale
+        xle *= scale
+        pdbc *= scale
         alt = gld + xle + pdbc
-    fi = max(0.0, 1.0 - eq - alt - 0.03)
-    tot = eq + alt + fi
-    return {k: round(v / tot, 4) for k, v in {"stock": eq, "fi": fi, "gld": gld, "xle": xle, "pdbc": pdbc}.items()}
+
+    fi = max(0.0, 1.0 - eq - alt)
+    return _normalized_weights({"stock": eq, "fi": fi, "gld": gld, "xle": xle, "pdbc": pdbc})
 
 
 PHASE_ALLOCATION = {

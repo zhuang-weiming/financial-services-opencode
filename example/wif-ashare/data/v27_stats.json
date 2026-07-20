@@ -1,0 +1,21 @@
+{
+  "version": "v2.7",
+  "engine": "ashare.py",
+  "stats": {
+    "cumulative": 749.2,
+    "geo_cagr": 19.03,
+    "volatility": 16.09,
+    "sharpe": 1.183,
+    "mdd": -21.5,
+    "win_rate": 52.3,
+    "nav_end": 8.4819
+  },
+  "diagnostics": {
+    "trend_up_days": 340,
+    "trend_dn_days": 109,
+    "override_q1_days": 163,
+    "override_q3_days": 79
+  },
+  "rebal_count": 117,
+  "total_turnover": 81.23841818181803
+}

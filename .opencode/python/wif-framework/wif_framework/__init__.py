@@ -1,12 +1,35 @@
-from wif_framework.phase import current_phase, phase1_status, macro_quadrant, compute_csi, CSI_COMPONENTS
+from wif_framework.phase import (
+    current_phase,
+    phase1_status,
+    macro_quadrant,
+    macro_quadrant_real_rate_fallback,
+    compute_csi,
+    CSI_COMPONENTS,
+)
 from wif_framework.allocation import target_allocation, triple_track_v59, calc_v68b, PHASE_ALLOCATION
 from wif_framework.universe import ETF_UNIVERSE, ETF_CATEGORIES, FACTOR_LIST, DEFENSIVE_ETFS
 from wif_framework.data import load_prices, load_ticker, load_fred_series, load_prices_with_fred, price_path, DATA_DIR
+from wif_framework.portfolio import Fill, RebalanceResult, PortfolioLedger, select_rebalance_assets
+from wif_framework.ashare import (
+    compute_mci,
+    mci_to_quadrant,
+    effective_quadrant,
+    get_em_weight,
+    normalize_weights,
+    QW,
+    EM_WEIGHTS,
+    COST,
+    TREND_UP,
+    TREND_DOWN,
+    load_data,
+    run_backtest,
+)
 
 __all__ = [
     "current_phase",
     "phase1_status",
     "macro_quadrant",
+    "macro_quadrant_real_rate_fallback",
     "compute_csi",
     "CSI_COMPONENTS",
     "target_allocation",
@@ -23,4 +46,20 @@ __all__ = [
     "load_prices_with_fred",
     "price_path",
     "DATA_DIR",
+    "Fill",
+    "RebalanceResult",
+    "PortfolioLedger",
+    "select_rebalance_assets",
+    "compute_mci",
+    "mci_to_quadrant",
+    "effective_quadrant",
+    "get_em_weight",
+    "normalize_weights",
+    "QW",
+    "EM_WEIGHTS",
+    "COST",
+    "TREND_UP",
+    "TREND_DOWN",
+    "load_data",
+    "run_backtest",
 ]

@@ -16,7 +16,7 @@ Wealth-Guide will route your question to the appropriate subagent(s).
 
 ## Cookbook Index
 
-### Institutional (17 subagents)
+### Institutional (19 subagents)
 
 | # | Cookbook | Routes to subagent | Trigger keywords |
 |---|:---|---|:---|
@@ -37,25 +37,26 @@ Wealth-Guide will route your question to the appropriate subagent(s).
 | 15 | `statement-auditor/` | `statement-auditor` | statement audit, LP statement, model audit, NAV tie-out |
 | 16 | `valuation-reviewer/` | `valuation-reviewer` | valuation review, returns analysis, stress-test |
 | 17 | `wealth-management/` | `wealth-management` | client report, financial plan, portfolio rebalance, tax-loss harvesting |
-| 18 | `wif-framework/` | `wealth-management` | WIF, wealth investment framework, asset allocation portfolio, fund advisory methodology, portfolio health, phase assessment |
+| 18 | `wif-framework/` | `wealth-management` | WIF (US), wealth investment framework, asset allocation portfolio, fund advisory methodology, portfolio health, phase assessment, F29, VIXTERM |
+| 19 | **`wif-ashare/`** | `wealth-management` | **A股WIF, MCI, PMI M2, MA60趋势, 沪深300配置, A股象限, A股资产配置** |
 
 ### Quantitative Research (5 subagents)
 
 | # | Cookbook | Routes to subagent | Trigger keywords |
 |---|:---|---|:---|
-| 19 | `alpha-researcher/` | `alpha-researcher` | alpha zoo, factor bench, alpha family, IC/IR |
-| 20 | `backtest-builder/` | `backtest-builder` | backtest, strategy backtest, walk-forward, signal test |
-| 21 | `factor-researcher/` | `factor-researcher` | factor analysis, IC/IR, quantile backtest, factor decomposition |
-| 22 | `market-router/` | `market-router` | crypto (BTC/ETH), A-share (600519), forex (EURUSD), multi-market |
-| 23 | `swarm-orchestrator/` | `swarm-orchestrator` | swarm, investment committee, multi-agent team, macro forum |
-| 24 | `alpha-engine-v21/` | `alpha-researcher` + `alpha-engine-v21` skill | V21, lazybear, WaveTrend, WT1, WT2, low-vol A-share, Deflated Sharpe Ratio, 懒熊振荡器, 低波动 A 股 |
+| 20 | `alpha-researcher/` | `alpha-researcher` | alpha zoo, factor bench, alpha family, IC/IR |
+| 21 | `backtest-builder/` | `backtest-builder` | backtest, strategy backtest, walk-forward, signal test |
+| 22 | `factor-researcher/` | `factor-researcher` | factor analysis, IC/IR, quantile backtest, factor decomposition |
+| 23 | `market-router/` | `market-router` | crypto (BTC/ETH), A-share (600519), forex (EURUSD), multi-market |
+| 24 | `swarm-orchestrator/` | `swarm-orchestrator` | swarm, investment committee, multi-agent team, macro forum |
+| 25 | `alpha-engine-v21/` | `alpha-researcher` + `alpha-engine-v21` skill | V21, lazybear, WaveTrend, WT1, WT2, low-vol A-share, Deflated Sharpe Ratio, 懒熊振荡器, 低波动 A 股 |
 
 ### Utility (2)
 
 | # | Cookbook | Description |
 |---|:---|---|
-| 24 | `explore/` | Codebase exploration (not a routed subagent) |
-| 25 | `wealth-guide-e2e/` | Cross-domain questions requiring multiple subagents in parallel |
+| 26 | `explore/` | Codebase exploration (not a routed subagent) |
+| 27 | `wealth-guide-e2e/` | Cross-domain questions requiring multiple subagents in parallel |
 
 ---
 
@@ -87,3 +88,12 @@ For questions spanning multiple domains, Wealth-Guide dispatches to multiple sub
 
 Example: *"Analyze NVDA's latest earnings, build a DCF model, and compare against AMD"*
 → dispatches to `earnings-reviewer` + `model-builder` + `market-researcher` in parallel.
+
+### WIF Framework Cross-Domain Examples
+
+| Domain Pattern | Parallel dispatch |
+|:---|---|
+| US WIF phase + A-Share WIF quadrant | `wealth-management` → load both `wif-fund-advisory` + `wif-ashare-advisory` |
+| A-Share WIF + alpha research + backtest | `market-router` (data) + `alpha-researcher` + `backtest-builder` |
+| US WIF rebalance + tax harvesting | `wealth-management` → `wif-fund-advisory` + `tax-loss-harvesting` |
+| A-Share WIF + macro analysis | `wealth-management` → `wif-ashare-advisory` + `global-macro` |

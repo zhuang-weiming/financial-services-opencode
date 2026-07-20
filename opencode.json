@@ -6,6 +6,9 @@
     ".opencode/instructions/quant-research.md",
     ".opencode/instructions/wealth-guide-router.md"
   ],
+  "skills": {
+    "paths": [".opencode/skills"]
+  },
   "mcp": {
     "morningstar": {
       "type": "remote",
