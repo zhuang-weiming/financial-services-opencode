@@ -1,0 +1,16 @@
+{
+  "full_sample_beta": 1.3102,
+  "full_sample_alpha": 0.051,
+  "full_sample_r_squared": 0.4781,
+  "full_sample_n": 4017,
+  "full_2015_beta": 1.2758,
+  "full_2015_r_squared": 0.6619,
+  "direction_same_pct": 79.31,
+  "rolling_beta_250d_mean": 1.303,
+  "rolling_beta_250d_current": 0.994,
+  "rolling_beta_250d_min": 0.907,
+  "rolling_beta_250d_max": 1.683,
+  "broker_avg_when_csi_over_1pct": 2.681,
+  "broker_avg_when_csi_over_3pct": 5.853,
+  "broker_avg_when_csi_under_minus_1pct": -2.399
+}

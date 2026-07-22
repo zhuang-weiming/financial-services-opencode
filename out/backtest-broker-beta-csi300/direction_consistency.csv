@@ -1,0 +1,2 @@
+total_days,same_direction_pct,up>0.5%_days,up>0.5%_same_dir_pct,up>0.5%_broker_avg_ret,up>0.5%_csi_avg_ret,down<-0.5%_days,down<-0.5%_same_dir_pct,down<-0.5%_broker_avg_ret,down<-0.5%_csi_avg_ret,flat_days,flat_same_dir_pct,flat_broker_avg_ret,flat_csi_avg_ret
+4017,79.31,1205,89.71,2.008,1.436,1186,90.89,-1.727,-1.411,1626,63.16,-0.049,0.006
