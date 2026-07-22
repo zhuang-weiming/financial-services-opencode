@@ -4,10 +4,14 @@
   "instructions": [
     ".opencode/instructions/data-priority.md",
     ".opencode/instructions/quant-research.md",
-    ".opencode/instructions/wealth-guide-router.md"
+    ".opencode/instructions/wealth-guide-router.md",
+    ".opencode/instructions/backtest-discipline.md",
+    ".opencode/instructions/memory-protocol.md"
   ],
   "skills": {
-    "paths": [".opencode/skills"]
+    "paths": [
+      ".opencode/skills"
+    ]
   },
   "mcp": {
     "morningstar": {
@@ -16,11 +20,18 @@
     },
     "factset": {
       "type": "remote",
-      "url": "https://mcp.factset.com/content/v1"
+      "url": "https://mcp.factset.com/content/v1",
+      "oauth": {
+        "redirectUri": "http://127.0.0.1:57123/mcp/oauth/callback?server=factset&directory=%2FUsers%2Fweimingzhuang%2FDocuments%2Fsource_code%2Ffinancial-services-opencode"
+      },
+      "enabled": true
     },
     "ddg-search": {
       "type": "local",
-      "command": ["uvx", "duckduckgo-mcp-server"],
+      "command": [
+        "uvx",
+        "duckduckgo-mcp-server"
+      ],
       "enabled": true
     }
   },

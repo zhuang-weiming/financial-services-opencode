@@ -1,0 +1,50 @@
+{
+  "RF_shallow": {
+    "metrics": {
+      "n_obs": 2394,
+      "r2": -0.2739,
+      "rmse": 0.069539,
+      "mae": 0.048464,
+      "directional_accuracy": 0.4925,
+      "mean_pred_return": 0.003798,
+      "n_long_signals": 1260,
+      "n_short_signals": 1134,
+      "sharpe_long": 0.3549,
+      "sharpe_short": 0.5791,
+      "sharpe_strategy": -0.013
+    },
+    "resid": {
+      "resid_mean": -0.001656,
+      "resid_std": 0.069519,
+      "resid_skew": 0.0526,
+      "resid_kurtosis": 3.5057,
+      "resid_q1": -0.034663,
+      "resid_q3": 0.03151,
+      "resid_outliers_pct": 6.56
+    }
+  },
+  "RF_deep": {
+    "metrics": {
+      "n_obs": 2394,
+      "r2": -0.4225,
+      "rmse": 0.073483,
+      "mae": 0.051017,
+      "directional_accuracy": 0.5033,
+      "mean_pred_return": 0.003798,
+      "n_long_signals": 1242,
+      "n_short_signals": 1152,
+      "sharpe_long": 0.2896,
+      "sharpe_short": 0.666,
+      "sharpe_strategy": -0.098
+    },
+    "resid": {
+      "resid_mean": -0.003806,
+      "resid_std": 0.073384,
+      "resid_skew": -0.0317,
+      "resid_kurtosis": 3.1229,
+      "resid_q1": -0.037941,
+      "resid_q3": 0.030251,
+      "resid_outliers_pct": 6.77
+    }
+  }
+}
