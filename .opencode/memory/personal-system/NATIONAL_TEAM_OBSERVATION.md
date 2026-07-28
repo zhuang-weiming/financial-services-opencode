@@ -98,7 +98,7 @@
 | 日期 | 更新者 | 内容 |
 |:-----|:-------|:-----|
 | 2026-07-22 | wealth-guide (FactSet) | 初版建立。FactSet 数据确认 2026H1 净卖出 regime。510050 -89%, 510310 -82%, 159919 -83% |
-| 2026-07-22 | wealth-guide | 完成完整时间线分析（2023-2026年全部月度数据）。详见 `out/national-team-monitoring/huijin-timeline-2023-2026.md` |
+| 2026-07-22 | wealth-guide | 完成完整时间线分析（2023-2026年全部月度数据）。详见 `out/national-team-monitoring-20260722/huijin-timeline-2023-2026-20260722.md` |
 | — | — | 下次更新：2026-08-22（每月用 FactSet 拉一次） |
 
 ---
@@ -107,8 +107,8 @@
 
 | 文件 | 作用 |
 |:-----|:-----|
-| `out/national-team-monitoring/README.md` | 监测方案详细说明 + 数据源评估 |
-| `out/national-team-monitoring/factset_data_20260722.md` | FactSet 完整份额变化分析 |
-| `out/national-team-monitoring/etf_share_monitor.py` | AKShare 脚本（当前限流中） |
+| `out/national-team-monitoring-20260722/README-20260722.md` | 监测方案详细说明 + 数据源评估 |
+| `out/national-team-monitoring-20260722/factset_data-20260722.md` | FactSet 完整份额变化分析 |
+| `out/national-team-monitoring-20260722/etf_share_monitor-20260722.py` | AKShare 脚本（当前限流中） |
 | `CONFLICTS.md` (CONFLICT-REGIME-001) | Regime 切换冲突记录 |
 | `BACKTEST_INDEX.md` (BT-004) | 国家队入市回测（仅限净买入 regime） |

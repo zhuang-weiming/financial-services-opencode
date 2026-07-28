@@ -69,10 +69,10 @@
 | 报告 | 文件 | 时间 |
 |:-----|:-----|:----:|
 | GWM深度分析（8章） | `out/gwm-deepdive-2026h1.md` | 2026-07-23 |
-| GWM品牌高端化分析 | `out/gwm-brand-premiumization-analysis.md` | 2026-07-23 |
+| GWM品牌高端化分析 | `out/gwm-brand-premiumization-analysis-20260723.md` | 2026-07-23 |
 | GWM vs 5同行对比 | `out/gwm-vs-peers-comparison-2026h1.md` | 2026-07-23 |
 | A股投资框架 | `out/ashare-investment-framework-2026-2027.md` | 2026-07-23 v1.1 |
-| 国家队监测 | `out/national-team-monitoring/` | 2026-07-22 |
+| 国家队监测 | `out/national-team-monitoring-20260722/` | 2026-07-22 |
 | ★ 中远海控601919完整分析 | `out/COSCO-601919-Complete-Analysis-20260723.md` | 2026-07-23 |
 | ★ 中国联通600050完整分析 | `out/ChinaUnicom-600050-Complete-Analysis-20260723.md` | 2026-07-23 (最新) |
 
