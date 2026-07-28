@@ -1,3 +1,17 @@
+---
+name: 5-why-adversary
+description: |
+  Adversarial quality-control system for subagent output validation.
+  Any subagent MUST load this skill before outputting a directional judgment,
+  rating, or position recommendation. Enforces a 5-Why Protocol: challenge
+  every conclusion 5 times before it is spoken — find hidden assumptions,
+  identify falsification conditions, invert the conclusion, check
+  confirmation bias, and state the framework's weakest point.
+  Integrates with LAWS.md, CONFLICTS.md, regime_shift_detector.py,
+  and the memory-protocol.md adversarial review workflow.
+category: quality-control
+---
+
 # 5-Why Adversary — 反方质控系统
 
 > **加载条件:** 任何 subagent 在产出结论（方向性判断/评级/仓位建议）**之前**，必须先加载此 skill，对自己即将输出的结论执行一次 5-Why 反方质控。

@@ -20,20 +20,19 @@
 
 ## 1. personal-system/
 
-| 文件 | 作用 | 时序性 | 状态 |
-|------|------|--------|------|
 | 文件 | 作用 | 时序性 | 5-Why 状态 |
 |------|------|--------|:----------:|
 | `LAWS.md` | 已验证生效的法则（每条含 5-Why Challenge） | 静态（蒸馏后） | ✅ 3/3 已填充 |
 | `FAILED_LAWS.md` | 已失效/未支持的规则 | 静态（蒸馏后） | 空 |
-| `OPEN_HYPOTHESES.md` | 待验证的猜想（每条含 5-Why Adversarial） | 静态 | ✅ 7/7 已填充 |
+| `OPEN_HYPOTHESES.md` | 待验证的猜想（每条含 5-Why Adversarial） | 静态 | ✅ 13/13 已填充 |
 | `BACKTEST_INDEX.md` | 回测台账（每条含 Adversarial Review） | 静态（追加） | ✅ 4/4 已填充 |
-| `CONFLICTS.md` | 冲突记录（回溯/逻辑/Regime） | 静态 | ✅ 4条已记录 |
+| `CONFLICTS.md` | 冲突记录（回溯/逻辑/Regime） | 静态 | ✅ 7条已记录 |
 | `SELL_LADDER.md` | 卖出梯子规则 | 静态 | 待补 |
 | `POSITION_SIZING.md` | 仓位管理 | 静态 | 已填充 |
 | `BROKER_OBSERVATION.md` | 券商板块观察指标体系 | 静态 | 已创建 |
 | `NATIONAL_TEAM_OBSERVATION.md` | 国家队全口径资金监测 | 动态（月度更新） | ✅ 已创建 |
-| `raw-log/YYYY-MM-DD.md` | 每日原始记录 | **强时序** | 1 文件 |
+| `raw-log/YYYY-MM-DD.md` | 每日原始记录 | **强时序** | 2 文件 |
+| `US_EQUITY_FRAMEWORK.md` | 美股投资框架（化债机制/板块轮动/退出信号） | 静态 | 已创建 |
 | `distillation-log/YYYY-MM-DD_NNN.md` | 蒸馏事件 | **强时序** | 空 |
 | `backtests/BT-XXX/` | 每个回测一个目录 | 静态 | 2 目录 |
 | `theses/<code>_<name>.md` | 个股研究论 | 静态 | 1 文件 |
@@ -56,14 +55,26 @@
 
 ## 当前活跃内容
 
-**最后更新:** 2026-07-22 (v4 — 国家队监测系统上线 + FactSet 数据源验证)
-**回测总数:** 5 (BT-001~BT-005)
-**活跃法则数:** 3 (全部含 5-Why Challenge 区块)
-**开放假设数:** 7 (全部含 5-Why Adversarial 区块)
-**开放冲突数:** 4 (3 LOGICAL_CONTRADICTION + 1 REGIME_SHIFT — 其中1条已获FactSet数据确认)
-**5-Why 系统:** ✅ 已集成（skill/script/模板全部就绪）
-**国家队 regime:** 🔴 净卖出（FactSet 数据确认，详见 NATIONAL_TEAM_OBSERVATION.md）
-**新增数据源验证:** FactSet FundsETF ✅ | Morningstar Data ✅
+**最后更新:** 2026-07-28
+**回测总数:** 4 (BT-001~BT-004)
+**活跃法则数:** 3 (LAW-001~003，全部含 5-Why Challenge；LAW-004 → HYP-013)
+**开放假设数:** 13 (HYP-001~013，全部含 5-Why Adversarial)
+**开放冲突数:** 3 (2 LOGICAL_CONTRADICTION + 1 REGIME_SHIFT)
+**5-Why 系统:** ✅ 已集成
+**国家队 regime:** 🔴 净卖出（FactSet 数据确认）
+**框架版本:** `out/ashare-investment-framework-2026-2027.md` v1.1
+
+### 最新产出研究报告 (`out/`)
+
+| 报告 | 文件 | 时间 |
+|:-----|:-----|:----:|
+| GWM深度分析（8章） | `out/gwm-deepdive-2026h1.md` | 2026-07-23 |
+| GWM品牌高端化分析 | `out/gwm-brand-premiumization-analysis.md` | 2026-07-23 |
+| GWM vs 5同行对比 | `out/gwm-vs-peers-comparison-2026h1.md` | 2026-07-23 |
+| A股投资框架 | `out/ashare-investment-framework-2026-2027.md` | 2026-07-23 v1.1 |
+| 国家队监测 | `out/national-team-monitoring/` | 2026-07-22 |
+| ★ 中远海控601919完整分析 | `out/COSCO-601919-Complete-Analysis-20260723.md` | 2026-07-23 |
+| ★ 中国联通600050完整分析 | `out/ChinaUnicom-600050-Complete-Analysis-20260723.md` | 2026-07-23 (最新) |
 
 ---
 
@@ -75,7 +86,7 @@
 | "我的法则说什么" | `grep "X" personal-system/LAWS.md` |
 | "X 假设是否被验证" | `grep "X" personal-system/OPEN_HYPOTHESES.md` |
 | "X 假设被推翻了吗" | `grep "X" personal-system/FAILED_LAWS.md` |
-| "今天学到了什么" | `cat personal-system/raw-log/2026-07-22.md` |
+| "今天学到了什么" | `cat personal-system/raw-log/2026-07-23.md`（或查看最近的 raw-log） |
 | "上周的回测" | `ls personal-system/backtests/ | grep BT-` |
 | **"LAW-XXX 的 5-Why 吗？"** | `grep "5-Why Challenge" personal-system/LAWS.md -A 20` |
 | **"HYP-XXX 的 5-Why？"** | `grep "5-Why Adversarial" personal-system/OPEN_HYPOTHESES.md -A 20` |

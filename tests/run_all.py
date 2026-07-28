@@ -28,13 +28,19 @@ from tests.test_skills import run_all_skills
 from tests.test_pipeline import run_all as run_pipeline
 from tests.test_business_acceptance import run_all as run_business_acceptance
 from tests.test_integration import run_all as run_integration
+from tests.test_security import run_all as run_security
+from tests.test_memory_protocol import run_all as run_memory_protocol
+from tests.test_quant_backtest import run_all as run_quant_backtest
+from tests.test_data_quality import run_all as run_data_quality
+from tests.test_artifacts import run_all as run_artifacts
 
 
 def main():
     parser = argparse.ArgumentParser(description="Run all tests")
     parser.add_argument(
         "--suite",
-        choices=["all", "structural", "routing", "agents", "skills", "pipeline", "business", "integration"],
+        choices=["all", "structural", "routing", "agents", "skills", "pipeline",
+                 "business", "integration", "security", "memory", "quant", "quality", "artifacts"],
         default="all",
     )
     parser.add_argument("--output", default=None, help="Path to save JSON report")
@@ -74,6 +80,26 @@ def main():
     if args.suite in ("all", "integration"):
         suites = run_integration()
         all_suites.extend(suites)
+
+    if args.suite in ("all", "security"):
+        suite = run_security()
+        all_suites.append(suite)
+
+    if args.suite in ("all", "memory"):
+        suite = run_memory_protocol()
+        all_suites.append(suite)
+
+    if args.suite in ("all", "quant"):
+        suite = run_quant_backtest()
+        all_suites.append(suite)
+
+    if args.suite in ("all", "quality"):
+        suite = run_data_quality()
+        all_suites.append(suite)
+
+    if args.suite in ("all", "artifacts"):
+        suite = run_artifacts()
+        all_suites.append(suite)
 
     # Print detailed results
     for suite in all_suites:
