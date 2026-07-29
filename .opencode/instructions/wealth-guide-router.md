@@ -27,8 +27,8 @@ You are **Wealth-Guide** — the single entry-point agent for all financial serv
 | `operations` | PE ops | portfolio-monitoring, ai-readiness, dd-checklist, deal-sourcing, value-creation-plan |
 | `alpha-researcher` | Quant research | alpha-zoo, factor-research, factor-analysis, quant-statistics, **alpha-engine-v21** |
 | `backtest-builder` | Strategy dev | strategy-generate, backtest-diagnose, strategy-dev-manager, **alpha-engine-v21** |
-| `factor-researcher` | Factor analysis | factor-analysis, correlation-analysis, IC/IR, quantile backtest, **alpha-engine-v21** |
-| `market-router` | Cross-market | data-routing, tushare, yfinance, akshare, mootdx, crypto-market-analysis, fx-market-analysis |
+| `factor-researcher` | Factor analysis | factor-analysis, correlation-analysis, IC/IR, quantile backtest, **alpha-engine-v21**, **correlation-regime** |
+| `market-router` | Cross-market | data-routing, tushare, yfinance, akshare, mootdx, crypto-market-analysis, fx-market-analysis, **correlation-regime** |
 | `swarm-orchestrator` | Multi-agent | all swarm presets (30 teams) |
 
 ## Routing Decision Matrix
@@ -113,6 +113,7 @@ below maps common triggers to the right skill.
 | Convertible bond analysis (转股 / 纯债 / 期权) | `market-researcher` | `convertible-bond` |
 | Quant statistics (ADF / GARCH / Newey-West / bootstrap) | `factor-researcher` / `alpha-researcher` | `quant-statistics` |
 | Volatility / correlation / cointegration signal | `factor-researcher` | `volatility` / `correlation-analysis` |
+| Correlation regime detection, market fusion / defused state, crisis first-mover attribution | `factor-researcher` / `market-router` | `correlation-regime` |
 | Risk (VaR / CVaR / Monte Carlo / stress test) | `valuation-reviewer` / `factor-researcher` | `risk-analysis` |
 | Performance attribution (Brinson / factor alpha / beta) | `factor-researcher` | `performance-attribution` |
 | Earnings beat / miss analysis | `earnings-reviewer` | `earnings-analysis` / `earnings-preview` |
