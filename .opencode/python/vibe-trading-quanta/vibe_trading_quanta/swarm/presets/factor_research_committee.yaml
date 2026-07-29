@@ -46,7 +46,7 @@ agents:
       5. **Factor Correlation Preview** — Expected correlation matrix among candidate factors to avoid information overlap
       6. **Mining Frontier Assessment** — Which factors are already overcrowded and which still have room
     tools: [bash, read_file, write_file, load_skill, factor_analysis]
-    skills: [factor-research, multi-factor]
+    skills: [factor-research, multi-factor, alpha-engine-v21, alpha-zoo]
     max_iterations: 50
     timeout_seconds: 1800
     max_retries: 1

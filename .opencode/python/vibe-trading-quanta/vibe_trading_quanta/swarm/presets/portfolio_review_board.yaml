@@ -79,7 +79,7 @@ agents:
 
       Use load_skill("risk-analysis") for methodology, load_skill("volatility") for vol and VaR.
     tools: [bash, read_file, write_file, load_skill]
-    skills: [risk-analysis, volatility]
+    skills: [risk-analysis, volatility, dividend-analysis]
     max_iterations: 50
     timeout_seconds: 1800
     max_retries: 1
