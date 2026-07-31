@@ -3,7 +3,8 @@
 > **5-Why Protocol:** 以下每条 BT 都附有 `## Adversarial Review` 区块。
 > 每次引用回测结果做决策前，必须先读其 Adversarial Review——它回答"这个回测结果在什么条件下不再适用"。
 > 
-> 状态: 4 条回测（BT-001~BT-004），全部完成 5-Why 审查
+> 状态: 5 条回测（BT-001~BT-005），全部完成 5-Why 审查
+> 最后更新: 2026-07-31（路径迁移：out/ → personal-system/backtests/）
 > 创建: 2026-07-22
 
 ---
@@ -97,7 +98,7 @@
   - 佣金率万8→万1.5，经纪业务占比50%→20%，量价完全脱钩
   - 所有成交量择时策略 Sharpe < 0.3
 - **结论:** **REJECTED** — 原始假设被数据证伪。成交量与券商PB在2015年后结构性断裂。
-- **位置:** `./out/backtest-broker-pb-volume-20260722/`（脚本+结果CSV+报告）
+- **位置:** `personal-system/backtests/BT-003/`（已从 `out/backtest-broker-pb-volume-20260722/` 迁移）
 
 #### Adversarial Review — BT-003
 - **回测最可能出错的方面:** (1) 券商指数 PB 是 8 只个股的平均 PB——可能掩盖个体差异。东财（互联网券商）的 PB 行为可能与传统券商不同。(2) 选择了月度频率，日内/周度数据可能有不同结果。
@@ -155,7 +156,7 @@
   - 分时期: 2015-2020 东财 PB-成交量 r=+0.72(极强)；2020后 r=+0.03(断裂)
 - **结论:** **SUPPORTED** — 东财确应被单独建模。剔除东财后传统券商负相关更强(r=-0.30)，BT-003 的 r=-0.13 被东财相反方向的+0.26 所稀释。
 - **状态:** VALIDATED（数据清晰，结论稳健）
-- **位置:** `out/swarm-analysis-20260729/p0-eastmoney-split-backtest.md`
+- **位置:** `personal-system/backtests/BT-005/p0-eastmoney-split-backtest.md`（已从 `out/swarm-analysis-20260729/` 迁移）
 
 #### Adversarial Review — BT-005
 - **回测最可能出错的方面:** BPS 从季度财报提取，月度 PB 对 BPS 精度敏感。但东财与传统券商的差异极大（4-12×），不太可能因 BPS 误差反转。

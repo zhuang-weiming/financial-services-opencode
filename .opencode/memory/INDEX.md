@@ -23,18 +23,19 @@
 | 文件 | 作用 | 时序性 | 5-Why 状态 |
 |------|------|--------|:----------:|
 | `LAWS.md` | 已验证生效的法则（每条含 5-Why Challenge） | 静态（蒸馏后） | ✅ 3/3 已填充 |
-| `FAILED_LAWS.md` | 已失效/未支持的规则 | 静态（蒸馏后） | 空 |
-| `OPEN_HYPOTHESES.md` | 待验证的猜想（每条含 5-Why Adversarial） | 静态 | ✅ 13/13 已填充 |
-| `BACKTEST_INDEX.md` | 回测台账（每条含 Adversarial Review） | 静态（追加） | ✅ 4/4 已填充 |
-| `CONFLICTS.md` | 冲突记录（回溯/逻辑/Regime） | 静态 | ✅ 7条已记录 |
+| `FAILED_LAWS.md` | 已失效/未支持的规则 | 静态（蒸馏后） | ✅ 1/1 已填充 |
+| `OPEN_HYPOTHESES.md` | 待验证的猜想（每条含 5-Why Adversarial） | 静态 | ✅ 26/26 活跃 HYP 已填充（HYP-001 标记归档至 FAILED；HYP-008 不存在；HYP-019/020/021 新增于 2026-08-01；HYP-027/028 双剧本新增于 2026-07-31） |
+| `BACKTEST_INDEX.md` | 回测台账（每条含 Adversarial Review） | 静态（追加） | ✅ 5/5 已填充 |
+| `CONFLICTS.md` | 冲突记录（回溯/逻辑/Regime） | 静态 | ✅ 11条已记录（3 OPEN + 8 RESOLVED） |
 | `SELL_LADDER.md` | 卖出梯子规则 | 静态 | 待补 |
 | `POSITION_SIZING.md` | 仓位管理 | 静态 | 已填充 |
 | `BROKER_OBSERVATION.md` | 券商板块观察指标体系 | 静态 | 已创建 |
 | `NATIONAL_TEAM_OBSERVATION.md` | 国家队全口径资金监测 | 动态（月度更新） | ✅ 已创建 |
-| `raw-log/YYYY-MM-DD.md` | 每日原始记录 | **强时序** | 2 文件 |
-| `US_EQUITY_FRAMEWORK.md` | 美股投资框架（化债机制/板块轮动/退出信号） | 静态 | 已创建 |
-| `distillation-log/YYYY-MM-DD_NNN.md` | 蒸馏事件 | **强时序** | 空 |
-| `backtests/BT-XXX/` | 每个回测一个目录 | 静态 | 2 目录 |
+| `raw-log/YYYY-MM-DD.md` | 每日原始记录 | **强时序** | 10 文件 |
+| `CHINA_FRAMEWORK.md` | **A 股独立投资框架 v1.2**（化债市总纲/国家机器/退出纪律/反方章节；与 US_FRAMEWORK.md 平级，跨市场协调见 US_FRAMEWORK.md §九）| 静态 | 已创建 |
+| `US_FRAMEWORK.md` | **美股独立投资框架 v2.0**（总纲/观察/配置/双剧本联动/反方章节；与 CHINA_FRAMEWORK.md 平级，跨市场协调见其"九、总组合协调层"）| 静态 | 已创建 |
+| `distillation-log/YYYY-MM-DD_NNN.md` | 蒸馏事件 | **强时序** | 1 文件 |
+| `backtests/BT-XXX/` | 每个回测一个目录 | 静态 | 5 目录 |
 | `theses/<code>_<name>.md` | 个股研究论 | 静态 | 1 文件 |
 
 ---
@@ -55,26 +56,28 @@
 
 ## 当前活跃内容
 
-**最后更新:** 2026-07-28
-**回测总数:** 4 (BT-001~BT-004)
+**最后更新:** 2026-07-31（data/ 架构建立 + out/ 清理 + 化债双剧本 HYP-027/028 入库 + 框架拆分：FRAMEWORK.md → CHINA_FRAMEWORK.md v1.2（瘦身）+ US_EQUITY_FRAMEWORK.md → US_FRAMEWORK.md v2.0（独立升级）；用户裁决：thesis 改"剧本判定中"、删除资金迁移规则、否决增长消化分支、清仓执行日不考虑延期）
+**回测总数:** 5 (BT-001~005)
 **活跃法则数:** 3 (LAW-001~003，全部含 5-Why Challenge；LAW-004 → HYP-013)
-**开放假设数:** 13 (HYP-001~013，全部含 5-Why Adversarial)
-**开放冲突数:** 3 (2 LOGICAL_CONTRADICTION + 1 REGIME_SHIFT)
+**失效法则数:** 1 (FAILED-001 — 券商原假设)
+**开放假设数:** 26 (HYP-002~007, 009~028 — HYP-001 已归档至 FAILED-001；HYP-008 不存在；HYP-019~026 化债理论系列；**HYP-027/028 双剧本 2026-07-31 新增**)
+**开放冲突数:** 3 (CONFLICT-REGIME-001, CONFLICT-LOGIC-002, CONFLICT-BLINDSPOT-001)
+**已解决冲突数:** 8 (LOGIC-001/003/004/005/006, REGIME-002, METHOD-001/002)
 **5-Why 系统:** ✅ 已集成
-**国家队 regime:** 🔴 净卖出（FactSet 数据确认）
-**框架版本:** `out/ashare-investment-framework-2026-2027.md` v1.1
+**国家队 regime:** 🔴 净卖出（FactSet 数据确认，持续监控）
+**框架版本:** `personal-system/CHINA_FRAMEWORK.md` v1.2（A 股独立框架，2026-07-31 瘦身改名）| `personal-system/US_FRAMEWORK.md` v2.0（美股独立框架，2026-07-31 升级）
+**数据架构:** `data/` 集中数据仓库已建立（market/earnings/factors/cache 四子目录）
 
-### 最新产出研究报告 (`out/`)
+### 当前 out/ 内容（清理后）
 
 | 报告 | 文件 | 时间 |
 |:-----|:-----|:----:|
-| GWM深度分析（8章） | `out/gwm-deepdive-2026h1.md` | 2026-07-23 |
-| GWM品牌高端化分析 | `out/gwm-brand-premiumization-analysis-20260723.md` | 2026-07-23 |
-| GWM vs 5同行对比 | `out/gwm-vs-peers-comparison-2026h1.md` | 2026-07-23 |
-| A股投资框架 | `out/ashare-investment-framework-2026-2027.md` | 2026-07-23 v1.1 |
-| 国家队监测 | `out/national-team-monitoring-20260722/` | 2026-07-22 |
-| ★ 中远海控601919完整分析 | `out/COSCO-601919-Complete-Analysis-20260723.md` | 2026-07-23 |
-| ★ 中国联通600050完整分析 | `out/ChinaUnicom-600050-Complete-Analysis-20260723.md` | 2026-07-23 (最新) |
+| 跨市场 debrief | `out/daily-debrief-20260729/` | 2026-07-29 |
+| HSBC vs framework Q3 verdict | `out/hsbc-vs-framework-verdict-q3-20260728.md` | 2026-07-28 |
+
+### 历史 one-off 报告（已清理）
+
+> 2026-07-31 清理：删除 GWM/COSCO/ChinaUnicom/Hundsun 公司 deep-dive × 7、datapack × 3、portfolio × 3、HSBC 对比 × 3、backtest × 5、临时数据 × 6 — 共 27 项已移出 `out/`，迁移至 memory 或删除。
 
 ---
 

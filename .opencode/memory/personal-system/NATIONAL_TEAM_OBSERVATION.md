@@ -1,6 +1,7 @@
 # NATIONAL_TEAM_OBSERVATION — 国家队全口径资金监测
 
 > **创建:** 2026-07-22 | **来源:** CONFLICT-REGIME-001 + FactSet 数据确认
+> **最后更新:** 2026-07-31（路径迁移：out/ → memory/backtests/BT-004/）
 > **目标:** 持续跟踪国家队（汇金/社保/保险/SFISF）的净买入/净卖出 regime，及时修正"安全边际"预期
 > **数据源优先级:** FactSet FundsETF ✅ | Morningstar Data ✅ | AKShare ❌（当前限流）
 
@@ -98,7 +99,8 @@
 | 日期 | 更新者 | 内容 |
 |:-----|:-------|:-----|
 | 2026-07-22 | wealth-guide (FactSet) | 初版建立。FactSet 数据确认 2026H1 净卖出 regime。510050 -89%, 510310 -82%, 159919 -83% |
-| 2026-07-22 | wealth-guide | 完成完整时间线分析（2023-2026年全部月度数据）。详见 `out/national-team-monitoring-20260722/huijin-timeline-2023-2026-20260722.md` |
+| 2026-07-22 | wealth-guide | 完成完整时间线分析（2023-2026年全部月度数据）。详见 `.opencode/memory/personal-system/backtests/BT-004/huijin-timeline-2023-2026-20260722.md` |
+| 2026-07-31 | wealth-guide | 路径迁移：原 `out/national-team-monitoring-20260722/` 已迁移至 `.opencode/memory/personal-system/backtests/BT-004/`（out/ 清理后）|
 | — | — | 下次更新：2026-08-22（每月用 FactSet 拉一次） |
 
 ---
@@ -107,8 +109,9 @@
 
 | 文件 | 作用 |
 |:-----|:-----|
-| `out/national-team-monitoring-20260722/README-20260722.md` | 监测方案详细说明 + 数据源评估 |
-| `out/national-team-monitoring-20260722/factset_data-20260722.md` | FactSet 完整份额变化分析 |
-| `out/national-team-monitoring-20260722/etf_share_monitor-20260722.py` | AKShare 脚本（当前限流中） |
+| `.opencode/memory/personal-system/backtests/BT-004/README-20260722.md` | 监测方案详细说明 + 数据源评估（已从 out/ 迁入）|
+| `.opencode/memory/personal-system/backtests/BT-004/factset_data-20260722.md` | FactSet 完整份额变化分析 |
+| `.opencode/memory/personal-system/backtests/BT-004/etf_share_monitor-20260722.py` | AKShare 脚本（当前限流中）|
+| `.opencode/memory/personal-system/backtests/BT-004/huijin-timeline-2023-2026-20260722.md` | 完整时间线分析 |
 | `CONFLICTS.md` (CONFLICT-REGIME-001) | Regime 切换冲突记录 |
-| `BACKTEST_INDEX.md` (BT-004) | 国家队入市回测（仅限净买入 regime） |
+| `BACKTEST_INDEX.md` (BT-004) | 国家队入市回测（仅限净买入 regime）|

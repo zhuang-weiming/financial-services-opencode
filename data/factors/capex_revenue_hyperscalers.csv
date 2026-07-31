@@ -1,0 +1,5 @@
+ticker,fiscal_period,period_end,ttm_capex_b,cloud_ttm_revenue_b,capex_rev_ratio_pct,status,source,notes
+MSFT,FY26,2026-06-30,175.0,100.0,175,HEALTHY,MSFT_Q4_FY26 in hyperscalers_2026.json,Includes lease reclassification; FY27 further growth
+AMZN,Q1_2026,2026-03-31,147.2,37.6,391,WATCH,AMZN_Q1_2026,逼近 400% 阈值；AWS 增速决定走向
+GOOGL,Q2_2026,2026-06-30,80.0,24.8,323,WATCH,estimated; needs 10-Q exact,Cloud revenue 估算待推算
+META,Q1_2025,2025-03-31,70.0,N/A,N/A,N/A,META_Q2_2025,无 Cloud 业务

@@ -1,0 +1,6 @@
+quarter,period_end,revenue_b,yoy_pct,qoq_pct,signal,source,notes
+Q2_FY25,2024-07-31,,,,+16,PEAK,earnings history,
+Q3_FY25,2024-10-31,,,,+17,PEAK,earnings history,
+Q4_FY25,2025-01-31,,,,+12,DECELERATION,earnings history,
+Q1_FY26,2025-04-30,,,,+12,DECELERATION,earnings history,
+Q2_FY26,2025-07-27,46.74,+56,+6,WATCH,NVDA_Q2_FY26 in hyperscalers_2026.json,Q/Q 腰斩是 HYP-015 关键信号

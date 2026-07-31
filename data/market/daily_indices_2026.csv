@@ -1,0 +1,33 @@
+date,ticker,name,close,change_pct,volume,source,notes
+2026-07-29,000300,CSI300,4519.50,+0.67,,Tencent,cross-market debrief raw-log
+2026-07-29,399006,ChiNext,3148.40,+1.55,,Tencent,cross-market debrief raw-log
+2026-07-29,512000,Broker_ETF,0.519,+1.93,,Tencent,user holdings direct beneficiary
+2026-07-29,SPY,S&P500_ETF,729.43,-1.54,,Morningstar-MCP,
+2026-07-29,QQQ,Nasdaq100_ETF,669.71,-2.04,,Morningstar-MCP,
+2026-07-29,DIA,Dow_ETF,515.42,-2.18,,Morningstar-MCP,
+2026-07-29,SOXX,iShares_Semiconductor,464.00,-3.50,,Morningstar-MCP,
+2026-07-29,NVDA,Nvidia,202.20,-3.55,,Morningstar-MCP,
+2026-07-29,TSLA,Tesla,318.30,-2.97,,Morningstar-MCP,
+2026-07-30,000300,CSI300,4549.72,+0.67,,Tencent,
+2026-07-30,399006,ChiNext,3244.62,+3.05,,Tencent,strong rebound
+2026-07-30,000688,STAR50,1588.41,+2.99,,Tencent,strong rebound
+2026-07-30,000905,CSI500,7309.58,+2.52,,Tencent,
+2026-07-30,000852,CSI1000,6900.66,+2.53,,Tencent,
+2026-07-30,000016,SSE50,2926.48,-0.12,,Tencent,blue chips weak
+2026-07-30,399975,Broker_Index,772.79,,,Tencent,
+2026-07-30,512000,Broker_ETF,0.529,+1.93,,Tencent,2-day consecutive gain
+2026-07-30,159995,Semiconductor_ETF,1.080,+3.00,,Tencent,
+2026-07-30,512480,Semiconductor_ETF,0.958,+3.50,,Tencent,
+2026-07-30,512760,Chip_ETF,1.038,+3.50,,Tencent,
+2026-07-30,510050,SSE50_ETF,3.026,+0.20,,Tencent,
+2026-07-30,510300,CSI300_ETF,4.605,+1.00,,Tencent,
+2026-07-30,SPY,S&P500_ETF,741.69,+1.68,,Morningstar-MCP,V-recovery
+2026-07-30,DIA,Dow_ETF,521.51,+1.18,,Morningstar-MCP,
+2026-07-30,SOXX,iShares_Semiconductor,504.53,+8.50,,Morningstar-MCP,strong V-recovery
+2026-07-30,MSFT,Microsoft,451.10,+16.00,,Morningstar-MCP,Q4 FY26 beat (Azure +43% CC)
+2026-07-30,NVDA,Nvidia,195.04,,,Morningstar-MCP,recovery (est +5-7%)
+2026-07-30,TSLA,Tesla,308.85,,,Morningstar-MCP,recovery
+2026-07-30,META,Meta,539.03,,,Morningstar-MCP,Q2 EPS miss pressure
+2026-07-30,AMD,AMD,485.39,,,Morningstar-MCP,
+2026-07-30,AVGO,Broadcom,387.84,,,Morningstar-MCP,
+2026-07-30,XLE,Energy_ETF,58.96,+0.53,,Morningstar-MCP,

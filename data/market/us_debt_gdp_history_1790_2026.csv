@@ -1,0 +1,16 @@
+# data/market/us_debt_gdp_history_1790_2026.csv
+# US 联邦债务/GDP 250 年轨迹（用户提供 + 交叉参考）
+# 注意：1790 年按用户表为 0%（联邦债务起点）；Reinhart-Sabelhaus 2015 估计承担州债后约 30%+，
+#       此处保留用户口径，notes 标注历史修订。
+year,debt_gdp_pct,trigger_event,source,notes
+1790,0,联邦承担州战争债务（Hamilton 计划起点）,user-provided,用户口径=联邦债务起点；含州债后实际约 30%+ [Reinhart-Sabelhaus 2015]
+1835,0,"Jackson 时代唯一一次完全偿清（短暂）",user-provided,历史事实：1835-01-08 偿清全部联邦债务
+1865,30,内战融资,user-provided,实际约 31%（内战结束峰值）
+1918,30,自由公债（WWI）,user-provided,实际约 29-33%（1919 峰值）
+1933,40,大萧条,user-provided,约 40%（1934 峰值 ~41%）
+1946,119,"WWII 结束（与今天相当）",user-provided,历史峰值 119-121%；本文献基准案例起点
+1974,35,28 年下降后低点,user-provided,1946-74 金融抑制期终点；r<g 持续 28 年 [Reinhart-Sabelhaus 2015]
+1992,65,Reagan/Bush 财政,user-provided,实际约 64-66%
+2012,100,GFC + TARP,user-provided,实际约 100%（2011-2013 区间）
+2020,127,COVID,user-provided,COVID 刺激峰值
+2026,120,当前,framework,HYP-003/US_EQUITY_FRAMEWORK 当前值；净利息 3.5% GDP > 国防

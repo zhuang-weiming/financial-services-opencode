@@ -1,0 +1,47 @@
+{
+  "total_months": 129,
+  "period": "2015-10 - 2026-06",
+  "volume_stats": {
+    "mean_avg_daily": 9201.0,
+    "median_avg_daily": 7932.0,
+    "max_avg_daily": 31801.0,
+    "min_avg_daily": 2602.0
+  },
+  "pb_stats": {
+    "mean_pb": 1.98,
+    "median_pb": 1.86,
+    "max_pb": 5.88,
+    "min_pb": 1.07
+  },
+  "correlation": {
+    "full_sample_pearson": -0.1262,
+    "full_sample_spearman": -0.1497,
+    "regression_r2": 0.0073,
+    "regression_formula": "PB = -0.1176 * ln(Vol) + 3.0372",
+    "per_period": {
+      "全样本 (2015-2026)": -0.1262,
+      "2015-2016 股灾期": 0.8853,
+      "2016-2018 熊市": 0.7904,
+      "2019-2021 结构牛": 0.7286,
+      "2022-2024 调整期": 0.528,
+      "2024-2026 AI行情": -0.218
+    }
+  },
+  "lead_lag": {
+    "best_lag_months": 6,
+    "best_correlation": -0.2461,
+    "interpretation": "成交量与PB呈显著负相关(-0.37~-0.20), 而非正相关"
+  },
+  "pb_scenarios": {
+    "current_vol_pred_pb": 1.82,
+    "vol_15000_pred_pb": 1.91,
+    "vol_20000_pred_pb": 1.87
+  },
+  "current_snapshot": {
+    "year_month": "2026-06",
+    "avg_daily_volume": 31117.0,
+    "broker_avg_pb": 1.54,
+    "broker_index": 785.57
+  },
+  "key_conclusion": "成交量与券商PB呈弱负相关而非假设的正相关。2015年牛市后,券商PB持续下降,即使在2024-2026成交额创历史新高的环境下,PB仍处于历史低位(1.4-2.0)。成交额驱动PB修复的假设在2015年后基本失效。"
+}

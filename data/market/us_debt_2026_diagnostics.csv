@@ -1,0 +1,16 @@
+# data/market/us_debt_2026_diagnostics.csv
+# 2026 美债可持续性诊断快照（2026-07-31 双剧本讨论使用数据）
+# 对应：HYP-027 快速剧本触发条件 / HYP-028 慢速剧本机制 / US_EQUITY_FRAMEWORK §1.3
+metric,value,unit,threshold,meaning,source,notes
+debt_gdp_ratio,120,%,130,化债进度严重滞后线,US_EQUITY_FRAMEWORK,>130% = HYP-011 恶化
+primary_deficit,3.5,% of GDP,0,基本赤字不可持续（需 >0 盈余才稳定）,250yr-analysis,i-g 数学要求
+net_interest,3.5,% of GDP,>defense,净利息超过国防预算,HYP-003,历史首次（2026）
+i_g_spread,-0.2,percentage points,<0,边际 r<g 勉强成立,250yr-analysis,临界：再升息即翻转
+us_5y_cds,38,bp,100 / 200,健康 / 危机,Investing.com USGV5YUSAB=R,HYP-011 S1；快速剧本危机线 200bp
+auction_bid_to_cover,2.4-2.6,x,<2.0,健康 / 快速剧本危机前兆,HYP-011 S2,拍卖失败 = HYP-027 触发
+us30y,5.184,%,5.0 / 7.0,重定价 / 失控,HYP-017,快速剧本失控线 7%+
+real_rate_10y,1.5,%,<0,反抑制期（正实际利率）,HYP-028,2022-26 反抑制证据
+cpi,3.0-4.0,%,2.0,高于目标,HYP-028,慢速剧本通胀通道 3% 基准
+fed_funds,4.5,%,<4.0,降息周期未启动,US_EQUITY_FRAMEWORK,慢速剧本重启前兆监控
+dxy,103-104,index,>110 或 <95,稳定,US_EQUITY_FRAMEWORK,HYP-011 S3
+nominal_gdp_growth_2026,5.0-6.0,%,>6.0,A 分支增长消化需持续 >6%,250yr-analysis,AI 生产率红利测试点

@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "last_updated": "2026-07-30",
+  "description": "AI mega-cap hyperscaler quarterly earnings snapshots for cross-market framework validation",
+  "data_points": {
+    "MSFT_Q4_FY26": {
+      "ticker": "MSFT",
+      "fiscal_period": "Q4_FY26",
+      "period_end": "2026-06-30",
+      "currency": "USD",
+      "revenue_b": 90.01,
+      "estimate_b": 87.62,
+      "beat_pct": 2.7,
+      "segment_metrics": {
+        "azure_cc_growth_pct": 43.0,
+        "azure_estimate_pct": 40.2,
+        "fy26_azure_total_b": "first_breach_100",
+        "ai_arr_b": 13.5,
+        "fy26_capex_b": 175
+      },
+      "after_hours_reaction_pct": "+8-9 then +16 next day",
+      "source": "MSFT Q4 FY26 earnings release + CNBC live blog 2026-07-29",
+      "notes": "FY26 capex higher than Q3 estimate of $80B+ due to lease reclassification (useful life 15->25y; finance->operating lease). FY27 capex 'further growth' (CFO Amy Hood)."
+    },
+    "MSFT_Q3_FY26": {
+      "ticker": "MSFT",
+      "fiscal_period": "Q3_FY26",
+      "period_end": "2026-03-31",
+      "currency": "USD",
+      "revenue_b": 82.9,
+      "yoy_growth_pct": 18,
+      "segment_metrics": {
+        "microsoft_cloud_b": 54.5,
+        "microsoft_cloud_yoy_pct": 29,
+        "azure_growth_pct": 40,
+        "ai_arr_b": 37.0,
+        "ai_arr_yoy_pct": 123
+      },
+      "source": "MSFT Q3 FY26 earnings release",
+      "notes": "AI ARR $37B is the leading monetization metric."
+    },
+    "META_Q2_2026": {
+      "ticker": "META",
+      "fiscal_period": "Q2_2026",
+      "period_end": "2026-06-30",
+      "currency": "USD",
+      "eps": 6.18,
+      "estimate_eps": 7.22,
+      "miss_eps": -1.04,
+      "q3_guide_low_b": 61.0,
+      "q3_guide_high_b": 64.0,
+      "q3_estimate_b": 63.15,
+      "after_hours_reaction_pct": "-7-9",
+      "source": "META Q2 2026 earnings release + CNBC live blog 2026-07-29",
+      "notes": "Q3 guide lower bound below estimate. Reality Labs continues losses + capex drags profit. Used as '吞噬型 AI' counterexample to MSFT in HYP-002 v4.1 CANDIDATE."
+    },
+    "META_Q2_2025": {
+      "ticker": "META",
+      "fiscal_period": "Q2_2025",
+      "period_end": "2025-06-30",
+      "currency": "USD",
+      "revenue_b": 47.52,
+      "yoy_growth_pct": 22,
+      "segment_metrics": {
+        "capex_b": 17.01,
+        "capex_yoy_pct": 100
+      },
+      "source": "META Q2 2025 earnings release",
+      "notes": ""
+    },
+    "AMZN_Q1_2026": {
+      "ticker": "AMZN",
+      "fiscal_period": "Q1_2026",
+      "period_end": "2026-03-31",
+      "currency": "USD",
+      "revenue_b": 181.5,
+      "yoy_growth_pct": 17,
+      "segment_metrics": {
+        "aws_b": 37.6,
+        "aws_yoy_pct": 28,
+        "ttm_capex_b": 147.2
+      },
+      "source": "AMZN Q1 2026 earnings release",
+      "notes": "AWS growth +28% is the fastest in 15 quarters. TTM capex $147B drives Capex/Revenue ratio to 391% (HYP-016 watch)."
+    },
+    "AMZN_Q3_2025": {
+      "ticker": "AMZN",
+      "fiscal_period": "Q3_2025",
+      "period_end": "2025-09-30",
+      "currency": "USD",
+      "revenue_b": 180.2,
+      "yoy_growth_pct": 13,
+      "segment_metrics": {
+        "aws_b": 33.0,
+        "aws_yoy_pct": 20,
+        "ttm_capex_b": 115.9
+      },
+      "source": "AMZN Q3 2025 earnings release",
+      "notes": ""
+    },
+    "AMZN_Q2_2025": {
+      "ticker": "AMZN",
+      "fiscal_period": "Q2_2025",
+      "period_end": "2025-06-30",
+      "currency": "USD",
+      "revenue_b": 167.7,
+      "yoy_growth_pct": 13,
+      "segment_metrics": {
+        "aws_b": 30.9,
+        "aws_yoy_pct": 17.5,
+        "ttm_capex_b": 103.0
+      },
+      "source": "AMZN Q2 2025 earnings release",
+      "notes": ""
+    },
+    "GOOGL_Q2_2026": {
+      "ticker": "GOOGL",
+      "fiscal_period": "Q2_2026",
+      "period_end": "2026-06-30",
+      "currency": "USD",
+      "revenue_b": 119.8,
+      "yoy_growth_pct": 24,
+      "segment_metrics": {
+        "google_cloud_b": 24.8,
+        "google_cloud_yoy_pct": 82
+      },
+      "source": "GOOGL Q2 2026 earnings release",
+      "notes": "Google Cloud +82% Y/Y is the strongest signal supporting HYP-014 (AI software inertia)."
+    },
+    "NVDA_Q2_FY26": {
+      "ticker": "NVDA",
+      "fiscal_period": "Q2_FY26",
+      "period_end": "2025-07-27",
+      "currency": "USD",
+      "revenue_b": 46.74,
+      "yoy_growth_pct": 56,
+      "qoq_growth_pct": 6,
+      "segment_metrics": {
+        "data_center_b": 41.1,
+        "data_center_yoy_pct": 56,
+        "data_center_qoq_pct": 5
+      },
+      "source": "NVDA Q2 FY26 earnings release",
+      "notes": "Q/Q +6% is half of Q3 FY25 peak (+17%). HYP-015 WATCH signal — potential hardware peak."
+    }
+  }
+}
