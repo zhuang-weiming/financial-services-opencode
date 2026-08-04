@@ -1,6 +1,6 @@
 # Distillation Log
 
-> 每次把 raw-log 蒸馏到 LAWS / FAILED / OPEN_HYPOTHESES / BACKTEST_INDEX / CONFLICTS 的事件
+> 每次把 raw-log 蒸馏到 LAWS / FAILED / HYPOTHESES / BACKTEST_INDEX / CONFLICTS 的事件
 > **不删，仅追加**
 
 ---
@@ -13,7 +13,7 @@
 - **产物:**
   - LAWS.md 新增 LAW-XXX (描述)
   - FAILED_LAWS.md 新增 FAILED-XXX (描述)
-  - OPEN_HYPOTHESES.md 状态变化
+  - HYPOTHESES.md 状态变化
   - BACKTEST_INDEX.md 新增
   - CONFLICTS.md 新增
 - **依据:** 为什么这样蒸馏
@@ -35,7 +35,7 @@
 - **执行:** wealth-guide 路由 → swarm-orchestrator（global equities desk 预设）+ market-router 平行 dispatch → 5-why-adversary skill 应用反方质控 → 用户确认"更新框架"后正式蒸馏
 
 - **产物:**
-  - **OPEN_HYPOTHESES.md:**
+  - **HYPOTHESES.md:**
     - HYP-002 v4.1 CANDIDATE（盈利型 vs 吞噬型 AI 维度）— **未升级为正式 v4.1**，因单日证据不足（5-Why 反驳）
     - HYP-005 新增约束（META Q2 miss + Q3 guide soft）
     - HYP-011 v2 扩展（6→8 信号矩阵；新增 S7 US30Y + S8 Brent/地缘）
@@ -74,5 +74,5 @@
 
 - **输出文件:**
   - raw-log/2026-07-30.md（已写入）
-  - OPEN_HYPOTHESES.md（已更新；875 行；新增 HYP-017/HYP-018）
+  - HYPOTHESES.md（已更新；875 行；新增 HYP-017/HYP-018）
   - CONFLICTS.md（已更新；新增 CONFLICT-BLINDSPOT-001）

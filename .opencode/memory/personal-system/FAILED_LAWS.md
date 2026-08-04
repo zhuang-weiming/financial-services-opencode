@@ -54,7 +54,7 @@
 
 | 文件 | 说明 |
 |:-----|:-----|
-| `OPEN_HYPOTHESES.md` (原 HYP-001) | 已废弃；该位置现标注 "原假设已迁移至 FAILED-001，活跃框架见 BROKER_OBSERVATION.md" |
+| `HYPOTHESES.md` (原 HYP-001) | 已废弃；该位置现标注 "原假设已迁移至 FAILED-001，活跃框架见 BROKER_OBSERVATION.md" |
 | `BROKER_OBSERVATION.md` | 当前活跃的修正版驱动力框架（CSI 300 Beta + 利率 + 政策 + 存款搬家）|
 | `BACKTEST_INDEX.md` (BT-003, BT-005) | 原始回测 + 东财分拆修正 |
 | `LAWS.md` (LAW-003) | 修正后结论：券商 PB-成交量脱钩（2015 年后）|
