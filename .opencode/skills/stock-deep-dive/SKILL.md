@@ -58,10 +58,10 @@ description: 标准化个股深度分析流程 - 强制走"多 skill 综合"路�
 ### 维度 7: 个人交易系统检查 (Personal System Check)
 - 加载 skill: `personal-trading-system`
 - **必查:**
-  - LAWS.md 中是否有相关法则
-  - FAILED_LAWS.md 中是否有相关失效案例
-  - OPEN_HYPOTHESES.md 中是否有相关待验证假设
-  - BACKTEST_INDEX.md 中是否有相关历史回测
+  - 1.LAWS.md 中是否有相关法则
+  - 1.1.FAILED_LAWS.md 中是否有相关失效案例
+  - OPEN_2.HYPOTHESES.md 中是否有相关待验证假设
+  - 5.BACKTEST_INDEX.md 中是否有相关历史回测
 - 必输出: 引用相关条目 (如有)，并结合到综合判断中
 
 ---
@@ -93,7 +93,7 @@ description: 标准化个股深度分析流程 - 强制走"多 skill 综合"路�
 - ❌ 在没有 7 维数据时直接给方向性结论
 - ❌ 跳过任何一维 (即使数据不可得, 也要标注"数据缺失")
 - ❌ 编造数据或指标
-- ❌ 隐瞒 LAWS.md 中相关的失效法则
+- ❌ 隐瞒 1.LAWS.md 中相关的失效法则
 - ❌ 用绝对化语言（"一定涨"、"肯定跌"）
 - ❌ 省略免责声明
 
@@ -102,7 +102,7 @@ description: 标准化个股深度分析流程 - 强制走"多 skill 综合"路�
 - ✅ 结合 7 维做综合判断（如"短期谨慎，中期看好"）
 - ✅ 给出评级（买入/持有/卖出）和信心水平
 - ✅ 给出仓位建议
-- ✅ 引用 LAWS.md / FAILED_LAWS.md 中的相关条目
+- ✅ 引用 1.LAWS.md / 1.1.FAILED_LAWS.md 中的相关条目
 - ✅ 标注数据缺失或异常
 
 ---

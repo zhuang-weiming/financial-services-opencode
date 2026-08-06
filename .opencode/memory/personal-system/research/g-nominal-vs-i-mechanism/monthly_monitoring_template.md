@@ -147,8 +147,8 @@ python3 g_nominal_vs_i_mechanism.py
 | **HYP-027** (危机被动) | tail hedge | MEDIUM |
 | **HYP-029** (全球去美元化) | 补充 Path B | MEDIUM |
 | **CONFLICT-LOGIC-007** | 慢剧本经济基线 vs 政治现实基线 | HIGH |
-| **US_FRAMEWORK.md §1.3** | 化债双剧本观察表 | HIGH |
-| **US_FRAMEWORK.md §5** | 月度检查清单 | HIGH |
+| **3.US_FRAMEWORK.md §1.3** | 化债双剧本观察表 | HIGH |
+| **3.US_FRAMEWORK.md §5** | 月度检查清单 | HIGH |
 
 ---
 

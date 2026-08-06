@@ -11,11 +11,11 @@
 ### YYYY-MM-DD HH:MM Distillation #NNN
 - **输入:** raw-log 中 N 条未蒸馏条目 (列出来源文件)
 - **产物:**
-  - LAWS.md 新增 LAW-XXX (描述)
-  - FAILED_LAWS.md 新增 FAILED-XXX (描述)
-  - HYPOTHESES.md 状态变化
-  - BACKTEST_INDEX.md 新增
-  - CONFLICTS.md 新增
+  - 1.LAWS.md 新增 LAW-XXX (描述)
+  - 1.1.FAILED_LAWS.md 新增 FAILED-XXX (描述)
+  - 2.HYPOTHESES.md 状态变化
+  - 5.BACKTEST_INDEX.md 新增
+  - 6.CONFLICTS.md 新增
 - **依据:** 为什么这样蒸馏
 - **未采纳的想法:** 为什么舍弃某些 raw-log 条目
 ```
@@ -35,7 +35,7 @@
 - **执行:** wealth-guide 路由 → swarm-orchestrator（global equities desk 预设）+ market-router 平行 dispatch → 5-why-adversary skill 应用反方质控 → 用户确认"更新框架"后正式蒸馏
 
 - **产物:**
-  - **HYPOTHESES.md:**
+  - **2.HYPOTHESES.md:**
     - HYP-002 v4.1 CANDIDATE（盈利型 vs 吞噬型 AI 维度）— **未升级为正式 v4.1**，因单日证据不足（5-Why 反驳）
     - HYP-005 新增约束（META Q2 miss + Q3 guide soft）
     - HYP-011 v2 扩展（6→8 信号矩阵；新增 S7 US30Y + S8 Brent/地缘）
@@ -43,11 +43,11 @@
     - HYP-016 更新 MSFT $175B capex（实际数字替代估算）
     - **新增 HYP-017**（US30Y 长端利率估值压缩独立信号）
     - **新增 HYP-018**（油价跳升 → 通胀 → 长端上行的 self-reinforcing 链条）
-  - **CONFLICTS.md:**
+  - **6.CONFLICTS.md:**
     - **新增 CONFLICT-BLINDSPOT-001**（HYP-011 6 信号矩阵未涵盖长端利率断裂 + 地缘风险溢价；新类型 METHOD_BIAS / BLINDSPOT）
-  - **LAWS.md:** 无变更（数据不足以升级为 LAW）
-  - **FAILED_LAWS.md:** 无变更（无新失败证据）
-  - **BACKTEST_INDEX.md:** 无变更（无新回测）
+  - **1.LAWS.md:** 无变更（数据不足以升级为 LAW）
+  - **1.1.FAILED_LAWS.md:** 无变更（无新失败证据）
+  - **5.BACKTEST_INDEX.md:** 无变更（无新回测）
 
 - **依据:**
   1. **HYP-013 维持 UNVERIFIED**：单日 S&P -1.54% 不构成"contradicted"；HYP-013 明确要求 3 层宏观确认，目前仍部分满足；维持 UNVERIFIED 等数据
@@ -74,5 +74,5 @@
 
 - **输出文件:**
   - raw-log/2026-07-30.md（已写入）
-  - HYPOTHESES.md（已更新；875 行；新增 HYP-017/HYP-018）
-  - CONFLICTS.md（已更新；新增 CONFLICT-BLINDSPOT-001）
+  - 2.HYPOTHESES.md（已更新；875 行；新增 HYP-017/HYP-018）
+  - 6.CONFLICTS.md（已更新；新增 CONFLICT-BLINDSPOT-001）

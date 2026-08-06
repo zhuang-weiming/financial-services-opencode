@@ -16,13 +16,13 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 ### 必读文件（按此顺序）
 
 1. `.opencode/memory/INDEX.md` — 全局入口
-2. `.opencode/memory/personal-system/LAWS.md` — 活跃法则
-3. `.opencode/memory/personal-system/FAILED_LAWS.md` — 失效法则
-4. `.opencode/memory/personal-system/OPEN_HYPOTHESES.md` — 待验证假设
-5. `.opencode/memory/personal-system/BACKTEST_INDEX.md` — 回测台账
-6. `.opencode/memory/personal-system/CONFLICTS.md` — 开放冲突
-7. `.opencode/memory/personal-system/SELL_LADDER.md` — 卖出梯子
-8. `.opencode/memory/personal-system/POSITION_SIZING.md` — 仓位管理
+2. `.opencode/memory/personal-system/1.LAWS.md` — 活跃法则
+3. `.opencode/memory/personal-system/1.1.FAILED_LAWS.md` — 失效法则
+4. `.opencode/memory/personal-system/OPEN_2.HYPOTHESES.md` — 待验证假设
+5. `.opencode/memory/personal-system/5.BACKTEST_INDEX.md` — 回测台账
+6. `.opencode/memory/personal-system/6.CONFLICTS.md` — 开放冲突
+7. `.opencode/memory/personal-system/7.SELL_LADDER.md` — 卖出梯子
+8. `.opencode/memory/personal-system/7.1.POSITION_SIZING.md` — 仓位管理
 
 ### 检索
 
@@ -35,7 +35,7 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 | 用户说 | subagent 必须做的 |
 |--------|-----------------|
 | "600519 现在能买吗" | grep 600519 → 看是否有 law/回测/thesis |
-| "我的仓位是不是太集中" | 读 POSITION_SIZING.md |
+| "我的仓位是不是太集中" | 读 7.1.POSITION_SIZING.md |
 | "成交量上升时券商怎么走" | grep 券商/成交量 → 看是否有回测 |
 | "我之前说过的" | grep raw-log 历史 |
 | "X 假设验证过吗" | 查 OPEN_HYPOTHESES + BACKTEST_INDEX |
@@ -48,11 +48,11 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 
 | 场景 | 写到哪里 |
 |------|----------|
-| 用户提出新假设 | OPEN_HYPOTHESES.md (新增 HYP-XXX) |
-| 跑出新回测 | backtests/BT-XXX/ 目录 + BACKTEST_INDEX.md (新增 BT-XXX) |
-| 回测推翻假设 | FAILED_LAWS.md (新增 FAILED-XXX) |
-| 回测支持假设 → 转法则 | LAWS.md (新增 LAW-XXX) |
-| 出现矛盾 | CONFLICTS.md (新增 CONFLICT-XXX) |
+| 用户提出新假设 | OPEN_2.HYPOTHESES.md (新增 HYP-XXX) |
+| 跑出新回测 | backtests/BT-XXX/ 目录 + 5.BACKTEST_INDEX.md (新增 BT-XXX) |
+| 回测推翻假设 | 1.1.FAILED_LAWS.md (新增 FAILED-XXX) |
+| 回测支持假设 → 转法则 | 1.LAWS.md (新增 LAW-XXX) |
+| 出现矛盾 | 6.CONFLICTS.md (新增 CONFLICT-XXX) |
 | 任何认知/对话洞察 | raw-log/YYYY-MM-DD.md (append) |
 
 ### 写回时序
@@ -72,7 +72,7 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 **执行步骤：**
 1. 读 raw-log/ 最近所有未蒸馏的文件
 2. 提取"反复出现的主题"→ 候选法则
-3. 读现有 LAWS.md / FAILED_LAWS.md / OPEN_HYPOTHESES.md
+3. 读现有 1.LAWS.md / 1.1.FAILED_LAWS.md / OPEN_2.HYPOTHESES.md
 4. 决定每条新认知应该：
    - 提升为 LAW（如已被 3+ 个证据支持）
    - 归入 FAILED_LAW（如被回测明确否定）
@@ -92,10 +92,10 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 
 | Skill | 协作 |
 |-------|------|
-| `alpha-engine-v21` | 跑回测，写到 backtests/BT-XXX/，更新 BACKTEST_INDEX.md |
+| `alpha-engine-v21` | 跑回测，写到 backtests/BT-XXX/，更新 5.BACKTEST_INDEX.md |
 | `stock-deep-dive` | 个股分析时必须先读 personal-system，检查是否与现有法则冲突 |
 | `vibe-thesis-tracker` | 单股论追踪 → 写入 theses/<code>_<name>.md |
-| `trade-journal` | 实际交易结果 → 用于验证/推翻 LAWS.md |
+| `trade-journal` | 实际交易结果 → 用于验证/推翻 1.LAWS.md |
 | `backtest-diagnose` | 回测异常 → 可能产生 FAILED-XXX 条目 |
 | `factor-research` | 因子检验 → 如显著可转为 HYP-XXX |
 
@@ -118,13 +118,13 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 ## 当前状态 (2026-07-22)
 
 - INDEX.md: 已建立
-- LAWS.md: 2 条（LAW-001: WT1 动量延续, LAW-002: mean/median 尾部分布）
-- FAILED_LAWS.md: 空
-- OPEN_HYPOTHESES.md: 空
-- BACKTEST_INDEX.md: 2 条（BT-001 WT1 极值信号, BT-002 ML 单股预测）
-- CONFLICTS.md: 空
-- SELL_LADDER.md: 已填
-- POSITION_SIZING.md: 已填
+- 1.LAWS.md: 2 条（LAW-001: WT1 动量延续, LAW-002: mean/median 尾部分布）
+- 1.1.FAILED_LAWS.md: 空
+- OPEN_2.HYPOTHESES.md: 空
+- 5.BACKTEST_INDEX.md: 2 条（BT-001 WT1 极值信号, BT-002 ML 单股预测）
+- 6.CONFLICTS.md: 空
+- 7.SELL_LADDER.md: 已填
+- 7.1.POSITION_SIZING.md: 已填
 - raw-log/: 2026-07-22.md 多条记录
 - distillation-log/: 空
 - backtests/: BT-001, BT-002

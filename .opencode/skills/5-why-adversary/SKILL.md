@@ -7,7 +7,7 @@ description: |
   every conclusion 5 times before it is spoken — find hidden assumptions,
   identify falsification conditions, invert the conclusion, check
   confirmation bias, and state the framework's weakest point.
-  Integrates with LAWS.md, CONFLICTS.md, regime_shift_detector.py,
+  Integrates with 1.LAWS.md, 6.CONFLICTS.md, regime_shift_detector.py,
   and the memory-protocol.md adversarial review workflow.
 category: quality-control
 ---
@@ -38,8 +38,8 @@ subagent 形成初步结论
 记录 5-Why 结果到 raw-log
     ↓
 IF 5-Why 未推翻结论 THEN 输出结论 + 附上 5-Why 摘要
-IF 5-Why 发现框架矛盾 THEN 写入 CONFLICTS.md + 修正结论
-IF 5-Why 发现 regime 变化 THEN 运行 regime_shift_detector.py + 更新 CONFLICTS.md
+IF 5-Why 发现框架矛盾 THEN 写入 6.CONFLICTS.md + 修正结论
+IF 5-Why 发现 regime 变化 THEN 运行 regime_shift_detector.py + 更新 6.CONFLICTS.md
 ```
 
 ---
@@ -148,10 +148,10 @@ IF 5-Why 发现 regime 变化 THEN 运行 regime_shift_detector.py + 更新 CONF
 
 | 系统组件 | 关系 |
 |:---------|:-----|
-| `CONFLICTS.md` | 5-Why 发现的逻辑矛盾 → 写入 LOGICAL_CONTRADICTION |
-| `LAWS.md` | 每条 LAW 已嵌入 5-Why Challenge 区块 → 每次使用前检查 |
-| `OPEN_HYPOTHESES.md` | 每条 HYP 已嵌入 5-Why Adversarial → 每次引用前检查 |
-| `BACKTEST_INDEX.md` | 每条 BT 已嵌入 Adversarial Review |
+| `6.CONFLICTS.md` | 5-Why 发现的逻辑矛盾 → 写入 LOGICAL_CONTRADICTION |
+| `1.LAWS.md` | 每条 LAW 已嵌入 5-Why Challenge 区块 → 每次使用前检查 |
+| `OPEN_2.HYPOTHESES.md` | 每条 HYP 已嵌入 5-Why Adversarial → 每次引用前检查 |
+| `5.BACKTEST_INDEX.md` | 每条 BT 已嵌入 Adversarial Review |
 | `regime_shift_detector.py` | 当 5-Why 怀疑 regime 变化时 → 运行检测脚本 |
 | `backtest-discipline.md` | 5-Why 是 backtest-discipline 规则 2（边界诚实）的执行方法 |
 | `memory-protocol.md` | 5-Why 是"读"协议的一部分——读 LAW/HYP 时即触发反方质控 |
@@ -164,10 +164,10 @@ IF 5-Why 发现 regime 变化 THEN 运行 regime_shift_detector.py + 更新 CONF
 
 | 组件 | 状态 |
 |:-----|:------|
-| CONFLICTS.md（含 4 条已识别冲突） | ✅ 已完成 |
-| LAWS.md（3 条 LAW 全部含 5-Why Challenge） | ✅ 已完成 |
-| OPEN_HYPOTHESES.md（7 条 HYP 全部含 5-Why Adversarial） | ✅ 已完成 |
-| BACKTEST_INDEX.md（4 条 BT 全部含 Adversarial Review） | ✅ 已完成 |
+| 6.CONFLICTS.md（含 4 条已识别冲突） | ✅ 已完成 |
+| 1.LAWS.md（3 条 LAW 全部含 5-Why Challenge） | ✅ 已完成 |
+| OPEN_2.HYPOTHESES.md（7 条 HYP 全部含 5-Why Adversarial） | ✅ 已完成 |
+| 5.BACKTEST_INDEX.md（4 条 BT 全部含 Adversarial Review） | ✅ 已完成 |
 | regime_shift_detector.py | ✅ 已完成 |
 | **本 skill** | ✅ 已完成 |
 | memory-protocol.md（待更新） | ⏳ 下一步 |
