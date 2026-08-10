@@ -108,6 +108,7 @@ below maps common triggers to the right skill.
 | Cross-market multi-asset portfolio | `backtest-builder` | `cross-market-strategy` |
 | WIF 5-phase market timing, F29, VIXTERM | `wealth-management` | `wif-fund-advisory` |
 | A股WIF, MCI, PMI+M2象限, MA60趋势覆盖, A股一线三象限 | `wealth-management` | `wif-ashare-advisory` |
+| 是否止盈/减持/卖出/清仓/动能是否结束/SELL_LADDER/卖出梯子（工具判定） | `wealth-management` | `sell-ladder`（协议层 → 跑 `personal-system/sell-ladder/sell_ladder.py`；回测验证 → `backtest_seed_2026.py` → BT-008） |
 | Hong Kong / A-share / ADR cross-listing arb | `market-router` / `factor-researcher` | `adr-hshare` |
 | Stock Connect flow / northbound / southbound | `market-router` | `hk-connect-flow` |
 | Convertible bond analysis (转股 / 纯债 / 期权) | `market-researcher` | `convertible-bond` |

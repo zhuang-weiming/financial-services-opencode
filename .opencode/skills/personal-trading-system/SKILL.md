@@ -92,6 +92,7 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 
 | Skill | 协作 |
 |-------|------|
+| `sell-ladder` | **卖出判定的工具入口**。任何"是否止盈/减持/卖出/动能是否结束"问题 → 先加载 `sell-ladder` skill → 跑 `sell_ladder.py` → 把阶段判定对齐到 7.SELL_LADDER.md + 7.1.POSITION_SIZING.md §5.5。工具在 personal-system/sell-ladder/，协议层在 .opencode/skills/sell-ladder/SKILL.md |
 | `alpha-engine-v21` | 跑回测，写到 backtests/BT-XXX/，更新 5.BACKTEST_INDEX.md |
 | `stock-deep-dive` | 个股分析时必须先读 personal-system，检查是否与现有法则冲突 |
 | `vibe-thesis-tracker` | 单股论追踪 → 写入 theses/<code>_<name>.md |
@@ -99,13 +100,22 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 | `backtest-diagnose` | 回测异常 → 可能产生 FAILED-XXX 条目 |
 | `factor-research` | 因子检验 → 如显著可转为 HYP-XXX |
 
+### sell-ladder 工具定位（2026-08-10 起）
+
+- **协议层**: `.opencode/skills/sell-ladder/SKILL.md`
+- **工具本体**: `.opencode/memory/personal-system/sell-ladder/sell_ladder.py`（14 skill 算法已内联，确定性计算）
+- **数据**: `personal-system/sell-ladder/data/`（300725 + 4 CDMO + 6 科技股池）
+- **历史结果**: `personal-system/sell-ladder/runs/YYYY-MM-DD/`
+- **回测验证**: `personal-system/sell-ladder/backtest_seed_2026.py` → 结果进 backtests/BT-XXX/
+
 ---
 
 ## 与 subagent 的对接
 
 | Subagent | 调用场景 |
 |----------|---------|
-| `wealth-management` | 客户报告 / 财务规划前必读 LAWS + SELL_LADDER + POSITION_SIZING |
+| `wealth-management` | 客户报告 / 财务规划前必读 LAWS + SELL_LADDER + POSITION_SIZING；"持仓是否卖出" → 加载 `sell-ladder` skill 跑判定 |
+| `backtest-builder` | 新回测前必读 BACKTEST_INDEX（避免重复回测）；回测 sell-ladder 有效性 → 跑 backtest_seed_2026.py |
 | `market-researcher` | 行业 / 标的研究前必读 FAILED_LAWS + OPEN_HYPOTHESES |
 | `model-builder` | 估值建模前必读 OPEN_HYPOTHESES（避免重复计算） |
 | `valuation-reviewer` | 估值审查前必读 LAWS（避免重复错误） |
@@ -115,20 +125,21 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 
 ---
 
-## 当前状态 (2026-07-22)
+## 当前状态 (2026-08-10)
 
-- INDEX.md: 已建立
+- INDEX.md: 已建立（含 sell-ladder 索引）
 - 1.LAWS.md: 2 条（LAW-001: WT1 动量延续, LAW-002: mean/median 尾部分布）
 - 1.1.FAILED_LAWS.md: 空
 - OPEN_2.HYPOTHESES.md: 空
 - 5.BACKTEST_INDEX.md: 2 条（BT-001 WT1 极值信号, BT-002 ML 单股预测）
 - 6.CONFLICTS.md: 空
-- 7.SELL_LADDER.md: 已填
-- 7.1.POSITION_SIZING.md: 已填
-- raw-log/: 2026-07-22.md 多条记录
+- 7.SELL_LADDER.md: v2.0（14 skill 信号矩阵 + 5 动能结束标志 + 3 阶段框架）
+- 7.1.POSITION_SIZING.md: 已填; §5.5 = SELL_LADDER v2.0 最新输出
+- sell-ladder 工具: `.opencode/memory/personal-system/sell-ladder/`（03.工具本体 + data/ + runs/ + backtest_seed_2026.py）; 协议层 = `.opencode/skills/sell-ladder/SKILL.md`
+- raw-log/: 2026-07-22.md, 2026-08-10.md
 - distillation-log/: 空
 - backtests/: BT-001, BT-002
-- theses/: 601788_光大证券.md
+- theses/: 601788_光大证券.md, 300725_药石科技.md
 
 ---
 

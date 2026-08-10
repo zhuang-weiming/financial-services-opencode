@@ -1,0 +1,44 @@
+# SELL_LADDER v2.0 — Required Packages
+# 安装: pip install -r requirements.txt
+# 最后更新: 2026-08-10
+
+# === 核心数据/计算 ===
+pandas>=2.0.0
+numpy>=1.24.0
+scipy>=1.10.0
+
+# === 机器学习 ===
+scikit-learn>=1.3.0
+
+# === 缠论 (chanlun skill) ===
+czsc>=1.0.0
+
+# === 聪明钱 (smc skill) ===
+smartmoneyconcepts>=0.1.0
+
+# === 谐波 (harmonic skill) ===
+pyharmonics>=0.2.0
+
+# === 金融数据 (国内) ===
+akshare>=1.12.0
+tushare>=1.4.0  # token-gated, 可选
+
+# === 金融数据 (全球) ===
+yfinance>=0.2.0
+
+# === 可视化 ===
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+
+# === HTTP ===
+requests>=2.30.0
+
+# === alpha-engine-v21 (HDF5) ===
+h5py>=3.8.0
+
+# === 备注 ===
+# 1. 上述 package 已通过 pip install 全部安装到本地 Python 环境
+# 2. tushare 是 token-gated, 没有 token 也能装但调用 API 会失败
+# 3. pyharmonics 是 harmonic skill 的可选库, 不装会回退到 bundled detector
+# 4. 如果有 package 版本冲突, 可用: pip install --upgrade package_name

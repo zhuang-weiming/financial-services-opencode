@@ -29,12 +29,12 @@
 | `decision-journal/` | **概率性决策日志 + Brier 季度校准** — `YYYY-MM-DD.md` 登记每条预测；`brier-quarterly/YYYY-QN.md` 季度评分；Brier < 0.15 = 框架在加值；连续 2 季度 > 0.20 触发 5-Why 蒸馏 | **强时序** | ✅ 2026-08-04 创建（首批 7 条预测登记：HYP-029/028/027/016/015/002 + HYP-006 触发器状态）|
 | `2.1.HYP-UNUSED.md` | 归档假设库（ARCHIVED / RETIRED 完整正文 + 5-Why，2026-08-04 从 2.HYPOTHESES.md 迁出） | 静态（远期回溯用） | ✅ 已创建（HYP-031 RETIRED + HYP-005/007/012/013 ARCHIVED；含恢复条件；原位置指针防断链） |
 | `5.BACKTEST_INDEX.md` | 回测台账（每条含 Adversarial Review） | 静态（追加） | ✅ 6/6 已填充 |
-| `6.CONFLICTS.md` | 冲突记录（回溯/逻辑/Regime） | 静态 | ✅ 11条已记录（**4 OPEN + 7 RESOLVED**；CONFLICT-LOGIC-008 已合并入 HYP-027 v3；**CONFLICT-LOGIC-009 化债收官口径 2026-08-04 用户裁决 RESOLVED — 保持 2027-06-30**） |
+| `6.CONFLICTS.md` | 冲突记录（回溯/逻辑/Regime） | 静态 | ✅ 12条已记录（**5 OPEN + 7 RESOLVED**；CONFLICT-LOGIC-008 已合并入 HYP-027 v3；**CONFLICT-LOGIC-009 化债收官口径 2026-08-04 用户裁决 RESOLVED**；**CONFLICT-BLINDSPOT-002 ⭐ 2026-08-07 部分 RESOLVED** — 4.2 v5.1 §三.3 新增供应链领先层 + 时间窗前移 6-12→6-9 月；剩余 OPEN 子项 (a) "3-6 月 vs 6-9 月" 阈值未定 (b) hyperscaler -20% 触发 (c) SK Hynix -50% 是 capex 见顶 vs HBM 周期） |
 | `7.SELL_LADDER.md` | 卖出梯子规则 | 静态 | 待补 |
 | `7.1.POSITION_SIZING.md` | 仓位管理 | 静态 | 已填充 |
 | `4.BROKER_OBSERVATION.md` | 券商板块观察指标体系 | 静态 | 已创建 + **v1.4 CDS 双层阈值修订 2026-08-04**（触发 5 降级为复核；触发 6 新增 100bp 清仓） |
 | `4.1.NATIONAL_TEAM_OBSERVATION.md` | 国家队全口径资金监测 | 动态（月度更新） | ✅ 已创建 |
-| `4.2.AI_BUBBLE_TRACKING.md` | **AI 泡沫跟踪与撤退策略**（2026-08-06 v5 — 从 out/ 迁入，含 5 信号 + 联动规则 + 对冲工具） | 静态（季度更新） | ✅ **已创建 v5**（2026-08-06 创建） |
+| `4.2.AI_BUBBLE_TRACKING.md` | **AI 泡沫跟踪与撤退策略**（**2026-08-07 v5.1** — v5.1 升级：新增 §三.3 供应链领先层真实数据 + §三.4 中国 LLM API 价格；时间窗 "6-12 月" → "**6-9 月**" 置信度下调；含 5 信号 + 联动规则 + 对冲工具） | 静态（季度更新） | ✅ **v5.1 升级**（2026-08-07）+ market-researcher subagent 反方验证 |
 | `raw-log/YYYY-MM-DD.md` | 每日原始记录（**强时序，保留全部** — 用于证据回溯；已蒸馏的认知标注归档关系） | **强时序** | 16 文件（截至 2026-08-04，含当日 2 次追加：P0 编辑 + 二次复核） |
 | `3.1.CHINA_FRAMEWORK.md` | **A 股独立投资框架 v1.4**（化债市总纲/国家机器/退出纪律/反方章节/借通胀窗口/**v1.4 CDS 阈值拆分 2026-08-04**；与 3.US_FRAMEWORK.md 平级，跨市场协调见 3.US_FRAMEWORK.md §九）| 静态 | v1.4 升级（**CDS 双层阈值**：30bp 预警 / 50bp 复核 / 100bp 清仓——与 US 对齐；§1.3 + §3.2 + §4.3 + §6.2 + §10.1 + §10.2 + §10.3 + §11 总览 + §13 反方 共 13 处同步；含 HYP-029 v2 中国反向操作；§10.3 月度检查清单 CDS 与 §10.1 一致化；§11.B 沪指/沪深300 实时刷新；§13.6 HYP-029 v2 触发状态标记 2/5）|
 | `3.US_FRAMEWORK.md` | **美股独立投资框架 v2.1**（总纲/观察/配置/双剧本联动/反方章节/**§1.3 双剧本观察表更新为中选后 6-9 月触发窗口 / §2.2.1 summary 表 v3 修正数据 2026-08-04**；与 3.1.CHINA_FRAMEWORK.md 平级，跨市场协调见其"九、总组合协调层"）| 静态 | v2.1 升级（HYP-027 v3 + HYP-028 v3 + HYP-029 v2 整合；**§2.2.1 summary 表修正**：旧估算~150-180% / 估算~320%+ 已替换为 v3 整体指标 34.9% / 22.7% / 18.4% + META 35.1% 警示红旗；数据缺口"精确 Capex/Revenue 比值"行删除（已解决））|
@@ -42,6 +42,7 @@
 | `distillation-log/YYYY-MM-DD_NNN.md` | 蒸馏事件 | **强时序** | 1 文件 |
 | `backtests/BT-XXX/` | 每个回测一个目录 | 静态 | 6 目录 |
 | `theses/<code>_<name>.md` | 个股研究论 | 静态 | 1 文件 |
+| **`sell-ladder/`** | **SELL_LADDER v2.0 能力** (14 skill 信号矩阵 + 5 动能结束标志 + 3 阶段框架; `sell_ladder.py` 可重跑; `data/` 永久数据; `runs/` 历史结果) | **可执行** | **1 目录 (2026-08-10 新建)** |
 
 ---
 
@@ -60,16 +61,17 @@
 
 ## 当前活跃内容
 
-**最后更新:** 2026-08-06 19:00 (personal-system/ 文件命名重构完成)
-**回测总数:** 6 (BT-001~006)
+**最后更新:** 2026-08-10 19:00 (**BT-008 入库 — SELL_LADDER v2.0 有效性回测**: 2026 科技股行情 walk-forward, 7 标的 × 28 周 = 196 评估点, 发现 **factor_research 死灯 BUG** (f2_ic>0.5 数学不可达 → v2.0 阶段 1 永不触发, 已修复 v2.1 multi_factor 补位) + **阶段 3 阈值过敏感** (超前实际顶 64-115 交易日, 4/7 标的踏空; 建议 v2.2 连续确认)。BT-008 存放在 backtests/, 工具更新: sell_ladder.py calc_multi_factor 补 strong_momentum + backtest_seed_2026.py --variant) | 上一轮: SELL_LADDER v2.0 落地 (14 skill 矩阵 + 5 动能结束标志 + 3 阶段框架, 工具永久存放 `personal-system/sell-ladder/`, 药石 300725: 4/5 强动能 + 0/5 结束 → 阶段 2 动能衰减期; 详见 `sell-ladder/README.md` + `7.1.POSITION_SIZING.md §5.5`)
+**回测总数:** 8 (BT-001~008; BT-008 = SELL_LADDER v2.0 有效性 2026-08-10)
 **本轮追加 (2026-08-06 19:00):** **personal-system/ 文件命名重构** — 14 个文件 git mv + 1 个新文件 + 70+ 个引用批量更新。编号体系：**1.** 法则（1.LAWS / 1.1.FAILED_LAWS）/ **2.** 假设（2.HYPOTHESES / 2.1.HYP-UNUSED / 2.2.HYP-027-V3-DETAILS / 2.3.HYP_UPDATE_RULES）/ **3.** 框架（3.US_FRAMEWORK / 3.1.CHINA_FRAMEWORK）/ **4.** 观察（4.BROKER_OBSERVATION / 4.1.NATIONAL_TEAM_OBSERVATION / 4.2.AI_BUBBLE_TRACKING）/ **5.** 回测 / **6.** 冲突 / **7.** 操作（7.SELL_LADDER / 7.1.POSITION_SIZING）。git history 完整保留（14 个 rename + 1 个 new file + 5 个 modified due to 引用更新）。详见 raw-log 19:00 段。
+**本轮追加 (2026-08-07):** **4.2 v5.1 升级** — 用户质询 "美国是浪潮控制人，韩国/中国是 follower" → 加载 skills (research-discipline/data-routing/bottleneck-hunter/quant-statistics/personal-trading-system) → Morningstar MCP 拉 7 家公司真实数据 (TSMC/Samsung/SK Hynix/Micron/中际旭创/Coherent/Lumentum) → DDG 全 blocked 触发派 market-researcher subagent (4200 字反方报告) → 5-Why 终极反方拒绝 "3-6 月" 激进断言 → v5 → v5.1 写回 9 个编辑：(1) §三.1 时间窗 6-12 月 → **6-9 月**置信度下调 (2) §三.3 新增供应链领先层（SK Hynix -49.95% / Micron P/FV 1.04 / Lumentum -11.7% op margin 等 7 家真实数据 + 反方裁决）(3) §三.4 新增中国 LLM API 价格（Kimi K3 ¥20/¥100 不是 commodity，HSBC 8-03 验证）(4) §八.2 月度监控追加 7 个新触发器 (5) §九.2 终极判定 v5.1 修正 (6) §十 风险披露 v5.1 数据空缺 (7-9) §十一 版本/触发/空缺更新。同时：6.CONFLICTS.md 新增 **CONFLICT-BLINDSPOT-002** 部分 RESOLVED；decision-journal/2026-08-07.md 新增 4 条 v5.1 预测登记。
 **本轮追加 (2026-08-06 17:00):** **AI 泡沫跟踪文件 v5 迁入 memory** — 原 `out/ai-bubble-report-20260806.md` 已删除，迁入 `personal-system/4.2.AI_BUBBLE_TRACKING.md`（命名风格参照 `4.BROKER_OBSERVATION.md` / `4.1.NATIONAL_TEAM_OBSERVATION.md`）。用户三轮反问带来 4 个根本性修正：(1) "避风港"→"减震器/真避风港"三分类；(2) 跷跷板逻辑修正（港股科技不是避风港）；(3) 删除"软/硬着陆"二分；(4) 4 级阶梯与减仓次序联动规则（5 信号触发数 → 综合减仓）。**US_FRAMEWORK 新增 §十二·附录** 整合上述 4 项修正。raw-log 17:00 段记录完整决策历史。
 **本轮追加 (2026-08-04 下午):** 评论驱动方案 B 实施 — 新增 `2.3.HYP_UPDATE_RULES.md`（7 条 HYP 显式上修/下修信号+反向截止）+ `decision-journal/`（首批 7 条预测登记 + 季度 Brier 评分模板）；2.HYPOTHESES.md 零新增；详细登记见 `decision-journal/2026-08-04.md`
 **本轮追加 (2026-08-04 晚):** P0 编辑 + memory 全扫描修复 — (1) US_FRAMEWORK §2.2.1 summary 表脏数据修正（估算~150-180% → 34.9%；估算~320%+ → 22.7% + META 警示红旗）(2) CDS 阈值 v1.4 双层拆分（30bp 预警 / 50bp 复核 / 100bp 清仓）覆盖 5 个文件 20+ 处；INDEX 版本号同步
 **活跃法则数:** 3 (LAW-001~003，全部含 5-Why Challenge；LAW-004 → HYP-013；**USER_RULE 候选 LAW-005 — 用户偏好硬约束 ≥300亿+非A字型+真正未启动**)
 **失效法则数:** 1 (FAILED-001 — 券商原假设)
 **开放假设数:** **20 活跃 + 1 OBSERVATION（HYP-019）+ 1 SUSPENDED（HYP-010）+ 1 元评估（HYP-025）+ 1 RETIRED（HYP-031）+ 4 ARCHIVED（HYP-005/007/012/013 → 2.1.HYP-UNUSED.md）**（2026-08-04 Tier 1-4 分类精简：Tier 1 = HYP-016/015/006/026/021/029；Tier 2 = HYP-002/014/028/011/020/024/017/030；Tier 3 = HYP-027/003/004/022/018/023；HYP-009 已并入 HYP-016；HYP-001 已归档至 FAILED-001；HYP-008 不存在；**归档正文统一存放于 2.1.HYP-UNUSED.md**；**三剧本概率重分配：HYP-029 50-55% 主导 / HYP-028 30-40% 辅助 / HYP-027 10-15% 尾部风险（2026-08-04 用户分级）**；HYP-027 v3 庄家式过山车剧本（降为尾部风险）；HYP-028 v3 有效时长 8-12 年；HYP-029 v2 触发状态 2/5（已更新））
-**开放冲突数:** 4 (CONFLICT-REGIME-001, CONFLICT-LOGIC-002, CONFLICT-BLINDSPOT-001, CONFLICT-LOGIC-007；CONFLICT-LOGIC-008 已合并入 HYP-027 v3；CONFLICT-LOGIC-009 RESOLVED)
+**开放冲突数:** 5 (CONFLICT-REGIME-001, CONFLICT-LOGIC-002, CONFLICT-BLINDSPOT-001, CONFLICT-LOGIC-007, **CONFLICT-BLINDSPOT-002 部分 RESOLVED — 4.2 v5.1 §三.3 供应链领先层；剩余 OPEN 子项 (a) "3-6 vs 6-9 月" 阈值 (b) hyperscaler -20% 触发 (c) SK Hynix -50% 信号归属**；CONFLICT-LOGIC-008 已合并入 HYP-027 v3；CONFLICT-LOGIC-009 RESOLVED)
 **已解决冲突数:** 10 (LOGIC-001/003/004/005/006/008/009, REGIME-002, METHOD-001/002)
 **5-Why 系统:** ✅ 已集成
 **国家队 regime:** 🔴 净卖出（FactSet 数据确认，持续监控）

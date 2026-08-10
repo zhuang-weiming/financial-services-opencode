@@ -1,0 +1,113 @@
+{
+  "ticker": "002821",
+  "date": "2026-08-10",
+  "last_close": 176.0,
+  "cost": 130.0,
+  "pnl_pct": 35.38461538461539,
+  "strong_healthy": 3,
+  "end_count": 0,
+  "stage": "阶段 2: 动能衰减期 (3-4/5 强信号)",
+  "action": "🟡 分批止盈 (减 20-40%)",
+  "signals": {
+    "alpha_engine_v21": {
+      "wt1": 15.220383738414915,
+      "wt2": 1.5557778059378373,
+      "zone": "N+ 0-20",
+      "signal": 0,
+      "healthy": true
+    },
+    "candlestick": {
+      "score_20": -1,
+      "signal": -1,
+      "healthy": true
+    },
+    "ml_strategy": {
+      "ret_5d": 0.19793084671930306,
+      "signal": 1,
+      "healthy": true
+    },
+    "chanlun": {
+      "bi_count": 49,
+      "zs_count": 7,
+      "last_zs_gg": 200.0,
+      "last_zs_dd": 142.43,
+      "verdict": "↔️ 中枢内 (DD=142.43~GG=200.00, 位置 58%)",
+      "signal": 0,
+      "healthy": true
+    },
+    "technical_basic": {
+      "ema12": 162.68985341308297,
+      "ema26": 159.0391879484815,
+      "adx": 20.454543193414327,
+      "rsi": 59.41229428601794,
+      "bb_pos": 0.7482697201789392,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "ichimoku": {
+      "tenkan": 165.215,
+      "kijun": 171.215,
+      "cloud_top": 143.64,
+      "cloud_bot": 139.315,
+      "above_cloud_pct": 22.528543581175175,
+      "tk_bullish": "False",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "smc": {
+      "verdict": "BOS 上升结构",
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": true
+    },
+    "alpha_zoo": {
+      "ret_20d": 0.0645375914836992,
+      "pos_20d": 0.5831162063574779,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "factor_research": {
+      "f2_ic_self": -0.2033747187047031,
+      "f2_ic_cross": 0.0,
+      "f2_ic": -0.2033747187047031,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "multi_factor": {
+      "composite": 0.09755415818406711,
+      "signal": 1,
+      "healthy": true,
+      "note": "with peer"
+    },
+    "volatility": {
+      "hv_pct": 95.0,
+      "hv_annual": 94.46335193120571,
+      "signal": 0,
+      "verdict": "⚪ 高波动 (强趋势特征)",
+      "healthy": true
+    },
+    "harmonic": {
+      "verdict": "⚪ B=100%, D=450%",
+      "signal": 0,
+      "healthy": true
+    },
+    "pair_trading": {
+      "verdict": "⚪ 300759 Z=-1.95",
+      "signal": 0,
+      "healthy": true,
+      "top_pair": "300759",
+      "top_z": -1.9541506975364005
+    }
+  },
+  "end_signals": {
+    "trend_break": false,
+    "momentum_reversal": false,
+    "volume_divergence": false,
+    "structure_break": false,
+    "volatility_drop": false
+  }
+}

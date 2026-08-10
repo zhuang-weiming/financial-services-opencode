@@ -1,0 +1,16 @@
+metric,value
+panel_date,2026-07-31
+panel_n,3042
+panel_mean,-14.53
+panel_median,-28.98
+panel_std,44.06
+panel_p5,-66.04
+panel_p25,-50.01
+panel_p75,18.23
+panel_p95,70.06
+panel_min,-83.92
+panel_max,96.44
+300725_wt1,7.668032966525757
+panel_percentile,71.2
+panel_rank,2167
+panel_rank_pct_top,28.8
