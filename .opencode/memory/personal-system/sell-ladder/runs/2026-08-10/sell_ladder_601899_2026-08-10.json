@@ -1,0 +1,123 @@
+{
+  "ticker": "601899",
+  "date": "2026-08-10",
+  "last_close": 35.45,
+  "cost": null,
+  "pnl_pct": null,
+  "strong_healthy": 4,
+  "end_count": 0,
+  "stage": "阶段 1: 强动能期",
+  "action": "🟢 持有 100%",
+  "v22": {
+    "score": 11,
+    "max": 12,
+    "event_pos": 3,
+    "event_neg": 0,
+    "trend_pos": 5,
+    "w_event": 2,
+    "w_trend": 1
+  },
+  "signals": {
+    "alpha_engine_v21": {
+      "wt1": 61.20730004635722,
+      "wt2": 57.25026737095943,
+      "zone": "OB≥60",
+      "signal": 0,
+      "healthy": true
+    },
+    "candlestick": {
+      "score_20": 8,
+      "signal": 1,
+      "healthy": true
+    },
+    "ml_strategy": {
+      "ret_5d": 0.08909370199692801,
+      "signal": 1,
+      "healthy": true
+    },
+    "chanlun": {
+      "bi_count": 50,
+      "zs_count": 9,
+      "last_zs_gg": 29.19,
+      "last_zs_dd": 24.42,
+      "verdict": "⭐ 三买候选 (中枢 GG=29.19, 现价 35.45, 突破 21.4%)",
+      "signal": 1,
+      "healthy": true
+    },
+    "technical_basic": {
+      "ema12": 33.218962876263696,
+      "ema26": 31.69101319802984,
+      "adx": 32.56736563102839,
+      "rsi": 70.7835495418737,
+      "bb_pos": 0.9256495321169224,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "ichimoku": {
+      "tenkan": 33.489999999999995,
+      "kijun": 31.174999999999997,
+      "cloud_top": 30.14,
+      "cloud_bot": 27.665,
+      "above_cloud_pct": 17.617783676177833,
+      "tk_bullish": "True",
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "smc": {
+      "verdict": "BOS 上升结构",
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": true
+    },
+    "alpha_zoo": {
+      "ret_20d": 0.29568713450292416,
+      "pos_20d": 0.9613259668508294,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "factor_research": {
+      "f2_ic_self": -0.08585049444626704,
+      "f2_ic_cross": 0.0,
+      "f2_ic": -0.08585049444626704,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "multi_factor": {
+      "composite": 0.2847016424943405,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": true,
+      "note": "with peer"
+    },
+    "volatility": {
+      "hv_pct": 44.166666666666664,
+      "hv_annual": 46.21518389970915,
+      "signal": 0,
+      "verdict": "⚪ 中性",
+      "healthy": true
+    },
+    "harmonic": {
+      "verdict": "⚪ B=50%, D=154%",
+      "signal": 0,
+      "healthy": true
+    },
+    "pair_trading": {
+      "verdict": "⚪ 601168 Z=-1.77",
+      "signal": 0,
+      "healthy": true,
+      "top_pair": "601168",
+      "top_z": -1.774957215663003
+    }
+  },
+  "end_signals": {
+    "trend_break": false,
+    "momentum_reversal": false,
+    "volume_divergence": false,
+    "structure_break": false,
+    "volatility_drop": false
+  }
+}

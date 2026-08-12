@@ -173,16 +173,7 @@ def compute_at(df: pd.DataFrame, cut: int, ticker: str, peer_dfs: dict, variant:
 
 
 def load_tech(ticker: str) -> pd.DataFrame:
-    """加载任意股票日线 (tech-pool 优先, 否则 local data / Sina fallback)"""
-    import glob
-    rename = {'日期': 'date', '股票代码': 'code', '开盘': 'open', '收盘': 'close',
-              '最高': 'high', '最低': 'low', '成交量': 'volume', '成交额': 'amount',
-              '涨跌幅': 'chg_pct'}
-    for f in glob.glob(str(TECH_DIR / f"{ticker}_*.csv")):
-        df = pd.read_csv(f)
-        df = df.rename(columns={k: v for k, v in rename.items() if k in df.columns})
-        df['date'] = pd.to_datetime(df['date'])
-        return df.sort_values('date').reset_index(drop=True)
+    """加载任意股票日线 (委托 sell_ladder.load_data → 集中化 data/market/daily → Sina)"""
     return load_data(ticker)
 
 

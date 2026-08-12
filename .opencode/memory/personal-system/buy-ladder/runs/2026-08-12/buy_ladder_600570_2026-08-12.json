@@ -1,0 +1,272 @@
+{
+  "ticker": "600570",
+  "date": "2026-08-10",
+  "last_close": 23.07,
+  "cost": null,
+  "pnl_pct": null,
+  "held": false,
+  "shares": null,
+  "layer0": {
+    "ma60_ok": true,
+    "mci_ok": true,
+    "national_team_ok": true,
+    "unlocked": true,
+    "forced": true
+  },
+  "layer1": {
+    "market_cap_yi": null,
+    "pe_ttm": null,
+    "pb_mrq": null,
+    "roe": null,
+    "is_st": false,
+    "valuation_pass": true,
+    "fundamental_pass": true,
+    "st_pass": true,
+    "market_cap_pass": true,
+    "sector_pass": false,
+    "n_pass": 4,
+    "n_total": 5,
+    "all_pass": false
+  },
+  "signals": {
+    "alpha_engine_v21": {
+      "wt1": 40.28134385836485,
+      "wt2": 41.08602413618879,
+      "zone": "H 40-60",
+      "signal": -1,
+      "verdict": "🔴 WT死叉 (WT1 40.5→40.3, H 40-60)",
+      "healthy": true
+    },
+    "candlestick": {
+      "score_20": 3,
+      "signal": 1,
+      "healthy": true
+    },
+    "ml_strategy": {
+      "ret_5d": -0.004745470232959459,
+      "ml_score": -0.06388366610666907,
+      "prob_up": 0.46805816694666547,
+      "n_train": 879,
+      "signal": 0,
+      "model": "rf_walkforward",
+      "healthy": true
+    },
+    "chanlun": {
+      "bi_count": 50,
+      "zs_count": 10,
+      "last_zs_gg": 24.27,
+      "last_zs_dd": 20.04,
+      "verdict": "↔️ 中枢内 (DD=20.04~GG=24.27, 位置 72%)",
+      "signal": 0,
+      "healthy": true
+    },
+    "technical_basic": {
+      "ema12": 22.540435149698432,
+      "ema26": 22.180734789615556,
+      "adx": 20.050915734462507,
+      "rsi": 59.117549256960054,
+      "bb_pos": 0.7946077244985108,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "ichimoku": {
+      "tenkan": 22.48,
+      "kijun": 21.945,
+      "cloud_top": 24.2,
+      "cloud_bot": 22.582500000000003,
+      "above_cloud_pct": -4.669421487603298,
+      "tk_bullish": "True",
+      "tk_bearish": "False",
+      "tk_cross_up": "False",
+      "tk_cross_down": "False",
+      "bullish_cloud": false,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "smc": {
+      "verdict": "⚪ SMC 无结构信号",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "swings_count": 45,
+      "last_struct": 0,
+      "last_fvg": 0,
+      "bos_choch_recent": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "alpha_zoo": {
+      "ret_20d": 0.11127167630057788,
+      "pos_20d": 0.7952755905511809,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "factor_research": {
+      "f2_ic_self": -0.05611508417675056,
+      "f2_ic_cross": 0.0,
+      "f2_ic": -0.05611508417675056,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "multi_factor": {
+      "composite": 0.3191462117923404,
+      "z_momentum": 1.6275556292758169,
+      "z_reversal": -0.03004981728548623,
+      "z_volatility": 0.1799102152092954,
+      "z_volume_ratio": -0.5008311800302647,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": true,
+      "note": "canonical 4-factor ts-z"
+    },
+    "volatility": {
+      "hv_pct": 57.49999999999999,
+      "hv_annual": 32.80911482943637,
+      "signal": 0,
+      "verdict": "⚪ 中性",
+      "healthy": true
+    },
+    "harmonic": {
+      "verdict": "⚪ B=55%, D=352%",
+      "signal": 0,
+      "healthy": true
+    },
+    "pair_trading": {
+      "verdict": "pair_trading 已移除 (v3.0)",
+      "signal": 0,
+      "healthy": true,
+      "removed": true
+    },
+    "turnover_anomaly": {
+      "vol_ratio": 0.7690656233415467,
+      "pos_20d": 0.7952755905511809,
+      "ret_5d": -0.004745470232959459,
+      "signal": 0,
+      "verdict": "⚪ 量比0.77, 位置80%",
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "sector_relative": {
+      "stock_ret_20d": 0.11127167630057788,
+      "sector_ret_20d": -0.16364952932657495,
+      "diff": 0.27492120562715283,
+      "signal": 1,
+      "verdict": "🟢 跑赢板块 +27.5% (个股+11.1% vs 板块-16.4%)",
+      "healthy": true,
+      "strong_momentum": true
+    },
+    "ad_line": {
+      "ad_5d_slope": -40252298.03772497,
+      "signal": -1,
+      "verdict": "🔴 A/D 顶部背离 (5d 派发)",
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "wt1_sweet_zone": {
+      "cur_wt1": 40.28134385836485,
+      "past_wt1": -51.65987489135591,
+      "sweet_low": 40,
+      "sweet_high": 60,
+      "ob_threshold": 60,
+      "in_sweet_zone": true,
+      "came_from_below": true,
+      "signal": 1,
+      "verdict": "🟢 WT1 sweet zone 穿越 (LazyBear, cur=+40.28 in [40,60], past=-51.66)",
+      "healthy": true
+    },
+    "trend_launch": {
+      "cur_adx": 20.050915734462507,
+      "past_adx": 26.644710634501884,
+      "adx_launch": false,
+      "ema_cross": "True",
+      "cloud_breakout": false,
+      "n_transitions": "1",
+      "signal": 0,
+      "verdict": "⚪ 部分 transition (1/3, 等待确认)",
+      "healthy": true
+    },
+    "volume_price_resonance": {
+      "turnover_pos": false,
+      "ad_line_pos": false,
+      "vol_ratio_5d": 1.0935127219339087,
+      "n_resonance": 0,
+      "signal": -1,
+      "verdict": "🔴 无共振 (0/3)",
+      "healthy": true
+    },
+    "structure_complete": {
+      "chanlun_pos": false,
+      "smc_pos": false,
+      "candlestick_pos": true,
+      "n_struct": 1,
+      "signal": 0,
+      "verdict": "⚪ 部分结构 (1/3)",
+      "healthy": true
+    },
+    "valuation_percentile": {
+      "signal": 0,
+      "healthy": false,
+      "note": "待接入 tushare daily_basic (Layer 1 筛子)"
+    },
+    "fundamental_inflection": {
+      "signal": 0,
+      "healthy": false,
+      "note": "待接入 tushare fina_indicator"
+    }
+  },
+  "veto_result": {
+    "vetoes": {
+      "downtrend_unbroken": {
+        "triggered": false,
+        "note": "EMA12<EMA26:False, ADX>25:False, 未收敛:True"
+      },
+      "volume_price_divergence": {
+        "triggered": false,
+        "note": "缩量反弹 (<0.7 量比 + 价涨)"
+      },
+      "fundamental_deteriorate": {
+        "triggered": false,
+        "note": "待接入 tushare fina_indicator (占位)"
+      },
+      "sector_weak": {
+        "triggered": true,
+        "note": "板块 ETF 20d<-5% 或 MA60 下行 (当前 计算中)"
+      },
+      "valuation_high": {
+        "triggered": false,
+        "note": "待接入 tushare daily_basic (占位)"
+      }
+    },
+    "n_veto": 1,
+    "any_veto": true
+  },
+  "confirmations": {
+    "wt1_sweet_zone": true,
+    "trend_launch": false,
+    "volume_price_resonance": false,
+    "structure_complete": false,
+    "fundamental_inflection": false
+  },
+  "n_confirm": 1,
+  "score": 1,
+  "max_score": 20,
+  "event_pos": 0,
+  "event_neg": 1,
+  "trend_pos": 3,
+  "stage": 4,
+  "stage_name": "禁入区-Layer1不通过",
+  "action": "🔴 不买 (Layer 1 通过 4/5)"
+}

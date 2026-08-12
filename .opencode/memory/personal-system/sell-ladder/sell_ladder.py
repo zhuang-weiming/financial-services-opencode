@@ -69,7 +69,7 @@ DEBT_QUOTA_CLOSE = "2026-12-31"  # 联和评级口径
 
 # 5 大动能结束标志触发条件
 MOMENTUM_END_SIGNALS = {
-    'trend_break': {'name': '趋势破坏', 'trigger': 'EMA(12) 跌破 + ADX<20 + ichimoku 跌穿云'},
+    'trend_break': {'name': '趋势破坏', 'trigger': 'EMA(12) 跌破 + ADX<25 + ichimoku 跌穿云'},
     'momentum_reversal': {'name': '动量反转', 'trigger': 'WT1<-20 + RSI<30 持续 + 20d 动量<-10%'},
     'volume_divergence': {'name': '量能背离', 'trigger': 'OBV 下降 + 价格新高 (5 日)'},
     'structure_break': {'name': '结构破坏', 'trigger': 'smc ChoCH + chanlun 顶分型 + ichimoku 跌穿云'},
@@ -77,96 +77,63 @@ MOMENTUM_END_SIGNALS = {
 }
 
 # ============================================================
-# 1. 数据加载
+# 1. 数据加载 (委托给集中化 data_loader)
 # ============================================================
 def load_data(ticker: str) -> pd.DataFrame:
-    """加载日线数据 (任意股票: 本地查找 → Sina API fallback → 永久落盘)"""
+    """加载日线数据 (统一入口): data/market/daily → 旧位置 fallback → Sina API 下载并落盘。
+
+    委托 data_loader.load_daily, 保留旧函数签名兼容调用方。
+    """
+    from data_loader import load_daily
     if not ticker.isdigit():
         raise ValueError(f"代码必须是数字: {ticker}")
-
-    # 1. 本地查找 (优先级: data/raw → data/tech-pool → data/cross-data)
-    local_candidates = [
-        DATA_DIR / f"raw_daily_{ticker}.csv",
-    ]
-    import glob
-    for g in [f"{DATA_DIR}/tech-pool/{ticker}_*.csv", f"{CROSS_DIR}/{ticker}_*.csv"]:
-        local_candidates += [Path(p) for p in glob.glob(g)]
-
-    for path in local_candidates:
-        if path.exists():
-            df = pd.read_csv(path)
-            return _standardize(df, ticker)
-
-    # 2. Fallback: Sina API (轻量, 永不被封) → 永久落盘
-    print(f"  ⚠️ 本地无 {ticker} 数据, 改用 Sina API 下载...")
-    df = _sina_download(ticker)
-    df = _standardize(df, ticker)
-    path = DATA_DIR / f"raw_daily_{ticker}.csv"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    df[['date', 'code', 'open', 'close', 'high', 'low', 'volume']].to_csv(path, index=False)
-    print(f"  ✅ 已保存到 {path}")
+    df = load_daily(ticker)
+    if df is None or df.empty:
+        raise ValueError(f"无法加载 {ticker} 数据 (本地无 + Sina 下载失败)")
     return df
 
 
 def _standardize(df: pd.DataFrame, ticker: str) -> pd.DataFrame:
-    """标准化列名 + 类型 (兼容本地中文列名 / Sina API 英文列名)"""
-    rename = {'日期': 'date', '股票代码': 'code', '开盘': 'open', '收盘': 'close',
-              '最高': 'high', '最低': 'low', '成交量': 'volume', '成交额': 'amount',
-              '涨跌幅': 'chg_pct'}
-    df = df.rename(columns={k: v for k, v in rename.items() if k in df.columns})
-    if 'date' in df.columns:
-        df['date'] = pd.to_datetime(df['date'])
-    # Sina 返回字符串列 → 转数值
-    for col in ['open', 'close', 'high', 'low', 'volume']:
-        if col in df.columns:
-            df[col] = pd.to_numeric(df[col], errors='coerce')
-    if 'code' not in df.columns:
-        df['code'] = ticker
-    return df.sort_values('date').reset_index(drop=True)
+    """标准化列名 + 类型 (兼容本地中文列名 / Sina API 英文列名) —— 保留兼容"""
+    from data_loader import _standardize as _dl_std
+    return _dl_std(df, ticker)
 
 
 def _sina_download(code: str) -> pd.DataFrame:
-    """Sina 历史 K 线 (fallback)"""
-    import time
-    full_code = f'sz{code}' if code.startswith(('0', '3')) else f'sh{code}'
-    if code.startswith(('1', '5')):
-        full_code = f'sh{code}'
-    url = 'https://money.finance.sina.com.cn/quotes_service/api/json_v2.php/CN_MarketData.getKLineData'
-    params = {'symbol': full_code, 'scale': 240, 'ma': 'no', 'datalen': 900}
-    r = __import__('requests').get(url, params=params, timeout=10,
-                                    headers={'User-Agent': 'Mozilla/5.0'})
-    df = pd.DataFrame(r.json())
-    df = df.rename(columns={'day': 'date', 'open': 'open', 'high': 'high',
-                            'low': 'low', 'close': 'close', 'volume': 'volume'})
-    df['date'] = pd.to_datetime(df['date'])
-    return df
+    """Sina 历史 K 线 (fallback) —— 保留兼容"""
+    from data_loader import _sina_download as _dl_sina
+    return _dl_sina(code)
 
 
 # ============================================================
 # 2. 14 Skill 信号计算
 # ============================================================
 def calc_alpha_engine_v21(df, ticker='300725'):
-    """alpha-engine-v21: LazyBear WaveTrend (任意 ticker: 本地 wt CSV 优先, 否则现场计算)"""
-    import glob
-    wt_paths = glob.glob(str(DATA_DIR / f"wt_daily_{ticker}.csv")) + \
-               glob.glob(str(DATA_DIR / f"tech-pool/wt_{ticker}.csv"))
-    wt_path = wt_paths[0] if wt_paths else None
-    if wt_path:
-        wt = pd.read_csv(wt_path)
-        wt_cols = {c: c for c in wt.columns}
-        if '日期' in wt.columns:
-            wt = wt.rename(columns={'日期': 'date', 'wt1': 'wt1', 'wt2': 'wt2'})
-        wt['date'] = pd.to_datetime(wt['date'])
-        df = df.merge(wt[['date', 'wt1', 'wt2']], on='date', how='left')
-    elif 'wt1' not in df.columns:
-        # 现场计算 (通用)
+    """alpha-engine-v21: LazyBear WaveTrend (任意 ticker, 现场计算, 确定性)
+
+    v2.3 修复: 原实现 signal 恒 0 (只输出 zone 诊断, 从不投票), 导致该信号
+    在计票中永远弃权。现按 LazyBear WaveTrend 经典语义投票:
+      - 金叉: WT1 上穿 WT2 且 WT1 从负区/低位回升 → +1 (看多)
+      - 死叉: WT1 下穿 WT2 且 WT1 从正区/高位回落 → -1 (看空)
+      - 无交叉时: 趋势同向 (WT1 > WT2 且 WT1 > 0 → +1; WT1 < WT2 且 WT1 < 0 → -1)
+      - 其余 → 0 (观望)
+    阈值为 V21 惯用 zone 分界 (WT1=±20 强弱区, ±60 超买超卖区)。
+    """
+    if 'wt1' not in df.columns or 'wt2' not in df.columns:
         df = _compute_wt(df)
+    # 取最近两根确认交叉, 避免仅看最后一根误判
+    prev = df.iloc[-2] if len(df) >= 2 else df.iloc[-1]
     last = df.iloc[-1]
     wt1, wt2 = last.get('wt1', 0), last.get('wt2', 0)
-    
+    pwt1, pwt2 = prev.get('wt1', 0), prev.get('wt2', 0)
+
+    for k in ('wt1', 'wt2'):
+        if pd.isna(locals().get(k)): pass
     if pd.isna(wt1): wt1 = 0
     if pd.isna(wt2): wt2 = 0
-    
+    if pd.isna(pwt1): pwt1 = 0
+    if pd.isna(pwt2): pwt2 = 0
+
     if wt1 >= 60: zone = "OB≥60"
     elif wt1 >= 40: zone = "H 40-60"
     elif wt1 >= 20: zone = "M+ 20-40"
@@ -175,18 +142,54 @@ def calc_alpha_engine_v21(df, ticker='300725'):
     elif wt1 >= -40: zone = "M- -40-20"
     elif wt1 >= -60: zone = "L -60-40"
     else: zone = "OS≤-60"
-    
-    return {'wt1': float(wt1), 'wt2': float(wt2), 'zone': zone, 'signal': 0, 'healthy': True}
+
+    # 金叉/死叉判定
+    cross_up = (pwt1 <= pwt2) and (wt1 > wt2)
+    cross_down = (pwt1 >= pwt2) and (wt1 < wt2)
+
+    # 经典 LazyBear 语义: 低位金叉看多, 高位死叉看空
+    if cross_up and pwt1 < 20:
+        signal = 1
+        verdict = f"🟢 WT金叉 (WT1 {pwt1:.1f}→{wt1:.1f}, {zone})"
+    elif cross_down and pwt1 > -20:
+        signal = -1
+        verdict = f"🔴 WT死叉 (WT1 {pwt1:.1f}→{wt1:.1f}, {zone})"
+    elif wt1 > wt2 and wt1 > 0:
+        signal = 1
+        verdict = f"🟢 WT多头趋势 (WT1 {wt1:.1f} > WT2 {wt2:.1f}, {zone})"
+    elif wt1 < wt2 and wt1 < 0:
+        signal = -1
+        verdict = f"🔴 WT空头趋势 (WT1 {wt1:.1f} < WT2 {wt2:.1f}, {zone})"
+    else:
+        signal = 0
+        verdict = f"⚪ WT观望 (WT1 {wt1:.1f}, WT2 {wt2:.1f}, {zone})"
+
+    return {'wt1': float(wt1), 'wt2': float(wt2), 'zone': zone,
+            'signal': signal, 'verdict': verdict, 'healthy': True}
 
 
 def _compute_wt(df, n1=10, n2=21):
-    """LazyBear WaveTrend (简化版, EMA-based)"""
+    """LazyBear WaveTrend (日频经典公式, hlc3 输入)
+
+    与 LazyBear TradingView 原版一致:
+      N1=10 (Channel Length), N2=21 (Average Length)
+      AP  = (HIGH + LOW + CLOSE) / 3   (hlc3)
+      ESA = EMA(AP, N1)
+      D   = EMA(ABS(AP - ESA), N1)
+      CI  = (AP - ESA) / (0.015 * D)
+      WT1 = EMA(CI, N2)
+      WT2 = SMA(WT1, 4)
+
+    注: alpha-engine-v21 的 wave_trend.py (N1=50/N2=105 close-only) 是 V21 周频
+    规范版本; 本函数保留日频 LazyBear 原版, 两者为不同频率的同一指标族。
+    """
     c = df['close']
     h = df['high']
     l = df['low']
-    esa = ((h + l) / 2).ewm(span=n1, adjust=False).mean()
-    d = ((((h + l) / 2) - esa).abs()).ewm(span=n1, adjust=False).mean()
-    ci = (((h + l) / 2) - esa) / (0.015 * d.replace(0, np.nan))
+    ap = (h + l + c) / 3
+    esa = ap.ewm(span=n1, adjust=False).mean()
+    d = (ap - esa).abs().ewm(span=n1, adjust=False).mean()
+    ci = (ap - esa) / (0.015 * d.replace(0, np.nan))
     wt1 = ci.ewm(span=n2, adjust=False).mean()
     wt2 = wt1.rolling(4).mean()
     df = df.copy()
@@ -206,32 +209,56 @@ def calc_candlestick(df):
     is_bull = c > o
     is_bear = c < o
 
-    # 5 单 K 线
-    hammer = ((lower_shadow >= 2 * body) & (upper_shadow <= body) & (body_pct < 0.4))
-    inv_hammer = ((upper_shadow >= 2 * body) & (lower_shadow <= body) & (body_pct < 0.4))
-    doji = (body_pct < 0.1) & (rng > 0)
-    spinning = (body_pct < 0.3) & (upper_shadow > body) & (lower_shadow > body)
+    # 单根形态 (对齐 Vibe-Trading canonical, shadow_ratio=2.0, body_pct=0.1)
+    hammer = (lower_shadow >= 2 * body) & (upper_shadow < body) & (body > 0) & (rng > 0)
+    inv_hammer = (upper_shadow >= 2 * body) & (lower_shadow < body) & (body > 0)
+    shooting_star = (upper_shadow >= 2 * body) & (lower_shadow < body) & (body > 0) & (c.shift(1) > c.shift(2))
+    doji = (body / rng < 0.1) & (rng > 0)
+    spinning = (body / rng < 0.3) & (upper_shadow > body) & (lower_shadow > body) & (rng > 0) & ~doji
 
-    # 双日
-    po, pc = df.shift(1)['open'], df.shift(1)['close']
-    pbody = (pc - po).abs()
-    bull_engulf = (pc < po) & (c > o) & (o <= pc) & (c >= po) & (body > pbody)
-    bear_engulf = (pc > po) & (c < o) & (o >= pc) & (c <= po) & (body > pbody)
-    bull_harami = (pc < po) & (c > o) & (o >= pc) & (c <= po) & (body < pbody)
-    bear_harami = (pc > po) & (c < o) & (o <= pc) & (c >= po) & (body < pbody)
-    piercing = (pc < po) & (c > o) & (c > (po + pc) / 2) & (o < pc)
-    dark_cloud = (pc > po) & (c < o) & (c < (po + pc) / 2) & (o > pc)
+    # 双日形态 (对齐 canonical: engulfing 不要求实体放大)
+    o1, c1, h1, l1 = df.shift(1)['open'], df.shift(1)['close'], df.shift(1)['high'], df.shift(1)['low']
+    prev_bear = c1 < o1
+    prev_bull = c1 > o1
+    bull_engulf = prev_bear & (c > o) & (c >= o1) & (o <= c1)
+    bear_engulf = prev_bull & (c < o) & (c <= o1) & (o >= c1)
 
-    # 三日
-    ppo, ppc = df.shift(2)['open'], df.shift(2)['close']
-    morning = (ppc < ppo) & (body.shift(1) < body) & (c > o) & (c > (ppo + pc) / 2)
-    evening = (ppc > ppo) & (body.shift(1) < body) & (c < o) & (c < (ppo + pc) / 2)
-    three_white = (c > o) & (c.shift(1) > df.shift(1)['open']) & (c.shift(2) > df.shift(2)['open']) & (c > c.shift(1)) & (c.shift(1) > c.shift(2))
-    three_black = (c < o) & (c.shift(1) < df.shift(1)['open']) & (c.shift(2) < df.shift(2)['open']) & (c < c.shift(1)) & (c.shift(1) < c.shift(2))
+    # Harami (canonical: 前实体大 + 当前实体被包含)
+    bd1 = (c1 - o1).abs()
+    prev_top = pd.concat([o1, c1], axis=1).max(axis=1)
+    prev_bot = pd.concat([o1, c1], axis=1).min(axis=1)
+    curr_top = pd.concat([o, c], axis=1).max(axis=1)
+    curr_bot = pd.concat([o, c], axis=1).min(axis=1)
+    contained = (curr_top <= prev_top) & (curr_bot >= prev_bot)
+    large_prev = bd1 > body
+    bull_harami = prev_bear & large_prev & contained
+    bear_harami = prev_bull & large_prev & contained
+
+    # Piercing / Dark Cloud (canonical: 锚点用前低/前高)
+    piercing = prev_bear & (c > o) & (o < l1) & (c > (o1 + c1) / 2)
+    dark_cloud = prev_bull & (c < o) & (o > h1) & (c < (o1 + c1) / 2)
+
+    # 三日形态 (canonical: 晨星/暮星需跳空 + Day2 小实体)
+    o2, c2, h2, l2 = df.shift(1)['open'], df.shift(1)['close'], df.shift(1)['high'], df.shift(1)['low']
+    day1_bear = c1 < o1
+    day1_bull = c1 > o1
+    bd2 = (c2 - o2).abs()
+    rng2 = (h2 - l2).replace(0, np.nan)
+    day2_small = bd2 / rng2 < 0.3
+    day2_gap_down = h2 < l1
+    day2_gap_up = l2 > h1
+    mid1 = (o1 + c1) / 2
+    morning = day1_bear & day2_small & day2_gap_down & (c > o) & (c > mid1)
+    evening = day1_bull & day2_small & day2_gap_up & (c < o) & (c < mid1)
+
+    # Three White / Black (canonical: 每根开盘在前一根实体内)
+    three_white = day1_bull & (c2 > o2) & (c > o) & (c2 > c1) & (c > c2) & (o2 >= o1) & (o2 <= c1) & (o >= o2) & (o <= c2)
+    three_black = day1_bear & (c2 < o2) & (c < o) & (c2 < c1) & (c < c2) & (o2 <= o1) & (o2 >= c1) & (o <= o2) & (o >= c2)
 
     BULL = ['Hammer', 'InvertedHammer', 'BullishEngulfing', 'BullishHarami', 'PiercingLine', 'MorningStar', 'ThreeWhite']
-    BEAR = ['BearishEngulfing', 'BearishHarami', 'DarkCloudCover', 'EveningStar', 'ThreeBlackCrows']
-    all_pats = {'Hammer': hammer, 'InvertedHammer': inv_hammer, 'Doji': doji, 'SpinningTop': spinning,
+    BEAR = ['ShootingStar', 'BearishEngulfing', 'BearishHarami', 'DarkCloudCover', 'EveningStar', 'ThreeBlackCrows']
+    all_pats = {'Hammer': hammer, 'InvertedHammer': inv_hammer, 'ShootingStar': shooting_star,
+                'Doji': doji, 'SpinningTop': spinning,
                 'BullishEngulfing': bull_engulf, 'BearishEngulfing': bear_engulf, 'BullishHarami': bull_harami,
                 'BearishHarami': bear_harami, 'PiercingLine': piercing, 'DarkCloudCover': dark_cloud,
                 'MorningStar': morning, 'EveningStar': evening, 'ThreeWhite': three_white, 'ThreeBlackCrows': three_black}
@@ -245,11 +272,105 @@ def calc_candlestick(df):
     return {'score_20': score_20, 'signal': 1 if score_20 > 0 else (-1 if score_20 < 0 else 0), 'healthy': True}
 
 
-def calc_ml_strategy(df):
-    """ml-strategy: 简化 (5d forward 方向)"""
+def calc_ml_strategy(df, min_train=252, retrain_freq=20, horizon=5):
+    """机器学习预测 (真 sklearn walk-forward, 对齐 Vibe-Trading canonical)
+
+    canonical (agent/src/skills/ml-strategy/SKILL.md):
+      - features: ret_5d, ret_20d, vol_20d, ma_ratio, volume_ratio, rsi_14,
+                  bb_position, high_low_ratio, close_open_ratio, skew_20d
+      - label: future 5d return > 0
+      - walk-forward: min_train=252, retrain_freq=20, RandomForest(100, depth5)
+      - signal: predict_proba[:,1] → [−1, 1]
+
+    实现:
+      - 数据 ≥ min_train 且 sklearn 可用 → 真 walk-forward RF, signal ∈ {-1, 0, 1}
+      - 否则回退到 5d 动量方向 (避免依赖/崩溃)
+
+    ⚠️ 注意: BT-002 已实证单股纯技术面 ML 无效 (R²=-0.27, 方向准确率≈50%)。
+    此信号仅作为 16 信号中的 1 个趋势投票, 不单独作为决策依据。
+    """
     c = df['close']
-    ret_5d = c.pct_change(5).iloc[-1]
-    return {'ret_5d': float(ret_5d), 'signal': 1 if ret_5d > 0.02 else (-1 if ret_5d < -0.02 else 0), 'healthy': True}
+
+    try:
+        from sklearn.ensemble import RandomForestClassifier
+        from sklearn.preprocessing import StandardScaler
+        if len(df) < min_train + horizon + 10:
+            raise ValueError('数据不足')
+
+        o, h, l, v = df['open'], df['high'], df['low'], df['volume']
+        ret = c.pct_change()
+
+        features = pd.DataFrame(index=df.index)
+        features['ret_5d'] = c.pct_change(5)
+        features['ret_20d'] = c.pct_change(20)
+        features['vol_20d'] = ret.rolling(20).std()
+        features['ma_ratio'] = c / c.rolling(20).mean()
+        features['volume_ratio'] = v / v.rolling(20).mean()
+        delta = c.diff()
+        gain = delta.clip(lower=0).rolling(14).mean()
+        loss = (-delta.clip(upper=0)).rolling(14).mean()
+        rs = gain / loss.replace(0, np.nan)
+        features['rsi_14'] = 100 - (100 / (1 + rs))
+        ma20 = c.rolling(20).mean()
+        std20 = c.rolling(20).std()
+        bb_upper = ma20 + 2 * std20
+        bb_lower = ma20 - 2 * std20
+        bb_range = (bb_upper - bb_lower).replace(0, np.nan)
+        features['bb_position'] = (c - bb_lower) / bb_range
+        features['high_low_ratio'] = (h - l) / c
+        features['close_open_ratio'] = (c - o) / o
+        features['skew_20d'] = ret.rolling(20).skew()
+        features = features.replace([np.inf, -np.inf], np.nan)
+
+        labels = (c.pct_change(horizon).shift(-horizon) > 0).astype(int)
+
+        X = features.values
+        y = labels.values
+        valid = ~(np.isnan(X).any(axis=1) | np.isnan(y))
+        X, y = X[valid], y[valid]
+
+        if len(X) < min_train:
+            raise ValueError('有效样本不足')
+
+        # walk-forward: 训练到倒数第 2 个 (今天), 预测最后 1 个 (未来 horizon)
+        train_end = len(X) - 1
+        if train_end < min_train:
+            raise ValueError('walk-forward 窗口不足')
+
+        X_train = X[:train_end]
+        y_train = y[:train_end]
+        X_today = X[train_end:train_end + 1]
+
+        scaler = StandardScaler()
+        X_train_s = scaler.fit_transform(X_train)
+        X_today_s = scaler.transform(X_today)
+
+        model = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
+        model.fit(X_train_s, y_train)
+
+        prob = model.predict_proba(X_today_s)[0, 1]
+        ml_score = prob * 2 - 1  # [0,1] → [-1,1]
+
+        signal = 1 if ml_score > 0.1 else (-1 if ml_score < -0.1 else 0)
+
+        return {
+            'ret_5d': float(c.pct_change(5).iloc[-1]),
+            'ml_score': float(ml_score),
+            'prob_up': float(prob),
+            'n_train': int(len(X_train)),
+            'signal': signal,
+            'model': 'rf_walkforward',
+            'healthy': True,
+        }
+    except Exception:
+        # 回退: 5d 动量方向
+        ret_5d = c.pct_change(5).iloc[-1]
+        return {
+            'ret_5d': float(ret_5d),
+            'signal': 1 if ret_5d > 0.02 else (-1 if ret_5d < -0.02 else 0),
+            'model': 'momentum_fallback',
+            'healthy': True,
+        }
 
 
 def calc_chanlun(df, ticker='300725'):
@@ -328,9 +449,9 @@ def calc_technical_basic(df):
     return {
         'ema12': float(ema12), 'ema26': float(ema26),
         'adx': float(adx), 'rsi': float(rsi), 'bb_pos': float(bb_pos),
-        'signal': 1 if (adx > 20 and ema12 > ema26) else 0,
+        'signal': 1 if (adx > 25 and ema12 > ema26) else 0,
         'healthy': True,
-        'strong_momentum': adx > 20,  # 5 强信号之一
+        'strong_momentum': adx > 25,  # 5 强信号之一 (v3.0 Vibe-Trading canonical)
     }
 
 
@@ -346,36 +467,103 @@ def calc_ichimoku(df):
     cloud_top = max(senkou_a.iloc[-1], senkou_b.iloc[-1])
     cloud_bot = min(senkou_a.iloc[-1], senkou_b.iloc[-1])
     above_cloud = last > cloud_top
+    below_cloud = last < cloud_bot
     tk_bullish = tenkan.iloc[-1] > kijun.iloc[-1]
-    
+    tk_bearish = tenkan.iloc[-1] < kijun.iloc[-1]
+    tk_cross_up = (tenkan.iloc[-1] > kijun.iloc[-1]) and (tenkan.iloc[-2] <= kijun.iloc[-2])
+    tk_cross_down = (tenkan.iloc[-1] < kijun.iloc[-1]) and (tenkan.iloc[-2] >= kijun.iloc[-2])
+    bullish_cloud = float(senkou_a.iloc[-1]) > float(senkou_b.iloc[-1])
+    bearish_cloud = float(senkou_a.iloc[-1]) < float(senkou_b.iloc[-1])
+
+    buy_signal = tk_cross_up and above_cloud and bullish_cloud
+    sell_signal = tk_cross_down and below_cloud and bearish_cloud
+
+    signal = 1 if buy_signal else (-1 if sell_signal else 0)
+
     return {
         'tenkan': float(tenkan.iloc[-1]), 'kijun': float(kijun.iloc[-1]),
         'cloud_top': float(cloud_top), 'cloud_bot': float(cloud_bot),
         'above_cloud_pct': float((last / cloud_top - 1) * 100),
         'tk_bullish': tk_bullish,
-        'signal': 1 if (above_cloud and tk_bullish) else 0,
+        'tk_bearish': tk_bearish,
+        'tk_cross_up': tk_cross_up,
+        'tk_cross_down': tk_cross_down,
+        'bullish_cloud': bullish_cloud,
+        'signal': signal,
         'healthy': True,
-        'strong_momentum': above_cloud,  # 5 强信号之一
+        'strong_momentum': tk_cross_up and above_cloud and bullish_cloud,
     }
 
 
-def calc_smc(df):
-    """smc: Smart Money Concepts (BOS/ChoCH)"""
-    # 简化: 20 日高/低 vs 前 20 日
-    recent_20 = df.iloc[-20:]
-    prev_20 = df.iloc[-40:-20]
-    bos_bullish = recent_20['high'].max() > prev_20['high'].max()
-    bos_bearish = recent_20['low'].min() < prev_20['low'].min()
-    
-    if bos_bullish and not bos_bearish:
-        signal, verdict = 1, "BOS 上升结构"
-    elif bos_bearish and not bos_bullish:
-        signal, verdict = -1, "BOS 下降结构"
+def calc_smc(df, swing_length=10, lookback=10):
+    """Smart Money Concepts (canonical 单 bar 事件):
+
+    对齐 Vibe-Trading canonical (smartmoneyconcepts 库默认):
+      - swing_length = 10 (canonical 默认)
+      - close_break = True
+      - structure = ChoCH 优先, BOS 补充
+      - buy  = bullish ChoCH/BOS + bullish FVG exists (last_fvg > 0)
+      - sell = bearish ChoCH/BOS + bearish FVG exists (last_fvg < 0)
+      - stand aside: 无结构信号或方向冲突
+
+    v3.3 canonical 修正: 去掉 v3.2 加的 lookback 聚合 (canonical 是单 bar 事件),
+    FVG 同向判断改为严格匹配 (buy=last_fvg>0, sell=last_fvg<0)。
+    lookback 参数保留仅用于回传最近 N bar 结构序列 (诊断用), 不参与投票。
+    """
+    try:
+        from smartmoneyconcepts import smc as smc_lib
+    except ImportError:
+        return {'error': 'smartmoneyconcepts 未安装', 'signal': 0, 'healthy': False}
+
+    if len(df) < max(60, swing_length + 10):
+        return {'error': '数据不足', 'signal': 0, 'healthy': False}
+
+    df_work = df.copy()
+    if 'date' in df_work.columns:
+        df_work = df_work.set_index('date')
+    ohlc = df_work[['open', 'high', 'low', 'close']].astype(float)
+
+    try:
+        swings = smc_lib.swing_highs_lows(ohlc, swing_length=swing_length)
+        bc = smc_lib.bos_choch(ohlc, swings, close_break=True)
+        fvg_df = smc_lib.fvg(ohlc, join_consecutive=True)
+    except Exception as e:
+        return {'error': f'smc lib 调用失败: {e}', 'signal': 0, 'healthy': False}
+
+    bos_val = bc['BOS'].fillna(0).astype(int)
+    choch_val = bc['CHOCH'].fillna(0).astype(int)
+    fvg_val = fvg_df['FVG'].fillna(0).astype(int)
+
+    # canonical: structure = ChoCH 优先, BOS 补充
+    structure = choch_val.where(choch_val != 0, bos_val)
+
+    # canonical buy/sell 严格语义: 单 bar 结构事件 + FVG 同向
+    last_struct = int(structure.iloc[-1])
+    last_fvg = int(fvg_val.iloc[-1])
+
+    if last_struct == 1 and last_fvg > 0:
+        signal = 1
+        verdict = f"🟢 SMC 看多 (ChoCH/BOS↑ + FVG↑={last_fvg:+d})"
+    elif last_struct == -1 and last_fvg < 0:
+        signal = -1
+        verdict = f"🔴 SMC 看空 (ChoCH/BOS↓ + FVG↓={last_fvg:+d})"
     else:
-        signal, verdict = 0, "震荡"
-    
-    return {'verdict': verdict, 'signal': signal, 'healthy': True,
-            'strong_momentum': signal == 1}  # 5 强信号之一
+        signal = 0
+        if last_struct != 0 or last_fvg != 0:
+            verdict = f"⚪ SMC 结构/FVG 不一致 (struct={last_struct:+d}, FVG={last_fvg:+d})"
+        else:
+            verdict = "⚪ SMC 无结构信号"
+
+    return {
+        'verdict': verdict,
+        'signal': signal,
+        'healthy': True,
+        'strong_momentum': signal == 1,
+        'swings_count': int(swings['HighLow'].notna().sum()),
+        'last_struct': last_struct,
+        'last_fvg': last_fvg,
+        'bos_choch_recent': structure.tail(lookback).tolist(),  # 诊断用, 不参与投票
+    }
 
 
 def calc_alpha_zoo(df):
@@ -398,7 +586,13 @@ def calc_alpha_zoo(df):
 def calc_factor_research(df, peer_dfs=None):
     """factor-research: f2_rev_5d IC (基于截面或自相关)"""
     from scipy.stats import spearmanr
-    c = df['close']
+    # v3.0 修复: df['close'] 返回 RangeIndex Series, 与 peer_df.set_index('date') 的
+    # DatetimeIndex 无法对齐 → aligned 为空 → ic_cross=0. 现统一用 date 索引
+    if 'date' in df.columns:
+        df_idx = df.set_index('date')
+    else:
+        df_idx = df.copy()
+    c = df_idx['close']
     fwd_5d = c.pct_change(5).shift(-5).dropna()
     rev_5d = c.pct_change(5).dropna()
     
@@ -414,23 +608,31 @@ def calc_factor_research(df, peer_dfs=None):
     else:
         ic_self = 0
     
-    # 截面 IC (如果有同业数据) - 用近 5 日的 5d 涨幅 vs 后续 5d 涨幅 (n=5 个标的)
+    # 截面 IC (如果有同业数据) - peer 5d 涨幅 vs peer 后续 5d 涨幅 (横截面回归)
+    # v3.0 修复: 原版误用 aligned['A'] (主标的自己), 所有 peer 都贡献同一行 → IC=0
+    # 应改为同行业横截面 5d 动量延续性: peer_ret[i] vs peer_fwd[i]
     if peer_dfs:
         try:
-            data_5d_ret = []  # 5d 涨幅
-            data_5d_fwd = []  # 后续 5d 涨幅
+            data_5d_ret = []
+            data_5d_fwd = []
             for code, peer_df in peer_dfs.items():
                 pc = peer_df.set_index('date')['close']
+                # 取最近 60 个截面 (过去 60 天的横截面)
                 aligned = pd.concat([c, pc], axis=1, join='inner').dropna()
                 aligned.columns = ['A', 'B']
                 if len(aligned) > 30:
-                    data_5d_ret.append(aligned['A'].pct_change(5).iloc[-1])
-                    data_5d_fwd.append(aligned['A'].pct_change(5).shift(-5).iloc[-1])
-            if len(data_5d_ret) >= 3:
+                    # 横截面: peer (B) 当天的 5d 涨幅 vs 5d 后涨幅
+                    b_ret = aligned['B'].pct_change(5).dropna()
+                    b_fwd = aligned['B'].pct_change(5).shift(-5).dropna()
+                    common = b_ret.index.intersection(b_fwd.index)
+                    if len(common) >= 20:
+                        data_5d_ret.extend(b_ret[common].tail(20).tolist())
+                        data_5d_fwd.extend(b_fwd[common].tail(20).tolist())
+            if len(data_5d_ret) >= 10:
                 ic_cross, _ = spearmanr(data_5d_ret, data_5d_fwd)
             else:
                 ic_cross = 0
-        except:
+        except Exception:
             ic_cross = 0
     else:
         ic_cross = 0
@@ -445,32 +647,83 @@ def calc_factor_research(df, peer_dfs=None):
             'strong_momentum': ic > 0.5}
 
 
-def calc_multi_factor(df, peer_data=None):
-    """multi-factor: Z-score 综合 (5 因子, 如果没同业数据, 用绝对分数)"""
+def calc_multi_factor(df, peer_data=None, z_window=252):
+    """multi-factor: 四因子 z-score 等权和 (对齐 Vibe-Trading canonical)
+
+    canonical (agent/src/skills/multi-factor/example_signal_engine.py L84-90):
+      momentum    = close/shift(20) - 1              (20d 动量)
+      reversal    = -(close/shift(5) - 1)            (5d 反转取负, 短期反转看空)
+      volatility  = -ret.rolling(20).std()           (20d 波动取负, 低波看多)
+      volume_ratio = volume/rolling(20).mean()        (量比)
+      → 四因子等权 z-score 和 (canonical 为截面 z, 单标的场景用时间序列 z 近似)
+
+    返回:
+      signal=1: composite z > 0 (相对自身历史偏多)
+      signal=0: composite z <= 0
+    """
+    if len(df) < 30:
+        return {'error': '数据不足', 'signal': 0, 'healthy': False}
+
     c, v = df['close'], df['volume']
-    f1 = c.pct_change(20).iloc[-1]  # 20d 动量
-    f2 = c.pct_change(5).iloc[-1]   # 5d 反转
-    f3 = c.pct_change().rolling(20).std().iloc[-1]  # 波动
-    f4 = (v / v.rolling(20).mean()).iloc[-1]  # 量比
-    f5 = ((c - df['low'].rolling(20).min()) / (df['high'].rolling(20).max() - df['low'].rolling(20).min())).iloc[-1]
-    
-    # 简化: 综合分 = (f1 + f5 - f2 - f3) / 4
-    composite = (f1 + f5 - abs(f2) - f3) / 4
-    return {'composite': float(composite),
-            'signal': 1 if composite > 0.05 else 0, 'healthy': True,
-            'strong_momentum': bool(composite > 0.05),  # 2026-08-10: 补位 5 强信号 (v2.1 修复)
-            'note': 'no peer data' if peer_data is None else 'with peer'}
+    ret = c.pct_change()
+
+    momentum = c / c.shift(20) - 1
+    reversal = -(c / c.shift(5) - 1)
+    volatility = -ret.rolling(20).std()
+    volume_ratio = v / v.rolling(20).mean()
+
+    def ts_z(series):
+        s = series.dropna()
+        if len(s) < 30:
+            return np.nan
+        window = s.tail(z_window)
+        mean = window.mean()
+        std = window.std(ddof=1)
+        if std == 0 or pd.isna(std):
+            return 0.0
+        return (s.iloc[-1] - mean) / std
+
+    z_mom = ts_z(momentum)
+    z_rev = ts_z(reversal)
+    z_vol = ts_z(volatility)
+    z_vr = ts_z(volume_ratio)
+
+    zs = [z for z in (z_mom, z_rev, z_vol, z_vr) if not pd.isna(z)]
+    if not zs:
+        return {'error': 'z-score 计算失败', 'signal': 0, 'healthy': False}
+
+    composite = sum(zs) / len(zs)
+
+    return {
+        'composite': float(composite),
+        'z_momentum': float(z_mom) if not pd.isna(z_mom) else None,
+        'z_reversal': float(z_rev) if not pd.isna(z_rev) else None,
+        'z_volatility': float(z_vol) if not pd.isna(z_vol) else None,
+        'z_volume_ratio': float(z_vr) if not pd.isna(z_vr) else None,
+        'signal': 1 if composite > 0 else 0,
+        'healthy': True,
+        'strong_momentum': bool(composite > 0),
+        'note': 'canonical 4-factor ts-z' if peer_data is None else 'canonical 4-factor with peer',
+    }
 
 
 def calc_volatility(df):
-    """volatility: HV 百分位"""
+    """volatility: HV 百分位 (卖出场景反向适配)
+
+    ⚠️ 与 Vibe-Trading canonical 的方向相反:
+      canonical: pct<20 → +1 做多 (低波扩张预期), pct>80 → -1 做空
+      本函数:    pct<30 → -1 卖出 (HV 骤降 = 顶部信号), 用于卖出场景
+
+    这是有意的业务适配 (卖出框架只看空波动收缩), 非 canonical 同步错误。
+    canonical 的做多/做空双向逻辑已保留在 buy_ladder 上下文。
+    """
     ret = df['close'].pct_change()
     hv = ret.rolling(20).std() * np.sqrt(252)
     pct = hv.rolling(120).rank(pct=True) * 100
     cur_hv = float(hv.iloc[-1] * 100)
     cur_pct = float(pct.iloc[-1])
-    
-    # 顶部信号: HV 骤降
+
+    # 顶部信号: HV 骤降 (卖出场景)
     if cur_pct < 30:
         signal = -1
         verdict = "🔴 HV 骤降 (顶部信号)"
@@ -480,13 +733,24 @@ def calc_volatility(df):
     else:
         signal = 0
         verdict = "⚪ 中性"
-    
+
     return {'hv_pct': cur_pct, 'hv_annual': cur_hv, 'signal': signal,
             'verdict': verdict, 'healthy': True}
 
 
 def calc_harmonic(df):
-    """harmonic: 简化 XABCD 检测"""
+    """harmonic: XABCD 检测 (对齐 Vibe-Trading canonical)
+
+    canonical 公式:
+      XA = |A - X|
+      B_retr = |B - A| / XA     (AB/XA)
+      D_retr = |D - A| / XA     (AD/XA, 锚点 A 而非 X)
+      BC = |C - B|, CD = |D - C|
+      Gartley:   B(0.55,0.68) D(0.72,0.84)
+      Bat:       B(0.33,0.55) D(0.82,0.94)
+      Butterfly: B(0.72,0.84) D(1.20,1.38)
+      Crab:      B(0.33,0.68) D(1.52,1.72)
+    """
     c = df['close']
     window = 10
     swings = []
@@ -495,73 +759,282 @@ def calc_harmonic(df):
             swings.append((i, float(c.iloc[i]), 'H'))
         elif c.iloc[i] == c.iloc[i-window:i+window+1].min():
             swings.append((i, float(c.iloc[i]), 'L'))
-    
+
     if len(swings) < 5:
         return {'verdict': '数据不足', 'signal': 0, 'healthy': True}
-    
+
     recent_5 = swings[-5:]
     X, A, B, C, D = [s[1] for s in recent_5]
     XA = abs(A - X)
     B_retr = abs(B - A) / XA if XA > 0 else 0
-    D_retr = abs(D - X) / XA if XA > 0 else 0
-    
-    if 0.55 < B_retr < 0.68 and 0.72 < D_retr < 0.85:
+    D_retr = abs(D - A) / XA if XA > 0 else 0
+
+    if 0.55 < B_retr < 0.68 and 0.72 < D_retr < 0.84:
         verdict = "🟢 Gartley (D 0.786)"
         signal = 1
-    elif 0.72 < B_retr < 0.85 and 1.15 < D_retr < 1.40:
+    elif 0.33 < B_retr < 0.55 and 0.82 < D_retr < 0.94:
+        verdict = "🟢 Bat"
+        signal = 1
+    elif 0.72 < B_retr < 0.84 and 1.20 < D_retr < 1.38:
         verdict = "🟢 Butterfly (D 1.27)"
+        signal = 1
+    elif 0.33 < B_retr < 0.68 and 1.52 < D_retr < 1.72:
+        verdict = "🟢 Crab"
         signal = 1
     else:
         verdict = f"⚪ B={B_retr*100:.0f}%, D={D_retr*100:.0f}%"
         signal = 0
-    
+
     return {'verdict': verdict, 'signal': signal, 'healthy': True}
 
 
 def calc_pair_trading(df, peer_dfs=None, ticker='300725'):
-    """pair-trading: 与参考标的的配对 Z-score"""
-    if not peer_dfs:
-        return {'verdict': '无配对', 'signal': 0, 'healthy': True}
-    
-    c = df.set_index('date')['close']
-    results = []
-    for peer_name, peer_df in peer_dfs.items():
-        if peer_name == ticker:  # 跳过自己
-            continue
-        peer_c = peer_df.set_index('date')['close']
-        aligned = pd.concat([c, peer_c], axis=1, join='inner').dropna()
-        aligned.columns = ['A', 'B']
-        if len(aligned) < 60:
-            continue
-        ratio = aligned['A'] / aligned['B']
-        mean = ratio.rolling(60).mean()
-        std = ratio.rolling(60).std()
-        z_cur = (ratio - mean).iloc[-1] / std.iloc[-1] if std.iloc[-1] > 0 else 0
-        if not pd.isna(z_cur):
-            results.append((peer_name, float(z_cur)))
-    
-    if not results:
-        return {'verdict': '无有效配对', 'signal': 0, 'healthy': True}
-    
-    results.sort(key=lambda x: abs(x[1]), reverse=True)
-    top = results[0]
-    if abs(top[1]) > 2:
-        return {'verdict': f'⚠️ {top[0]} 配对 Z={top[1]:+.2f}', 'signal': 0, 'healthy': True,
-                'top_pair': top[0], 'top_z': top[1]}
+    """pair-trading REMOVED in v3.0 — signal 恒 0 (仅返回 verdict), 死灯。
+
+    删于 2026-08-12 (实盘验证): 用户确认 pair_trading 是对冲工具, 而 ladder 是
+    方向性信号, 用法不匹配; 且原实现所有分支 signal=0, 在计票中永远弃权,
+    增加计算成本不增加信号价值。删除可减少 ~15ms/ticker 与 14 个读取槽位。
+
+    占位函数保留以防历史回测 (BT-008/009) 的 import 引用, 返回 dict 但 signal=0。
+    """
+    return {'verdict': 'pair_trading 已移除 (v3.0)', 'signal': 0, 'healthy': True, 'removed': True}
+
+
+def calc_turnover_anomaly(df):
+    """v2.3 新增: 高位放量滞涨 (A 股顶部最经典信号)
+    - 量比 > 1.5 (放量) AND
+    - 位置在 20 日区间上 80% AND
+    - 5 日收益 ≤ +2% (滞涨)
+    = 顶部派发信号 (-1)
+    - 量比 > 1.5 + 位置 < 30% + 5 日 > +5% = 低位吸筹 (+1)
+    实现成本: 零 (volume 列已有, 无需 shares_outstanding)
+    """
+    if len(df) < 25 or 'volume' not in df.columns or 'close' not in df.columns:
+        return {'error': '数据不足', 'signal': 0, 'healthy': False}
+
+    c = df['close']; v = df['volume']
+    vol_avg_20 = v.rolling(20).mean().iloc[-1]
+    vol_ratio = v.iloc[-1] / vol_avg_20 if vol_avg_20 > 0 else 1.0
+
+    high_20 = df['high'].rolling(20).max().iloc[-1]
+    low_20 = df['low'].rolling(20).min().iloc[-1]
+    pos_20d = (c.iloc[-1] - low_20) / (high_20 - low_20) if high_20 > low_20 else 0.5
+
+    ret_5d = c.pct_change(5).iloc[-1]
+
+    # 顶部派发 (v2.4: 阈值 1.5 → 1.2, A 股常态量比均值 ~1.0)
+    if vol_ratio > 1.5 and pos_20d > 0.80 and ret_5d < 0.02:
+        signal = -1
+        verdict = f"🔴 高位放量滞涨 (量比{vol_ratio:.2f}, 位置{pos_20d*100:.0f}%, 5d {ret_5d*100:+.1f}%)"
+    # 低位吸筹
+    elif vol_ratio > 1.5 and pos_20d < 0.30 and ret_5d > 0.05:
+        signal = 1
+        verdict = f"🟢 低位放量吸筹 (量比{vol_ratio:.2f}, 位置{pos_20d*100:.0f}%)"
     else:
-        return {'verdict': f'⚪ {top[0]} Z={top[1]:+.2f}', 'signal': 0, 'healthy': True,
-                'top_pair': top[0], 'top_z': top[1]}
+        signal = 0
+        verdict = f"⚪ 量比{vol_ratio:.2f}, 位置{pos_20d*100:.0f}%"
+
+    return {
+        'vol_ratio': float(vol_ratio),
+        'pos_20d': float(pos_20d),
+        'ret_5d': float(ret_5d) if not pd.isna(ret_5d) else 0.0,
+        'signal': signal,
+        'verdict': verdict,
+        'healthy': True,
+        'strong_momentum': signal == 1
+    }
+
+
+def calc_sector_relative(df, sector_df=None, ticker=None):
+    """v2.3 新增: 个股 vs 板块 ETF 强弱 (持续跑输 = 减仓信号)
+    直接解决 BT-008/009 的 002371/300308/688041 踏空问题
+    ('个股 stage3 触发但板块同期在涨' = 个股分化, 不该卖)
+    - 个股 20d 收益 - 板块 20d 收益 < -10% → 持续跑输 = -1
+    - 差值 -10% ~ -5% → 弱跑输 = -1
+    - 差值 +5% ~ 0% → 同步 = 0
+    - 差值 > +5% → 跑赢 = +1
+
+    v3.3 实装: sector_df=None 时自动从 SECTOR_FOR_HOLDING + 本地板块 ETF 数据加载
+      - 优先用 SECTOR_FOR_HOLDING[ticker] 找板块 ETF (e.g., 券商→512000, 医药→512010)
+      - 兜底: 用 data/sector_pool.py 的 ticker→sector 映射, 加载该 sector 的代表 ETF
+        (data/market/daily/5xxxxx_*.csv 板块 ETF 数据)
+      - 若两者都失败, 返回 healthy=False 但不报 error (允许其他信号继续投票)
+    """
+    if sector_df is None or sector_df.empty:
+        if ticker:
+            sector_df = _auto_load_sector_df(ticker)
+        if sector_df is None or sector_df.empty:
+            return {'error': '无板块数据 (sector_df 自动加载失败)',
+                    'signal': 0, 'healthy': False,
+                    'auto_load_attempted': bool(ticker)}
+    if len(df) < 25 or len(sector_df) < 25:
+        return {'error': '数据不足', 'signal': 0, 'healthy': False}
+
+    df_work = df.copy()
+    sector_work = sector_df.copy()
+    if 'date' in df_work.columns:
+        df_work = df_work.set_index('date')
+    if 'date' in sector_work.columns:
+        sector_work = sector_work.set_index('date')
+
+    # 对齐日期
+    aligned = pd.concat([df_work['close'], sector_work['close']], axis=1, join='inner').dropna()
+    aligned.columns = ['stock', 'sector']
+    if len(aligned) < 21:
+        return {'error': '对齐后数据不足', 'signal': 0, 'healthy': False}
+
+    stock_ret_20 = aligned['stock'].iloc[-1] / aligned['stock'].iloc[-21] - 1
+    sector_ret_20 = aligned['sector'].iloc[-1] / aligned['sector'].iloc[-21] - 1
+    diff = stock_ret_20 - sector_ret_20
+
+    if diff < -0.10:
+        signal = -1
+        verdict = f"🔴 持续跑输板块 {diff*100:+.1f}% (个股{stock_ret_20*100:+.1f}% vs 板块{sector_ret_20*100:+.1f}%)"
+    elif diff < -0.05:
+        signal = -1
+        verdict = f"🟠 跑输板块 {diff*100:+.1f}% (个股{stock_ret_20*100:+.1f}% vs 板块{sector_ret_20*100:+.1f}%)"
+    elif diff > 0.05:
+        signal = 1
+        verdict = f"🟢 跑赢板块 {diff*100:+.1f}% (个股{stock_ret_20*100:+.1f}% vs 板块{sector_ret_20*100:+.1f}%)"
+    else:
+        signal = 0
+        verdict = f"⚪ 与板块同步 (差 {diff*100:+.1f}%)"
+
+    return {
+        'stock_ret_20d': float(stock_ret_20),
+        'sector_ret_20d': float(sector_ret_20),
+        'diff': float(diff),
+        'signal': signal,
+        'verdict': verdict,
+        'healthy': True,
+        'strong_momentum': signal == 1
+    }
+
+
+def calc_ad_line(df):
+    """v2.4 新增: A/D Line 累积派发线 (Accumulation/Distribution Line)
+    CLV (Close Location Value) = ((close - low) - (high - close)) / (high - low)
+    AD = Σ CLV × volume
+    信号逻辑:
+    - 顶部背离: AD 5 日下行 + 价格 5 日新高/平台 = 主力派发 (-1)
+    - 底部背离: AD 5 日上行 + 价格 5 日新低/平台 = 主力吸筹 (+1)
+    数据需求: 高/低/收/成交量 — 全部已有
+    """
+    if len(df) < 25 or 'volume' not in df.columns:
+        return {'error': '数据不足', 'signal': 0, 'healthy': False}
+
+    h = df['high'].astype(float)
+    l = df['low'].astype(float)
+    c = df['close'].astype(float)
+    v = df['volume'].astype(float)
+
+    hl = (h - l).replace(0, 0.0001)
+    clv = ((c - l) - (h - c)) / hl
+    clv = clv.fillna(0)
+    ad = (clv * v).cumsum()
+
+    ad_5d_slope = float(ad.iloc[-1] - ad.iloc[-6]) if len(ad) >= 6 else 0
+    price_5d_high = bool(c.iloc[-5:].max() >= c.iloc[-10:-5].max()) if len(c) >= 10 else False
+    price_5d_low = bool(c.iloc[-5:].min() <= c.iloc[-10:-5].min()) if len(c) >= 10 else False
+
+    if ad_5d_slope < 0 and price_5d_high:
+        signal = -1
+        verdict = f"🔴 A/D 顶部背离 (5d 派发)"
+    elif ad_5d_slope > 0 and price_5d_low:
+        signal = 1
+        verdict = f"🟢 A/D 底部背离 (5d 吸筹)"
+    else:
+        signal = 0
+        verdict = f"⚪ A/D 同步 (5d 斜率 {ad_5d_slope:+.0f})"
+
+    return {
+        'ad_5d_slope': ad_5d_slope,
+        'signal': signal,
+        'verdict': verdict,
+        'healthy': True,
+        'strong_momentum': signal == 1
+    }
+
+
+# 板块 ETF 映射 (与 backtest_v090.py 同步)
+SECTOR_ETF_MAP_LOCAL = {
+    '688256': '159995', '688981': '159995', '002371': '159995', '300308': '159995',
+    '688041': '159995', '603501': '159995', '300725': '512010',
+    '601318': '512800', '600036': '512800', '601628': '512800', '000001': '512800',
+    '600519': '510630', '000858': '510630', '600887': '510630',
+    '000333': '510630', '603288': '510630',
+    '600276': '512010', '000538': '512010',
+    '300750': '515030', '002594': '515030',
+}
+
+
+def _auto_load_sector_df(ticker):
+    """v3.3 实装: 自动加载 ticker 对应的板块 ETF 日线数据
+
+    优先级:
+      1. SECTOR_ETF_MAP_LOCAL[ticker]  → 加载 data/market/daily/{code}*.csv
+      2. data/sector_pool.py 的 TICKER_SECTOR 反查 → 找该 sector 的代表 ETF
+         (sector_pool 数据池中 6xxxxx 板块 ETF 代码)
+      3. 失败: 返回 None
+    """
+    import os
+    import re
+    from pathlib import Path
+
+    # 优先级 1: SECTOR_ETF_MAP_LOCAL
+    etf_code = SECTOR_ETF_MAP_LOCAL.get(ticker)
+
+    # 优先级 2: 从 sector_pool 反查 sector, 再找该 sector 的 ETF
+    if not etf_code:
+        try:
+            import sys
+            sp_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data')
+            if sp_path not in sys.path:
+                sys.path.insert(0, sp_path)
+            from sector_pool import TICKER_SECTOR, load_sector_pool
+            sector = TICKER_SECTOR.get(ticker)
+            if sector:
+                # 找该 sector 中代码以 51 开头 (板块 ETF) 的代表
+                pool = load_sector_pool()
+                sector_codes = TICKER_SECTOR  # 反向索引: sector → [codes]
+                # 简单实现: 直接用板块 ETF 映射表 (sector → 51xxxx ETF)
+                SECTOR_TO_ETF = {
+                    'securities': '512000', 'semiconductor': '159995',
+                    'pharma': '512010', 'bank': '512800', 'consumer': '510630',
+                    'steel': '512810', 'chemical': '512010',  # 化工用医药ETF兜底
+                    'infra': '512800', 'telecom': '159915',
+                    'defense': '512760', 'auto': '515030',
+                    'insurance': '512800', 'shipping': '513180',
+                }
+                etf_code = SECTOR_TO_ETF.get(sector)
+        except Exception:
+            pass
+
+    if not etf_code:
+        return None
+
+    # 加载板块 ETF 日线
+    daily_dir = Path(__file__).resolve().parent.parent.parent.parent.parent / 'data' / 'market' / 'daily'
+    matches = list(daily_dir.glob(f"{etf_code}*.csv"))
+    if not matches:
+        return None
+
+    try:
+        import pandas as pd
+        return pd.read_csv(matches[0])
+    except Exception:
+        return None
 
 
 # ============================================================
 # 3. 5 大动能结束标志
 # ============================================================
-def check_momentum_end_signals(signals):
-    """检查 5 大动能结束标志"""
+def check_momentum_end_signals(signals, df=None):
+    """检查 5 大动能结束标志 (v2.2.1: OBV 真参与，依赖 df.volume)"""
     end_signals = {}
     
     # ① 趋势破坏
-    tb = (signals.get('technical_basic', {}).get('adx', 50) < 20 and
+    tb = (signals.get('technical_basic', {}).get('adx', 50) < 25 and
           signals.get('ichimoku', {}).get('above_cloud_pct', 50) < 0)
     end_signals['trend_break'] = bool(tb)
     
@@ -571,8 +1044,20 @@ def check_momentum_end_signals(signals):
           signals.get('alpha_zoo', {}).get('ret_20d', 0) < -0.10)
     end_signals['momentum_reversal'] = bool(mr)
     
-    # ③ 量能背离 (简化: OBV 5 日下降 + 价格 5 日新高)
-    end_signals['volume_divergence'] = False  # 简化, 需要 OBV 计算
+    # ③ 量能背离 (OBV 5 日趋势下行 + 价格 5 日新高/平台 = 顶部量价背离)
+    if df is not None and 'volume' in df.columns and 'close' in df.columns:
+        c = df['close']; v = df['volume']
+        if len(c) >= 10 and v.sum() > 0:
+            direction = ((c.diff() > 0).astype(int) - (c.diff() < 0).astype(int)).fillna(0)
+            obv = (direction * v).cumsum()
+            obv_ref = abs(obv.iloc[-6]) if abs(obv.iloc[-6]) > 0 else 1.0
+            obv_5d_slope = (obv.iloc[-1] - obv.iloc[-6]) / obv_ref
+            price_5d_high = (c.iloc[-5:].max() >= c.iloc[-10:-5].max())
+            end_signals['volume_divergence'] = bool(obv_5d_slope < 0 and price_5d_high)
+        else:
+            end_signals['volume_divergence'] = False
+    else:
+        end_signals['volume_divergence'] = False
     
     # ④ 结构破坏
     sb = (signals.get('smc', {}).get('signal', 0) == -1 and
@@ -587,34 +1072,59 @@ def check_momentum_end_signals(signals):
 
 
 # ============================================================
-# 3.5 v2.2 分级计票 (BT-008 回测实证: 事件信号 ×2 最优)
-#   事件信号 (明确买卖点): candlestick, chanlun, ml_strategy → w_event 票
-#   趋势信号 (方向判定):   alpha_engine_v21, technical_basic, ichimoku,
-#                          smc, alpha_zoo, multi_factor → w_trend 票
-#   辅助观察 (0 票):       harmonic, pair_trading, volatility, factor_research
+# 3.5 v2.3 分级计票 (BT-008 + BT-009 回测定案)
+#   事件信号 (明确买卖点, ×2 票): candlestick, chanlun, turnover_anomaly (v2.3 新增)
+#   趋势信号 (方向判定, ×1 票):   alpha_engine_v21, technical_basic, ichimoku,
+#                                 smc, alpha_zoo, multi_factor, ml_strategy,
+#                                 sector_relative (v2.3 新增)
+#   辅助观察 (0 票): harmonic, pair_trading, volatility, factor_research
 # ============================================================
-EVENT_SIGNALS = ['candlestick', 'chanlun', 'ml_strategy']
-TREND_SIGNALS = ['alpha_engine_v21', 'technical_basic', 'ichimoku', 'smc', 'alpha_zoo', 'multi_factor']
+# v2.5 分级计票: max=14 (3 事件×2 + 8 趋势×1, 移除 ad_line)
+#   v2.5 调整: ad_line 在 A 股日线数据 4/20 命中, 加权稀释主信号,
+#              移除后 max=14, 阶段 2 阈值从 6.30 回到 5.88, 避免 stage 2.5 误扩
+#   事件信号 (明确买卖点, ×2 票): candlestick, chanlun, turnover_anomaly
+#   趋势信号 (方向判定, ×1 票):   alpha_engine_v21, technical_basic, ichimoku,
+#                                 smc, alpha_zoo, multi_factor, ml_strategy, sector_relative
+#   辅助观察 (0 票): harmonic, pair_trading, volatility, factor_research, ad_line
+# ============================================================
+EVENT_SIGNALS = ['candlestick', 'chanlun', 'turnover_anomaly']
+TREND_SIGNALS = ['alpha_engine_v21', 'technical_basic', 'ichimoku', 'smc',
+                 'alpha_zoo', 'multi_factor', 'ml_strategy', 'sector_relative']
 
 
 def score_v22(signals, w_event=2, w_trend=1):
-    """分级计票 → (score, max_score, event_pos, event_neg, trend_pos)"""
-    event_pos = sum(1 for k in EVENT_SIGNALS if signals[k].get('signal', 0) > 0)
-    event_neg = sum(1 for k in EVENT_SIGNALS if signals[k].get('signal', 0) < 0)
-    trend_pos = sum(1 for k in TREND_SIGNALS if signals[k].get('signal', 0) > 0)
-    max_score = 3 * w_event + 6 * w_trend
+    """分级计票 → (score, max_score, event_pos, event_neg, trend_pos)
+    v2.4 修复:
+    - P0-2 防御性: signals[k] 不存在时不 KeyError (用 .get(k, {}).get('signal', 0))
+    - P0-3 动态化: max_score = len(EVENT_SIGNALS)*w_event + len(TREND_SIGNALS)*w_trend
+    """
+    event_pos = sum(1 for k in EVENT_SIGNALS if signals.get(k, {}).get('signal', 0) > 0)
+    event_neg = sum(1 for k in EVENT_SIGNALS if signals.get(k, {}).get('signal', 0) < 0)
+    trend_pos = sum(1 for k in TREND_SIGNALS if signals.get(k, {}).get('signal', 0) > 0)
+    max_score = len(EVENT_SIGNALS) * w_event + len(TREND_SIGNALS) * w_trend  # v2.4: 动态
     score = w_event * event_pos + w_trend * trend_pos - w_event * event_neg
     return score, max_score, event_pos, event_neg, trend_pos
 
 
-def stage_v22(score, max_score):
-    """分级计票阶段判定 (BT-008 阈值: 0.75/0.42)"""
-    if score >= 0.75 * max_score:
+def stage_v22(score, max_score, end_count=0):
+    """分级计票阶段判定 (v2.5: 含阶段 2.5 兜底, 与 backtest_v090.stage_v22_1 同步)
+    - 0.65·max + end_count ≤ 1 = 强动能期
+    - 0.42·max + end_count ≤ 2 = 衰减期
+    - < 0.42·max + end_count ≥ 3 = 结束期 (大幅减仓 80%)
+    - < 0.42·max + end_count < 3 = 阶段 2.5 (减 40% 观察, 不恐慌清仓)
+    """
+    thr1 = 0.65 * max_score
+    thr2 = 0.42 * max_score
+    if score >= thr1 and end_count <= 1:
         return 1, '强动能期'
-    elif score >= 0.42 * max_score:
+    elif score >= thr2 and end_count <= 2:
         return 2, '动能衰减期'
-    else:
+    elif score < thr2 and end_count >= 3:
         return 3, '动能结束期'
+    elif score < thr2 and end_count < 3:
+        return 2.5, '阶段2.5-得分触底未共振'
+    else:
+        return 2, '动能衰减期'
 
 
 # ============================================================
@@ -640,7 +1150,7 @@ def run_sell_ladder(ticker, cost=None, shares=None, peer_codes=None,
         pnl = (last_close - cost) / cost * 100
         print(f"    成本: {cost} 元, 浮盈: {pnl:+.2f}%")
     
-    # 2. 加载同业 (默认 CDMO; 任意股票可传自定义 peer_codes)
+# 2. 加载同业 (默认 CDMO; 任意股票可传自定义 peer_codes)
     peer_dfs = {}
     if not no_cdmo:
         if peer_codes is None:
@@ -653,8 +1163,19 @@ def run_sell_ladder(ticker, cost=None, shares=None, peer_codes=None,
             except Exception:
                 pass
     
-    # 3. 跑 14 skill
-    print(f"\n[2] 14 Skill 信号计算...")
+    # 2.5 v2.5 加载板块 ETF (用于 sector_relative) — 不传 sector_codes 时尝试 SECTOR_ETF_MAP
+    sector_df = pd.DataFrame()
+    if not no_cdmo:
+        sector_code = SECTOR_ETF_MAP_LOCAL.get(ticker)
+        if sector_code:
+            try:
+                sector_df = load_data(sector_code)
+                print(f"    板块 ETF: {sector_code} ({len(sector_df)} bars)")
+            except Exception as e:
+                print(f"    ⚠️ 板块 ETF {sector_code} 加载失败: {e}")
+    
+    # 3. 跑 16 skill (v2.5: 加入 turnover_anomaly + sector_relative + ad_line)
+    print(f"\n[2] 16 Skill 信号计算...")
     signals = {
         'alpha_engine_v21': calc_alpha_engine_v21(df, ticker),
         'candlestick': calc_candlestick(df),
@@ -668,15 +1189,20 @@ def run_sell_ladder(ticker, cost=None, shares=None, peer_codes=None,
         'multi_factor': calc_multi_factor(df, peer_dfs if not no_cdmo else None),
         'volatility': calc_volatility(df),
         'harmonic': calc_harmonic(df),
-        'pair_trading': calc_pair_trading(df, peer_dfs if not no_cdmo else None, ticker),
+        'pair_trading': calc_pair_trading(df, peer_dfs if not no_cdmo else None, ticker),  # v3.0 removed — 占位返回 0
+        # v2.3 新增
+        'turnover_anomaly': calc_turnover_anomaly(df),
+        'sector_relative': calc_sector_relative(df, sector_df if not sector_df.empty else None),
+        # v2.5 新增
+        'ad_line': calc_ad_line(df),
     }
-    
+     
     # 4. 5 强动能信号健康数
     strong_signals = ['technical_basic', 'ichimoku', 'smc', 'alpha_zoo', 'factor_research']
     strong_healthy = sum(1 for s in strong_signals if signals[s].get('strong_momentum', False))
     
-    # 5. 5 大动能结束标志
-    end_signals = check_momentum_end_signals(signals)
+    # 5. 5 大动能结束标志 (v2.2.1: 传入 df 以计算 OBV 真背离)
+    end_signals = check_momentum_end_signals(signals, df)
     end_count = sum(1 for v in end_signals.values() if v)
     
     # 6. 输出 14 skill 信号矩阵
@@ -689,7 +1215,9 @@ def run_sell_ladder(ticker, cost=None, shares=None, peer_codes=None,
             elif name == 'candlestick':
                 detail = f"20d score={s['score_20']}"
             elif name == 'ml_strategy':
-                detail = f"5d ret={s['ret_5d']*100:+.2f}%"
+                detail = (f"ML={s.get('ml_score', 0):+.2f} (prob_up={s.get('prob_up', 0):.2f})"
+                          if s.get('model') == 'rf_walkforward'
+                          else f"5d ret={s['ret_5d']*100:+.2f}% (fallback)")
             elif name == 'chanlun':
                 detail = f"{s.get('verdict', '?')}"
             elif name == 'technical_basic':
@@ -726,9 +1254,9 @@ def run_sell_ladder(ticker, cost=None, shares=None, peer_codes=None,
     
     # 7. 3 阶段判定 (v2.2 分级计票 — BT-008 实证: 事件信号 ×2 最优)
     score, mscore, ev_pos, ev_neg, tr_pos = score_v22(signals, w_event=w_event, w_trend=w_trend)
-    s22_stage, s22_name = stage_v22(score, mscore)
-    print(f"\n[5] SELL_LADDER v2.2 阶段判定 (分级计票: 事件×{w_event} + 趋势×{w_trend}, max={mscore}):")
-    print(f"    事件信号: {ev_pos}正 / {ev_neg}负 (candlestick+chanlun+ml_strategy)   趋势信号: {tr_pos}/6 正")
+    s22_stage, s22_name = stage_v22(score, mscore, end_count)
+    print(f"\n[5] SELL_LADDER v2.5 阶段判定 (分级计票: 事件×{w_event} + 趋势×{w_trend}, max={mscore}):")
+    print(f"    事件信号: {ev_pos}正 / {ev_neg}负 (candlestick+chanlun+turnover_anomaly)   趋势信号: {tr_pos}/{len(TREND_SIGNALS)} 正 (不含 ad_line)")
     print(f"    加权得分: {score}/{mscore}")
 
     if s22_stage == 1 and end_count <= 1:

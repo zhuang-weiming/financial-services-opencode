@@ -1,0 +1,172 @@
+{
+  "ticker": "601990",
+  "date": "2026-08-10",
+  "last_close": 6.76,
+  "cost": null,
+  "pnl_pct": null,
+  "strong_healthy": 0,
+  "end_count": 1,
+  "stage": "阶段 2.5: 阶段2.5-得分触底未共振",
+  "action": "🟡 分批止盈 (减 20-40%)",
+  "v22": {
+    "score": 3,
+    "max": 14,
+    "event_pos": 1,
+    "event_neg": 0,
+    "trend_pos": 1,
+    "w_event": 2,
+    "w_trend": 1
+  },
+  "signals": {
+    "alpha_engine_v21": {
+      "wt1": 4.718612692824518,
+      "wt2": 16.74585523265815,
+      "zone": "N+ 0-20",
+      "signal": 0,
+      "verdict": "⚪ WT观望 (WT1 4.7, WT2 16.7, N+ 0-20)",
+      "healthy": true
+    },
+    "candlestick": {
+      "score_20": 2,
+      "signal": 1,
+      "healthy": true
+    },
+    "ml_strategy": {
+      "ret_5d": -0.024531024531024515,
+      "ml_score": -0.030489857084538885,
+      "prob_up": 0.48475507145773056,
+      "n_train": 879,
+      "signal": 0,
+      "model": "rf_walkforward",
+      "healthy": true
+    },
+    "chanlun": {
+      "bi_count": 50,
+      "zs_count": 8,
+      "last_zs_gg": 7.02,
+      "last_zs_dd": 6.32,
+      "verdict": "↔️ 中枢内 (DD=6.32~GG=7.02, 位置 63%)",
+      "signal": 0,
+      "healthy": true
+    },
+    "technical_basic": {
+      "ema12": 6.808652763180632,
+      "ema26": 6.797640323718187,
+      "adx": 11.815366654336305,
+      "rsi": 47.82861558417188,
+      "bb_pos": 0.26148424836511386,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "ichimoku": {
+      "tenkan": 6.835,
+      "kijun": 6.77,
+      "cloud_top": 6.890000000000001,
+      "cloud_bot": 6.699999999999999,
+      "above_cloud_pct": -1.8867924528301994,
+      "tk_bullish": "True",
+      "tk_bearish": "False",
+      "tk_cross_up": "False",
+      "tk_cross_down": "False",
+      "bullish_cloud": false,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "smc": {
+      "verdict": "⚪ SMC 无结构信号",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "swings_count": 50,
+      "last_struct": 0,
+      "last_fvg": 0,
+      "bos_choch_recent": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "alpha_zoo": {
+      "ret_20d": 0.019607843137254832,
+      "pos_20d": 0.4347826086956526,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "factor_research": {
+      "f2_ic_self": -0.16377751115443742,
+      "f2_ic_cross": 0.0,
+      "f2_ic": -0.16377751115443742,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "multi_factor": {
+      "composite": 0.14319008543456135,
+      "z_momentum": 0.8369853954087108,
+      "z_reversal": 0.8922465551954608,
+      "z_volatility": -0.13064066439381505,
+      "z_volume_ratio": -1.0258309444721112,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": true,
+      "note": "canonical 4-factor ts-z"
+    },
+    "volatility": {
+      "hv_pct": 54.166666666666664,
+      "hv_annual": 19.487343020839212,
+      "signal": 0,
+      "verdict": "⚪ 中性",
+      "healthy": true
+    },
+    "harmonic": {
+      "verdict": "⚪ B=78%, D=60%",
+      "signal": 0,
+      "healthy": true
+    },
+    "pair_trading": {
+      "verdict": "pair_trading 已移除 (v3.0)",
+      "signal": 0,
+      "healthy": true,
+      "removed": true
+    },
+    "turnover_anomaly": {
+      "vol_ratio": 0.5982418545998529,
+      "pos_20d": 0.4347826086956526,
+      "ret_5d": -0.024531024531024515,
+      "signal": 0,
+      "verdict": "⚪ 量比0.60, 位置43%",
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "sector_relative": {
+      "error": "无板块数据 (sector_df 自动加载失败)",
+      "signal": 0,
+      "healthy": false,
+      "auto_load_attempted": false
+    },
+    "ad_line": {
+      "ad_5d_slope": -24828836.142857194,
+      "signal": 0,
+      "verdict": "⚪ A/D 同步 (5d 斜率 -24828836)",
+      "healthy": true,
+      "strong_momentum": false
+    }
+  },
+  "end_signals": {
+    "trend_break": true,
+    "momentum_reversal": false,
+    "volume_divergence": false,
+    "structure_break": false,
+    "volatility_drop": false
+  }
+}

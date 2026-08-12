@@ -106,6 +106,26 @@ us30y,5.184,%,5.0 / 7.0,重定价 / 失控,HYP-017,快速剧本失控线 7%+
 **A 股 ticker 命名：** 6 位代码前补 0 至 6 位（600519 = 贵州茅台）
 **美股 ticker 命名：** 用交易所代码（MSFT/NVDA/SPY/QQQ）
 
+### `daily/<code>_<name>.csv` — 个股/ETF OHLCV（集中化，跨 subagent 共享）
+
+```csv
+date,code,open,close,high,low,volume
+2026-08-10,000001,11.18,11.29,11.38,11.16,88906014
+```
+
+| 字段 | 类型 | 说明 |
+|:-----|:-----|:-----|
+| `date` | ISO date | 交易日 |
+| `code` | string | 6 位代码 |
+| `open/close/high/low` | float | 价格（前复权 as-is） |
+| `volume` | int | 成交量（股） |
+
+**细节：**
+- 统一命名 `<code>_<name>.csv`（如 `000001_平安银行.csv`），全量清单见 `daily/INDEX.md`
+- 来源: Sina API（`data_loader.py` 自动下载 + 永久落盘）
+- 加载: 用 `.opencode/memory/personal-system/sell-ladder/data_loader.py` 的 `load_daily(ticker)`（搜索本目录 → fallback → Sina），不直接 read_csv
+- 已有 89 个 A 股/ETF 标的（历史上散落在 sell-ladder/data/ 的已迁移至此）
+
 ---
 
 ## 写入规则
