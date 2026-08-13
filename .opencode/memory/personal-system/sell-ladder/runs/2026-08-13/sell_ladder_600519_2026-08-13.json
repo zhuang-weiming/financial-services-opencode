@@ -1,0 +1,202 @@
+{
+  "ticker": "600519",
+  "date": "2026-08-10",
+  "last_close": 1348.86,
+  "cost": null,
+  "pnl_pct": null,
+  "strong_healthy": 2,
+  "end_count": 0,
+  "stage": "阶段 2.5: 阶段2.5-得分触底未共振",
+  "action": "🟡 分批止盈 (减 20-40%)",
+  "v22": {
+    "score": 3,
+    "max": 14,
+    "event_pos": 1,
+    "event_neg": 1,
+    "trend_pos": 3,
+    "w_event": 2,
+    "w_trend": 1
+  },
+  "signals": {
+    "alpha_engine_v21": {
+      "wt1": 34.49675020484109,
+      "wt2": 36.184602707102925,
+      "zone": "M+ 20-OB2",
+      "signal": 0,
+      "verdict": "⚪ 无交叉 (WT1 +34.5 vs WT2 +36.2, M+ 20-OB2)",
+      "healthy": true,
+      "cross_type": "none",
+      "ob_level1": 60,
+      "ob_level2": 53,
+      "os_level1": -60,
+      "os_level2": -53
+    },
+    "candlestick": {
+      "score_20": 1,
+      "signal": 1,
+      "healthy": true
+    },
+    "ml_strategy": {
+      "ret_5d": -0.007446761541744618,
+      "ml_score": -0.45765919920220954,
+      "prob_up": 0.27117040039889523,
+      "n_train": 879,
+      "signal": -1,
+      "model": "rf_walkforward",
+      "healthy": true
+    },
+    "chanlun": {
+      "bi_count": 50,
+      "last_zs_gg": 1363.35,
+      "last_zs_dd": 1279.58,
+      "last_zs_zd": 1300.01,
+      "last_zs_zg": 1344.7,
+      "verdict": "🔴 缠论做空 (Vibe-Trading 5 函数评估)",
+      "signal": -1,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "technical_basic": {
+      "ema12": 1318.5943883634768,
+      "ema26": 1296.6289797427726,
+      "adx": 31.215418924117536,
+      "rsi": 61.81048375078887,
+      "bb_pos": 0.7818791951569583,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "ichimoku": {
+      "tenkan": 1331.6799999999998,
+      "kijun": 1266.815,
+      "cloud_top": 1304.9450000000002,
+      "cloud_bot": 1223.755,
+      "above_cloud_pct": 3.365275931169487,
+      "tk_bullish": "True",
+      "tk_bearish": "False",
+      "tk_cross_up": "False",
+      "tk_cross_down": "False",
+      "bullish_cloud": false,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "smc": {
+      "verdict": "⚪ SMC 无结构信号",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "swings_count": 56,
+      "last_struct": 0,
+      "last_fvg": 0,
+      "bos_choch_recent": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "alpha_zoo": {
+      "ret_20d": 0.11384899957885697,
+      "pos_20d": 0.9120165158783167,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "factor_research": {
+      "f2_ic_mean": 0.021704059638603026,
+      "f2_ic_std": 0.5200502691930906,
+      "f2_ir": 0.04173454168628548,
+      "f2_positive_ic_pct": 0.48900462962962965,
+      "f2_n_days": 875,
+      "f2_n_peers": 5,
+      "f2_ic_per_factor": {
+        "momentum": 0.05999999999999998,
+        "reversal": -0.023085714285714275,
+        "volatility": 0.0655813953488372,
+        "volume_ratio": -0.015679442508710797
+      },
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "verdict": "Vibe-Trading 4-factor IC mean=+0.0217 IR=0.04 (insufficient_predictive)"
+    },
+    "multi_factor": {
+      "composite": 0.3959286870774678,
+      "z_momentum": 2.3692343151850994,
+      "z_reversal": 0.19483985414488017,
+      "z_volatility": -1.4474909834796394,
+      "z_volume_ratio": 0.4671315624595312,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": true,
+      "note": "canonical 4-factor cross-section"
+    },
+    "volatility": {
+      "hv_pct": 86.66666666666667,
+      "hv_annual": 31.669056437763842,
+      "signal": -1,
+      "verdict": "🔴 高波收缩 (pct=86.7% > 80)",
+      "healthy": true,
+      "strong_momentum": false,
+      "hv_window": 20,
+      "lookback": 120,
+      "low_pct": 20,
+      "high_pct": 80
+    },
+    "harmonic": {
+      "verdict": "⚪ B=57%, D=137%",
+      "signal": 0,
+      "healthy": true
+    },
+    "pair_trading": {
+      "verdict": "⚪ 配对平仓 (|Z|=0.91 < 0.5)",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "peer": "002821",
+      "z_score": -0.906186606519061,
+      "lookback": 60,
+      "entry_z": 2.0,
+      "exit_z": 0.5
+    },
+    "turnover_anomaly": {
+      "vol_ratio": 1.2014952190440928,
+      "pos_20d": 0.9120165158783167,
+      "ret_5d": -0.007446761541744618,
+      "signal": 0,
+      "verdict": "⚪ 量比1.20, 位置91%",
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "sector_relative": {
+      "stock_ret_20d": 0.11384899957885697,
+      "sector_ret_20d": 0.11067193675889331,
+      "diff": 0.003177062819963661,
+      "signal": 0,
+      "verdict": "⚪ 与板块同步 (差 +0.3%)",
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "ad_line": {
+      "ad_5d_slope": -3385385.5355666876,
+      "signal": 0,
+      "verdict": "⚪ A/D 同步 (5d 斜率 -3385386)",
+      "healthy": true,
+      "strong_momentum": false
+    }
+  },
+  "end_signals": {
+    "trend_break": false,
+    "momentum_reversal": false,
+    "volume_divergence": false,
+    "structure_break": false,
+    "volatility_drop": false
+  }
+}

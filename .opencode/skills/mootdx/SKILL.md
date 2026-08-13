@@ -74,8 +74,10 @@ df_15m = client.bars(symbol="600519", frequency=1, offset=800)
 `backtest/loaders/mootdx_loader.py` is registered as the `mootdx` source. Fallback chain for `a_share` is `[tushare, mootdx, akshare]` — tushare wins when a token is present; mootdx wins when no token but TCP egress works; akshare is the broadest fallback.
 
 ```python
-from backtest.runner import run
-result = run(strategy=..., source="mootdx")  # explicit override
+# runner is a CLI entrypoint (python -m backtest.runner <run_dir>);
+# point source="mootdx" in config.json to force the mootdx loader.
+{"codes": ["600519.SH"], "start_date": "2024-01-01", "end_date": "2026-08-01",
+ "source": "mootdx", "interval": "1D", "engine": "daily"}
 ```
 
 ## Known Limitations

@@ -64,6 +64,22 @@ BUY_VETO_SIGNALS = {
     'valuation_high': '估值过高 (PE/PB 分位>70%)',
 }
 
+# v3.1 数据驱动积分 (BT-015/016 回测定案: 2024-10~2026-08, 200 池真实数据)
+#   信号集 = 4 个独立事件研究验证正 α 的信号:
+#   - technical_basic: 2026 α60=+5.18% (t=4.23) | 全期 α60=+0.65%
+#   - alpha_zoo:       2026 α60=+3.67% (t=4.49) | 2025 α60=+0.67% (跨年双显著)
+#   - candlestick:     2026 α60=+1.05% (t=2.77)
+#   - ad_line:         2026 α60=+1.05% (t=2.31)
+#   权重 = α60 近似比例 (2/2/1/1), 总分 0~6
+#   绝对阈值 (W_B 扫描最优): score>=4 → 击球区 (全期 α60=+1.26% p<1e-4; 2026 α60=+4.80%)
+#                            score>=3 → 观察区 (全期 α60=+1.22%)
+#   被移除信号 (回测证据): chanlun/volatility/harmonic/ml_strategy/turnover_anomaly 显著负 α;
+#                          smc/pair_trading/factor_research/multi_factor/sector_relative 缓存零
+#                          (multi_factor 生产实测活跃 31.6% 正, 列为待验证候补, 不入计票)
+BUY_SCORE_WEIGHTS = {'technical_basic': 2, 'alpha_zoo': 2, 'candlestick': 1, 'ad_line': 1}
+MAX_BUY_SCORE = sum(BUY_SCORE_WEIGHTS.values())  # 6
+
+# 展示全集 (计票仅用 BUY_SCORE_WEIGHTS; 以下保留用于诊断输出/否决/确认)
 BUY_EVENT_SIGNALS = ['chanlun', 'turnover_anomaly', 'valuation_percentile', 'fundamental_inflection',
                       'volume_price_resonance', 'structure_complete']
 BUY_TREND_SIGNALS = ['alpha_engine_v21', 'technical_basic', 'ichimoku', 'smc', 'alpha_zoo',
@@ -469,9 +485,8 @@ def check_layer0_regime(force_unlock=False):
 
 def check_layer1_selection(ticker, sector_df=None):
     """
-    Layer 1: 5 道筛子
-    任一不通过 → 不进入观察池
-    当前 v3.0: 估值/基本面占位符, 只检查市值 (从 daily_basic 或 Sina)
+    Layer 1: 5 道筛子 (v3.1 起咨询性 — 仅 ST 红牌由 stage_buy 作硬否决)
+    估值/基本面占位符 (恒 True), 只检查市值/ST/板块景气, 均不再阻断判定
     """
     market_cap_yi = None
     pe_ttm = None
@@ -680,37 +695,37 @@ def adaptive_ob_keep(wt1_series, mcap_series, ob_base=V21_OB_BASE, ob_cap_adj=V2
 
 def score_buy(signals, w_event=W_BUY_EVENT, w_trend=W_BUY_TREND):
     """
-    Buy-Ladder v3.0 分级计票 (经典 LazyBear + Vibe-Trading canonical)
-    事件信号 ×2: chanlun / turnover_anomaly / valuation_percentile / fundamental_inflection /
-                  volume_price_resonance / structure_complete (6 个)
-    趋势信号 ×1: alpha_engine_v21 / technical_basic / ichimoku / smc / alpha_zoo /
-                  multi_factor / ml_strategy / sector_relative (8 个)
+    Buy-Ladder v3.1 数据驱动积分 (BT-015/016 回测定案)
+    计票信号 (4 个, 全部经 2024-10~2026-08 200 池事件研究验证正 α):
+      technical_basic ×2 / alpha_zoo ×2 / candlestick ×1 / ad_line ×1  (总分 0~6)
+    其余信号保留在 veto/confirmation 层, 不再进入积分 (负 α 或缓存为零未验证)
     """
+    score = sum(w * (signals.get(k, {}).get('signal', 0) > 0) for k, w in BUY_SCORE_WEIGHTS.items())
+    # 兼容旧字段: event_pos/trend_pos 仍输出, 但不再参与计分
     event_pos = sum(1 for k in BUY_EVENT_SIGNALS if signals.get(k, {}).get('signal', 0) > 0)
     event_neg = sum(1 for k in BUY_EVENT_SIGNALS if signals.get(k, {}).get('signal', 0) < 0)
     trend_pos = sum(1 for k in BUY_TREND_SIGNALS if signals.get(k, {}).get('signal', 0) > 0)
-    max_score = len(BUY_EVENT_SIGNALS) * w_event + len(BUY_TREND_SIGNALS) * w_trend
-    score = w_event * event_pos + w_trend * trend_pos - w_event * event_neg
-    return score, max_score, event_pos, event_neg, trend_pos
+    return score, MAX_BUY_SCORE, event_pos, event_neg, trend_pos
 
 
 def stage_buy(score, max_score, n_veto, layer0_unlocked, layer1_pass):
     """
-    Buy-Ladder v3.0 阶段判定
+    Buy-Ladder v3.1 阶段判定 (绝对阈值, BT-016 定案):
+      score >= 4/6 → 击球区   (全期 α60=+1.26%, 2026 弱市 α60=+4.80%)
+      score >= 3/6 → 观察区   (全期 α60=+1.22%)
+      其余 → 禁入区-得分不足
+    Layer 0 自 v3.1 起为咨询性 (结构性牛市无法可靠判定 regime), 不阻断;
+    Layer 1 自 v3.1 起仅 ST 风险为硬否决 (layer1_pass = not is_st), 其余筛子咨询性;
+    判定链 = ST 红牌 → veto 否决 → 积分阈值
     """
-    if not layer0_unlocked:
-        return 4, '禁入区-Layer0锁定'
     if not layer1_pass:
-        return 4, '禁入区-Layer1不通过'
+        return 4, '禁入区-ST风险红牌'
     if n_veto > 0:
         return 4, '禁入区-触发否决'
 
-    thr1 = 0.65 * max_score
-    thr2 = 0.42 * max_score
-
-    if score >= thr1:
+    if score >= 4:
         return 1, '击球区'
-    elif score >= thr2:
+    elif score >= 3:
         return 2, '观察区'
     else:
         return 4, '禁入区-得分不足'
@@ -749,7 +764,7 @@ def run_buy_ladder(ticker, cost=None, shares=None, held=False,
     print(f"🎯 BUY_LADDER v3.0 — {ticker} ({datetime.now().date()})")
     print("=" * 72)
 
-    print("\n[Layer 0] REGIME FILTER")
+    print("\n[Layer 0] REGIME FILTER (v3.1 咨询性 — 结构性牛市无法可靠判定 regime, 不阻断判定链)")
     layer0 = check_layer0_regime(force_unlock=force_regime_unlock)
     if not layer0['forced']:
         print(f"  沪深300 MA60: {layer0.get('ma60_pct', 'N/A'):.2f}% → {'🟢' if layer0['ma60_ok'] else '🔴'}  [{layer0.get('ma60_source', '?')}]")
@@ -759,23 +774,7 @@ def run_buy_ladder(ticker, cost=None, shares=None, held=False,
         print(f"  沪深300 MA60: 🔧 强制解锁")
         print(f"  WIF MCI: 🔧 强制解锁")
         print(f"  国家队: 🔧 强制解锁")
-    print(f"  综合: {'🟢 解锁' if layer0['unlocked'] else '🔒 锁定'} ({'强制' if layer0['forced'] else 'normal'})")
-
-    if not layer0['unlocked']:
-        print("\n" + "=" * 72)
-        print("🔒 BUY-LADDER 关闭 — Layer 0 regime 闸门未解锁")
-        print("   建议: 等待国家队转净买入 + MCI > 0.5 + MA60 转正")
-        print("=" * 72)
-        result = {
-            'ticker': ticker,
-            'date': str(date.today()),
-            'layer0': layer0,
-            'stage': 4,
-            'stage_name': '禁入区-Layer0锁定',
-            'action': '🔴 不买 (regime 闸门未解锁)',
-        }
-        _save_run_result(result)
-        return result
+    print(f"  综合: {'🟢 解锁' if layer0['unlocked'] else '🔒 锁定'} ({'强制' if layer0['forced'] else 'normal'}) — 仅展示, v3.1 不据此阻断")
 
     print("\n[1] 数据加载...")
     df = sl.load_data(ticker)
@@ -797,18 +796,14 @@ def run_buy_ladder(ticker, cost=None, shares=None, held=False,
         except Exception as e:
             print(f"  ⚠️ 板块 ETF {sector_code} 加载失败: {e}")
 
-    print("\n[Layer 1] SELECTION FILTER (5 道筛子)")
+    print("\n[Layer 1] SELECTION FILTER (v3.1 咨询性 — 估值/基本面待接入; 仅 ST 风险为硬否决)")
     layer1 = check_layer1_selection(ticker, sector_df)
     print(f"  市值: {layer1.get('market_cap_yi', 'N/A')}亿 → {'🟢' if layer1['market_cap_pass'] else '🔴'} (门槛 {LAYER1_MARKET_CAP_MIN_YI}亿)")
     print(f"  估值: {'🟢' if layer1['valuation_pass'] else '🔴'} (待接入)")
     print(f"  基本面: {'🟢' if layer1['fundamental_pass'] else '🔴'} (待接入)")
     print(f"  ST 风险: {'🟢' if layer1['st_pass'] else '🔴'}")
     print(f"  板块景气: {'🟢' if layer1['sector_pass'] else '🔴'}")
-    print(f"  通过: {layer1['n_pass']}/{layer1['n_total']}")
-
-    if not layer1['all_pass']:
-        print("\n  ⏸ Layer 1 不全通过, 跳过 Layer 2 详细判定")
-        print(f"  建议: {'🟡 继续观察' if layer1['n_pass'] >= 3 else '🔴 不买'}")
+    print(f"  通过: {layer1['n_pass']}/{layer1['n_total']} (咨询 — 不阻断, 仅 ST 风险为硬否决)")
 
     print("\n[Layer 2] TIMING ENGINE (16 信号 + 4 新增)")
     sector_d = sector_df if not sector_df.empty else None
@@ -878,11 +873,13 @@ def run_buy_ladder(ticker, cost=None, shares=None, held=False,
     print(f"  确认触发: {n_confirm}/5 (3+ = 真启动)")
 
     score, mscore, ev_pos, ev_neg, tr_pos = score_buy(signals, w_event, w_trend)
-    print(f"\n[5] BUY-LADDER v3.0 分级计票:")
-    print(f"  事件: {ev_pos}正 / {ev_neg}负 | 趋势: {tr_pos}/{len(BUY_TREND_SIGNALS)}正")
-    print(f"  加权得分: {score}/{mscore} ({score/mscore*100:.0f}%)")
+    print(f"\n[5] BUY-LADDER v3.1 数据驱动积分 (BT-015/016 回测定案):")
+    print(f"  计票信号: {' + '.join(f'{k}×{w}' for k,w in BUY_SCORE_WEIGHTS.items())}")
+    pos_detail = ' | '.join(f"{k}={'🟢' if signals.get(k,{}).get('signal',0)>0 else '⚪'}" for k in BUY_SCORE_WEIGHTS)
+    print(f"  {pos_detail}")
+    print(f"  加权得分: {score}/{mscore} (绝对阈值: ≥4 击球 / ≥3 观察)")
 
-    layer1_pass = layer1['all_pass']
+    layer1_pass = not layer1.get('is_st', False)   # v3.1: Layer 1 仅 ST 红牌为硬否决, 其余筛子咨询性
     stage, stage_name = stage_buy(score, mscore, veto_result['n_veto'],
                                    layer0['unlocked'], layer1_pass)
 
@@ -891,10 +888,8 @@ def run_buy_ladder(ticker, cost=None, shares=None, held=False,
     elif stage == 2:
         action = "🟡 放入观察池, 等待确认增至 3+/5"
     else:
-        if not layer0['unlocked']:
-            action = "🔴 不买 (Layer 0 锁定)"
-        elif not layer1_pass:
-            action = f"🔴 不买 (Layer 1 通过 {layer1['n_pass']}/5)"
+        if layer1.get('is_st', False):
+            action = "🔴 不买 (ST 风险一票否决)"
         elif veto_result['n_veto'] > 0:
             action = f"🔴 不买 (触发 {veto_result['n_veto']}/5 否决)"
         else:

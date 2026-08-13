@@ -288,12 +288,18 @@ class BaseEngine(ABC):
         self.config = config
         self.initial_capital: float = config.get("initial_cash", 1_000_000)
         self.default_leverage: float = config.get("leverage", 1.0)
+        #: Bar fields consulted, in order, for the price-limit base price.
+        #: Futures engines put ``pre_settle`` first: exchanges set the band off
+        #: the previous settlement, not the previous close.
+        self.base_price_fields: tuple[str, ...] = ("pre_close",)
         self.capital: float = self.initial_capital
         self.positions: Dict[str, Position] = {}
         self.trades: List[TradeRecord] = []
         self.equity_snapshots: List[EquitySnapshot] = []
         self._bar_idx: int = 0
         self._active_symbol: str = ""  # set by _rebalance/_close_position for subclass use
+        self._close_arr = None  # close panel (n_dates, n_codes) built in _execute_bars
+        self._code_to_col: dict = {}
 
     # ── Market rule interface (subclass must implement) ──
 
@@ -354,8 +360,76 @@ class BaseEngine(ABC):
         Default: no-op. Override in subclass as needed.
         """
 
-    # ── PnL / margin calculation hooks ──
-    # Override in FuturesBaseEngine to inject contract multiplier.
+    # ── Price-limit band helpers ──
+    # Ported verbatim from Vibe-Trading base.py: price-limit bands must be
+    # derived from a base price the market already knew when the order was
+    # placed. can_execute() runs before the fill, and this engine fills at the
+    # CURRENT bar's open, so the current bar's close is not available
+    # information: using it is lookahead.
+
+    def historical_base_price(self, symbol: str, bar: pd.Series) -> Optional[float]:
+        """Return a strictly historical base price for price-limit bands.
+
+        Sources, in order:
+          1. the first field of :attr:`base_price_fields` present on the bar
+             (``pre_close`` for cash equity, ``pre_settle`` first for futures);
+          2. the previous row of the close panel assembled in ``_execute_bars``;
+          3. reconstruct the prior close from tushare's ``pct_chg`` (both inputs
+             sit on the current bar, but their ratio is the PREVIOUS close, so
+             the result is still historical).
+
+        Returns None when no historical close is reachable.
+        """
+        for field in self.base_price_fields:
+            if field in bar.index:
+                raw = bar[field]
+                if pd.notna(raw) and float(raw) > 0:
+                    return float(raw)
+
+        close_arr = getattr(self, "_close_arr", None)
+        col = getattr(self, "_code_to_col", {}).get(symbol)
+        row = getattr(self, "_bar_idx", 0) - 1
+        if close_arr is not None and col is not None and row >= 0:
+            value = close_arr[row, col]
+            if pd.notna(value) and float(value) > 0:
+                return float(value)
+
+        # Last resort: prior close reconstructed from pct_chg (percentage points).
+        if "pct_chg" in bar.index and "close" in bar.index:
+            pct, close = bar["pct_chg"], bar["close"]
+            if pd.notna(pct) and pd.notna(close) and float(close) > 0:
+                denominator = 1.0 + float(pct) / 100.0
+                if denominator > 0:
+                    return float(close) / denominator
+        return None
+
+    def prospective_fill_price(self, bar: pd.Series, direction: int) -> Optional[float]:
+        """Return the price this engine would fill at on this bar.
+
+        Mirrors the sizing path: the bar's open, with slippage applied in the
+        trade direction. Comparing THIS against a price-limit band keeps the
+        simulation from ever transacting outside the exchange's legal range.
+        """
+        raw = bar.get("open", bar.get("close"))
+        if raw is None or pd.isna(raw):
+            return None
+        price = float(raw)
+        if price <= 0:
+            return None
+        return self.apply_slippage(price, direction)
+
+    def limit_band(
+        self, symbol: str, bar: pd.Series, limit: float
+    ) -> Optional[tuple[float, float]]:
+        """Return the (lower, upper) legal price band for this bar.
+
+        Returns None when no historical base price is reachable — in which case
+        the caller must not fabricate a block.
+        """
+        base = self.historical_base_price(symbol, bar)
+        if base is None or base <= 0 or not limit:
+            return None
+        return base * (1.0 - float(limit)), base * (1.0 + float(limit))
 
     def _calc_pnl(
         self, symbol: str, direction: int, size: float,
@@ -542,6 +616,10 @@ class BaseEngine(ABC):
         codes: List[str],
     ) -> None:
         """Bar-by-bar execution with market rule enforcement."""
+        # Close panel used by limit_band() to derive price-limit bands from the
+        # PREVIOUS bar's close (no lookahead). col = symbol → panel column.
+        self._close_arr = close_df[codes].values
+        self._code_to_col = {c: j for j, c in enumerate(codes)}
         for i, ts in enumerate(dates):
             self._bar_idx = i
 

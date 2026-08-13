@@ -28,10 +28,12 @@
 | `2.3.HYP_UPDATE_RULES.md` | **概率更新规则 + 截止日 + 反向条件（评论驱动方案 B 实施）** — 显式信号→概率变化表，覆盖 Tier 1 + 化债三剧本（7 条 HYP）；区间中位 + Brier 可校准；与 2.HYPOTHESES.md 描述解耦 | 静态（季度复审） | ✅ 2026-08-04 创建（HYP-016/015/006/002/029/028/027 全部含上修/下修信号+反向截止）|
 | `decision-journal/` | **概率性决策日志 + Brier 季度校准** — `YYYY-MM-DD.md` 登记每条预测；`brier-quarterly/YYYY-QN.md` 季度评分；Brier < 0.15 = 框架在加值；连续 2 季度 > 0.20 触发 5-Why 蒸馏 | **强时序** | ✅ 2026-08-04 创建（首批 7 条预测登记：HYP-029/028/027/016/015/002 + HYP-006 触发器状态）|
 | `2.1.HYP-UNUSED.md` | 归档假设库（ARCHIVED / RETIRED 完整正文 + 5-Why，2026-08-04 从 2.HYPOTHESES.md 迁出） | 静态（远期回溯用） | ✅ 已创建（HYP-031 RETIRED + HYP-005/007/012/013 ARCHIVED；含恢复条件；原位置指针防断链） |
-| `5.BACKTEST_INDEX.md` | 回测台账（每条含 Adversarial Review） | 静态（追加） | ✅ 6/6 已填充 |
+| `5.BACKTEST_INDEX.md` | 回测台账（每条含 Adversarial Review） | 静态（追加） | ✅ 15 主体 + v2.x 系归档（BT-001~008, 010~016）|
 | `6.CONFLICTS.md` | 冲突记录（回溯/逻辑/Regime） | 静态 | ✅ 12条已记录（**5 OPEN + 7 RESOLVED**；CONFLICT-LOGIC-008 已合并入 HYP-027 v3；**CONFLICT-LOGIC-009 化债收官口径 2026-08-04 用户裁决 RESOLVED**；**CONFLICT-BLINDSPOT-002 ⭐ 2026-08-07 部分 RESOLVED** — 4.2 v5.1 §三.3 新增供应链领先层 + 时间窗前移 6-12→6-9 月；剩余 OPEN 子项 (a) "3-6 月 vs 6-9 月" 阈值未定 (b) hyperscaler -20% 触发 (c) SK Hynix -50% 是 capex 见顶 vs HBM 周期） |
-| `7.SELL_LADDER.md` | 卖出梯子规则 | 静态 | 待补 |
+| `7.SELL_LADDER.md` | 卖出梯子规则 v2.5 | 静态 | ✅ 已填充（16 信号矩阵 + 5 动能结束标志 + 3 阶段）|
 | `7.1.POSITION_SIZING.md` | 仓位管理 | 静态 | 已填充 |
+| `8.BUY_LADDER.md` | 买入梯子规则 **v3.1**（BT-015/016 回测定案：4 信号 2/2/1/1 积分 + 绝对阈值 ≥4 击球/≥3 观察；Layer 0/1 咨询性；判定链 = ST → 否决 → 积分）| 静态 | ✅ v3.1（2026-08-13，数据驱动积分）|
+| **`buy-ladder/`** | **BUY_LADDER v3.1 能力**（`buy_ladder.py` 积分计票；`runs/` 历史结果；判定链 = ST 红牌 → 5 否决 → 积分绝对阈值）| **可执行** | **v3.1（2026-08-13）** |
 | `4.BROKER_OBSERVATION.md` | 券商板块观察指标体系 | 静态 | 已创建 + **v1.4 CDS 双层阈值修订 2026-08-04**（触发 5 降级为复核；触发 6 新增 100bp 清仓） |
 | `4.1.NATIONAL_TEAM_OBSERVATION.md` | 国家队全口径资金监测 | 动态（月度更新） | ✅ 已创建 |
 | `4.2.AI_BUBBLE_TRACKING.md` | **AI 泡沫跟踪与撤退策略**（**2026-08-07 v5.1** — v5.1 升级：新增 §三.3 供应链领先层真实数据 + §三.4 中国 LLM API 价格；时间窗 "6-12 月" → "**6-9 月**" 置信度下调；含 5 信号 + 联动规则 + 对冲工具） | 静态（季度更新） | ✅ **v5.1 升级**（2026-08-07）+ market-researcher subagent 反方验证 |
@@ -40,7 +42,7 @@
 | `3.US_FRAMEWORK.md` | **美股独立投资框架 v2.1**（总纲/观察/配置/双剧本联动/反方章节/**§1.3 双剧本观察表更新为中选后 6-9 月触发窗口 / §2.2.1 summary 表 v3 修正数据 2026-08-04**；与 3.1.CHINA_FRAMEWORK.md 平级，跨市场协调见其"九、总组合协调层"）| 静态 | v2.1 升级（HYP-027 v3 + HYP-028 v3 + HYP-029 v2 整合；**§2.2.1 summary 表修正**：旧估算~150-180% / 估算~320%+ 已替换为 v3 整体指标 34.9% / 22.7% / 18.4% + META 35.1% 警示红旗；数据缺口"精确 Capex/Revenue 比值"行删除（已解决））|
 | `2.2.HYP-027-V3-DETAILS.md` | **HYP-027 v3 完整证据库 + 配置矩阵（合并文件，与 2.HYPOTHESES.md / 3.1.CHINA_FRAMEWORK.md 等同级）** — **三部分结构**：① **数学敏感性**（模型一/二/三 + 123→80% 所需资产重估 + 5-Why 最薄弱） ② **机制工具扩展**（政治工具 P1-P12 + 瞒天过海 5 条路径 + 主动发行 P13-P17 即 2008 CDS 模板升级版 + 石油 vs 黄金品种选择 + 工具组合优先级 + 阶段应用） ③ **阶段 × 国家 × 资产 配置矩阵**（阶段 0-6 各自国家/货币 + 资产类型多空判断 + 跨阶段对冲组合） | 静态（随阶段演进更新）| 2026-08-04 创建（v3 合并版：原 REPORT.md 数学 + 原 asset-matrix.md 配置合并到一处；v3.1 扩展：政治工具 + 瞒天过海 + 主动发行），保留 Python 复现代码 `research/asset-blowdown-takeover-2026/blowdown_takeover_model.py` |
 | `distillation-log/YYYY-MM-DD_NNN.md` | 蒸馏事件 | **强时序** | 1 文件 |
-| `backtests/BT-XXX/` | 每个回测一个目录 | 静态 | 6 目录 |
+| `backtests/BT-XXX/` | 每个回测一个目录 (BT-001~016) | 静态 | 16 目录（BT-009-v2x 已归档清理，记录在 INDEX）|
 | `theses/<code>_<name>.md` | 个股研究论 | 静态 | 1 文件 |
 | **`sell-ladder/`** | **SELL_LADDER v2.0 能力** (14 skill 信号矩阵 + 5 动能结束标志 + 3 阶段框架; `sell_ladder.py` 可重跑; `data/` 永久数据; `runs/` 历史结果) | **可执行** | **1 目录 (2026-08-10 新建)** |
 

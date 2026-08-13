@@ -1,0 +1,248 @@
+{
+  "ticker": "300725",
+  "date": "2026-08-13",
+  "last_close": 54.79,
+  "cost": 36.62,
+  "pnl_pct": 49.617695248498094,
+  "strong_healthy": 1,
+  "end_count": 1,
+  "stage": "阶段 2.5: 阶段2.5-得分触底未共振",
+  "action": "🟡 分批止盈 (减 20-40%)",
+  "v22": {
+    "score": 4,
+    "max": 14,
+    "event_pos": 1,
+    "event_neg": 0,
+    "trend_pos": 2,
+    "w_event": 2,
+    "w_trend": 1
+  },
+  "dual_score": {
+    "weak": {
+      "label": "弱市震荡得分 (V4 纯事件 + thr_mid)",
+      "formula": "2·ev_pos − 2·ev_neg",
+      "ev_pos": 1,
+      "ev_neg": 0,
+      "score": 2,
+      "max": 6,
+      "threshold": [
+        3.0,
+        2.0
+      ],
+      "end_count": 1,
+      "stage": 2,
+      "stage_name": "动能衰减期",
+      "position": 0.7
+    },
+    "bull": {
+      "label": "牛市上涨得分 (V0 原版 + thr_lo)",
+      "formula": "2·ev_pos + 1·tr_pos − 2·ev_neg",
+      "ev_pos": 1,
+      "ev_neg": 0,
+      "tr_pos": 2,
+      "score": 4,
+      "max": 14,
+      "threshold": [
+        2.0,
+        1.0
+      ],
+      "end_count": 1,
+      "stage": 1,
+      "stage_name": "强动能期",
+      "position": 1.0
+    },
+    "regime": {
+      "status": "ok",
+      "etf": "510300",
+      "close": 4.729,
+      "ma60": 4.827166666666667,
+      "dev_pct": -2.03,
+      "mode": "模糊区",
+      "recommend": "两分并列参考, 方向性判断看 trend_break/动量"
+    }
+  },
+  "signals": {
+    "alpha_engine_v21": {
+      "wt1": 58.21542330464669,
+      "wt2": 51.24421345458096,
+      "zone": "OB2≥53",
+      "signal": 0,
+      "verdict": "⚪ 无交叉 (WT1 +58.2 vs WT2 +51.2, OB2≥53)",
+      "healthy": true,
+      "cross_type": "none",
+      "ob_level1": 60,
+      "ob_level2": 53,
+      "os_level1": -60,
+      "os_level2": -53
+    },
+    "candlestick": {
+      "score_20": -1,
+      "signal": 1,
+      "healthy": true
+    },
+    "ml_strategy": {
+      "ret_5d": 0.36565304087736794,
+      "ml_score": -0.12651722108458874,
+      "prob_up": 0.43674138945770563,
+      "n_train": 2100,
+      "signal": -1,
+      "model": "rf_walkforward",
+      "healthy": true
+    },
+    "chanlun": {
+      "bi_count": 50,
+      "last_zs_gg": 44.19,
+      "last_zs_dd": 34.8,
+      "last_zs_zd": 35.51,
+      "last_zs_zg": 38.83,
+      "verdict": "⚪ 中枢内观望 (DD=34.80~GG=44.19, 位置 213%)",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "technical_basic": {
+      "ema12": 45.51391455025055,
+      "ema26": 41.9741539875108,
+      "adx": 34.945568820855506,
+      "rsi": 78.22732464706358,
+      "bb_pos": 1.0984288315901563,
+      "obv_ma_diff": -12242292.25,
+      "signal": -1,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "ichimoku": {
+      "tenkan": 46.370000000000005,
+      "kijun": 45.754999999999995,
+      "cloud_top": 35.715,
+      "cloud_bot": 35.44,
+      "above_cloud_pct": 53.408931821363545,
+      "tk_bullish": "True",
+      "tk_bearish": "False",
+      "tk_cross_up": "False",
+      "tk_cross_down": "False",
+      "bullish_cloud": false,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "smc": {
+      "verdict": "⚪ SMC 无结构信号",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "swings_count": 113,
+      "last_struct": 0,
+      "last_fvg": 0,
+      "bos_choch_recent": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "alpha_zoo": {
+      "ret_20d": 0.3104520449653192,
+      "pos_20d": 0.9094339622641509,
+      "signal": 1,
+      "healthy": true,
+      "strong_momentum": "True"
+    },
+    "factor_research": {
+      "f2_ic_mean": 0.03349190843127167,
+      "f2_ic_std": 0.5035352370618509,
+      "f2_ir": 0.06651353463701638,
+      "f2_positive_ic_pct": 0.5008650519031141,
+      "f2_n_days": 878,
+      "f2_n_peers": 5,
+      "f2_ic_per_factor": {
+        "momentum": 0.011123986095017383,
+        "reversal": 0.007403189066059217,
+        "volatility": 0.14055619930475083,
+        "volume_ratio": -0.02511574074074073
+      },
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "verdict": "Vibe-Trading 4-factor IC mean=+0.0335 IR=0.07 (insufficient_predictive)"
+    },
+    "multi_factor": {
+      "composite": -0.22585734950455127,
+      "z_momentum": 2.693157083535615,
+      "z_reversal": -5.183359268347161,
+      "z_volatility": -3.444306904163589,
+      "z_volume_ratio": 5.03107969095693,
+      "signal": -1,
+      "healthy": true,
+      "strong_momentum": false,
+      "note": "canonical 4-factor cross-section"
+    },
+    "volatility": {
+      "hv_pct": 100.0,
+      "hv_annual": 103.13948521912783,
+      "signal": -1,
+      "verdict": "🔴 高波收缩 (pct=100.0% > 80)",
+      "healthy": true,
+      "strong_momentum": false,
+      "hv_window": 20,
+      "lookback": 120,
+      "low_pct": 20,
+      "high_pct": 80
+    },
+    "harmonic": {
+      "verdict": "🔴 Gartley (bearish, B=45%, D=64%)",
+      "signal": -1,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "pair_trading": {
+      "verdict": "⚪ 配对平仓 (|Z|=1.99 < 0.5)",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "peer": "002821",
+      "z_score": 1.9915823372985775,
+      "lookback": 60,
+      "entry_z": 2.0,
+      "exit_z": 0.5
+    },
+    "turnover_anomaly": {
+      "vol_ratio": 8.124458337400451,
+      "pos_20d": 0.9094339622641509,
+      "ret_5d": 0.36565304087736794,
+      "signal": 0,
+      "verdict": "⚪ 量比8.12, 位置91%",
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "sector_relative": {
+      "stock_ret_20d": 0.3104520449653192,
+      "sector_ret_20d": 0.060846560846560926,
+      "diff": 0.24960548411875827,
+      "signal": 1,
+      "verdict": "🟢 跑赢板块 +25.0% (个股+31.0% vs 板块+6.1%)",
+      "healthy": true,
+      "strong_momentum": true
+    },
+    "ad_line": {
+      "ad_5d_slope": 12779483.949034752,
+      "signal": 0,
+      "verdict": "⚪ A/D 同步 (5d 斜率 +12779484)",
+      "healthy": true,
+      "strong_momentum": false
+    }
+  },
+  "end_signals": {
+    "trend_break": false,
+    "momentum_reversal": false,
+    "volume_divergence": true,
+    "structure_break": false,
+    "volatility_drop": false
+  }
+}

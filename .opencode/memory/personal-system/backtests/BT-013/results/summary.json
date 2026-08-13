@@ -1,0 +1,34 @@
+{
+  "cache": {
+    "rows": 89845,
+    "start": "2024-10-08",
+    "end": "2026-08-13",
+    "stocks": 200
+  },
+  "dead_signals_cache_oriented": [
+    "multi_factor",
+    "sector_relative",
+    "factor_research",
+    "pair_trading"
+  ],
+  "strongest_negative_alpha": [
+    "chanlun",
+    "turnover_anomaly"
+  ],
+  "strongest_positive_alpha_all": [
+    "alpha_zoo",
+    "technical_basic"
+  ],
+  "regime_dependent_positive": {
+    "2025_cow": "alpha_zoo",
+    "2026_weak": [
+      "technical_basic",
+      "candlestick",
+      "ad_line"
+    ]
+  },
+  "stage_reachable": {
+    "stage1": "0 / 89845 (0.00%)",
+    "note": "固定比例阈值 0.65/0.42·max 两年零触发"
+  }
+}

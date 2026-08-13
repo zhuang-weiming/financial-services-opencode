@@ -99,11 +99,11 @@ def decide_combined_action(held: bool, sell_stage, buy_stage, sell_buyer_loop=Fa
     """
     if not held:
         if buy_stage == 1:
-            return '🟢', '建仓 50% (Layer 0/1 已通过 + Buy Stage 1)', 0.50
+            return '🟢', '建仓 50% (v3.1 积分击球区 score≥4/6 + 否决=0 + 非ST)', 0.50
         elif buy_stage == 2:
-            return '🟡', '观察池, 等 buy stage 升级', 0.0
+            return '🟡', '观察池, 等 buy stage 升级 (score≥3/6)', 0.0
         else:
-            return '🔴', '不买 (regime 锁定 / Layer 1 不通过 / 触发否决)', 0.0
+            return '🔴', '不买 (score<3/6 / 触发否决 / ST 红牌)', 0.0
     else:
         if sell_stage == 3:
             return '🔴', '大幅减仓 80% (sell stage 3, 优先级 sell > buy)', -0.80

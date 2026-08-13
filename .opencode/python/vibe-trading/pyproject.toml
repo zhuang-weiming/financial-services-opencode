@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vibe-trading-ai"
+version = "0.1.13"
+description = "Vendored Vibe-Trading agent tree (src.* / backtest.* / cli.* / skills.*) for financial-services-opencode skill algorithms"
+requires-python = ">=3.11,<3.14"
+license = "MIT"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+py-modules = ["api_server", "mcp_server"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*", "backtest*", "cli*", "skills*"]
+
+[tool.setuptools.package-data]
+"src" = [
+    "skills/**/*.md",
+    "skills/**/*.yaml",
+    "skills/**/*.json",
+    "skills/**/*.py",
+    "providers/*.json",
+    "scheduled_research/playbooks/*.md",
+    "swarm/presets/*.yaml",
+    "shadow_account/templates/*.j2",
+    "shadow_account/templates/*.html",
+    "shadow_account/templates/*.css",
+]
+"backtest" = ["*.py"]
+"src.factors" = ["zoo/**/*.yaml", "zoo/**/*.md", "zoo/**/NOTICE"]

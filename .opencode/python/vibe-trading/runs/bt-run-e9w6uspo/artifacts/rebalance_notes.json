@@ -1,0 +1,852 @@
+{
+  "rebalances": [
+    {
+      "date": "1970-01-20",
+      "turnover": 0.5,
+      "entries": [
+        {
+          "code": "600519.SH",
+          "weight": -1.0
+        }
+      ],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 0.0,
+          "to": -1.0,
+          "delta": -1.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-20",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 0.5,
+      "entries": [],
+      "exits": [
+        {
+          "code": "600519.SH",
+          "weight": -1.0
+        }
+      ],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 0.0,
+          "delta": 1.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 0.5,
+      "entries": [
+        {
+          "code": "600519.SH",
+          "weight": -1.0
+        }
+      ],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 0.0,
+          "to": -1.0,
+          "delta": -1.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": -1.0,
+          "to": 1.0,
+          "delta": 2.0
+        }
+      ]
+    },
+    {
+      "date": "1970-01-21",
+      "turnover": 1.0,
+      "entries": [],
+      "exits": [],
+      "top_moves": [
+        {
+          "code": "600519.SH",
+          "from": 1.0,
+          "to": -1.0,
+          "delta": -2.0
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "rebalance_count": 59,
+    "turnover_total": 57.5,
+    "turnover_mean": 0.9745762711864406,
+    "turnover_max": 1.0,
+    "largest_rebalance_date": "1970-01-20"
+  }
+}

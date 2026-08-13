@@ -502,8 +502,8 @@ def llm_sentiment(text: str, ticker: str | None = None) -> dict:
 
 Text: {text[:1000]}"""
     # Call the current agent's LLM interface
-    from src.providers.base import get_llm
-    response = get_llm().invoke(prompt)
+    from src.providers.llm import build_llm
+    response = build_llm().invoke(prompt)
     import json
     return json.loads(response.content)
 ```

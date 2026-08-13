@@ -1,0 +1,101 @@
+{
+  "artifacts": [
+    {
+      "path": "artifacts/equity.csv",
+      "sha256": "5070c6681915b66bc3f69d8e6090160204ceb0cef0107f5bee47228c8abfb332",
+      "size_bytes": 39042
+    },
+    {
+      "path": "artifacts/fills.jsonl",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "size_bytes": 0
+    },
+    {
+      "path": "artifacts/metrics.csv",
+      "sha256": "565596136bd7182e641bd3221e65199363365a953ee09d6aa8fb89b7863c34c8",
+      "size_bytes": 460
+    },
+    {
+      "path": "artifacts/ohlcv_600519.SH.csv",
+      "sha256": "1af0eb1dfa08293645fd2e6b1a7d5e16b9f4bf97049b3b72906f246d64854034",
+      "size_bytes": 26718
+    },
+    {
+      "path": "artifacts/positions.csv",
+      "sha256": "e6e99fbbef9ae8abea060f18ad5d035b5d5ec4840bd719202d898b3940f37cb9",
+      "size_bytes": 13858
+    },
+    {
+      "path": "artifacts/rebalance_notes.json",
+      "sha256": "ef36fa7cc595980a7ceb54db110220aec25621e1bf744d59bc0ac71755ee56aa",
+      "size_bytes": 15356
+    },
+    {
+      "path": "artifacts/rebalance_notes.md",
+      "sha256": "6d00f94cf0a431970de310398ead5638b4ad7fa5799cf522682ea8b1e38bd64c",
+      "size_bytes": 4552
+    },
+    {
+      "path": "artifacts/trades.csv",
+      "sha256": "4c418fbeeef8693f7085bd05854e10a984033250d23aee1026acd2e8f2ba8c7d",
+      "size_bytes": 78
+    },
+    {
+      "path": "code/signal_engine.py",
+      "sha256": "b2750c4e16de83a9011f84ae13fe5196f400072c9cc0a9d06543069912783c8f",
+      "size_bytes": 555
+    },
+    {
+      "path": "config.json",
+      "sha256": "2b26022b465b2b9a056ce25f3efb8ba02537c8ee9ba45ef7443c29a8c749c87d",
+      "size_bytes": 183
+    }
+  ],
+  "backtest": {
+    "codes": [
+      "600519.SH"
+    ],
+    "end_date": "2025-12-31",
+    "engine": "daily",
+    "initial_cash": 100000.0,
+    "interval": "1D",
+    "source": "auto",
+    "start_date": "2024-01-01"
+  },
+  "data_sources": [
+    "tencent"
+  ],
+  "generated_at": "2026-08-13T05:53:39.740288Z",
+  "metrics": {
+    "annual_return": 0.0,
+    "avg_holding_days": 0.0,
+    "avg_turnover": 0.0,
+    "benchmark_beta": 0.0,
+    "benchmark_return": -0.129953,
+    "calmar": 0.0,
+    "excess_return": 0.129953,
+    "final_value": 100000.0,
+    "information_ratio": 0.1757,
+    "max_consecutive_loss": 0,
+    "max_drawdown": 0.0,
+    "profit_factor": 0.0,
+    "profit_loss_ratio": 0.0,
+    "rebalance_count": 59,
+    "rebalance_turnover_max": 1.0,
+    "rebalance_turnover_mean": 0.9745762711864406,
+    "sharpe": 0.0,
+    "sortino": 0.0,
+    "total_return": 0.0,
+    "total_turnover": 0.0,
+    "tracking_error": 0.24428,
+    "trade_count": 0,
+    "win_rate": 0.0
+  },
+  "reproducibility": {
+    "config_hash": "2b26022b465b2b9a056ce25f3efb8ba02537c8ee9ba45ef7443c29a8c749c87d",
+    "strategy_hash": "b2750c4e16de83a9011f84ae13fe5196f400072c9cc0a9d06543069912783c8f"
+  },
+  "run_dir": "/Users/weimingzhuang/Documents/source_code/financial-services-opencode/.opencode/python/vibe-trading/runs/bt-run-e9w6uspo",
+  "schema_version": "0.1",
+  "warnings": []
+}

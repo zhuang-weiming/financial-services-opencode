@@ -46,7 +46,12 @@ def run_backtest(run_dir: str) -> str:
     if not signal_path.exists():
         return json.dumps({"status": "error", "error": "code/signal_engine.py not found"}, ensure_ascii=False)
 
-    agent_root = Path(__file__).resolve().parents[2]
+    # Vendor-rooted agent: resolve the Vibe-Trading tree (installed editable
+    # as vibe-trading-ai) from the src package location, NOT from this file's
+    # relative depth (quanta lives one level deeper than the original tree).
+    import src
+
+    agent_root = Path(src.__file__).resolve().parents[1]
     entry_script = agent_root / "backtest" / "runner.py"
 
     source = config.get("source", "?")
