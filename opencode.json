@@ -21,9 +21,6 @@
     "factset": {
       "type": "remote",
       "url": "https://mcp.factset.com/content/v1",
-      "oauth": {
-        "redirectUri": "http://127.0.0.1:57123/mcp/oauth/callback?server=factset&directory=%2FUsers%2Fweimingzhuang%2FDocuments%2Fsource_code%2Ffinancial-services-opencode"
-      },
       "enabled": true
     },
     "ddg-search": {

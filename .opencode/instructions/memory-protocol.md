@@ -12,13 +12,13 @@
 
 1. **必读** `.opencode/memory/INDEX.md` 了解全局
 2. **必读** `.opencode/memory/personal-system/` 下的关键文件:
-   - `LAWS.md` (已验证法则 — 每条含 5-Why Challenge 区块)
-   - `FAILED_LAWS.md` (失效法则)
-   - `OPEN_HYPOTHESES.md` (待验证假设 — 每条含 5-Why Adversarial)
-   - `BACKTEST_INDEX.md` (回测台账 — 每条含 Adversarial Review)
-   - `CONFLICTS.md` (开放冲突 — 含逻辑矛盾 + Regime 冲突)
-   - `SELL_LADDER.md` (卖出梯子)
-   - `POSITION_SIZING.md` (仓位管理)
+   - `1.LAWS.md` (已验证法则 — 每条含 5-Why Challenge 区块)
+   - `1.1.FAILED_LAWS.md` (失效法则)
+   - `2.HYPOTHESES.md` (待验证假设 — 每条含 5-Why Adversarial)
+   - `5.BACKTEST_INDEX.md` (回测台账 — 每条含 Adversarial Review)
+   - `6.CONFLICTS.md` (开放冲突 — 含逻辑矛盾 + Regime 冲突)
+   - `7.SELL_LADDER.md` (卖出梯子)
+   - `7.1.POSITION_SIZING.md` (仓位管理)
 3. **必查**: grep 用户当前问题中的关键词，找到相关条目
 4. **必引**: 如果命中，必须在回答中引用
 5. **必反**: 引用任何 LAW/HYP/BT 前，必须读其 5-Why Challenge / Adversarial / Review 区块。每次使用都是一次"价值观边界的确认"——条件变了，结论可能失效。
@@ -33,8 +33,8 @@
    - Why 4: 我为什么想相信这个结论？（确认偏误检查）
    - Why 5: 一句话——这个结论最薄弱的地方
 3. **记录** 5-Why 结果到 `raw-log/YYYY-MM-DD.md`（状态标签 ADD_5WHY）
-4. **IF** 5-Why 发现框架矛盾 → 写入 `CONFLICTS.md`（类型 LOGICAL_CONTRADICTION）
-5. **IF** 5-Why 怀疑 regime 变化 → 运行 `regime_shift_detector.py` + 更新 CONFLICTS.md
+4. **IF** 5-Why 发现框架矛盾 → 写入 `6.CONFLICTS.md`（类型 LOGICAL_CONTRADICTION）
+5. **IF** 5-Why 怀疑 regime 变化 → 运行 `regime_shift_detector.py` + 更新 6.CONFLICTS.md
 6. **IF** 5-Why 未推翻结论 → 输出结论时**必须附上** 5-Why 摘要
 
 ### 任何 subagent 在产生新认知后：
@@ -42,11 +42,11 @@
 1. **写入** raw-log：append 到 `.opencode/memory/personal-system/raw-log/YYYY-MM-DD.md`
 2. **触发回测**: 如果是关于"X 假设对不对"，必须触发 `backtest-builder` 跑回测
 3. **触发更新**: 如果回测完成，按回测结果更新:
-   - SUPPORTED + 多个证据 → 蒸馏到 LAWS.md
-   - REJECTED → 写入 FAILED_LAWS.md
-   - 部分支持 → 维持 OPEN_HYPOTHESES.md
-   - 与现有 LAW 矛盾 → 写入 CONFLICTS.md
-4. **记录回测**: 创建 `backtests/BT-XXX/` 目录，更新 BACKTEST_INDEX.md
+   - SUPPORTED + 多个证据 → 蒸馏到 1.LAWS.md
+   - REJECTED → 写入 1.1.FAILED_LAWS.md
+   - 部分支持 → 维持 2.HYPOTHESES.md
+   - 与现有 LAW 矛盾 → 写入 6.CONFLICTS.md
+4. **记录回测**: 创建 `backtests/BT-XXX/` 目录，更新 5.BACKTEST_INDEX.md
 5. **5-Why 蒸馏**: 新认知写入后，加载 `5-why-adversary` skill 对整条新认知做一遍 5-Why Protocol（见 §2.2），确保"被记录的知识"在被信任前已经过了反方质控
 
 ---
@@ -62,9 +62,9 @@ subagent 收到用户问题
     ↓
 2. 根据问题类型决定读哪些文件:
    - 涉及具体股票 → 读 theses/<code>_<name>.md (如有)
-   - 涉及仓位 → 读 POSITION_SIZING.md
-   - 涉及规则 → 读 LAWS.md, FAILED_LAWS.md
-   - 涉及未来走势 → 读 OPEN_HYPOTHESES.md, BACKTEST_INDEX.md
+   - 涉及仓位 → 读 7.1.POSITION_SIZING.md
+   - 涉及规则 → 读 1.LAWS.md, 1.1.FAILED_LAWS.md
+   - 涉及未来走势 → 读 2.HYPOTHESES.md, 5.BACKTEST_INDEX.md
     ↓
 3. grep 用户问题关键词
     ↓
@@ -95,10 +95,10 @@ subagent 完成回答
 3. 如果是回测完成:
    - 创建 backtests/BT-XXX/ 目录
    - 复制代码、数据、报告
-   - 更新 BACKTEST_INDEX.md
-    ↓
+- 更新 5.BACKTEST_INDEX.md
+     ↓
 4. 如果是冲突:
-   - 写入 CONFLICTS.md
+   - 写入 6.CONFLICTS.md
    - 通知用户
 ```
 
@@ -109,14 +109,14 @@ subagent 完成回答
     ↓
 1. 读所有未蒸馏的 raw-log/YYYY-MM-DD.md
     ↓
-2. 读现有 LAWS.md, FAILED_LAWS.md, OPEN_HYPOTHESES.md, BACKTEST_INDEX.md
+2. 读现有 1.LAWS.md, 1.1.FAILED_LAWS.md, 2.HYPOTHESES.md, 5.BACKTEST_INDEX.md
     ↓
 3. 对每条新认知分类:
-   - 支持现有 LAW (新证据) → 不动 LAW，在 BACKTEST_INDEX.md 标注 REINFORCEMENT
-   - 反对现有 LAW → 写入 CONFLICTS.md (不修改 LAW)
+   - 支持现有 LAW (新证据) → 不动 LAW，在 5.BACKTEST_INDEX.md 标注 REINFORCEMENT
+   - 反对现有 LAW → 写入 6.CONFLICTS.md (不修改 LAW)
    - 全新主题 (有 2+ 独立证据) → 提升为 LAW
-   - 全新主题 (1 个证据) → 写入 OPEN_HYPOTHESES.md
-   - 已被回测否定 → 写入 FAILED_LAWS.md
+   - 全新主题 (1 个证据) → 写入 2.HYPOTHESES.md
+   - 已被回测否定 → 写入 1.1.FAILED_LAWS.md
     ↓
 4. 写一条 distillation-log 记录:
    - 时间
@@ -145,10 +145,10 @@ subagent 完成回答
 |-----------|--------------|
 | `skills/5-why-adversary/SKILL.md` | 所有 subagent 在输出结论前加载，执行 5-Why Protocol |
 | `scripts/regime_shift_detector.py` | 怀疑 regime 变化时运行，输出结构断点检测结果 |
-| `memory/personal-system/CONFLICTS.md` | 5-Why 发现 LOGICAL_CONTRADICTION 或 REGIME_SHIFT 时写入 |
-| `memory/personal-system/LAWS.md` (5-Why 区块) | 每次引用 LAW 前必读其 5-Why Challenge——判断条件是否已变 |
-| `memory/personal-system/OPEN_HYPOTHESES.md` (5-Why 区块) | 每次引用 HYP 前必读其 5-Why Adversarial——判断置信度是否仍合理 |
-| `memory/personal-system/BACKTEST_INDEX.md` (Adversarial Review) | 每次引用 BT 前读其 Adversarial Review——判断 regime 是否适用 |
+| `memory/personal-system/6.CONFLICTS.md` | 5-Why 发现 LOGICAL_CONTRADICTION 或 REGIME_SHIFT 时写入 |
+| `memory/personal-system/1.LAWS.md` (5-Why 区块) | 每次引用 LAW 前必读其 5-Why Challenge——判断条件是否已变 |
+| `memory/personal-system/2.HYPOTHESES.md` (5-Why 区块) | 每次引用 HYP 前必读其 5-Why Adversarial——判断置信度是否仍合理 |
+| `memory/personal-system/5.BACKTEST_INDEX.md` (Adversarial Review) | 每次引用 BT 前读其 Adversarial Review——判断 regime 是否适用 |
 
 ---
 
@@ -158,19 +158,19 @@ subagent 完成回答
 ```
 subagent: alpha-researcher (调 alpha-engine-v21)
 1. 读 INDEX.md → 知道有 theses/ 和 personal-system/
-2. grep "中芯国际" → 没有现成 thesis，但 OPEN_HYPOTHESES.md 里有相关 HYP
+2. grep "中芯国际" → 没有现成 thesis，但 2.HYPOTHESES.md 里有相关 HYP
 3. 读 HYP-XXX "WT1 92% 半导体是否回调"
 4. 调 alpha-engine-v21 跑 WT1 历史分布回测
 5. 输出回测结果
-6. 写回 raw-log + backtests/BT-XXX/ + 更新 BACKTEST_INDEX + OPEN_HYPOTHESES
+6. 写回 raw-log + backtests/BT-XXX/ + 更新 5.BACKTEST_INDEX + 2.HYPOTHESES
 ```
 
 ### 例 2: 用户问"我的仓位是不是太集中"
 ```
 subagent: wealth-management
-1. 读 POSITION_SIZING.md → 知道用户当前是 50% 券商集中
-2. 读 LAWS.md → 没有相关法则
-3. 读 FAILED_LAWS.md → 没有相关失效案例
+1. 读 7.1.POSITION_SIZING.md → 知道用户当前是 50% 券商集中
+2. 读 1.LAWS.md → 没有相关法则
+3. 读 1.1.FAILED_LAWS.md → 没有相关失效案例
 4. 读 raw-log/2026-07-22.md → 发现 11:30 提到"成交量暴涨+券商+50-70%"已被回测否定
 5. ⚠️ 5-Why 反方（新增 — 加载 5-why-adversary skill）:
    Why 1: "50% 券商集中度=风险"这个结论依赖"券商修复持续"的前提
