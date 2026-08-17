@@ -1,0 +1,106 @@
+{
+  "algorithm": "alg3_historical_similarity",
+  "method": "z-score features across anchors+current; Euclidean distance; sim=1/(1+d); overlap-reliability weighting; anchor->scenario mapping matrix",
+  "zscored": {
+    "1971.8_nixon": {
+      "cpi_yoy_pct": -0.2027,
+      "gs10_pct": 0.8315,
+      "ffr_pct": 0.7525,
+      "real10_pct": NaN,
+      "wti_usd": NaN,
+      "credit_bp": NaN,
+      "gold_usd": -0.7975
+    },
+    "2000.3_dotcom": {
+      "cpi_yoy_pct": -0.4509,
+      "gs10_pct": 0.8564,
+      "ffr_pct": 0.92,
+      "real10_pct": 1.2213,
+      "wti_usd": -1.4377,
+      "credit_bp": 0.7803,
+      "gold_usd": -0.6602
+    },
+    "2007.10_gfc": {
+      "cpi_yoy_pct": -0.5139,
+      "gs10_pct": -0.0053,
+      "ffr_pct": 0.268,
+      "real10_pct": 0.2423,
+      "wti_usd": 0.1495,
+      "credit_bp": -0.009,
+      "gold_usd": -0.4014
+    },
+    "2021-23_mini": {
+      "cpi_yoy_pct": 1.7691,
+      "gs10_pct": -1.6028,
+      "ffr_pct": -1.5326,
+      "real10_pct": -1.1669,
+      "wti_usd": 0.8454,
+      "credit_bp": 0.6375,
+      "gold_usd": 0.209
+    },
+    "2026_current": {
+      "cpi_yoy_pct": -0.6015,
+      "gs10_pct": -0.0797,
+      "ffr_pct": -0.408,
+      "real10_pct": -0.2967,
+      "wti_usd": 0.4428,
+      "credit_bp": -1.4088,
+      "gold_usd": 1.6502
+    }
+  },
+  "distances": {
+    "1971.8_nixon": 2.8857,
+    "2000.3_dotcom": 4.3166,
+    "2007.10_gfc": 2.6487,
+    "2021-23_mini": 4.0482
+  },
+  "overlap_features": {
+    "1971.8_nixon": 4,
+    "2000.3_dotcom": 7,
+    "2007.10_gfc": 7,
+    "2021-23_mini": 7
+  },
+  "similarity_raw": {
+    "1971.8_nixon": 0.2574,
+    "2000.3_dotcom": 0.1881,
+    "2007.10_gfc": 0.2741,
+    "2021-23_mini": 0.1981
+  },
+  "similarity_weighted_norm": {
+    "1971.8_nixon": 0.1822,
+    "2000.3_dotcom": 0.233,
+    "2007.10_gfc": 0.3395,
+    "2021-23_mini": 0.2454
+  },
+  "anchor_scenario_matrix": {
+    "1971.8_nixon": {
+      "A_old_inflation": 0.55,
+      "C_stagflation_loss": 0.35,
+      "B_ai_solution": 0.1
+    },
+    "2000.3_dotcom": {
+      "D_deflation_bust": 0.9,
+      "B_ai_solution": 0.1
+    },
+    "2007.10_gfc": {
+      "D_deflation_bust": 0.9,
+      "B_ai_solution": 0.1
+    },
+    "2021-23_mini": {
+      "C_stagflation_loss": 0.6,
+      "B_ai_solution": 0.4
+    }
+  },
+  "scenario_probabilities": {
+    "A_old_inflation": 0.1002,
+    "B_ai_solution": 0.1736,
+    "C_stagflation_loss": 0.211,
+    "D_deflation_bust": 0.5152
+  },
+  "original": {
+    "A": 0.3,
+    "B": 0.3,
+    "C": 0.15,
+    "D": 0.25
+  }
+}

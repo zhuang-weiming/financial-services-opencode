@@ -1,0 +1,48 @@
+{
+  "algorithm": "alg1_signal_scoring",
+  "input_data": {
+    "signal_probabilities": {
+      "capex_rev": 0.85,
+      "leverage": 0.7,
+      "focus_shift": 0.5,
+      "rate_credit": 0.6,
+      "gov_response": 0.3
+    },
+    "wti_now": 82.55,
+    "ffr_now": 3.63,
+    "china_cpi_now": 0.5
+  },
+  "state_values": {
+    "x1_bust": 0.76,
+    "x1_productivity": 0.24,
+    "x1_partial": 0.075,
+    "x2_escalation_100": 0.0,
+    "x2_extreme_150": 0.0,
+    "x2_flat_75_95": 1.0,
+    "x2_de-escalation": 0.0,
+    "x3_violent": 0.0,
+    "x3_slow": 1.0,
+    "x3_surrender": 0.0,
+    "x3_lost_credibility": 0.605,
+    "x4_soft_1_2": 0.0,
+    "x4_crisis": 0.92
+  },
+  "raw_scores": {
+    "A_old_inflation": 0.266,
+    "B_ai_solution": 0.496,
+    "C_stagflation_loss": 0.1965,
+    "D_deflation_bust": 0.496
+  },
+  "probabilities": {
+    "A_old_inflation": 0.1829,
+    "B_ai_solution": 0.341,
+    "C_stagflation_loss": 0.1351,
+    "D_deflation_bust": 0.341
+  },
+  "original": {
+    "A": 0.3,
+    "B": 0.3,
+    "C": 0.15,
+    "D": 0.25
+  }
+}

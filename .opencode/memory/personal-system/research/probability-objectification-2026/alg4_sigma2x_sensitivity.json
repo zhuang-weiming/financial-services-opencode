@@ -1,0 +1,34 @@
+{
+  "test": "sigma_x2_sensitivity",
+  "n_iter": 3000,
+  "seed": 999,
+  "sigma_multiplier": 2.0,
+  "scenarios": {
+    "A_old_inflation": {
+      "mean": 0.188,
+      "median": 0.186,
+      "lo95": 0.143,
+      "hi95": 0.245
+    },
+    "B_ai_solution": {
+      "mean": 0.281,
+      "median": 0.283,
+      "lo95": 0.185,
+      "hi95": 0.365
+    },
+    "C_stagflation_loss": {
+      "mean": 0.168,
+      "median": 0.167,
+      "lo95": 0.136,
+      "hi95": 0.206
+    },
+    "D_deflation_bust": {
+      "mean": 0.363,
+      "median": 0.36,
+      "lo95": 0.299,
+      "hi95": 0.444
+    }
+  },
+  "A_above_25pct_frequency": 0.016,
+  "D_top_frequency": 0.852
+}

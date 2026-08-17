@@ -1,0 +1,133 @@
+{
+  "algorithm": "alg4_monte_carlo",
+  "n_iter": 3000,
+  "seed": 20260817,
+  "scenarios": {
+    "A_old_inflation": {
+      "label": "A 老剧本",
+      "alg1": {
+        "mean": 0.204,
+        "median": 0.202,
+        "lo95": 0.168,
+        "hi95": 0.252
+      },
+      "alg2": {
+        "mean": 0.227,
+        "median": 0.223,
+        "lo95": 0.15,
+        "hi95": 0.318
+      },
+      "alg3": {
+        "mean": 0.101,
+        "median": 0.101,
+        "lo95": 0.083,
+        "hi95": 0.119
+      },
+      "ensemble": {
+        "mean": 0.177,
+        "median": 0.176,
+        "lo95": 0.144,
+        "hi95": 0.216
+      }
+    },
+    "B_ai_solution": {
+      "label": "B AI 化解",
+      "alg1": {
+        "mean": 0.335,
+        "median": 0.345,
+        "lo95": 0.227,
+        "hi95": 0.416
+      },
+      "alg2": {
+        "mean": 0.353,
+        "median": 0.354,
+        "lo95": 0.225,
+        "hi95": 0.475
+      },
+      "alg3": {
+        "mean": 0.178,
+        "median": 0.176,
+        "lo95": 0.138,
+        "hi95": 0.225
+      },
+      "ensemble": {
+        "mean": 0.288,
+        "median": 0.292,
+        "lo95": 0.213,
+        "hi95": 0.347
+      }
+    },
+    "C_stagflation_loss": {
+      "label": "C 滞胀失控",
+      "alg1": {
+        "mean": 0.154,
+        "median": 0.151,
+        "lo95": 0.126,
+        "hi95": 0.195
+      },
+      "alg2": {
+        "mean": 0.12,
+        "median": 0.118,
+        "lo95": 0.066,
+        "hi95": 0.188
+      },
+      "alg3": {
+        "mean": 0.211,
+        "median": 0.211,
+        "lo95": 0.182,
+        "hi95": 0.239
+      },
+      "ensemble": {
+        "mean": 0.161,
+        "median": 0.16,
+        "lo95": 0.138,
+        "hi95": 0.189
+      }
+    },
+    "D_deflation_bust": {
+      "label": "D 通缩破裂",
+      "alg1": {
+        "mean": 0.308,
+        "median": 0.313,
+        "lo95": 0.224,
+        "hi95": 0.398
+      },
+      "alg2": {
+        "mean": 0.301,
+        "median": 0.296,
+        "lo95": 0.192,
+        "hi95": 0.43
+      },
+      "alg3": {
+        "mean": 0.511,
+        "median": 0.513,
+        "lo95": 0.473,
+        "hi95": 0.541
+      },
+      "ensemble": {
+        "mean": 0.373,
+        "median": 0.372,
+        "lo95": 0.315,
+        "hi95": 0.442
+      }
+    }
+  },
+  "ranking_stability": {
+    "A_old_inflation": 0.0,
+    "B_ai_solution": 0.083,
+    "C_stagflation_loss": 0.0,
+    "D_deflation_bust": 0.917
+  },
+  "d_over_b_frequency": 0.917,
+  "A_above_25pct_frequency": 0.0,
+  "D_above_40pct_frequency": 0.214,
+  "uncertainty_parameters": {
+    "wti": "N(82.55, 4.0) clipped [60,110]",
+    "ffr": "N(3.63, 0.25) clipped [2.5,5.5]",
+    "china_cpi": "N(0.5, 0.30) clipped [-0.5,2.5]",
+    "signals": "each clipped-N(p, 0.08) in [0.05,0.98]",
+    "priors": "Dirichlet((30,30,15,25))",
+    "alg3_matrix": "each contribution + N(0, 0.06), clipped [0.05,0.95], renormalized",
+    "note": "Uncertainty sigma choices are analyst-selected; see report honest-boundary. MC quantifies parameter uncertainty only, not regime-change or model risk."
+  }
+}

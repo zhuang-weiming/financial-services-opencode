@@ -1,0 +1,57 @@
+{
+  "algorithm": "alg2_bayesian_update",
+  "method": "shrinkage p_soft=0.075+0.85p; group-averaged logL (X1..X4 weights 0.30/0.25/0.25/0.20)",
+  "priors": {
+    "A_old_inflation": 0.3,
+    "B_ai_solution": 0.3,
+    "C_stagflation_loss": 0.15,
+    "D_deflation_bust": 0.25
+  },
+  "evidence_states": {
+    "x1_bust": 0.76,
+    "x1_productivity": 0.24,
+    "x1_partial": 0.075,
+    "x2_de_escalation": 0.0,
+    "x2_flat_75_95": 1.0,
+    "x2_escalation_100": 0.0,
+    "x2_extreme_150": 0.0,
+    "x3_surrender": 0.0,
+    "x3_slow": 1.0,
+    "x3_violent": 0.0,
+    "x3_lost_credibility": 0.605,
+    "x4_soft_1_2": 0.0,
+    "x4_crisis": 0.92
+  },
+  "evidence_softened": {
+    "x1_bust": 0.721,
+    "x1_productivity": 0.279,
+    "x1_partial": 0.1387,
+    "x2_de_escalation": 0.075,
+    "x2_flat_75_95": 0.925,
+    "x2_escalation_100": 0.075,
+    "x2_extreme_150": 0.075,
+    "x3_surrender": 0.075,
+    "x3_slow": 0.925,
+    "x3_violent": 0.075,
+    "x3_lost_credibility": 0.5892,
+    "x4_soft_1_2": 0.075,
+    "x4_crisis": 0.857
+  },
+  "log_likelihoods": {
+    "A_old_inflation": -1.4281,
+    "B_ai_solution": -0.8755,
+    "C_stagflation_loss": -1.3129,
+    "D_deflation_bust": -0.7884
+  },
+  "posteriors": {
+    "A_old_inflation": 0.205,
+    "B_ai_solution": 0.3562,
+    "C_stagflation_loss": 0.115,
+    "D_deflation_bust": 0.3238
+  },
+  "data": {
+    "wti_now": 82.55,
+    "ffr_now": 3.63,
+    "china_cpi_now": 0.5
+  }
+}

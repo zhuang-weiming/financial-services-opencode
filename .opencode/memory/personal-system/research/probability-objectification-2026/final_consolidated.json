@@ -1,0 +1,40 @@
+{
+  "algorithm": "ensemble",
+  "original": {
+    "A": 30.0,
+    "B": 30.0,
+    "C": 15.0,
+    "D": 25.0
+  },
+  "alg1_signal_scoring": {
+    "A": 18.3,
+    "B": 34.1,
+    "C": 13.5,
+    "D": 34.1
+  },
+  "alg2_bayesian": {
+    "A": 20.5,
+    "B": 35.6,
+    "C": 11.5,
+    "D": 32.4
+  },
+  "alg3_historical": {
+    "A": 10.0,
+    "B": 17.4,
+    "C": 21.1,
+    "D": 51.5
+  },
+  "ensemble_3objective": {
+    "A": 16.3,
+    "B": 29.0,
+    "C": 15.4,
+    "D": 39.3
+  },
+  "ensemble_4way_with_original": {
+    "A": 19.7,
+    "B": 29.3,
+    "C": 15.3,
+    "D": 35.8
+  },
+  "note": "Alg1=signal scoring; Alg2=Bayesian update w/ shrinkage+group weights; Alg3=historical similarity; Ensemble=mean of 3 objective methods"
+}

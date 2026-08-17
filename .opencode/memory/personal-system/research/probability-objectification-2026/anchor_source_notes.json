@@ -1,0 +1,23 @@
+{
+  "method": "window statistics on local FRED/WIF CSVs",
+  "notes": {
+    "cpi_yoy_pct": "CPI YoY % last obs in window, CPIAUCSL",
+    "gs10_pct": "10Y constant maturity mean, DGS10 + WIF DGS10_2007_2026",
+    "ffr_pct": "Fed funds effective last, FEDFUNDS",
+    "real10_pct": "10Y real rate last, REAINTRATREARAT10Y",
+    "wti_usd": "WTI spot mean, DCOILWTICO",
+    "credit_bp": "BAA-DGS10 spread mean, CreditSpread_BAA_1986_2026",
+    "gold_usd": "staged historical gold values from report §2.1 / WGC broad history [UNSOURCED-local]"
+  },
+  "current_snapshot": "report §5.1 values as of 2026-08-16",
+  "current_snapshot_sources": {
+    "cpi_yoy_pct": "BLS 2026-07 (3.4%)",
+    "gs10_pct": "H.15 Fed CSV 2026-08-13 (4.63%)",
+    "ffr_pct": "FOMC 2026-07-29 midpoint (3.50-3.75%)",
+    "real10_pct": "Fisher decomposition §5.1 (+1.19%)",
+    "wti_usd": "OilPrice.com 2026-08-16 (82.55)",
+    "credit_bp": "[UNSOURCED-local] ~152bp estimate",
+    "gold_usd": "Kitco 2026-08-16 (4391.80)"
+  },
+  "2021-23_fill": "2021-23 mini-stagflation facts [HISTORICAL-FACT]: CPI YoY 9.1% (2022-06 peak), FFR 1.75% (mid-2022), WTI ~94.5 avg, real10 ~ -0.1%; gs10 computed from WIF DGS10_2007_2026"
+}
