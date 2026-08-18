@@ -88,6 +88,7 @@
 | HSBC vs framework Q3 verdict | `out/hsbc-vs-framework-verdict-q3-20260728.md` | 2026-07-28 |
 | 市场 debrief | `out/market-debrief-20260805/` | 2026-08-05 |
 | AI 泡沫×通胀历史类比报告 | `personal-system/reports/ai-bubble-inflation-historical-analogues-2026-08-13.md` | 2026-08-13 |
+| **AI 泡沫×通胀阶段 × 30+ 大类资产 × 巴菲特操作** | `personal-system/reports/ai-bubble-inflation-stages-deep-2026-08-18.md` (**新**) | 2026-08-18 |
 | 剧本概率客观化（三算法） | ✅ 已迁入 `personal-system/research/probability-objectification-2026/`（alg1 信号计分 / alg2 贝叶斯 / alg3 历史相似 + consolidate 汇总，三法均值 16.3/29.0/15.4/39.3；README 含重跑方法） | 2026-08-17 |
 | 剧本概率蒙特卡洛层 | ✅ 已迁入 `personal-system/research/probability-objectification-2026/`（alg4_monte_carlo.py, 3000 iters — ensemble 95% CI: D [31.5,44.2]% 头号 91.7%, A>25% 仅 0.0%; + alg4_sigma2x_sensitivity.json） | 2026-08-17 |
 
