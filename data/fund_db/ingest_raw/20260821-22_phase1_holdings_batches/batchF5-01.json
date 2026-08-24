@@ -1,0 +1,827 @@
+{
+ "FOUSA00KTN": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.44232
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    6.52649
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    4.25516
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.58273
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    3.21783
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.74641
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    2.56435
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    1.9988
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.89943
+   ],
+   [
+    "0P0000OQN8",
+    "Tesla Inc",
+    1.81816
+   ]
+  ]
+ },
+ "FOUSA00H2N": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "FMUSA001PQ",
+    "Northern Institutional US Government",
+    1.02659
+   ],
+   [
+    "",
+    "E-mini Russell 2000 Index Future Sept 26",
+    0.97214
+   ],
+   [
+    "0P000003P8",
+    "Moog Inc Class A",
+    0.37329
+   ],
+   [
+    "0P0001QUQ0",
+    "Hut 8 Corp",
+    0.36683
+   ],
+   [
+    "0P000005RG",
+    "Viasat Inc",
+    0.35088
+   ],
+   [
+    "0P0001S5DP",
+    "BrightSpring Health Services Inc",
+    0.34988
+   ],
+   [
+    "0P000001LJ",
+    "Cytokinetics Inc",
+    0.34639
+   ],
+   [
+    "0P0000NHEV",
+    "MaxLinear Inc",
+    0.34108
+   ],
+   [
+    "0P000000IC",
+    "Argan Inc",
+    0.33748
+   ],
+   [
+    "0P000005KQ",
+    "UMB Financial Corp",
+    0.32395
+   ]
+  ]
+ },
+ "FOUSA05BL3": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P0000ALDL",
+    "ASML Holding NV",
+    3.47512
+   ],
+   [
+    "",
+    "MSCI EAFE Index Future Sept 26",
+    2.03442
+   ],
+   [
+    "0P00007OFH",
+    "HSBC Holdings PLC",
+    1.47356
+   ],
+   [
+    "0P0000AZ48",
+    "Roche Holding AG Ordinary Shares new",
+    1.30298
+   ],
+   [
+    "0P0000A5FH",
+    "Novartis AG Registered Shares",
+    1.29468
+   ],
+   [
+    "0P00007NYP",
+    "AstraZeneca PLC",
+    1.2772
+   ],
+   [
+    "FMUSA001PQ",
+    "Northern Institutional US Government",
+    1.23978
+   ],
+   [
+    "0P0000A5EE",
+    "Nestle SA",
+    1.19441
+   ],
+   [
+    "0P00009QS2",
+    "Siemens AG",
+    1.07743
+   ],
+   [
+    "0P00007OU3",
+    "Shell PLC",
+    0.98213
+   ]
+  ]
+ },
+ "FOUSA06L9E": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    9.67847
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    5.51358
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    4.35963
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    3.42184
+   ],
+   [
+    "0P0000OQN8",
+    "Tesla Inc",
+    2.48029
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    2.0184
+   ],
+   [
+    "0P0000006A",
+    "Advanced Micro Devices Inc",
+    1.98444
+   ],
+   [
+    "0P0000ALDL",
+    "ASML Holding NV",
+    1.6131
+   ],
+   [
+    "",
+    "E-mini S&P 500 Future Sept 26",
+    1.34058
+   ],
+   [
+    "FMUSA001PQ",
+    "Northern Institutional US Government",
+    1.30313
+   ]
+  ]
+ },
+ "FOUSA00EF0": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.38748
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    6.47834
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    4.22333
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.55666
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    3.1919
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.72636
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    2.54754
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    1.98388
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.88535
+   ],
+   [
+    "0P0000OQN8",
+    "Tesla Inc",
+    1.80457
+   ]
+  ]
+ },
+ "FOUSA05841": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "FOUSA00KBQ",
+    "DFA Two-Year Global Fixed-Income I",
+    29.9541
+   ],
+   [
+    "FOUSA07ZY8",
+    "DFA Short-Term Extended Quality I",
+    29.9334
+   ],
+   [
+    "FOUSA05CLH",
+    "DFA US Core Equity 2 I",
+    13.45579
+   ],
+   [
+    "FOUSA05IJD",
+    "DFA Inflation-Protected Securities I",
+    10.92653
+   ],
+   [
+    "FOUSA05CLG",
+    "DFA US Core Equity 1 I",
+    4.49303
+   ],
+   [
+    "FOUSA05GHZ",
+    "DFA International Core Equity 2 I",
+    4.45631
+   ],
+   [
+    "F00000N2G7",
+    "DFA International Government Fxd Inc I",
+    3.9933
+   ],
+   [
+    "FOUSA05CLF",
+    "DFA Emerging Markets Core Equity 2 I",
+    2.34618
+   ],
+   [
+    "FOUSA00C2P",
+    "DFA Real Estate Securities I",
+    0.33351
+   ],
+   [
+    "FOUSA05K4I",
+    "DFA International Real Estate Sec I",
+    0.10783
+   ]
+  ]
+ },
+ "FOUSA05J32": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P00000093",
+    "ATI Inc",
+    2.10067
+   ],
+   [
+    "0P00015YJ3",
+    "FTAI Aviation Ltd",
+    1.82438
+   ],
+   [
+    "0P0000MLJ8",
+    "Cenovus Energy Inc",
+    1.74029
+   ],
+   [
+    "0P00013BF0",
+    "Viper Energy Inc Ordinary Shares - Class A",
+    1.72438
+   ],
+   [
+    "0P000004JC",
+    "Quanta Services Inc",
+    1.6608
+   ],
+   [
+    "0P000005Z8",
+    "WEC Energy Group Inc",
+    1.59665
+   ],
+   [
+    "0P000002QK",
+    "Huntington Bancshares Inc",
+    1.58149
+   ],
+   [
+    "0P0000007E",
+    "Agilent Technologies Inc",
+    1.55931
+   ],
+   [
+    "0P0000VKO5",
+    "MACOM Technology Solutions Holdings Inc",
+    1.52869
+   ],
+   [
+    "0P0000019J",
+    "Ciena Corp",
+    1.50196
+   ]
+  ]
+ },
+ "F00000VEFQ": {
+  "as_of": "2026-03-31",
+  "h": [
+   [
+    "B00033JAM9",
+    "Federal National Mortgage Association 5%",
+    4.71532
+   ],
+   [
+    "B10003D0DQ",
+    "Federal National Mortgage Association 3%",
+    3.03966
+   ],
+   [
+    "B100038V23",
+    "Federal National Mortgage Association 2.5%",
+    2.20448
+   ],
+   [
+    "B100034ZQH",
+    "Government National Mortgage Association 5%",
+    2.13657
+   ],
+   [
+    "B1000JC3YQ",
+    "United States Treasury Notes 4%",
+    1.41446
+   ],
+   [
+    "B1000H1IF8",
+    "United States Treasury Notes 1.875%",
+    1.38033
+   ],
+   [
+    "B00033JAOX",
+    "Federal National Mortgage Association 5.5%",
+    1.37494
+   ],
+   [
+    "B00033JAMB",
+    "Federal National Mortgage Association 5%",
+    1.35201
+   ],
+   [
+    "B00001ZHZ6",
+    "United States Treasury Bonds 4.375%",
+    1.24258
+   ],
+   [
+    "B00032BQQU",
+    "U.S. Treasury Bond Stripped Principal Payment",
+    1.17389
+   ]
+  ]
+ },
+ "FOUSA00LAL": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "F00000JVPY",
+    "Columbia Short-Term Cash",
+    5.54415
+   ],
+   [
+    "0P000004S5",
+    "SPX Technologies Inc",
+    2.77699
+   ],
+   [
+    "0P000005P7",
+    "VSE Corp",
+    2.07993
+   ],
+   [
+    "0P0001L5SY",
+    "GCM Grosvenor Inc Ordinary Shares - Class A",
+    1.99427
+   ],
+   [
+    "0P0001R9TZ",
+    "SharkNinja Inc",
+    1.8935
+   ],
+   [
+    "0P0000014P",
+    "Cavco Industries Inc",
+    1.84618
+   ],
+   [
+    "0P0001LXPE",
+    "DigitalOcean Holdings Inc",
+    1.80342
+   ],
+   [
+    "0P0001EOHC",
+    "Guardant Health Inc",
+    1.78847
+   ],
+   [
+    "0P0001LFS1",
+    "Rush Street Interactive Inc Ordinary Shares - Class A",
+    1.74672
+   ],
+   [
+    "0P0000031J",
+    "Viavi Solutions Inc",
+    1.72278
+   ]
+  ]
+ },
+ "FOUSA00CKS": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000005AR",
+    "Taiwan Semiconductor Manufacturing Co Ltd ADR",
+    8.33804
+   ],
+   [
+    "0P0000054Y",
+    "Steris PLC",
+    4.98806
+   ],
+   [
+    "0P00006802",
+    "Canadian Pacific Kansas City Ltd",
+    4.81851
+   ],
+   [
+    "0P000005V0",
+    "Waste Connections Inc",
+    4.28164
+   ],
+   [
+    "0P000004FA",
+    "Linde PLC",
+    4.20989
+   ],
+   [
+    "0P000004R4",
+    "SAP SE ADR",
+    4.20541
+   ],
+   [
+    "0P000000GK",
+    "Aon PLC Class A",
+    4.13903
+   ],
+   [
+    "0P0000Q79U",
+    "AIA Group Ltd",
+    4.11904
+   ],
+   [
+    "0P000002K4",
+    "HDFC Bank Ltd ADR",
+    3.82299
+   ],
+   [
+    "0P00007OUD",
+    "Sage Group (The) PLC",
+    3.68468
+   ]
+  ]
+ },
+ "F00000U60P": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    15.07011
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    7.47068
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    6.85479
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    5.89661
+   ],
+   [
+    "0P0001U8JM",
+    "SanDisk Corp Ordinary Shares",
+    4.84229
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    4.38955
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    3.79626
+   ],
+   [
+    "0P000001I3",
+    "Corning Inc",
+    3.15376
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    2.88122
+   ],
+   [
+    "0P0000028H",
+    "Flex Ltd",
+    2.79995
+   ]
+  ]
+ },
+ "FOUSA06LDG": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    9.56674
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    6.45579
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    5.2658
+   ],
+   [
+    "0P000004JC",
+    "Quanta Services Inc",
+    5.18929
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    4.95468
+   ],
+   [
+    "0P000005AR",
+    "Taiwan Semiconductor Manufacturing Co Ltd ADR",
+    4.651
+   ],
+   [
+    "0P000002DO",
+    "GE Aerospace",
+    4.32796
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    4.08837
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    4.07684
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    3.61363
+   ]
+  ]
+ },
+ "FOUSA00EKY": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "SCUSA001GY",
+    "Federated Mortgage Core Portfolio",
+    17.95423
+   ],
+   [
+    "",
+    "2 Year Treasury Note Future Sept 26",
+    12.99026
+   ],
+   [
+    "F00000Q1Y5",
+    "Federated Project and Trade Fin Cor",
+    8.17983
+   ],
+   [
+    "B1000JC3YQ",
+    "United States Treasury Notes 4%",
+    5.42817
+   ],
+   [
+    "B1000B042U",
+    "United States Treasury Notes 4.125%",
+    3.80161
+   ],
+   [
+    "SCUSA001GW",
+    "Federated Emerging Markets Core",
+    2.2636
+   ],
+   [
+    "B00032BQTP",
+    "United States Treasury Bonds 4.25%",
+    2.14484
+   ],
+   [
+    "SCUSA001GX",
+    "High Yield Bond Portfolio",
+    2.11133
+   ],
+   [
+    "B1000NF2SB",
+    "United States Treasury Notes 4.125%",
+    2.0774
+   ],
+   [
+    "B00032BQTL",
+    "United States Treasury Bonds 4.125%",
+    2.02449
+   ]
+  ]
+ },
+ "FOUSA05C76": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P00000357",
+    "Kimberly-Clark Corp",
+    2.26252
+   ],
+   [
+    "0P0000061X",
+    "Zimmer Biomet Holdings Inc",
+    2.00836
+   ],
+   [
+    "0P000001DK",
+    "Commerce Bancshares Inc",
+    1.99596
+   ],
+   [
+    "0P000002NL",
+    "Henry Schein Inc",
+    1.97655
+   ],
+   [
+    "0P0000037R",
+    "Labcorp Holdings Inc",
+    1.84268
+   ],
+   [
+    "0P00000479",
+    "Packaging Corp of America",
+    1.64593
+   ],
+   [
+    "0P000005WW",
+    "Evergy Inc",
+    1.64335
+   ],
+   [
+    "0P0000060J",
+    "Xcel Energy Inc",
+    1.62586
+   ],
+   [
+    "0P000000QR",
+    "Becton Dickinson & Co",
+    1.60864
+   ],
+   [
+    "0P000001Z9",
+    "Enterprise Products Partners LP",
+    1.57346
+   ]
+  ]
+ },
+ "F00000OWIL": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.82494
+   ],
+   [
+    "0P000000TU",
+    "Boeing Co",
+    4.53842
+   ],
+   [
+    "0P000002DO",
+    "GE Aerospace",
+    4.35499
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    4.18422
+   ],
+   [
+    "0P000005WD",
+    "Wells Fargo & Co",
+    3.80231
+   ],
+   [
+    "F000016QSH",
+    "Fidelity Cash Central Fund",
+    3.74435
+   ],
+   [
+    "0P0001RSOL",
+    "GE Vernova Inc",
+    3.66383
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    3.41167
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.33243
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    3.29178
+   ]
+  ]
+ }
+}

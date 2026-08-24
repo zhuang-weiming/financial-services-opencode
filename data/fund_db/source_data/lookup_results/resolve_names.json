@@ -1,0 +1,16 @@
+{
+  "UST": {"id": "F0000045IO", "type": "FE", "name": "ProShares Ultra 7-10 Year Treasury", "note": "name+ticker exact match", "source": "name_lookup"},
+  "CORN": {"id": "F00000H15R", "type": "FE", "name": "Teucrium Corn Fund", "note": "name+ticker exact match", "source": "name_lookup"},
+  "VLBLX": {"id": "F000011J08", "type": "FO", "name": "Vanguard Long-Term Bond Index Admiral", "note": "name exact match; Morningstar ticker VBLAX", "source": "name_lookup"},
+  "EMSH": {"id": "F0000143T8", "type": "FE", "name": "PIMCO Enhanced Short Mtrty Actv ESG ETF", "note": "name match; Morningstar ticker EMNT", "source": "name_lookup"},
+  "FSICX": {"id": "F0000104K7", "type": "FO", "name": "Fidelity Strategic Income", "note": "name match; Morningstar ticker FADMX", "source": "name_lookup"},
+  "FFTFX": {"id": "FOUSA00J4U", "type": "FO", "name": "Fidelity Freedom 2040", "note": "TICKER_FIX: CSV FFTFX wrong, correct FFFFX", "source": "name_lookup"},
+  "FMOM": {"id": "F00000X9NP", "type": "FE", "name": "Fidelity Momentum Factor ETF", "note": "TICKER_FIX: CSV FMOM wrong, correct FDMO", "source": "name_lookup"},
+  "RMEAX": {"id": "F00000JNWX", "type": "FO", "name": "American Funds Mortgage A", "note": "TICKER_FIX: CSV RMEAX wrong, correct MFAAX", "source": "name_lookup"},
+  "HRAAX": {"id": "F00000GYIQ", "type": "FO", "name": "Hartford Real Asset A", "note": "TICKER_FIX: CSV HRAAX wrong, correct HRLAX", "source": "name_lookup"},
+  "RGFAX": {"id": "F00000NM0Z", "type": "FO", "name": "American Funds Global Growth Port A", "note": "TICKER_FIX: CSV RGFAX wrong, correct PGGAX", "source": "name_lookup"},
+  "QWGFX": {"id": "FOUSA00BK7", "type": "FO", "name": "American Funds Cptl Wld Gr&Inc A", "note": "TICKER_FIX: CSV QWGFX(R-6) vs name A conflict; per name use A=CWGIX", "source": "name_lookup"},
+  "SPLG": {"id": "FEUSA04AE6", "type": "FE", "name": "State Street SPDR Port S&P 500 ETF", "note": "name match; Morningstar ticker SPYM", "source": "name_lookup"},
+  "SLY": {"id": "F00000PTNZ", "type": "FE", "name": "State Street SPDR Port S&P 600 Sm Cp ETF", "note": "SLY itself not found; replacement SPSM same index", "source": "name_lookup"},
+  "FDEZX": {"id": "F000010TXV", "type": "FO", "name": "Fidelity Advisor Freedom 2055 Z", "note": "name match; Morningstar ticker FIJSX", "source": "name_lookup"}
+}

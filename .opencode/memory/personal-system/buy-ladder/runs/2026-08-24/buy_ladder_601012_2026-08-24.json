@@ -1,0 +1,298 @@
+{
+  "ticker": "601012",
+  "date": "2026-08-21",
+  "last_close": 12.42,
+  "cost": null,
+  "pnl_pct": null,
+  "held": false,
+  "shares": null,
+  "layer0": {
+    "ma60_pct": -2.0336291130062523,
+    "ma60_source": "data/510300 (bar 2026-08-13)",
+    "ma60_ok": true,
+    "mci_value": 0.3861,
+    "mci_month": "2026-06-01",
+    "mci_source": "WIF v2.7 公式实时计算 (PMI=50.3 M2=8.0 @2026-06-01)",
+    "mci_ok": false,
+    "nt_pct": -89.0,
+    "nt_source": "md 510050 vs-2025-12峰值 (Morningstar 月度份额)",
+    "national_team_ok": false,
+    "unlocked": false,
+    "forced": false
+  },
+  "layer1": {
+    "market_cap_yi": null,
+    "pe_ttm": null,
+    "pb_mrq": null,
+    "roe": null,
+    "is_st": false,
+    "valuation_pass": true,
+    "fundamental_pass": true,
+    "st_pass": true,
+    "market_cap_pass": true,
+    "sector_pass": true,
+    "n_pass": 5,
+    "n_total": 5,
+    "all_pass": true
+  },
+  "signals": {
+    "alpha_engine_v21": {
+      "wt1": -20.984069342727068,
+      "wt2": -7.9752347058146285,
+      "zone": "N- 0-OS2",
+      "signal": 0,
+      "verdict": "⚪ 无交叉 (WT1 -21.0 vs WT2 -8.0, N- 0-OS2)",
+      "healthy": true,
+      "cross_type": "none",
+      "ob_level1": 60,
+      "ob_level2": 53,
+      "os_level1": -60,
+      "os_level2": -53
+    },
+    "candlestick": {
+      "score_20": 2,
+      "signal": 1,
+      "healthy": true
+    },
+    "ml_strategy": {
+      "ret_5d": -0.018181818181818188,
+      "ml_score": -0.241973705661362,
+      "prob_up": 0.379013147169319,
+      "n_train": 879,
+      "signal": -1,
+      "model": "rf_walkforward",
+      "healthy": true
+    },
+    "chanlun": {
+      "bi_count": 49,
+      "last_zs_gg": 19.47,
+      "last_zs_dd": 11.41,
+      "last_zs_zd": 15.82,
+      "last_zs_zg": 17.04,
+      "verdict": "⚪ 中枢内观望 (DD=11.41~GG=19.47, 位置 13%)",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "technical_basic": {
+      "ema12": 12.66450546778559,
+      "ema26": 12.706287773607867,
+      "adx": 19.91787709801685,
+      "rsi": 43.89809976021664,
+      "bb_pos": 0.08233200224149222,
+      "obv_ma_diff": -12845579.75,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "ichimoku": {
+      "tenkan": 12.754999999999999,
+      "kijun": 12.535,
+      "cloud_top": 14.225,
+      "cloud_bot": 12.4175,
+      "above_cloud_pct": -12.688927943760985,
+      "tk_bullish": "True",
+      "tk_bearish": "False",
+      "tk_cross_up": "False",
+      "tk_cross_down": "False",
+      "bullish_cloud": false,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "smc": {
+      "verdict": "⚪ SMC 无结构信号",
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "swings_count": 51,
+      "last_struct": 0,
+      "last_fvg": 0,
+      "bos_choch_recent": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "alpha_zoo": {
+      "ret_20d": 0.0,
+      "pos_20d": 0.08653846153846147,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": "False"
+    },
+    "factor_research": {
+      "f2_ic_mean": 0.015160547030495896,
+      "f2_ic_std": 0,
+      "f2_ir": 0,
+      "f2_n_days": 900,
+      "f2_n_peers": 1,
+      "f2_ic_per_factor": {
+        "momentum": -0.054080187437362794,
+        "reversal": -0.013591093605562515,
+        "volatility": 0.07258482742996836,
+        "volume_ratio": 0.055728641734940534
+      },
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "verdict": "单标 4 因子 vs fwd20 IC=+0.0152 (per_factor={'momentum': '-0.054', 'reversal': '-0.014', 'volatility': '+0.073', 'volume_ratio': '+0.056'})"
+    },
+    "multi_factor": {
+      "composite": 0.08061486452002753,
+      "z_momentum": 0.136341441364771,
+      "z_reversal": 0.30038623887701377,
+      "z_volatility": 0.9467793165917158,
+      "z_volume_ratio": -1.0610475387533904,
+      "signal": 0,
+      "healthy": true,
+      "strong_momentum": false,
+      "note": "canonical 4-factor ts-z approx"
+    },
+    "volatility": {
+      "hv_pct": 21.666666666666668,
+      "hv_annual": 26.271201601602424,
+      "signal": 0,
+      "verdict": "⚪ 中性波动 (pct=21.7%)",
+      "healthy": true,
+      "strong_momentum": false,
+      "hv_window": 20,
+      "lookback": 120,
+      "low_pct": 20,
+      "high_pct": 80
+    },
+    "harmonic": {
+      "verdict": "🔴 Gartley (bearish, B=53%, D=72%)",
+      "signal": -1,
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "pair_trading": {
+      "error": "配对交易需要 peer_dfs",
+      "signal": 0,
+      "healthy": false
+    },
+    "turnover_anomaly": {
+      "vol_ratio": 0.5313190104208368,
+      "pos_20d": 0.08653846153846147,
+      "ret_5d": -0.018181818181818188,
+      "signal": 0,
+      "verdict": "⚪ 量比0.53, 位置9%",
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "sector_relative": {
+      "error": "无板块数据 (sector_df 自动加载失败)",
+      "signal": 0,
+      "healthy": false,
+      "auto_load_attempted": false
+    },
+    "ad_line": {
+      "ad_5d_slope": -46435970.44481468,
+      "signal": 0,
+      "verdict": "⚪ A/D 同步 (5d 斜率 -46435970)",
+      "healthy": true,
+      "strong_momentum": false
+    },
+    "wt1_sweet_zone": {
+      "cur_wt1": -20.984069342727068,
+      "past_wt1": -61.67906242081839,
+      "sweet_low": 40,
+      "sweet_high": 60,
+      "ob_threshold": 60,
+      "in_sweet_zone": false,
+      "came_from_below": true,
+      "signal": 0,
+      "verdict": "⚪ WT1 未到 sweet zone (cur=-20.98 < 40, 等拐点)",
+      "healthy": true
+    },
+    "trend_launch": {
+      "cur_adx": 19.91787709801684,
+      "past_adx": 17.71024205808458,
+      "adx_launch": false,
+      "ema_cross": "False",
+      "cloud_breakout": false,
+      "n_transitions": "0",
+      "signal": -1,
+      "verdict": "🔴 趋势未启动 (0/3 transition)",
+      "healthy": true
+    },
+    "volume_price_resonance": {
+      "turnover_pos": false,
+      "ad_line_pos": false,
+      "vol_ratio_5d": 0.7060897563450406,
+      "n_resonance": 0,
+      "signal": -1,
+      "verdict": "🔴 无共振 (0/3)",
+      "healthy": true
+    },
+    "structure_complete": {
+      "chanlun_pos": false,
+      "smc_pos": false,
+      "candlestick_pos": true,
+      "n_struct": 1,
+      "signal": 0,
+      "verdict": "⚪ 部分结构 (1/3)",
+      "healthy": true
+    },
+    "valuation_percentile": {
+      "signal": 0,
+      "healthy": false,
+      "note": "待接入 tushare daily_basic (Layer 1 筛子)"
+    },
+    "fundamental_inflection": {
+      "signal": 0,
+      "healthy": false,
+      "note": "待接入 tushare fina_indicator"
+    }
+  },
+  "veto_result": {
+    "vetoes": {
+      "downtrend_unbroken": {
+        "triggered": false,
+        "note": "EMA12<EMA26:True, ADX>25:False, 未收敛:False"
+      },
+      "volume_price_divergence": {
+        "triggered": false,
+        "note": "缩量反弹 (<0.7 量比 + 价涨)"
+      },
+      "fundamental_deteriorate": {
+        "triggered": false,
+        "note": "待接入 tushare fina_indicator (占位)"
+      },
+      "sector_weak": {
+        "triggered": false,
+        "note": "板块 ETF 20d<-5% 或 MA60 下行 (当前 禁用)"
+      },
+      "valuation_high": {
+        "triggered": false,
+        "note": "待接入 tushare daily_basic (占位)"
+      }
+    },
+    "n_veto": 0,
+    "any_veto": false
+  },
+  "confirmations": {
+    "wt1_sweet_zone": false,
+    "trend_launch": false,
+    "volume_price_resonance": false,
+    "structure_complete": false,
+    "fundamental_inflection": false
+  },
+  "n_confirm": 0,
+  "score": 1,
+  "max_score": 6,
+  "event_pos": 0,
+  "event_neg": 1,
+  "trend_pos": 0,
+  "stage": 4,
+  "stage_name": "禁入区-得分不足",
+  "action": "🔴 不买 (得分不足)"
+}

@@ -1,0 +1,992 @@
+{
+ "FOUSA00EJ0": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.49919
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    6.57623
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    4.28728
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.61163
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    3.2419
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.76683
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    2.58334
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    2.01531
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.91179
+   ],
+   [
+    "0P0000OQN8",
+    "Tesla Inc",
+    1.83162
+   ]
+  ]
+ },
+ "FOUSA00EKD": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    10.92468
+   ],
+   [
+    "0P0000006A",
+    "Advanced Micro Devices Inc",
+    5.35229
+   ],
+   [
+    "0P0001U8JM",
+    "SanDisk Corp Ordinary Shares",
+    5.31836
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    5.04771
+   ],
+   [
+    "0P00000384",
+    "Lam Research Corp",
+    4.93971
+   ],
+   [
+    "",
+    "Aggregate Miscellaneous Equity",
+    4.73593
+   ],
+   [
+    "",
+    "T. Rowe Price Gov. Reserve",
+    4.35641
+   ],
+   [
+    "0P000003H5",
+    "Marvell Technology Inc",
+    4.22278
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    4.18358
+   ],
+   [
+    "0P000002X8",
+    "Intel Corp",
+    3.6851
+   ]
+  ]
+ },
+ "FOUSA00J6Q": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    14.26887
+   ],
+   [
+    "",
+    "Aggregate Miscellaneous Equity",
+    7.62898
+   ],
+   [
+    "0P0000032S",
+    "Johnson & Johnson",
+    6.62414
+   ],
+   [
+    "0P000005NU",
+    "UnitedHealth Group Inc",
+    5.98511
+   ],
+   [
+    "0P0000XPGW",
+    "AbbVie Inc",
+    5.09597
+   ],
+   [
+    "0P000003KE",
+    "Merck & Co Inc",
+    4.0039
+   ],
+   [
+    "0P000002FD",
+    "Gilead Sciences Inc",
+    2.81848
+   ],
+   [
+    "0P000005F1",
+    "Thermo Fisher Scientific Inc",
+    2.51919
+   ],
+   [
+    "0P000005R7",
+    "Vertex Pharmaceuticals Inc",
+    2.27722
+   ],
+   [
+    "0P000000VL",
+    "Bristol-Myers Squibb Co",
+    2.10639
+   ]
+  ]
+ },
+ "FOUSA00GJO": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000000PA",
+    "Bank of America Corp",
+    5.52415
+   ],
+   [
+    "0P00005U6B",
+    "Mastercard Inc Class A",
+    4.69771
+   ],
+   [
+    "0P0000031C",
+    "JPMorgan Chase & Co",
+    4.47995
+   ],
+   [
+    "0P0000CPCP",
+    "Visa Inc Class A",
+    4.21687
+   ],
+   [
+    "0P000002H5",
+    "The Goldman Sachs Group Inc",
+    3.96006
+   ],
+   [
+    "0P000005WD",
+    "Wells Fargo & Co",
+    3.6058
+   ],
+   [
+    "0P00000175",
+    "Charles Schwab Corp",
+    3.56411
+   ],
+   [
+    "0P000001A2",
+    "Citigroup Inc",
+    3.40655
+   ],
+   [
+    "",
+    "Aggregate Miscellaneous Equity",
+    3.17723
+   ],
+   [
+    "0P00000129",
+    "Capital One Financial Corp",
+    3.15043
+   ]
+  ]
+ },
+ "F00000HGTS": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000002MB",
+    "Welltower Inc",
+    4.02956
+   ],
+   [
+    "0P00000205",
+    "Equinix Inc",
+    3.25681
+   ],
+   [
+    "",
+    "ASX SPI 200 Index Future Sept 26",
+    -2.64036
+   ],
+   [
+    "0P00000023",
+    "Prologis Inc",
+    2.31677
+   ],
+   [
+    "",
+    "Aggregate Miscellaneous Equity",
+    2.1724
+   ],
+   [
+    "",
+    "T. Rowe Price Gov. Reserve",
+    1.9229
+   ],
+   [
+    "",
+    "Bhp",
+    1.89549
+   ],
+   [
+    "0P000004YN",
+    "Simon Property Group Inc",
+    1.64068
+   ],
+   [
+    "0P000067Y3",
+    "Agnico Eagle Mines Ltd",
+    1.62238
+   ],
+   [
+    "0P000002AI",
+    "Freeport-McMoRan Inc",
+    1.55357
+   ]
+  ]
+ },
+ "FOUSA00DP3": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.79859
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    6.47805
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    6.06468
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    5.76984
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    5.243
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    3.48406
+   ],
+   [
+    "0P0000031C",
+    "JPMorgan Chase & Co",
+    2.8308
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    2.29668
+   ],
+   [
+    "0P0000CPCP",
+    "Visa Inc Class A",
+    1.90525
+   ],
+   [
+    "0P00005U6B",
+    "Mastercard Inc Class A",
+    1.71211
+   ]
+  ]
+ },
+ "FOUSA00JH4": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P0000ALDL",
+    "ASML Holding NV",
+    2.89105
+   ],
+   [
+    "0P00007OFH",
+    "HSBC Holdings PLC",
+    1.64504
+   ],
+   [
+    "0P0000AZ48",
+    "Roche Holding AG Ordinary Shares new",
+    1.38601
+   ],
+   [
+    "0P0000A5FH",
+    "Novartis AG Registered Shares",
+    1.29351
+   ],
+   [
+    "0P0000A5EE",
+    "Nestle SA",
+    1.1645
+   ],
+   [
+    "0P00007NYP",
+    "AstraZeneca PLC",
+    1.16035
+   ],
+   [
+    "0P00007OU3",
+    "Shell PLC",
+    1.15422
+   ],
+   [
+    "0P00009QS2",
+    "Siemens AG",
+    1.09051
+   ],
+   [
+    "0P0000AEW4",
+    "Mitsubishi UFJ Financial Group Inc",
+    1.08126
+   ],
+   [
+    "0P00006WAE",
+    "BHP Group Ltd",
+    0.97156
+   ]
+  ]
+ },
+ "FOUSA00EZG": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    4.81475
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    4.34824
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    4.32689
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    3.77152
+   ],
+   [
+    "0P0000CPCP",
+    "Visa Inc Class A",
+    3.42454
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.73961
+   ],
+   [
+    "0P000005YG",
+    "Willis Towers Watson PLC",
+    2.4975
+   ],
+   [
+    "0P00009WP6",
+    "Schneider Electric SE",
+    2.4939
+   ],
+   [
+    "0P00000175",
+    "Charles Schwab Corp",
+    2.33648
+   ],
+   [
+    "0P000005F1",
+    "Thermo Fisher Scientific Inc",
+    2.12268
+   ]
+  ]
+ },
+ "FOUSA00CSN": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P00000220",
+    "ExxonMobil Holdings Corp",
+    1.96989
+   ],
+   [
+    "0P00000185",
+    "Chevron Corp",
+    1.87082
+   ],
+   [
+    "B100047IO8",
+    "United States Treasury Notes 3.875%",
+    1.82224
+   ],
+   [
+    "0P000004GV",
+    "Procter & Gamble Co",
+    1.37334
+   ],
+   [
+    "0P000002OY",
+    "The Home Depot Inc",
+    1.26208
+   ],
+   [
+    "B1000F98WD",
+    "United States Treasury Notes 4.25%",
+    1.22923
+   ],
+   [
+    "0P0000051F",
+    "Southern Co",
+    1.07829
+   ],
+   [
+    "0P000004B0",
+    "PepsiCo Inc",
+    0.88432
+   ],
+   [
+    "B00032BQU1",
+    "United States Treasury Bonds 4.75%",
+    0.87765
+   ],
+   [
+    "B1000FDEL0",
+    "CHS/Community Health Systems Inc 10.75%",
+    0.79819
+   ]
+  ]
+ },
+ "FOUSA00FZ2": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    7.91075
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    6.39618
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    3.61414
+   ],
+   [
+    "0P0000031C",
+    "JPMorgan Chase & Co",
+    3.5019
+   ],
+   [
+    "0P000005F1",
+    "Thermo Fisher Scientific Inc",
+    2.46245
+   ],
+   [
+    "0P0000003P",
+    "Abbott Laboratories",
+    2.45795
+   ],
+   [
+    "0P0000C1PV",
+    "Ferguson Enterprises Inc",
+    2.44569
+   ],
+   [
+    "0P0000AZ48",
+    "Roche Holding AG Ordinary Shares new",
+    2.41115
+   ],
+   [
+    "0P0001PE9O",
+    "Haleon PLC",
+    2.31461
+   ],
+   [
+    "0P000000JC",
+    "Arthur J. Gallagher & Co",
+    2.25512
+   ]
+  ]
+ },
+ "FOUSA00CTN": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P0000022S",
+    "NextEra Energy Inc",
+    9.60169
+   ],
+   [
+    "0P000001Z5",
+    "Entergy Corp",
+    6.20077
+   ],
+   [
+    "0P0000051F",
+    "Southern Co",
+    5.09436
+   ],
+   [
+    "0P000004W4",
+    "Sempra",
+    4.74522
+   ],
+   [
+    "0P000005WW",
+    "Evergy Inc",
+    4.6408
+   ],
+   [
+    "0P000001SD",
+    "Duke Energy Corp",
+    4.3088
+   ],
+   [
+    "0P00018S1K",
+    "Vistra Corp",
+    3.79303
+   ],
+   [
+    "0P0000045R",
+    "PG&E Corp",
+    3.69931
+   ],
+   [
+    "0P0001OB8L",
+    "Constellation Energy Corp",
+    3.45113
+   ],
+   [
+    "0P0000009L",
+    "Alliant Energy Corp",
+    3.33728
+   ]
+  ]
+ },
+ "FOUSA00CTH": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "B100010SJC",
+    "Government National Mortgage Association 2.5%",
+    7.01681
+   ],
+   [
+    "B100010SJB",
+    "Government National Mortgage Association 2%",
+    5.23134
+   ],
+   [
+    "B00036GVP9",
+    "Government National Mortgage Association 3.5%",
+    4.54473
+   ],
+   [
+    "B1000042T1",
+    "Government National Mortgage Association 5%",
+    4.10316
+   ],
+   [
+    "B100010SJD",
+    "Government National Mortgage Association 3%",
+    3.47811
+   ],
+   [
+    "B1000GQZPG",
+    "Government National Mortgage Association 6%",
+    3.05862
+   ],
+   [
+    "B10001J5CY",
+    "Government National Mortgage Association 2.5%",
+    2.85551
+   ],
+   [
+    "B1000168L6",
+    "Government National Mortgage Association 2.5%",
+    2.83291
+   ],
+   [
+    "B1000HG60N",
+    "Government National Mortgage Association 5.5%",
+    2.76167
+   ],
+   [
+    "B10000WVZW",
+    "Government National Mortgage Association 2.5%",
+    2.35885
+   ]
+  ]
+ },
+ "FOUSA00CEG": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "F00001DOVB",
+    "Fidelity Municipal Cash Central",
+    1.75853
+   ],
+   [
+    "B1000HQ9MB",
+    "LOS ANGELES CALIF DEPT WTR & PWR WTRWKS REV 5%",
+    1.40467
+   ],
+   [
+    "B1000NEPII",
+    "CALIFORNIA CMNTY CHOICE FING AUTH CLEAN ENERGY PROJ REV 5%",
+    1.16721
+   ],
+   [
+    "B1000NNDXO",
+    "CALIFORNIA CMNTY CHOICE FING AUTH CLEAN ENERGY PROJ REV 5%",
+    1.14967
+   ],
+   [
+    "B1000LXQ0M",
+    "CALIFORNIA CMNTY CHOICE FING AUTH CLEAN ENERGY PROJ REV 5%",
+    1.05646
+   ],
+   [
+    "B1000NB4AY",
+    "SOUTHERN CALIF PUB PWR AUTH REV 5%",
+    1.04637
+   ],
+   [
+    "B1000N46OK",
+    "SAN FRANCISCO CALIF CITY & CNTY ARPTS COMMN INTL ARPT REV 5.5%",
+    0.99967
+   ],
+   [
+    "B10000AXK4",
+    "UNIVERSITY CALIF REVS 3%",
+    0.9102
+   ],
+   [
+    "B1000L26TR",
+    "CENTRAL VY ENERGY AUTH CALIF COMMODITY SUPPLY REV 5%",
+    0.90916
+   ],
+   [
+    "B100004WLY",
+    "CALIFORNIA INFRASTRUCTURE & ECONOMIC DEV BK REV 1.2%",
+    0.89929
+   ]
+  ]
+ },
+ "F000002PFB": {
+  "as_of": "2026-04-30",
+  "h": [
+   [
+    "0P0000ASAJ",
+    "Taiwan Semiconductor Manufacturing Co Ltd",
+    16.10934
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    15.23839
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    6.72168
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    6.70582
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    4.33061
+   ],
+   [
+    "0P00000384",
+    "Lam Research Corp",
+    3.94752
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.77833
+   ],
+   [
+    "0P0000B2XZ",
+    "Samsung Electronics Co Ltd",
+    3.65259
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    3.24589
+   ],
+   [
+    "0P0000033M",
+    "KLA Corp",
+    3.0902
+   ]
+  ]
+ },
+ "FOUSA00D9Q": {
+  "as_of": "2026-04-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    5.92459
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    4.98592
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    3.79622
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.46498
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    3.22165
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.93499
+   ],
+   [
+    "0P0000031C",
+    "JPMorgan Chase & Co",
+    1.4156
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    1.32679
+   ],
+   [
+    "0P00005U6B",
+    "Mastercard Inc Class A",
+    1.32409
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.31616
+   ]
+  ]
+ },
+ "FOUSA05JUB": {
+  "as_of": "2026-04-30",
+  "h": [
+   [
+    "0P00009WRK",
+    "TotalEnergies SE",
+    4.18511
+   ],
+   [
+    "0P0000A5EE",
+    "Nestle SA",
+    3.01248
+   ],
+   [
+    "0P00007OU3",
+    "Shell PLC",
+    3.00706
+   ],
+   [
+    "0P00009WBE",
+    "AXA SA",
+    2.98725
+   ],
+   [
+    "0P00009WOZ",
+    "Sanofi SA",
+    2.98044
+   ],
+   [
+    "0P0000A5GW",
+    "Zurich Insurance Group AG",
+    2.88632
+   ],
+   [
+    "0P00009QR8",
+    "Munchener Ruckversicherungs-Gesellschaft AG",
+    2.82329
+   ],
+   [
+    "0P0000BQSW",
+    "Quanta Computer Inc",
+    2.75284
+   ],
+   [
+    "0P0000D5B8",
+    "Samsung Electronics Co Ltd Participating Preferred",
+    2.69337
+   ],
+   [
+    "0P0001O38V",
+    "Daimler Truck Holding AG Ordinary Shares",
+    2.53488
+   ]
+  ]
+ },
+ "F000005IK9": {
+  "as_of": "2026-04-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    6.31808
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    5.82511
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    4.15097
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.38264
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.92125
+   ],
+   [
+    "0P0000031C",
+    "JPMorgan Chase & Co",
+    2.09572
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    2.06923
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.68094
+   ],
+   [
+    "0P00000384",
+    "Lam Research Corp",
+    1.5137
+   ],
+   [
+    "0P0000ALDL",
+    "ASML Holding NV",
+    1.44439
+   ]
+  ]
+ },
+ "FOUSA00D9Y": {
+  "as_of": "2026-04-30",
+  "h": [
+   [
+    "0P000168U6",
+    "Glaukos Corp",
+    2.70191
+   ],
+   [
+    "0P0001DZC9",
+    "Bloom Energy Corp Class A",
+    2.62036
+   ],
+   [
+    "0P0001XBHS",
+    "Legence Corp Ordinary Shares - Class A",
+    2.05129
+   ],
+   [
+    "0P000004S5",
+    "SPX Technologies Inc",
+    1.92148
+   ],
+   [
+    "0P0001NQZ1",
+    "Perimeter Solutions Inc",
+    1.88609
+   ],
+   [
+    "0P00000141",
+    "Casey's General Stores Inc",
+    1.87966
+   ],
+   [
+    "0P000000QU",
+    "Bel Fuse Inc Class B",
+    1.87743
+   ],
+   [
+    "0P0000040T",
+    "OSI Systems Inc",
+    1.85066
+   ],
+   [
+    "0P0000BSZ2",
+    "Tower Semiconductor Ltd",
+    1.80805
+   ],
+   [
+    "0P000003AP",
+    "Ligand Pharmaceuticals Inc",
+    1.77014
+   ]
+  ]
+ }
+}

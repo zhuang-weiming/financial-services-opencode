@@ -1,0 +1,57 @@
+{
+ "FEUSA04AE6": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.93983
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    7.01165
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    5.42089
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.9211
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    3.04569
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.58598
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    2.43354
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.80684
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    1.59242
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    1.52599
+   ]
+  ]
+ }
+}

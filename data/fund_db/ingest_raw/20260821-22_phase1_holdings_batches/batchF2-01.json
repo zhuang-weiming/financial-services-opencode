@@ -1,0 +1,767 @@
+{
+ "FOUSA00FUP": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    6.4076
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    3.93018
+   ],
+   [
+    "0P0000CUPM",
+    "Philip Morris International Inc",
+    3.66715
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    3.11914
+   ],
+   [
+    "0P0000033M",
+    "KLA Corp",
+    2.52988
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    2.04699
+   ],
+   [
+    "0P000002MB",
+    "Welltower Inc",
+    1.75142
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    1.74134
+   ],
+   [
+    "0P000005NU",
+    "UnitedHealth Group Inc",
+    1.68039
+   ],
+   [
+    "0P000000PA",
+    "Bank of America Corp",
+    1.66611
+   ]
+  ]
+ },
+ "FOUSA00CTS": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    6.05042
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    4.05263
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    3.81348
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    3.72079
+   ],
+   [
+    "0P0000CUPM",
+    "Philip Morris International Inc",
+    3.64943
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    3.37602
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.16954
+   ],
+   [
+    "",
+    "Capital Group Central Cash Fund",
+    2.60791
+   ],
+   [
+    "0P0000ASAJ",
+    "Taiwan Semiconductor Manufacturing Co Ltd",
+    2.54916
+   ],
+   [
+    "0P0000033M",
+    "KLA Corp",
+    2.18789
+   ]
+  ]
+ },
+ "F00000NM0Z": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "F000002PIY",
+    "American Funds New Perspective R-6",
+    19.76578
+   ],
+   [
+    "F000002PJB",
+    "American Funds Cptl Wld Gr&Inc R-6",
+    16.97333
+   ],
+   [
+    "F000002PJF",
+    "American Funds SMALLCAP World R-6",
+    15.0915
+   ],
+   [
+    "F000002PJ1",
+    "American Funds Growth Fd of Amer R-6",
+    13.06819
+   ],
+   [
+    "F000002PJA",
+    "American Funds New Economy R-6",
+    10.09609
+   ],
+   [
+    "F000002PJ9",
+    "American Funds New World R-6",
+    10.02997
+   ],
+   [
+    "F000002P1T",
+    "American Funds EUPAC R-6",
+    9.9737
+   ],
+   [
+    "F00001434B",
+    "American Funds Global Insight R-6",
+    5.0273
+   ],
+   [
+    "",
+    "Cash And Other Assets Less Liablities",
+    -0.02586
+   ]
+  ]
+ },
+ "FOUSA00BKK": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "",
+    "Capital Group Central Cash Fund",
+    8.58152
+   ],
+   [
+    "B00038JZF2",
+    "Petroleos Mexicanos Sa De CV 6.84%",
+    1.65021
+   ],
+   [
+    "B1000GEY47",
+    "United States Treasury Notes 3.875%",
+    1.61751
+   ],
+   [
+    "B10007XG5Q",
+    "Peru (Republic Of) 7.6%",
+    1.49856
+   ],
+   [
+    "B1000HRE06",
+    "United States Treasury Notes 3.625%",
+    1.38509
+   ],
+   [
+    "B1000589JX",
+    "Secretaria Do Tesouro Nacional 10%",
+    0.7747
+   ],
+   [
+    "B00038H1GL",
+    "France (Republic Of) 0%",
+    0.7738
+   ],
+   [
+    "B10002YFCW",
+    "Korea (Republic Of) 4.25%",
+    0.76971
+   ],
+   [
+    "B00032BQU8",
+    "United States Treasury Bonds 2.441%",
+    0.74466
+   ],
+   [
+    "B00033JALX",
+    "Federal National Mortgage Association 5%",
+    0.73469
+   ]
+  ]
+ },
+ "F00000OSX7": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "B00032BQU7",
+    "United States Treasury Bonds 4.75%",
+    1.74448
+   ],
+   [
+    "B1000N2UPM",
+    "United States Treasury Notes 4.375%",
+    1.23626
+   ],
+   [
+    "B00032BQUB",
+    "United States Treasury Bonds 5%",
+    1.22301
+   ],
+   [
+    "B10005H7LO",
+    "AbbVie Inc. 5.05%",
+    1.18123
+   ],
+   [
+    "B10005JCH6",
+    "Chubb INA Holdings LLC 5%",
+    0.81837
+   ],
+   [
+    "B1000MS5I1",
+    "Bank of America Corp. 4.695%",
+    0.8145
+   ],
+   [
+    "B1000M8SNW",
+    "PacifiCorp. 5.8%",
+    0.80693
+   ],
+   [
+    "B1000NHH0A",
+    "Citibank, N.A. 4.846%",
+    0.78936
+   ],
+   [
+    "B1000IWVS5",
+    "Goldman Sachs Group, Inc. 4.939%",
+    0.77
+   ],
+   [
+    "B1000MYS46",
+    "Road MI Property Owner I LLC 7.5%",
+    0.76782
+   ]
+  ]
+ },
+ "FOUSA00B4M": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P0001RIUI",
+    "Diebold Nixdorf Inc Ordinary Shares- New",
+    1.73529
+   ],
+   [
+    "B100030RCW",
+    "DISH Network Corporation 11.75%",
+    0.91859
+   ],
+   [
+    "B10009OIGY",
+    "Connect Finco SARL/Connect US Finco LLC 9%",
+    0.74397
+   ],
+   [
+    "B1000JFJ15",
+    "FXI Holdings Inc 11%",
+    0.70014
+   ],
+   [
+    "B1000BGYE8",
+    "EchoStar Corp. 10.75%",
+    0.67603
+   ],
+   [
+    "B00036H3XV",
+    "MPT Operating Partnership LP / MPT Finance Corporation 5%",
+    0.63739
+   ],
+   [
+    "0P0001R4D4",
+    "Talen Energy Corp Ordinary Shares New",
+    0.59825
+   ],
+   [
+    "B10000NQOY",
+    "Peraton Corp., Term Loan B, First Lien, (3-month USD CME Term SOFR + 3.85%)",
+    0.57653
+   ],
+   [
+    "B10003MGDX",
+    "Cloud Software Group Inc. 9%",
+    0.54321
+   ],
+   [
+    "B1000B49OS",
+    "NFE Financing LLC 12%",
+    0.53293
+   ]
+  ]
+ },
+ "FOUSA06BKX": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "B1000NIB81",
+    "United States Treasury Bills 0.01%",
+    20.81955
+   ],
+   [
+    "",
+    "Cayman Commodity Csf, Ltd.",
+    20.78115
+   ],
+   [
+    "",
+    "United States Treasury Bills 0.01%",
+    18.12275
+   ],
+   [
+    "B1000IG6YF",
+    "United States Treasury Bills 0.01%",
+    13.97568
+   ],
+   [
+    "B1000N49GH",
+    "United States Treasury Bills 0.01%",
+    12.79344
+   ],
+   [
+    "B1000LYZ3K",
+    "United States Treasury Bills 0.01%",
+    6.5557
+   ],
+   [
+    "FMUSA001GH",
+    "Goldman Sachs FS Government Instl",
+    4.68365
+   ],
+   [
+    "B1000MJ9R6",
+    "United States Treasury Bills 0.01%",
+    1.42706
+   ],
+   [
+    "B1000LBXEP",
+    "United States Treasury Bills 0.01%",
+    0.74588
+   ],
+   [
+    "",
+    "Usd",
+    0.09513
+   ]
+  ]
+ },
+ "F00001CJWS": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    6.80757
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    6.51361
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    5.77657
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    5.33596
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    3.739
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    3.31617
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    3.23551
+   ],
+   [
+    "0P000000H9",
+    "Applied Materials Inc",
+    2.50658
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    2.47938
+   ],
+   [
+    "0P000005AR",
+    "Taiwan Semiconductor Manufacturing Co Ltd ADR",
+    2.43397
+   ]
+  ]
+ },
+ "F00001CJWU": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    6.79482
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    5.69949
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    4.86887
+   ],
+   [
+    "0P000004QD",
+    "Royal Caribbean Group",
+    4.12481
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    3.86296
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    3.69288
+   ],
+   [
+    "0P000002DO",
+    "GE Aerospace",
+    3.28379
+   ],
+   [
+    "0P000005NO",
+    "RTX Corp",
+    3.27603
+   ],
+   [
+    "0P0000019Y",
+    "Cisco Systems Inc",
+    2.73639
+   ],
+   [
+    "0P0000043L",
+    "Oracle Corp",
+    2.53987
+   ]
+  ]
+ },
+ "FOUSA00E5P": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    7.3021
+   ],
+   [
+    "0P0000AZ1B",
+    "SK Hynix Inc",
+    5.72379
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    4.84379
+   ],
+   [
+    "0P000005X1",
+    "Western Digital Corp",
+    3.41719
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    3.37107
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.13829
+   ],
+   [
+    "0P0000ASAJ",
+    "Taiwan Semiconductor Manufacturing Co Ltd",
+    3.13208
+   ],
+   [
+    "0P000005AR",
+    "Taiwan Semiconductor Manufacturing Co Ltd ADR",
+    3.07651
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    2.54523
+   ],
+   [
+    "",
+    "Capital Group Central Cash Fund",
+    2.46635
+   ]
+  ]
+ },
+ "F00000NM05": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "F000002PJB",
+    "American Funds Cptl Wld Gr&Inc R-6",
+    15.04208
+   ],
+   [
+    "F000002PJH",
+    "American Funds Invmt Co of Amer R-6",
+    11.97786
+   ],
+   [
+    "F000002PJG",
+    "American Funds American Balanced R-6",
+    10.03453
+   ],
+   [
+    "F000002PIZ",
+    "American Funds Washington Mutual R-6",
+    10.02108
+   ],
+   [
+    "F000002PIQ",
+    "American Funds Capital Inc Bldr R-6",
+    9.85068
+   ],
+   [
+    "F000002PJF",
+    "American Funds SMALLCAP World R-6",
+    8.15078
+   ],
+   [
+    "F00001434B",
+    "American Funds Global Insight R-6",
+    5.13953
+   ],
+   [
+    "F000002PJ1",
+    "American Funds Growth Fd of Amer R-6",
+    5.11833
+   ],
+   [
+    "F000002PJ8",
+    "American Funds Fundamental Invs R-6",
+    5.11005
+   ],
+   [
+    "F000002PJE",
+    "American Funds Bond Fund of Amer R-6",
+    4.84792
+   ]
+  ]
+ },
+ "FOUSA00BU6": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "B10001WQSI",
+    "PUERTO RICO COMWLTH 0%",
+    1.06097
+   ],
+   [
+    "B10001WQSR",
+    "PUERTO RICO COMWLTH 0%",
+    0.96974
+   ],
+   [
+    "B00033GSJE",
+    "NEW YORK N Y 3.05%",
+    0.38055
+   ],
+   [
+    "B00037IV65",
+    "PUERTO RICO SALES TAX FING CORP SALES TAX REV 4.329%",
+    0.31493
+   ],
+   [
+    "B10001LDY8",
+    "UIPA CROSSROADS PUB INFRASTRUCTURE DIST UTAH TAX DIFFERENTIAL REV 4.375%",
+    0.31118
+   ],
+   [
+    "B1000DS0ZQ",
+    "NEW YORK N Y CITY TRANSITIONAL FIN AUTH REV 3.05%",
+    0.31038
+   ],
+   [
+    "B00037BN5E",
+    "PUERTO RICO SALES TAX FING CORP SALES TAX REV 0%",
+    0.30648
+   ],
+   [
+    "B10000KNBA",
+    "FLORIDA DEV FIN CORP SOLID WASTE DISP REV 3%",
+    0.30633
+   ],
+   [
+    "B1000154QG",
+    "HOUSTON TEX ARPT SYS REV 4%",
+    0.3029
+   ],
+   [
+    "B000384MZS",
+    "BUCKEYE OHIO TOB SETTLEMENT FING AUTH 5%",
+    0.29548
+   ]
+  ]
+ },
+ "F00000JNWX": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "B00033JAPB",
+    "Federal National Mortgage Association 6%",
+    5.97992
+   ],
+   [
+    "B00000IEWA",
+    "Federal Home Loan Banks 0%",
+    3.2483
+   ],
+   [
+    "B00033JALW",
+    "Federal National Mortgage Association 6.5%",
+    2.91824
+   ],
+   [
+    "B10003DS8V",
+    "Federal National Mortgage Association 2.5%",
+    2.79121
+   ],
+   [
+    "B00000IEWF",
+    "Federal Home Loan Banks 0%",
+    2.66045
+   ],
+   [
+    "B00000IEVM",
+    "Federal Home Loan Banks 0%",
+    1.90852
+   ],
+   [
+    "B000103WXE",
+    "Federal Home Loan Banks 0%",
+    1.89849
+   ],
+   [
+    "B00000IEZ8",
+    "Federal Home Loan Banks 0%",
+    1.87846
+   ],
+   [
+    "B00000IF1L",
+    "Federal Home Loan Banks 0%",
+    1.71906
+   ],
+   [
+    "B00032BQU7",
+    "United States Treasury Bonds 4.75%",
+    1.63267
+   ]
+  ]
+ },
+ "F00001CJWT": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "",
+    "2 Year Treasury Note Future Sept 26",
+    26.81552
+   ],
+   [
+    "",
+    "Ultra 10 Year US Treasury Note Future Sept 26",
+    -5.48799
+   ],
+   [
+    "",
+    "Us 5yr Note (Cbt) Sep26 Xcbt 20260930",
+    4.4974
+   ],
+   [
+    "B00032BQUB",
+    "United States Treasury Bonds 5%",
+    2.75153
+   ],
+   [
+    "",
+    "10 Year Treasury Note Future Sept 26",
+    2.50973
+   ],
+   [
+    "B10003BT3U",
+    "United States Treasury Notes 3.5%",
+    2.11218
+   ],
+   [
+    "B00032BQUA",
+    "United States Treasury Bonds 5%",
+    1.91811
+   ],
+   [
+    "B00015CVPD",
+    "United States Treasury Bonds 4.375%",
+    1.08001
+   ],
+   [
+    "B1000KPC2X",
+    "United States Treasury Notes 3.75%",
+    1.04195
+   ],
+   [
+    "B10005J0SM",
+    "Federal National Mortgage Association 2.5%",
+    1.03713
+   ]
+  ]
+ }
+}

@@ -1,0 +1,222 @@
+{
+ "F00000X8Q6": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P0000EBSS",
+    "Keyence Corp",
+    10.32998
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    9.48319
+   ],
+   [
+    "0P0000A5G8",
+    "ABB Ltd",
+    9.41076
+   ],
+   [
+    "0P0000AEUC",
+    "Fanuc Corp",
+    7.71109
+   ],
+   [
+    "0P00000301",
+    "Intuitive Surgical Inc",
+    6.3983
+   ],
+   [
+    "0P0000ECDD",
+    "SMC Corp",
+    4.60212
+   ],
+   [
+    "0P0000PYQR",
+    "Shenzhen Inovance Technology Co Ltd Class A",
+    3.91774
+   ],
+   [
+    "0P0000EB7A",
+    "Daifuku Co Ltd",
+    3.13862
+   ],
+   [
+    "0P0001FFA1",
+    "RoboTechnik Intelligent Technology Co Ltd Class A",
+    2.30513
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    2.28886
+   ]
+  ]
+ },
+ "FEUSA0002N": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    10.01685
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    8.947
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    8.93813
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    7.527
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    4.5802
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    4.4269
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    4.16868
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    3.53704
+   ],
+   [
+    "0P0000006A",
+    "Advanced Micro Devices Inc",
+    3.4215
+   ],
+   [
+    "0P000002X8",
+    "Intel Corp",
+    2.06205
+   ]
+  ]
+ },
+ "FEUSA04ACF": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    19.8197
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    15.08307
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    8.54033
+   ],
+   [
+    "0P000003UP",
+    "Netflix Inc",
+    4.80151
+   ],
+   [
+    "0P000005QY",
+    "Verizon Communications Inc",
+    4.48245
+   ],
+   [
+    "0P000005UJ",
+    "The Walt Disney Co",
+    4.00155
+   ],
+   [
+    "0P00000031",
+    "AT&T Inc",
+    3.94068
+   ],
+   [
+    "0P000001DB",
+    "Comcast Corp Class A",
+    2.7252
+   ],
+   [
+    "0P00008DL1",
+    "T-Mobile US Inc",
+    2.57785
+   ],
+   [
+    "0P000001QJ",
+    "Warner Bros. Discovery Inc Ordinary Shares - Class A",
+    2.37643
+   ]
+  ]
+ },
+ "F000011TP4": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P0001KOSA",
+    "Snowflake Inc Ordinary Shares",
+    7.02787
+   ],
+   [
+    "0P0001IEZ0",
+    "Datadog Inc Class A",
+    5.21322
+   ],
+   [
+    "0P00012KIK",
+    "Paycom Software Inc",
+    5.17321
+   ],
+   [
+    "0P0000X4V6",
+    "Workday Inc Class A",
+    4.78405
+   ],
+   [
+    "0P000186EL",
+    "Twilio Inc Class A",
+    4.42442
+   ],
+   [
+    "0P0000WDY1",
+    "ServiceNow Inc",
+    4.25103
+   ],
+   [
+    "0P0001ID95",
+    "Cloudflare Inc",
+    4.20247
+   ],
+   [
+    "0P0001CT73",
+    "Zscaler Inc",
+    4.1695
+   ],
+   [
+    "0P0000X22X",
+    "Qualys Inc",
+    4.14018
+   ],
+   [
+    "0P00015ZGZ",
+    "Shopify Inc Registered Shs -A- Subord Vtg",
+    3.57186
+   ]
+  ]
+ }
+}

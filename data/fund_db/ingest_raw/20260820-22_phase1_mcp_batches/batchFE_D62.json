@@ -1,0 +1,521 @@
+{
+  "F000025R0T": {
+    "OF003": "Miscellaneous Allocation",
+    "OF006": "Fidelity Investments",
+    "OF009": "4403678435",
+    "OF00C": "No",
+    "OS00F": "2026-06-16",
+    "PM004": "0.23274",
+    "HS05A": "Mid Blend",
+    "ESG48": "High",
+    "AA04M": "0.13607",
+    "RR010": "0.741",
+    "LI055": "Bloomberg Index"
+  },
+  "F00001TIMX": {
+    "RR010": "0.711",
+    "ESG48": "Below Average",
+    "MMR01": "Neutral",
+    "AA04M": "-0.38247",
+    "OF00C": "No",
+    "LI055": "Russell Index",
+    "HS05A": "Large Growth",
+    "OF009": "232142558",
+    "OF003": "Mid-Cap Growth",
+    "PM004": "-3.23121",
+    "OF006": "Thornburg",
+    "OS00F": "2026-03-31"
+  },
+  "F00001TGKW": {
+    "ESG48": "Average",
+    "PM004": "5.92164",
+    "OS00F": "2026-05-15",
+    "OF009": "140997940",
+    "HS05A": "Large Value",
+    "OF00C": "No",
+    "OF003": "Global Large-Stock Blend",
+    "AA04M": "5.55000",
+    "OF006": "CresAlta Investment Management, Inc."
+  },
+  "F00001TIMW": {
+    "HS05A": "Large Blend",
+    "MMR01": "Neutral",
+    "RR010": "0.817",
+    "AA04M": "2.71482",
+    "OF00C": "No",
+    "ESG48": "Above Average",
+    "PM004": "3.10205",
+    "OF009": "521916232",
+    "OF006": "Thornburg",
+    "OF003": "Small Blend",
+    "OS00F": "2026-03-31",
+    "LI055": "Standard and Poors"
+  },
+  "F00001TGL7": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OF009": "107805911",
+    "OF00C": "No",
+    "OF006": "John Hancock",
+    "OF003": "Equity Hedged",
+    "PM004": "0.66927",
+    "AA04M": "1.24937",
+    "OS00F": "2026-04-07"
+  },
+  "F00001TGL6": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OF006": "Roundhill Investments",
+    "OS00F": "2026-04-01",
+    "OF00C": "No",
+    "OF003": "Technology",
+    "PM004": "-26.63968",
+    "AA04M": "-31.79418",
+    "OF009": "27453228970"
+  },
+  "F000024ZLB": {
+    "AA04M": "0.00000",
+    "OF009": "6336934965",
+    "RR010": "0.675",
+    "MMR01": "Neutral",
+    "HS05A": "Large Value",
+    "OF00C": "No",
+    "ESG48": "Above Average",
+    "PM004": "3.13611",
+    "OS00F": "2026-06-02",
+    "LI055": "Standard and Poors",
+    "OF003": "Large Blend",
+    "OF006": "Nuveen"
+  },
+  "F00001UF95": {
+    "HS05A": "Large Blend",
+    "AA04M": "-0.41845",
+    "OF003": "Long-Short Equity",
+    "OF006": "BlackRock Asset Management Ireland - ETF",
+    "PM004": "-0.51444",
+    "OF00C": "No",
+    "OF009": "2024225262",
+    "ESG48": "High",
+    "OS00F": "2026-05-19"
+  },
+  "F000024ZLA": {
+    "ESG48": "Average",
+    "LI055": "MSCI Inc.",
+    "PM004": "-1.38462",
+    "AA04M": "-1.27428",
+    "MMR01": "Neutral",
+    "HS05A": "Mid Blend",
+    "OF00C": "No",
+    "OF003": "Infrastructure",
+    "OF009": "569183668",
+    "OS00F": "2026-06-02",
+    "OF006": "Nuveen",
+    "RR010": "0.93"
+  },
+  "F0000261IH": {
+    "HS05A": "Large Blend",
+    "OF003": "Large Growth",
+    "OF006": "The Investment House LLC",
+    "OS00F": "2026-08-05",
+    "OF00C": "No",
+    "OF009": "651424141"
+  },
+  "F00001TIN1": {
+    "HS05A": "Small Value",
+    "OF009": "140349820",
+    "OS00F": "2026-04-22",
+    "OF006": "AXS",
+    "OF00C": "No",
+    "AA04M": "65.17949",
+    "PM004": "65.42342",
+    "OF003": "Trading--Inverse Equity"
+  },
+  "F00001TIUW": {
+    "PM004": "-49.79480",
+    "OF009": "5991699604",
+    "OF006": "AXS",
+    "AA04M": "-49.62251",
+    "OF00C": "No",
+    "OS00F": "2026-04-23",
+    "HS05A": "Small Growth",
+    "OF003": "Trading--Leveraged Equity"
+  },
+  "F00001TAEN": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OS00F": "2026-03-06",
+    "PM004": "2.23739",
+    "OF003": "Foreign Large Blend",
+    "OF009": "253019146",
+    "OF00C": "No",
+    "OF006": "Neuberger Berman",
+    "AA04M": "2.97750"
+  },
+  "F00001TAEM": {
+    "OF009": "282441802",
+    "PM004": "-78.32139",
+    "OF00C": "No",
+    "OS00F": "2026-03-11",
+    "OF006": "Rex",
+    "OF003": "Trading--Leveraged Equity",
+    "AA04M": "-78.46199"
+  },
+  "F000025R1F": {
+    "OS00F": "2026-06-16",
+    "PM004": "-1.59601",
+    "OF009": "13877229321",
+    "OF00C": "No",
+    "OF006": "Fidelity Investments",
+    "AA04M": "-1.54310",
+    "LI055": "Bloomberg Index",
+    "RR010": "-0.061",
+    "OF003": "Muni National Interm",
+    "MMR01": "Gold"
+  },
+  "F000025UXJ": {
+    "ESG48": "Average",
+    "AA04M": "-0.04990",
+    "OS00F": "2026-06-16",
+    "OF00C": "No",
+    "OF006": "Fidelity Investments",
+    "MMR01": "Silver",
+    "OF009": "2794839259",
+    "LI055": "Bloomberg Index",
+    "OF003": "Short-Term Bond",
+    "PM004": "0.00000",
+    "RR010": "-0.724"
+  },
+  "F00001TIVO": {
+    "OF006": "DoubleLine ETF Trust",
+    "OF00C": "No",
+    "PM004": "0.24885",
+    "OF009": "207179354",
+    "OS00F": "2026-03-31",
+    "OF003": "Ultrashort Bond",
+    "AA04M": "0.17323"
+  },
+  "F00001TAW7": {
+    "OS00F": "2026-06-22",
+    "OF009": "101475518",
+    "PM004": "0.19752",
+    "OF006": "Pacer",
+    "OF00C": "No",
+    "OF003": "Securitized Bond - Focused",
+    "AA04M": "0.37440"
+  },
+  "F00001TIVN": {
+    "PM004": "-28.68881",
+    "AA04M": "-28.83476",
+    "OF00C": "No",
+    "OS00F": "2026-03-30",
+    "HS05A": "Small Growth",
+    "OF006": "Tema ETFs",
+    "OF003": "Large Blend",
+    "OF009": "1117527505"
+  },
+  "F00001UIRZ": {
+    "ESG48": "Average",
+    "AA04M": "-22.01874",
+    "OF00C": "No",
+    "OF006": "Tuttle Capital Management, LLC",
+    "OF003": "Technology",
+    "OF009": "134364434",
+    "HS05A": "Small Growth",
+    "PM004": "-23.03158",
+    "OS00F": "2026-05-28"
+  },
+  "F00001TAW6": {
+    "AA04M": "0.66508",
+    "OS00F": "2026-06-22",
+    "PM004": "0.65632",
+    "OF006": "Pacer",
+    "OF00C": "No",
+    "OF009": "101836770",
+    "OF003": "Securitized Bond - Focused"
+  },
+  "F00001TAQ0": {
+    "ESG48": "Average",
+    "PM004": "0.63160",
+    "OS00F": "2026-02-24",
+    "OF006": "First Trust",
+    "AA04M": "0.38598",
+    "OF00C": "No",
+    "OF003": "Derivative Income",
+    "OF009": "1647833890"
+  },
+  "F00001TAZW": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OS00F": "2026-03-10",
+    "PM004": "0.03439",
+    "OF009": "193283079",
+    "OF006": "WisdomTree",
+    "AA04M": "-0.71817",
+    "OF003": "Large Blend",
+    "OF00C": "Yes"
+  },
+  "F00001TJ5I": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "PM004": "0.50288",
+    "OF009": "146614879",
+    "OF00C": "No",
+    "AA04M": "0.63624",
+    "OS00F": "2026-02-25",
+    "OF003": "Large Blend",
+    "OF006": "Pictet Asset Management Ltd"
+  },
+  "F00001TJTF": {
+    "ESG48": "Average",
+    "AA04M": "-27.42339",
+    "OF00C": "No",
+    "OF003": "Technology",
+    "OF006": "Corgi Funds",
+    "OS00F": "2026-05-05",
+    "PM004": "-26.94598",
+    "HS05A": "Large Growth",
+    "OF009": "472336878"
+  },
+  "F00001TKJ9": {
+    "ESG48": "Average",
+    "OF003": "Money Market-Taxable",
+    "ZZ006": "0.15000",
+    "PM004": "0.32782",
+    "OF00C": "No",
+    "AA04M": "0.32122",
+    "OF009": "18594138007",
+    "OS00F": "2026-02-17",
+    "OF006": "ProShares"
+  },
+  "F0000264QW": {
+    "OS00F": "2026-07-13",
+    "OF00C": "No",
+    "OF006": "Graniteshares",
+    "OF003": "Trading--Leveraged Equity",
+    "OF009": "205942405"
+  },
+  "F00001UJUD": {
+    "PM004": "18.59436",
+    "OF009": "730058046",
+    "OF003": "Digital Assets",
+    "OS00F": "2026-02-18",
+    "AA04M": "18.44476",
+    "OF006": "iShares",
+    "OF00C": "Yes"
+  },
+  "F00001TF5H": {
+    "HS05A": "Large Blend",
+    "OF006": "The Burney Company",
+    "AA04M": "-0.45180",
+    "ESG48": "Below Average",
+    "OF009": "685452169",
+    "OS00F": "2026-02-04",
+    "OF00C": "No",
+    "PM004": "-0.51116",
+    "OF003": "Large Blend"
+  },
+  "F00001TAYP": {
+    "ESG48": "Average",
+    "OF009": "351140980",
+    "OF006": "First Trust",
+    "OS00F": "2026-04-22",
+    "PM004": "0.55922",
+    "AA04M": "0.26274",
+    "OF00C": "No",
+    "OF003": "Derivative Income"
+  },
+  "F00001TKE2": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "AA04M": "0.44554",
+    "OF009": "105059030",
+    "OF00C": "No",
+    "PM004": "0.55220",
+    "OF003": "Defined Outcome",
+    "OF006": "Innovator ETFs",
+    "OS00F": "2026-03-31"
+  },
+  "F00001TAZ1": {
+    "OF009": "486712583",
+    "PM004": "-4.15484",
+    "AA04M": "-4.11453",
+    "OF00C": "No",
+    "OF003": "Derivative Income",
+    "HS05A": "Large Growth",
+    "OS00F": "2026-03-18",
+    "OF006": "JPMorgan",
+    "ESG48": "High"
+  },
+  "F000024ZOL": {
+    "HS05A": "Large Blend",
+    "OF009": "1616212701",
+    "OS00F": "2026-06-22",
+    "ESG48": "Below Average",
+    "OF00C": "No",
+    "PM004": "0.07952",
+    "AA04M": "0.14876",
+    "OF003": "Large Blend",
+    "OF006": "Dimensional Fund Advisors"
+  },
+  "F00001TJLY": {
+    "HS05A": "Large Blend",
+    "OF006": "Fidelity Investments",
+    "OF009": "1672558967",
+    "OF003": "Large Blend",
+    "OF00C": "Yes",
+    "OS00F": "2026-07-07"
+  },
+  "F00001TAZ0": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "AA04M": "1.74180",
+    "PM004": "1.67236",
+    "OF009": "577790979",
+    "OF00C": "No",
+    "OF003": "Derivative Income",
+    "OS00F": "2026-03-18",
+    "OF006": "JPMorgan"
+  },
+  "F00001TJM2": {
+    "OF006": "Calamos",
+    "AA04M": "0.34722",
+    "OS00F": "2026-04-15",
+    "OF00C": "No",
+    "OF009": "1464451813",
+    "OF003": "Relative Value Arbitrage",
+    "PM004": "0.46687"
+  },
+  "F00001TJM1": {
+    "ESG48": "Average",
+    "OF009": "128458736",
+    "OF006": "Calamos",
+    "OS00F": "2026-04-15",
+    "OF00C": "No",
+    "AA04M": "-0.28870",
+    "PM004": "-0.39870",
+    "OF003": "Large Blend"
+  },
+  "F00001TJFI": {
+    "AA04M": "126.04878",
+    "PM004": "125.88956",
+    "OS00F": "2026-06-12",
+    "OF006": "Themes ETF Trust",
+    "OF00C": "No",
+    "OF009": "209526486",
+    "OF003": "Trading--Inverse Equity"
+  },
+  "F00001TJFH": {
+    "OF009": "284822914",
+    "AA04M": "-61.81462",
+    "OS00F": "2026-06-12",
+    "OF006": "Themes ETF Trust",
+    "OF00C": "No",
+    "PM004": "-61.89825",
+    "OF003": "Trading--Leveraged Equity"
+  },
+  "F00001TCJR": {
+    "OF009": "155359368",
+    "OF00C": "No",
+    "PM004": "-9.33242",
+    "OS00F": "2026-01-26",
+    "ESG48": "Above Average",
+    "OF006": "Twin Oak ETF Co",
+    "HS05A": "Large Growth",
+    "AA04M": "-7.73615",
+    "OF003": "Large Blend"
+  },
+  "F00001TIKJ": {
+    "HS05A": "Large Blend",
+    "AA04M": "0.54212",
+    "PM004": "-0.34770",
+    "OF00C": "No",
+    "OF009": "897020326",
+    "OS00F": "2026-03-20",
+    "OF003": "Large Blend",
+    "ESG48": "Low",
+    "OF006": "Northern Trust"
+  },
+  "F00001UI2W": {
+    "HS05A": "Large Blend",
+    "OS00F": "2026-03-10",
+    "OF009": "672748769",
+    "OF00C": "No",
+    "OF006": "NPF Investment Advisors",
+    "PM004": "-0.00504",
+    "AA04M": "0.10155",
+    "ESG48": "High",
+    "OF003": "Large Blend"
+  },
+  "F00001TAEG": {
+    "HS05A": "Large Blend",
+    "OF006": "Alpha Architect",
+    "OF00C": "No",
+    "OS00F": "2026-07-22",
+    "OF003": "Large Blend",
+    "OF009": "846796349"
+  },
+  "F00001TCGF": {
+    "OS00F": "2026-07-13",
+    "OF006": "SEI Investments Co",
+    "HS05A": "Large Value",
+    "OF00C": "No",
+    "OF009": "936640428",
+    "OF003": "Large Blend"
+  },
+  "F00001UF9D": {
+    "OF006": "Themes ETF Trust",
+    "AA04M": "-77.98861",
+    "OF00C": "No",
+    "OS00F": "2026-05-11",
+    "OF003": "Trading--Leveraged Equity",
+    "PM004": "-77.92884",
+    "OF009": "120549228"
+  },
+  "F00002691X": {
+    "AA04M": "0.30940",
+    "OF00C": "No",
+    "OF006": "F/m Investments LLC",
+    "PM004": "0.29633",
+    "OS00F": "2026-06-10",
+    "OF003": "Ultrashort Bond",
+    "OF009": "256214388"
+  },
+  "F00001TBIE": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OF006": "Cambria",
+    "OF009": "209706628",
+    "OF00C": "No",
+    "OF003": "Global Large-Stock Blend",
+    "PM004": "-0.87920",
+    "OS00F": "2026-06-08",
+    "AA04M": "-0.37718"
+  },
+  "F00001TKE7": {
+    "HS05A": "Large Blend",
+    "PM004": "0.36142",
+    "AA04M": "0.30376",
+    "OS00F": "2026-05-29",
+    "OF00C": "No",
+    "OF009": "148552689",
+    "ESG48": "Above Average",
+    "OF003": "Defined Outcome",
+    "OF006": "Innovator ETFs"
+  },
+  "F00001UHJW": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001UHJX": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  }
+}

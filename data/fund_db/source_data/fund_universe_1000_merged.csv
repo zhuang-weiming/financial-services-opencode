@@ -1,0 +1,1001 @@
+group_id,group_name,manager,fund_name,ticker,isin_or_note,morningstar_id
+A1,标普500/大盘指数,Vanguard,Vanguard S&P 500 ETF,VOO,US-domiciled,F00000J3JR
+A1,标普500/大盘指数,iShares,iShares Core S&P 500 ETF,IVV,US-domiciled,FEUSA0000E
+A1,标普500/大盘指数,SPDR (State Street),SPDR S&P 500 ETF,SPY,US-domiciled,FEUSA00001
+A1,标普500/大盘指数,Vanguard,Vanguard 500 Index Admiral,VFIAX,US-domiciled,FOUSA00L8W
+A1,标普500/大盘指数,Schwab,Schwab S&P 500 Index,SWPPX,US-domiciled,FOUSA00JLQ
+A1,标普500/大盘指数,Fidelity,Fidelity 500 Index,FXAIX,US-domiciled,F00000LZSI
+A1,标普500/大盘指数,Schwab,Schwab U.S. Large-Cap ETF,SCHX,US-domiciled,F000003XC6
+A1,标普500/大盘指数,SPDR (State Street),SPDR Portfolio S&P 500 ETF,SPLG,US-domiciled,FEUSA04AE6
+A1,标普500/大盘指数,Vanguard,Vanguard 500 Index Investor,VFINX,US-domiciled,FOUSA00FS1
+A1,标普500/大盘指数,Fidelity,Fidelity 500 Index Investor,FUSEX,US-domiciled,
+A1,标普500/大盘指数,BNY Mellon,BNY Mellon US Large Cap Core Equity ETF,BKLC,US-domiciled,F0000149CO
+A1,标普500/大盘指数,SPDR (State Street),SPDR S&P 500 Fossil Fuel Free ETF,SPYX,US-domiciled,F00000WAP7
+A1,标普500/大盘指数,Invesco,Invesco S&P 500 Equal Weight ETF,RSP,US-domiciled,FEUSA04ABN
+A1,标普500/大盘指数,SoFi,SoFi Select 500 ETF,SFY,US-domiciled,F000011TB1
+A1,标普500/大盘指数,Vanguard,Vanguard Large-Cap Index Admiral,VLCAX,US-domiciled,FOUSA04BN7
+A1,标普500/大盘指数,Vanguard,Vanguard Mega Cap ETF,MGC,US-domiciled,FOUSA06NWL
+A1,标普500/大盘指数,iShares,iShares S&P 100 ETF,OEF,US-domiciled,FEUSA0002J
+A1,标普500/大盘指数,Vanguard,Vanguard Russell 1000 ETF,VONE,US-domiciled,F00000J3KE
+A1,标普500/大盘指数,iShares,iShares Russell 1000 ETF,IWB,US-domiciled,FEUSA0001A
+A1,标普500/大盘指数,Invesco,Invesco FTSE RAFI US 1000 ETF,PRF,US-domiciled,FEUSA04AEP
+A1,标普500/大盘指数,Schwab,Schwab 1000 Index ETF,SCHK,US-domiciled,F00000ZA80
+A1,标普500/大盘指数,iShares,iShares Morningstar Large-Cap ETF,JKD,US-domiciled,
+A1,标普500/大盘指数,JPMorgan,JPMorgan BetaBuilders U.S. Equity ETF,BBUS,US-domiciled,F000011OAE
+A1,标普500/大盘指数,Fidelity,Fidelity Large Cap Core Enhanced Index,FLCEX,US-domiciled,
+A1,标普500/大盘指数,SPDR (State Street),SPDR Dow Jones Industrial Average ETF,DIA,US-domiciled,FEUSA00002
+A2,全市场/扩展,Vanguard,Vanguard Total Stock Market ETF,VTI,US-domiciled,FEUSA0002P
+A2,全市场/扩展,Schwab,Schwab U.S. Broad Market ETF,SCHB,US-domiciled,F000003XBY
+A2,全市场/扩展,Fidelity,Fidelity Total Market Index,FSKAX,US-domiciled,F00000MJS0
+A2,全市场/扩展,Fidelity,Fidelity ZERO Total Market Index,FZROX,US-domiciled,F00000Y8GT
+A2,全市场/扩展,Schwab,Schwab Total Stock Market Index,SWTSX,US-domiciled,FOUSA00K0Q
+A2,全市场/扩展,Vanguard,Vanguard Total Stock Market Admiral,VTSAX,US-domiciled,FOUSA00L83
+A2,全市场/扩展,iShares,iShares Russell 3000 ETF,IWV,US-domiciled,FEUSA00014
+A2,全市场/扩展,Vanguard,Vanguard Extended Market ETF,VXF,US-domiciled,FEUSA00037
+A2,全市场/扩展,iShares,iShares Dow Jones U.S. ETF,IYY,US-domiciled,FEUSA0000P
+A2,全市场/扩展,SPDR (State Street),SPDR Portfolio Total Stock Market ETF,SPTM,US-domiciled,FEUSA0002H
+A2,全市场/扩展,Vanguard,Vanguard ESG U.S. Stock ETF,ESGV,US-domiciled,F000010QC6
+A2,全市场/扩展,iShares,iShares ESG Aware MSCI USA ETF,USXF,US-domiciled,F0000150ZA
+A2,全市场/扩展,iShares,iShares ESG MSCI USA Leaders ETF,SUSL,US-domiciled,F0000139JY
+A2,全市场/扩展,iShares,iShares MSCI USA ESG Select ETF,SUSA,US-domiciled,FEUSA04AD6
+A2,全市场/扩展,Vanguard,Vanguard FTSE Social Index Admiral,VFTAX,US-domiciled,F000011IZ5
+A2,全市场/扩展,Dimensional,Dimensional Core Equity ETF,DFAC,US-domiciled,F0000162EB
+A2,全市场/扩展,Avantis,Avantis U.S. Equity ETF,AVUS,US-domiciled,F000013TAQ
+A2,全市场/扩展,Goldman Sachs,Goldman Sachs MarketBeta U.S. Equity ETF,GUSA,US-domiciled,F00001D42F
+A2,全市场/扩展,Goldman Sachs,Goldman Sachs ActiveBeta U.S. Large Cap Equity ETF,GSLC,US-domiciled,F00000V48E
+A2,全市场/扩展,Vanguard,Vanguard Tax-Managed Capital Appreciation,VTCLX,US-domiciled,FOUSA02TYG
+A2,全市场/扩展,TBD,TBD-A2-001,TBD,PENDING-SCREENER,
+A2,全市场/扩展,TBD,TBD-A2-002,TBD,PENDING-SCREENER,
+A2,全市场/扩展,TBD,TBD-A2-003,TBD,PENDING-SCREENER,
+A2,全市场/扩展,TBD,TBD-A2-004,TBD,PENDING-SCREENER,
+A2,全市场/扩展,TBD,TBD-A2-005,TBD,PENDING-SCREENER,
+A3,大盘成长,Vanguard,Vanguard Growth ETF,VUG,US-domiciled,FEUSA04AC5
+A3,大盘成长,iShares,iShares Russell 1000 Growth ETF,IWF,US-domiciled,FEUSA0001B
+A3,大盘成长,Schwab,Schwab U.S. Large-Cap Growth ETF,SCHG,US-domiciled,F000003XBZ
+A3,大盘成长,iShares,iShares Morningstar U.S. Growth ETF,ILCG,US-domiciled,FEUSA04ACO
+A3,大盘成长,Vanguard,Vanguard Mega Cap Growth ETF,MGK,US-domiciled,FOUSA06NWK
+A3,大盘成长,SPDR (State Street),SPDR Portfolio S&P 500 Growth ETF,SPYG,US-domiciled,FEUSA0002B
+A3,大盘成长,iShares,iShares S&P 500 Growth ETF,IVW,US-domiciled,FEUSA0000F
+A3,大盘成长,Fidelity,Fidelity Large Cap Growth Index,FSPGX,US-domiciled,F00000WZW5
+A3,大盘成长,Invesco,Invesco QQQ Trust,QQQ,US-domiciled,FEUSA00003
+A3,大盘成长,Invesco,Invesco NASDAQ 100 ETF,QQQM,US-domiciled,F000015DO3
+A3,大盘成长,Fidelity,Fidelity NASDAQ Composite Index ETF,ONEQ,US-domiciled,FEUSA04ABU
+A3,大盘成长,Vanguard,Vanguard Growth Index Admiral,VIGAX,US-domiciled,FOUSA00L97
+A3,大盘成长,iShares,iShares Core S&P U.S. Growth ETF,IUSG,US-domiciled,FEUSA00015
+A3,大盘成长,Vanguard,Vanguard S&P 500 Growth ETF,VOOG,US-domiciled,F00000J3JW
+A3,大盘成长,Fidelity,Fidelity Growth Company,FDGRX,US-domiciled,FOUSA00CH5
+A3,大盘成长,T. Rowe Price,T. Rowe Price Blue Chip Growth,TRBCX,US-domiciled,FOUSA00EI7
+A3,大盘成长,Vanguard,Vanguard Growth Index Investor,VIGRX,US-domiciled,FOUSA00FQV
+A3,大盘成长,Fidelity,Fidelity OTC,FOCPX,US-domiciled,FOUSA00CID
+A3,大盘成长,Fidelity,Fidelity Advisor Growth Opportunities,FAGAX,US-domiciled,FOUSA00K3A
+A3,大盘成长,Capital Group,Capital Group Growth ETF,CGGR,US-domiciled,F00001CJWW
+A3,大盘成长,TBD,TBD-A3-001,TBD,PENDING-SCREENER,
+A3,大盘成长,TBD,TBD-A3-002,TBD,PENDING-SCREENER,
+A3,大盘成长,TBD,TBD-A3-003,TBD,PENDING-SCREENER,
+A3,大盘成长,TBD,TBD-A3-004,TBD,PENDING-SCREENER,
+A3,大盘成长,TBD,TBD-A3-005,TBD,PENDING-SCREENER,
+A4,大盘价值/股息,Vanguard,Vanguard Value ETF,VTV,US-domiciled,FEUSA04AC4
+A4,大盘价值/股息,iShares,iShares Russell 1000 Value ETF,IWD,US-domiciled,FEUSA0001C
+A4,大盘价值/股息,Schwab,Schwab U.S. Large-Cap Value ETF,SCHV,US-domiciled,F000003XC5
+A4,大盘价值/股息,iShares,iShares Morningstar U.S. Value ETF,ILCV,US-domiciled,FEUSA04ACP
+A4,大盘价值/股息,SPDR (State Street),SPDR Portfolio S&P 500 Value ETF,SPYV,US-domiciled,FEUSA0002A
+A4,大盘价值/股息,iShares,iShares S&P 500 Value ETF,IVE,US-domiciled,FEUSA0000G
+A4,大盘价值/股息,Vanguard,Vanguard S&P 500 Value ETF,VOOV,US-domiciled,F00000J3JZ
+A4,大盘价值/股息,Vanguard,Vanguard Dividend Appreciation ETF,VIG,US-domiciled,FEUSA04AF8
+A4,大盘价值/股息,Schwab,Schwab U.S. Dividend Equity ETF,SCHD,US-domiciled,F00000MVE2
+A4,大盘价值/股息,iShares,iShares Select Dividend ETF,DVY,US-domiciled,FEUSA04ABY
+A4,大盘价值/股息,iShares,iShares Core Dividend Growth ETF,DGRO,US-domiciled,F00000TNI5
+A4,大盘价值/股息,Vanguard,Vanguard High Dividend Yield ETF,VYM,US-domiciled,FOUSA05J85
+A4,大盘价值/股息,Vanguard,Vanguard High Dividend Yield Index Admiral,VHYAX,US-domiciled,F000011J06
+A4,大盘价值/股息,iShares,iShares Core High Dividend ETF,HDV,US-domiciled,F00000M8D8
+A4,大盘价值/股息,SPDR (State Street),SPDR Portfolio S&P 500 High Dividend ETF,SPYD,US-domiciled,F00000W2MY
+A4,大盘价值/股息,WisdomTree,WisdomTree U.S. LargeCap Dividend Fund,DON,US-domiciled,FEUSA04AG0
+A4,大盘价值/股息,First Trust,First Trust Value Line Dividend ETF,FVD,US-domiciled,FOUSA05U4B
+A4,大盘价值/股息,Vanguard,Vanguard Dividend Growth Fund,VDIGX,US-domiciled,FOUSA00FUG
+A4,大盘价值/股息,Dodge & Cox,Dodge & Cox Stock,DODGX,US-domiciled,FOUSA00C3O
+A4,大盘价值/股息,Vanguard,Vanguard Value Index Admiral,VVIAX,US-domiciled,FOUSA00LA4
+A4,大盘价值/股息,Dimensional,Dimensional US Large Cap Value ETF,DFLV,US-domiciled,F00001EH8R
+A4,大盘价值/股息,Avantis,Avantis U.S. Large Cap Value ETF,AVLV,US-domiciled,F00001841A
+A4,大盘价值/股息,iShares,iShares MSCI USA Value Factor ETF,VLUE,US-domiciled,F00000PGP4
+A4,大盘价值/股息,T. Rowe Price,T. Rowe Price Dividend Growth,PRDGX,US-domiciled,FOUSA00EJ4
+A4,大盘价值/股息,Vanguard,Vanguard Equity Income Admiral,VEIRX,US-domiciled,FOUSA02TIM
+A5,中盘,Vanguard,Vanguard Mid-Cap ETF,VO,US-domiciled,FEUSA04AC2
+A5,中盘,iShares,iShares Core S&P Mid-Cap ETF,IJH,US-domiciled,FEUSA0000H
+A5,中盘,SPDR (State Street),SPDR S&P Midcap 400 ETF,MDY,US-domiciled,FEUSA00004
+A5,中盘,Schwab,Schwab U.S. Mid-Cap ETF,SCHM,US-domiciled,F00000GYBC
+A5,中盘,Fidelity,Fidelity Mid Cap Index,FSMDX,US-domiciled,F00000MJRP
+A5,中盘,Vanguard,Vanguard Mid-Cap Index Admiral,VIMAX,US-domiciled,FOUSA02TYC
+A5,中盘,iShares,iShares Russell Mid-Cap ETF,IWR,US-domiciled,FEUSA0002U
+A5,中盘,Vanguard,Vanguard S&P Mid-Cap 400 ETF,IVOO,US-domiciled,F00000J3K3
+A5,中盘,iShares,iShares S&P Mid-Cap 400 Growth ETF,IJK,US-domiciled,FEUSA0000I
+A5,中盘,iShares,iShares S&P Mid-Cap 400 Value ETF,IJJ,US-domiciled,FEUSA0000J
+A5,中盘,Vanguard,Vanguard Mid-Cap Value ETF,VOE,US-domiciled,FEUSA04AHK
+A5,中盘,Vanguard,Vanguard Mid-Cap Growth ETF,VOT,US-domiciled,FEUSA04AHL
+A5,中盘,SPDR (State Street),SPDR S&P 400 Mid Cap Growth ETF,MDYG,US-domiciled,FEUSA04AE9
+A5,中盘,SPDR (State Street),SPDR S&P 400 Mid Cap Value ETF,MDYV,US-domiciled,FEUSA04AE8
+A5,中盘,iShares,iShares Russell Mid-Cap Growth ETF,IWP,US-domiciled,FEUSA0002T
+A5,中盘,iShares,iShares Russell Mid-Cap Value ETF,IWS,US-domiciled,FEUSA0002V
+A5,中盘,Avantis,Avantis U.S. Mid Cap Equity ETF,AVMC,US-domiciled,F00001GN8Q
+A5,中盘,Dimensional,Dimensional US Mid Cap Value,DFMVX,US-domiciled,
+A5,中盘,T. Rowe Price,T. Rowe Price Mid-Cap Growth,RPMGX,US-domiciled,FOUSA00EJ2
+A5,中盘,Fidelity,Fidelity ZERO Extended Market Index,FZIPX,US-domiciled,F000010QVB
+A5,中盘,TBD,TBD-A5-001,TBD,PENDING-SCREENER,
+A5,中盘,TBD,TBD-A5-002,TBD,PENDING-SCREENER,
+A5,中盘,TBD,TBD-A5-003,TBD,PENDING-SCREENER,
+A5,中盘,TBD,TBD-A5-004,TBD,PENDING-SCREENER,
+A5,中盘,TBD,TBD-A5-005,TBD,PENDING-SCREENER,
+A6,小盘,Vanguard,Vanguard Small-Cap ETF,VB,US-domiciled,FEUSA04AC3
+A6,小盘,iShares,iShares Core S&P Small-Cap ETF,IJR,US-domiciled,FEUSA0000K
+A6,小盘,iShares,iShares Russell 2000 ETF,IWM,US-domiciled,FEUSA00017
+A6,小盘,Schwab,Schwab U.S. Small-Cap ETF,SCHA,US-domiciled,F000003XC4
+A6,小盘,Avantis,Avantis U.S. Small Cap Value ETF,AVUV,US-domiciled,F000013TAR
+A6,小盘,Fidelity,Fidelity Extended Market Index,FSMAX,US-domiciled,F00000MJRH
+A6,小盘,Vanguard,Vanguard Small-Cap Index Admiral,VSMAX,US-domiciled,FOUSA00L7W
+A6,小盘,Vanguard,Vanguard Russell 2000 ETF,VTWO,US-domiciled,F00000J3KK
+A6,小盘,SPDR (State Street),SPDR S&P 600 Small Cap ETF,SLY,US-domiciled,F00000PTNZ
+A6,小盘,iShares,iShares Russell 2000 Growth ETF,IWO,US-domiciled,FEUSA00018
+A6,小盘,iShares,iShares Russell 2000 Value ETF,IWN,US-domiciled,FEUSA00019
+A6,小盘,Vanguard,Vanguard Small-Cap Growth ETF,VBK,US-domiciled,FEUSA04AC6
+A6,小盘,Vanguard,Vanguard Small-Cap Value ETF,VBR,US-domiciled,FEUSA04ACH
+A6,小盘,Avantis,Avantis U.S. Small Cap Equity ETF,AVSC,US-domiciled,F00001CTRA
+A6,小盘,Dimensional,Dimensional US Small Cap Value,DFFVX,US-domiciled,FOUSA02VMM
+A6,小盘,SPDR (State Street),SPDR Portfolio S&P 600 Small Cap ETF,SPSM,US-domiciled,F00000PTNZ
+A6,小盘,Vanguard,Vanguard S&P Small-Cap 600 ETF,VIOO,US-domiciled,F00000J3K8
+A6,小盘,iShares,iShares S&P Small-Cap 600 Growth ETF,IJT,US-domiciled,FEUSA0000L
+A6,小盘,iShares,iShares S&P Small-Cap 600 Value ETF,IJS,US-domiciled,FEUSA0000M
+A6,小盘,WisdomTree,WisdomTree U.S. SmallCap Dividend Fund,DES,US-domiciled,FEUSA04AFU
+A6,小盘,SPDR (State Street),SPDR S&P 600 Small Cap Growth ETF,SLYG,US-domiciled,FEUSA0002D
+A6,小盘,SPDR (State Street),SPDR S&P 600 Small Cap Value ETF,SLYV,US-domiciled,FEUSA0002C
+A6,小盘,T. Rowe Price,T. Rowe Price Small-Cap Stock,PRDSX,US-domiciled,FOUSA00GQ1
+A6,小盘,T. Rowe Price,T. Rowe Price New Horizons,PRNHX,US-domiciled,FOUSA00EJR
+A6,小盘,Vanguard,Vanguard Small-Cap Growth Index Admiral,VSGAX,US-domiciled,F00000MPYF
+A7,主动成长,Fidelity,Fidelity Contrafund,FCNTX,US-domiciled,FOUSA00CEO
+A7,主动成长,Fidelity,Fidelity Blue Chip Growth,FBGRX,US-domiciled,FOUSA06TXN
+A7,主动成长,T. Rowe Price,T. Rowe Price Growth Stock,PRGFX,US-domiciled,FOUSA00EJ5
+A7,主动成长,Fidelity,Fidelity Growth Strategies,FDEGX,US-domiciled,FOUSA00CFG
+A7,主动成长,Capital Group,American Funds Growth Fund of America A,AGTHX,US-domiciled,FOUSA00D02
+A7,主动成长,Capital Group,American Funds Investment Company of America A,AIVSX,US-domiciled,FOUSA00D77
+A7,主动成长,Capital Group,American Funds AMCAP A,AMCPX,US-domiciled,FOUSA00B49
+A7,主动成长,Vanguard,Vanguard U.S. Growth,VWUSX,US-domiciled,FOUSA00FU1
+A7,主动成长,MFS,MFS Growth A,MGRAX,US-domiciled,FOUSA00BKM
+A7,主动成长,Jensen,Jensen Quality Growth,JENSX,US-domiciled,FOUSA00DA1
+A7,主动成长,PRIMECAP,PRIMECAP Odyssey Growth,POGRX,US-domiciled,FOUSA05B59
+A7,主动成长,Vanguard,Vanguard Capital Opportunity,VHCAX,US-domiciled,FOUSA02TY3
+A7,主动成长,Fidelity,Fidelity Trend,FTRNX,US-domiciled,FOUSA00CJZ
+A7,主动成长,Fidelity,Fidelity Capital Appreciation,FDCAX,US-domiciled,FOUSA00CEM
+A7,主动成长,Oakmark,Oakmark Select,OAKLX,US-domiciled,FOUSA00KZH
+A7,主动成长,T. Rowe Price,T. Rowe Price New America Growth,PRWAX,US-domiciled,FOUSA00EJG
+A7,主动成长,Wasatch,Wasatch Core Growth,WGROX,US-domiciled,FOUSA00FW0
+A7,主动成长,Fidelity,Fidelity Growth Company K6,FGKFX,US-domiciled,F000013FUR
+A7,主动成长,Fidelity,Fidelity Magellan,FMAGX,US-domiciled,FOUSA00CGP
+A7,主动成长,Fidelity,Fidelity Dividend Growth,FDGFX,US-domiciled,FOUSA00DRH
+A7,主动成长,Vanguard,Vanguard Explorer,VEXPX,US-domiciled,FOUSA00CBV
+A7,主动成长,T. Rowe Price,T. Rowe Price OTC,OTCFX,US-domiciled,FOUSA00ECQ
+A7,主动成长,Columbia,Columbia Contrarian Core,LCCAX,US-domiciled,FOUSA00FFK
+A7,主动成长,Harbor,Harbor Capital Appreciation,HACAX,US-domiciled,FOUSA00D2I
+A7,主动成长,American Century,American Century Ultra,TWCUX,US-domiciled,FOUSA00FJW
+A7,主动成长,Janus Henderson,Janus Henderson Growth and Income,JGLIX,US-domiciled,
+A7,主动成长,Janus Henderson,Janus Henderson Enterprise,JDMAX,US-domiciled,F000002PAB
+A7,主动成长,Allspring,Allspring Special Large Cap Growth,STAFX,US-domiciled,F00000J8KH
+A7,主动成长,Nuveen,Nuveen Large Cap Growth,FBCKX,US-domiciled,F00001MMFQ
+A7,主动成长,Baron,Baron Growth,BGRFX,US-domiciled,FOUSA00FFZ
+A8,主动价值/收益,Oakmark,Oakmark Investor,OAKMX,US-domiciled,FOUSA00E9D
+A8,主动价值/收益,Vanguard,Vanguard Windsor,VWNDX,US-domiciled,FOUSA00FVR
+A8,主动价值/收益,Vanguard,Vanguard Windsor II,VWNAX,US-domiciled,FOUSA02T2O
+A8,主动价值/收益,Capital Group,American Funds Income Fund of America A,AMECX,US-domiciled,FOUSA00D6E
+A8,主动价值/收益,T. Rowe Price,T. Rowe Price Equity Income,PRFDX,US-domiciled,FOUSA00EIV
+A8,主动价值/收益,Vanguard,Vanguard Selected Value,VASVX,US-domiciled,FOUSA00KDL
+A8,主动价值/收益,Vanguard,Vanguard Primecap,VPMCX,US-domiciled,FOUSA00FTH
+A8,主动价值/收益,T. Rowe Price,T. Rowe Price Value,TRVLX,US-domiciled,FOUSA00B1O
+A8,主动价值/收益,Fidelity,Fidelity Low-Priced Stock,FLPSX,US-domiciled,FOUSA00CFE
+A8,主动价值/收益,Fidelity,Fidelity Equity-Income,FEQIX,US-domiciled,FOUSA00CFI
+A8,主动价值/收益,Fidelity,Fidelity Value,FDVLX,US-domiciled,FOUSA00CFA
+A8,主动价值/收益,Invesco,Invesco Equity and Income,ACEIX,US-domiciled,FOUSA00EM2
+A8,主动价值/收益,Columbia,Columbia Dividend Income,LBSAX,US-domiciled,FOUSA02VPG
+A8,主动价值/收益,Hartford,Hartford Dividend and Growth,HDGIX,US-domiciled,FOUSA05HXX
+A8,主动价值/收益,John Hancock,John Hancock Disciplined Value,JVTIX,US-domiciled,F00000M8WO
+A8,主动价值/收益,Dreyfus,Dreyfus Large Cap Equity,DFEOX,US-domiciled,FOUSA05CLG
+A8,主动价值/收益,Federated,Federated Hermes Strategic Value Dividend,SVAIX,US-domiciled,FOUSA05BSQ
+A8,主动价值/收益,First Trust,First Trust Capital Strength,FTCS,US-domiciled,FEUSA04AH0
+A8,主动价值/收益,Franklin,Franklin Rising Dividends,FRDPX,US-domiciled,FOUSA00DH0
+A8,主动价值/收益,Voya,Voya Large Cap Value,VYGVX,US-domiciled,
+A8,主动价值/收益,BlackRock,BlackRock Equity Dividend,MDDVX,US-domiciled,FOUSA00DOE
+A8,主动价值/收益,Neuberger Berman,Neuberger Berman Large Cap Value,NPRTX,US-domiciled,FOUSA00EEE
+A8,主动价值/收益,Victory,Victory Sycamore Established Value,VEQAX,US-domiciled,
+A8,主动价值/收益,Segall Bryant,Segall Bryant & Hamill Large Cap Value,SYVYX,US-domiciled,
+A8,主动价值/收益,Loomis Sayles,Loomis Sayles Equity Income,LSCIX,ticker精确匹配；Morningstar名称=Lord Abbett Short Duration Core Bond I (CSV原名可能笔误),F00000YF6F
+A9,智能β/量化,iShares,iShares MSCI USA Min Vol Factor ETF,USMV,US-domiciled,F00000M8DC
+A9,智能β/量化,Invesco,Invesco S&P 500 Low Volatility ETF,SPLV,US-domiciled,F00000LI6V
+A9,智能β/量化,iShares,iShares MSCI USA Momentum Factor ETF,MTUM,US-domiciled,F00000PF2S
+A9,智能β/量化,iShares,iShares MSCI USA Quality Factor ETF,QUAL,US-domiciled,F00000PVIY
+A9,智能β/量化,iShares,iShares MSCI USA Size Factor ETF,SIZE,US-domiciled,F00000PGP3
+A9,智能β/量化,iShares,iShares Edge MSCI Multifactor USA ETF,LRGF,US-domiciled,F00000V7LA
+A9,智能β/量化,Invesco,Invesco S&P 500 Pure Value ETF,RPV,US-domiciled,FEUSA04AEV
+A9,智能β/量化,Invesco,Invesco S&P 500 Momentum ETF,SPMO,US-domiciled,F00000VR1Y
+A9,智能β/量化,Schwab,Schwab Fundamental US Large Co ETF,FNDX,US-domiciled,F00000PNZN
+A9,智能β/量化,Schwab,Schwab Fundamental US Small Co ETF,FNDA,US-domiciled,F00000PNZO
+A9,智能β/量化,Fidelity,Fidelity Value Factor ETF,FVAL,US-domiciled,F00000X9NR
+A9,智能β/量化,Fidelity,Fidelity Quality Factor ETF,FQAL,US-domiciled,F00000X9NQ
+A9,智能β/量化,Fidelity,Fidelity Low Volatility Factor ETF,FDLO,US-domiciled,F00000X9LH
+A9,智能β/量化,Fidelity,Fidelity Momentum Factor ETF,FMOM,US-domiciled,F00000X9NP
+A9,智能β/量化,Vanguard,Vanguard U.S. Quality Factor ETF,VFQY,US-domiciled,F00000ZTQ2
+A9,智能β/量化,Vanguard,Vanguard U.S. Momentum Factor ETF,VFMO,US-domiciled,F00000ZTQY
+A9,智能β/量化,Vanguard,Vanguard U.S. Multifactor ETF,VFMF,US-domiciled,F00000ZTQ1
+A9,智能β/量化,iShares,iShares MSCI USA Equal Weighted ETF,EUSA,US-domiciled,F000005QFD
+A9,智能β/量化,Invesco,Invesco S&P 500 Equal Weight Technology ETF,RYT,名称匹配 Invesco S&P 500 Equal Weight Tech ETF；ticker 已更名 RYT->RSPT,FOUSA05V5O
+A9,智能β/量化,Goldman Sachs,Goldman Sachs Equal Weight U.S. Large Cap Equity ETF,GSEW,US-domiciled,F00000YURG
+A9,智能β/量化,TBD,TBD-A9-001,TBD,PENDING-SCREENER,
+A9,智能β/量化,TBD,TBD-A9-002,TBD,PENDING-SCREENER,
+A9,智能β/量化,TBD,TBD-A9-003,TBD,PENDING-SCREENER,
+A9,智能β/量化,TBD,TBD-A9-004,TBD,PENDING-SCREENER,
+A9,智能β/量化,TBD,TBD-A9-005,TBD,PENDING-SCREENER,
+A10,杠杆/备兑/收益增强,JPMorgan,JPMorgan Equity Premium Income ETF,JEPI,US-domiciled,F000014SF4
+A10,杠杆/备兑/收益增强,JPMorgan,JPMorgan Nasdaq Equity Premium Income ETF,JEPQ,US-domiciled,F00001DH2R
+A10,杠杆/备兑/收益增强,Amplify,Amplify CWP Enhanced Dividend Income ETF,DIVO,US-domiciled,F00000XH7M
+A10,杠杆/备兑/收益增强,Invesco,Invesco S&P 500 High Dividend Low Volatility ETF,SPHD,US-domiciled,F00000ONW3
+A10,杠杆/备兑/收益增强,Nationwide,Nationwide Nasdaq-100 Risk-Managed Income ETF,NUSI,US-domiciled,
+A10,杠杆/备兑/收益增强,Global X,Global X NASDAQ 100 Covered Call ETF,QYLD,US-domiciled,F00000QEMN
+A10,杠杆/备兑/收益增强,Global X,Global X S&P 500 Covered Call ETF,XYLD,US-domiciled,F00000OBHG
+A10,杠杆/备兑/收益增强,Global X,Global X Russell 2000 Covered Call ETF,RYLD,US-domiciled,F000011RCD
+A10,杠杆/备兑/收益增强,ProShares,ProShares UltraPro QQQ,TQQQ,US-domiciled,FOUSA08MU7
+A10,杠杆/备兑/收益增强,ProShares,ProShares UltraPro Short QQQ,SQQQ,US-domiciled,FOUSA08MU8
+A10,杠杆/备兑/收益增强,ProShares,ProShares UltraPro S&P 500,UPRO,US-domiciled,FOUSA08MUK
+A10,杠杆/备兑/收益增强,Direxion,Direxion Daily S&P 500 Bull 3X Shares,SPXL,US-domiciled,FOUSA07XVX
+A10,杠杆/备兑/收益增强,ProShares,ProShares Ultra S&P 500,SSO,US-domiciled,FEUSA04AG6
+A10,杠杆/备兑/收益增强,ProShares,ProShares UltraPro Short S&P 500,SPXU,US-domiciled,FOUSA08MUC
+A10,杠杆/备兑/收益增强,Direxion,Direxion Daily Small Cap Bull 3X Shares,TNA,US-domiciled,FOUSA07XVZ
+A10,杠杆/备兑/收益增强,Invesco,Invesco S&P 500 BuyWrite ETF,PBP,US-domiciled,FOUSA06LRM
+A10,杠杆/备兑/收益增强,WisdomTree,WisdomTree CBOE S&P 500 PutWrite Strategy Fund,PUTW,US-domiciled,
+A10,杠杆/备兑/收益增强,Goldman Sachs,Goldman Sachs Enhanced Income ETF,GDE,US-domiciled,F00001ADMD
+A10,杠杆/备兑/收益增强,Direxion,Direxion NASDAQ-100 Equal Weighted ETF,QQQE,US-domiciled,F00000LM0M
+A10,杠杆/备兑/收益增强,iShares,iShares Global 100 ETF,IOO,US-domiciled,FEUSA0002K
+A10,杠杆/备兑/收益增强,Invesco,Invesco BuyBack Achievers ETF,PKW,US-domiciled,FOUSA05KB9
+A10,杠杆/备兑/收益增强,ProShares,ProShares S&P 500 Dividend Aristocrats ETF,NOBL,US-domiciled,F00000Q6JF
+A10,杠杆/备兑/收益增强,Cambria,Cambria Shareholder Yield ETF,SYLD,US-domiciled,F00000OEUW
+A10,杠杆/备兑/收益增强,TBD,TBD-A10-001,TBD,PENDING-SCREENER,
+A10,杠杆/备兑/收益增强,TBD,TBD-A10-002,TBD,PENDING-SCREENER,
+B1,发达市场指数,Vanguard,Vanguard FTSE Developed Markets ETF,VEA,US-domiciled,FOUSA06JJS
+B1,发达市场指数,iShares,iShares MSCI EAFE ETF,EFA,US-domiciled,FEUSA0002W
+B1,发达市场指数,iShares,iShares Core MSCI EAFE ETF,IEFA,US-domiciled,F00000OPP5
+B1,发达市场指数,Schwab,Schwab International Equity ETF,SCHF,US-domiciled,F000003XC1
+B1,发达市场指数,iShares,iShares Core MSCI International Developed Markets ETF,IDEV,US-domiciled,F00000YBTL
+B1,发达市场指数,Vanguard,Vanguard Developed Markets Index Admiral,VTMGX,US-domiciled,FOUSA00L5B
+B1,发达市场指数,Schwab,Schwab Fundamental International Large Co Index ETF,FNDF,US-domiciled,F00000PNZP
+B1,发达市场指数,SPDR (State Street),SPDR Portfolio Developed World ex-US ETF,SPDW,US-domiciled,FOUSA068X6
+B1,发达市场指数,Avantis,Avantis International Equity ETF,AVDE,US-domiciled,F000013TAO
+B1,发达市场指数,iShares,iShares MSCI EAFE Growth ETF,EFG,US-domiciled,FEUSA04ADR
+B1,发达市场指数,iShares,iShares MSCI EAFE Value ETF,EFV,US-domiciled,FEUSA04ADQ
+B1,发达市场指数,Vanguard,Vanguard International High Dividend Yield ETF,VYMI,US-domiciled,F00000WC5O
+B1,发达市场指数,Dimensional,Dimensional International Core Equity ETF,DFIC,US-domiciled,F00001D12Q
+B1,发达市场指数,WisdomTree,WisdomTree International Equity Fund,DWM,US-domiciled,FEUSA04AFM
+B1,发达市场指数,First Trust,First Trust Developed Markets ex-US AlphaDEX Fund,FDT,US-domiciled,F00000M7WC
+B1,发达市场指数,Xtrackers,Xtrackers MSCI EAFE Hedged Equity ETF,DBEF,US-domiciled,F00000LI6T
+B1,发达市场指数,iShares,iShares Currency Hedged MSCI EAFE ETF,HEFA,US-domiciled,F00000QF77
+B1,发达市场指数,Vanguard,Vanguard FTSE Europe ETF,VGK,US-domiciled,FEUSA04ADE
+B1,发达市场指数,iShares,iShares MSCI Eurozone ETF,EZU,US-domiciled,FEUSA00028
+B1,发达市场指数,Vanguard,Vanguard FTSE Pacific ETF,VPL,US-domiciled,FEUSA04ADF
+B1,发达市场指数,iShares,iShares MSCI Japan ETF,EWJ,US-domiciled,FEUSA0001X
+B1,发达市场指数,WisdomTree,WisdomTree Japan Hedged Equity Fund,DXJ,US-domiciled,FEUSA04AG4
+B1,发达市场指数,iShares,iShares MSCI United Kingdom ETF,EWU,US-domiciled,FEUSA0001O
+B1,发达市场指数,iShares,iShares MSCI Germany ETF,EWG,US-domiciled,FEUSA00020
+B1,发达市场指数,Franklin,Franklin FTSE Japan ETF,FLJP,US-domiciled,F00000ZEMH
+B1,发达市场指数,TBD,TBD-B1-001,TBD,PENDING-SCREENER,
+B1,发达市场指数,TBD,TBD-B1-002,TBD,PENDING-SCREENER,
+B1,发达市场指数,TBD,TBD-B1-003,TBD,PENDING-SCREENER,
+B1,发达市场指数,TBD,TBD-B1-004,TBD,PENDING-SCREENER,
+B1,发达市场指数,TBD,TBD-B1-005,TBD,PENDING-SCREENER,
+B2,新兴市场,Vanguard,Vanguard FTSE Emerging Markets ETF,VWO,US-domiciled,FEUSA04ADG
+B2,新兴市场,iShares,iShares MSCI Emerging Markets ETF,EEM,US-domiciled,FEUSA04ABV
+B2,新兴市场,iShares,iShares Core MSCI Emerging Markets ETF,IEMG,US-domiciled,F00000OPJJ
+B2,新兴市场,Schwab,Schwab Emerging Markets Equity ETF,SCHE,US-domiciled,F000003XC0
+B2,新兴市场,Fidelity,Fidelity Emerging Markets Index,FPADX,US-domiciled,F00000MJRF
+B2,新兴市场,Vanguard,Vanguard Emerging Markets Stock Admiral,VEMAX,US-domiciled,FOUSA05IBW
+B2,新兴市场,WisdomTree,WisdomTree Emerging Markets High Dividend Fund,DEM,US-domiciled,FOUSA06B79
+B2,新兴市场,Avantis,Avantis Emerging Markets Equity ETF,AVEM,US-domiciled,F000013TAM
+B2,新兴市场,iShares,iShares MSCI Emerging Markets Small-Cap ETF,EEMS,US-domiciled,F00000M8DB
+B2,新兴市场,SPDR (State Street),SPDR Portfolio Emerging Markets ETF,SPEM,US-domiciled,FOUSA068X0
+B2,新兴市场,iShares,iShares MSCI Emerging Markets Min Vol Factor ETF,EEMV,US-domiciled,F00000MBN6
+B2,新兴市场,Fidelity,Fidelity Emerging Markets ETF,FEM,US-domiciled,F00000M7W5
+B2,新兴市场,iShares,iShares MSCI Brazil ETF,EWZ,US-domiciled,FEUSA00023
+B2,新兴市场,iShares,iShares MSCI India ETF,INDA,US-domiciled,F00000NFMN
+B2,新兴市场,WisdomTree,WisdomTree India Earnings Fund,EPI,US-domiciled,FOUSA06MLG
+B2,新兴市场,iShares,iShares MSCI China ETF,MCHI,US-domiciled,F00000M8D9
+B2,新兴市场,KraneShares,KraneShares CSI China Internet ETF,KWEB,US-domiciled,F00000PX5H
+B2,新兴市场,iShares,iShares MSCI South Korea ETF,EWY,US-domiciled,FEUSA0001T
+B2,新兴市场,iShares,iShares MSCI Taiwan ETF,EWT,US-domiciled,FEUSA0001P
+B2,新兴市场,Vanguard,Vanguard FTSE Emerging Markets Admiral,VEMRX,US-domiciled,F00000JXVQ
+B2,新兴市场,iShares,iShares Core MSCI Total International Stock ETF,IXUS,US-domiciled,F00000OPP4
+B2,新兴市场,iShares,iShares MSCI ACWI ex U.S. ETF,ACWX,US-domiciled,FOUSA06OEY
+B2,新兴市场,Schwab,Schwab International Small-Cap Equity ETF,SCHC,US-domiciled,F000003XC2
+B2,新兴市场,Xtrackers,Xtrackers MSCI Emerging Markets Hedged Equity ETF,DBEM,US-domiciled,F00000LI6U
+B2,新兴市场,BlackRock,BlackRock Emerging Markets Fund,MADCX,US-domiciled,FOUSA00DQS
+B2,新兴市场,TBD,TBD-B2-001,TBD,PENDING-SCREENER,
+B2,新兴市场,TBD,TBD-B2-002,TBD,PENDING-SCREENER,
+B2,新兴市场,TBD,TBD-B2-003,TBD,PENDING-SCREENER,
+B2,新兴市场,TBD,TBD-B2-004,TBD,PENDING-SCREENER,
+B2,新兴市场,TBD,TBD-B2-005,TBD,PENDING-SCREENER,
+B3,全球/国际主动,Capital Group,American Funds New Perspective A,ANWPX,US-domiciled,FOUSA00E5U
+B3,全球/国际主动,Capital Group,American Funds Capital World G&I A,CWGIX,US-domiciled,FOUSA00BK7
+B3,全球/国际主动,Vanguard,Vanguard International Growth,VWIGX,US-domiciled,FOUSA00FU3
+B3,全球/国际主动,Templeton,Templeton Growth,TEPLX,US-domiciled,FOUSA00FG7
+B3,全球/国际主动,T. Rowe Price,T. Rowe Price International Stock,PRITX,US-domiciled,FOUSA00EJD
+B3,全球/国际主动,Dodge & Cox,Dodge & Cox International Stock,DODFX,US-domiciled,FOUSA02TGA
+B3,全球/国际主动,Capital Group,American Funds International Growth and Income R5,RGAGX,US-domiciled,F000002PJ1
+B3,全球/国际主动,Fidelity,Fidelity International Capital Appreciation,FIVFX,US-domiciled,
+B3,全球/国际主动,Vanguard,Vanguard International Growth Admiral,VWILX,US-domiciled,FOUSA02TID
+B3,全球/国际主动,Oakmark,Oakmark International,OAKIX,US-domiciled,FOUSA00E9G
+B3,全球/国际主动,T. Rowe Price,T. Rowe Price International Discovery,PRIDX,US-domiciled,FOUSA00EJC
+B3,全球/国际主动,Fidelity,Fidelity International Growth,FIGRX,US-domiciled,FOUSA00CGG
+B3,全球/国际主动,Franklin,Franklin Mutual Global Discovery,TEDIX,US-domiciled,FOUSA00HXX
+B3,全球/国际主动,Morgan Stanley,Morgan Stanley Institutional International Growth,MSEGX,US-domiciled,FOUSA00BEA
+B3,全球/国际主动,Artisan,Artisan International,ARTIX,US-domiciled,FOUSA00BFN
+B3,全球/国际主动,Harbor,Harbor International,HAINX,US-domiciled,FOUSA00D2E
+B3,全球/国际主动,American Century,American Century International Growth,TWIGX,US-domiciled,
+B3,全球/国际主动,JPMorgan,JPMorgan International Growth,JIGFX,US-domiciled,F000002PG6
+B3,全球/国际主动,Capital Group,Capital Group International Focus Equity ETF,CGIE,US-domiciled,F00001FIAY
+B3,全球/国际主动,Vanguard,Vanguard International Value,VTRIX,US-domiciled,FOUSA00FIG
+B3,全球/国际主动,Dodge & Cox,Dodge & Cox Worldwide Global Stock,DODWX,US-domiciled,FOUSA06SDO
+B3,全球/国际主动,Fidelity,Fidelity Worldwide Fund,FWWFX,US-domiciled,FOUSA00CK3
+B3,全球/国际主动,Templeton,Templeton Foreign,TEMFX,US-domiciled,FOUSA00FFO
+B3,全球/国际主动,Lazard,Lazard International Strategic Equity,LISIX,US-domiciled,FOUSA05IBR
+B3,全球/国际主动,Sands Capital,Sands Capital Global Growth,SGCGX,US-domiciled,
+B3,全球/国际主动,TBD,TBD-B3-001,TBD,PENDING-SCREENER,
+B3,全球/国际主动,TBD,TBD-B3-002,TBD,PENDING-SCREENER,
+B3,全球/国际主动,TBD,TBD-B3-003,TBD,PENDING-SCREENER,
+B3,全球/国际主动,TBD,TBD-B3-004,TBD,PENDING-SCREENER,
+B3,全球/国际主动,TBD,TBD-B3-005,TBD,PENDING-SCREENER,
+B4,国际价值/股息/因素,Vanguard,Vanguard International High Dividend Yield Index Admiral,VIHAX,US-domiciled,F00000WC5N
+B4,国际价值/股息/因素,iShares,iShares International Select Dividend ETF,IDV,US-domiciled,FOUSA06IXV
+B4,国际价值/股息/因素,Xtrackers,Xtrackers MSCI EAFE High Dividend Yield Equity ETF,HDEF,US-domiciled,F00000VQ7J
+B4,国际价值/股息/因素,Dimensional,Dimensional International Value ETF,DFIV,US-domiciled,F0000162EC
+B4,国际价值/股息/因素,iShares,iShares MSCI Intl Value Factor ETF,IVLU,US-domiciled,F00000VIWQ
+B4,国际价值/股息/因素,WisdomTree,WisdomTree International Hedged Quality Dividend Growth Fund,IHDG,US-domiciled,F00000QKX9
+B4,国际价值/股息/因素,SPDR (State Street),SPDR S&P International Dividend ETF,DWX,US-domiciled,FOUSA06PCH
+B4,国际价值/股息/因素,Schwab,Schwab International Dividend Equity ETF,SCHY,US-domiciled,F00001699Z
+B4,国际价值/股息/因素,WisdomTree,WisdomTree International High Dividend Fund,DTH,US-domiciled,FEUSA04AFN
+B4,国际价值/股息/因素,Invesco,Invesco International Dividend Achievers ETF,PID,US-domiciled,FEUSA04ADU
+B4,国际价值/股息/因素,iShares,iShares International Momentum Factor ETF,IMTM,US-domiciled,F00000UH08
+B4,国际价值/股息/因素,iShares,iShares International Quality Factor ETF,IQLT,US-domiciled,F00000UH07
+B4,国际价值/股息/因素,Avantis,Avantis International Large Cap Value ETF,AVIV,US-domiciled,F000018419
+B4,国际价值/股息/因素,Dimensional,Dimensional International Small Cap Value ETF,DISV,US-domiciled,F00001D12T
+B4,国际价值/股息/因素,Fidelity,Fidelity International Value Factor ETF,FIVA,US-domiciled,F00000ZEMJ
+B4,国际价值/股息/因素,Vanguard,Vanguard International Dividend Appreciation ETF,VIGI,US-domiciled,F00000WC5P
+B4,国际价值/股息/因素,iShares,iShares MSCI EAFE Small-Cap ETF,SCZ,US-domiciled,FOUSA06LA1
+B4,国际价值/股息/因素,WisdomTree,WisdomTree International SmallCap Dividend Fund,DLS,US-domiciled,FEUSA04AG1
+B4,国际价值/股息/因素,SPDR (State Street),SPDR S&P International Small Cap ETF,GWX,US-domiciled,FOUSA06F92
+B4,国际价值/股息/因素,Schwab,Schwab Fundamental International Small Co Index ETF,FNDC,US-domiciled,F00000PNZQ
+B4,国际价值/股息/因素,Avantis,Avantis International Small Cap Value ETF,AVDV,US-domiciled,F000013TAP
+B4,国际价值/股息/因素,Vanguard,Vanguard FTSE All-World ex-US Small-Cap ETF,VSS,US-domiciled,FOUSA08NFZ
+B4,国际价值/股息/因素,iShares,iShares MSCI Intl Small-Cap Multifactor ETF,ISCF,US-domiciled,F00000VB53
+B4,国际价值/股息/因素,Invesco,Invesco FTSE RAFI Dev Markets ex-US Small-Mid ETF,PDN,US-domiciled,FOUSA06JMH
+B4,国际价值/股息/因素,TBD,TBD-B4-001,TBD,PENDING-SCREENER,
+B4,国际价值/股息/因素,TBD,TBD-B4-002,TBD,PENDING-SCREENER,
+B4,国际价值/股息/因素,TBD,TBD-B4-003,TBD,PENDING-SCREENER,
+B4,国际价值/股息/因素,TBD,TBD-B4-004,TBD,PENDING-SCREENER,
+B4,国际价值/股息/因素,TBD,TBD-B4-005,TBD,PENDING-SCREENER,
+B4,国际价值/股息/因素,TBD,TBD-B4-006,TBD,PENDING-SCREENER,
+B5,全球指数/配置,Vanguard,Vanguard Total International Stock ETF,VXUS,US-domiciled,F00000LVTA
+B5,全球指数/配置,iShares,iShares MSCI ACWI ETF,ACWI,US-domiciled,FOUSA06OEZ
+B5,全球指数/配置,Vanguard,Vanguard Total World Stock ETF,VT,US-domiciled,FOUSA06UUJ
+B5,全球指数/配置,Vanguard,Vanguard FTSE All-World ex-US ETF,VEU,US-domiciled,FOUSA06BAL
+B5,全球指数/配置,Vanguard,Vanguard Total World Stock Index Admiral,VTWAX,US-domiciled,F000011IZ6
+B5,全球指数/配置,iShares,iShares ESG Aware MSCI EAFE ETF,ESGD,US-domiciled,F00000X1BR
+B5,全球指数/配置,iShares,iShares ESG Aware MSCI EM ETF,ESGE,US-domiciled,F00000X1BL
+B5,全球指数/配置,iShares,iShares MSCI World ETF,URTH,US-domiciled,F00000NFMT
+B5,全球指数/配置,Franklin,Franklin FTSE Developed Markets ETF,FDEV,US-domiciled,F000011J0A
+B5,全球指数/配置,Dimensional,Dimensional World Equity ETF,DFAW,US-domiciled,F00001GG5R
+B5,全球指数/配置,Goldman Sachs,Goldman Sachs MarketBeta International Equity ETF,GXUS,US-domiciled,F00001EG5W
+B5,全球指数/配置,Vanguard,Vanguard ESG International Stock ETF,VSGX,US-domiciled,F000010QC5
+B5,全球指数/配置,iShares,iShares ESG Aware MSCI USA Small-Cap ETF,ESML,US-domiciled,F00000ZZFQ
+B5,全球指数/配置,FlexShares,FlexShares STOXX Global ESG Impact Index Fund,ESGG,US-domiciled,F00000X4WN
+B5,全球指数/配置,BlackRock,BlackRock Global Allocation Fund,MALOX,US-domiciled,FOUSA00DR1
+B5,全球指数/配置,Fidelity,Fidelity Global ex U.S. Index,FSGGX,US-domiciled,F00000MJRI
+B5,全球指数/配置,Schwab,Schwab International Index,SWISX,US-domiciled,FOUSA00GPS
+B5,全球指数/配置,Vanguard,Vanguard Global ex-U.S. Real Estate ETF,VNQI,US-domiciled,F00000J3JK
+B5,全球指数/配置,iShares,iShares Global REIT ETF,REET,US-domiciled,F00000T1FW
+B5,全球指数/配置,SPDR (State Street),SPDR Global Dow ETF,DGT,US-domiciled,FEUSA0002E
+B5,全球指数/配置,TBD,TBD-B5-001,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-002,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-003,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-004,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-005,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-006,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-007,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-008,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-009,TBD,PENDING-SCREENER,
+B5,全球指数/配置,TBD,TBD-B5-010,TBD,PENDING-SCREENER,
+C1,全债指数,iShares,iShares Core U.S. Aggregate Bond ETF,AGG,US-domiciled,FEUSA04ABS
+C1,全债指数,Vanguard,Vanguard Total Bond Market ETF,BND,US-domiciled,FOUSA06C1Y
+C1,全债指数,Schwab,Schwab U.S. Aggregate Bond ETF,SCHZ,US-domiciled,F00000MDEJ
+C1,全债指数,Fidelity,Fidelity U.S. Bond Index,FXNAX,US-domiciled,F00000LZX3
+C1,全债指数,Schwab,Schwab U.S. Aggregate Bond Index,SWAGX,US-domiciled,F00000Y6C1
+C1,全债指数,Vanguard,Vanguard Total Bond Market Index Admiral,VBTLX,US-domiciled,FOUSA02TYI
+C1,全债指数,iShares,iShares Core Total USD Bond Market ETF,IUSB,US-domiciled,F00000TNI6
+C1,全债指数,SPDR (State Street),SPDR Portfolio Aggregate Bond ETF,SPAB,US-domiciled,FOUSA06B8D
+C1,全债指数,Vanguard,Vanguard Total Bond Market Index Investor,VBMFX,US-domiciled,FOUSA00FQH
+C1,全债指数,Fidelity,Fidelity Total Bond,FTBFX,US-domiciled,FOUSA02VNL
+C1,全债指数,Vanguard,Vanguard Total Bond Market II Index Investor,VTBIX,US-domiciled,FOUSA08OZT
+C1,全债指数,iShares,iShares Aaa-A Rated Corporate Bond ETF,QLTA,US-domiciled,F00000NFLY
+C1,全债指数,Vanguard,Vanguard Intermediate-Term Bond Index Admiral,VBILX,US-domiciled,FOUSA02TYB
+C1,全债指数,Vanguard,Vanguard Short-Term Bond Index Admiral,VBIRX,US-domiciled,FOUSA02TYF
+C1,全债指数,Vanguard,Vanguard Long-Term Bond Index Admiral,VLBLX,US-domiciled,F000011J08
+C1,全债指数,iShares,iShares 1-3 Year Treasury Bond ETF,SHY,US-domiciled,FEUSA00038
+C1,全债指数,iShares,iShares 7-10 Year Treasury Bond ETF,IEF,US-domiciled,FEUSA00039
+C1,全债指数,iShares,iShares 20+ Year Treasury Bond ETF,TLT,US-domiciled,FEUSA0003A
+C1,全债指数,Vanguard,Vanguard Intermediate-Term Treasury ETF,VGIT,US-domiciled,F000003Z3K
+C1,全债指数,Vanguard,Vanguard Short-Term Treasury ETF,VGSH,US-domiciled,F000003Z3H
+C1,全债指数,Vanguard,Vanguard Long-Term Treasury ETF,VGLT,US-domiciled,F000003Z3M
+C1,全债指数,SPDR (State Street),SPDR Portfolio Long Term Treasury ETF,SPTL,US-domiciled,FOUSA06B88
+C1,全债指数,iShares,iShares U.S. Treasury Bond ETF,GOVT,US-domiciled,F00000NFM1
+C1,全债指数,Fidelity,Fidelity Investment Grade Bond,FBNDX,US-domiciled,FOUSA00CFP
+C1,全债指数,Dodge & Cox,Dodge & Cox Income,DODIX,US-domiciled,FOUSA00C3M
+C1,全债指数,TBD,TBD-C1-001,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-002,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-003,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-004,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-005,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-006,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-007,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-008,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-009,TBD,PENDING-SCREENER,
+C1,全债指数,TBD,TBD-C1-010,TBD,PENDING-SCREENER,
+C2,国债/TIPS,iShares,iShares TIPS Bond ETF,TIP,US-domiciled,FEUSA04ABZ
+C2,国债/TIPS,Schwab,Schwab U.S. TIPS ETF,SCHP,US-domiciled,F00000H62C
+C2,国债/TIPS,Vanguard,Vanguard Short-Term Inflation-Protected Securities ETF,VTIP,US-domiciled,F00000ONBY
+C2,国债/TIPS,Vanguard,Vanguard Inflation-Protected Securities Fund,VIPSX,US-domiciled,FOUSA00K6A
+C2,国债/TIPS,iShares,iShares 0-5 Year TIPS Bond ETF,STIP,US-domiciled,F00000JSH5
+C2,国债/TIPS,Vanguard,Vanguard Extended Duration Treasury ETF,EDV,US-domiciled,FOUSA06KY3
+C2,国债/TIPS,PIMCO,PIMCO 15+ Year U.S. TIPS Index ETF,LTPZ,US-domiciled,F000002Y2T
+C2,国债/TIPS,SPDR (State Street),SPDR Portfolio TIPS ETF,SPIP,US-domiciled,FOUSA06B89
+C2,国债/TIPS,Fidelity,Fidelity Inflation-Protected Bond Index,FIPDX,US-domiciled,F00000NZ8Q
+C2,国债/TIPS,Vanguard,Vanguard Short-Term Inflation-Protected Securities Index Admiral,VTAPX,US-domiciled,F00000ONBX
+C2,国债/TIPS,iShares,iShares 3-7 Year Treasury Bond ETF,IEI,US-domiciled,FOUSA069WU
+C2,国债/TIPS,Vanguard,Vanguard Short-Term Federal,VSGBX,US-domiciled,FOUSA00FRZ
+C2,国债/TIPS,Vanguard,Vanguard Intermediate-Term Treasury Admiral,VFIUX,US-domiciled,FOUSA02SNG
+C2,国债/TIPS,Vanguard,Vanguard Long-Term Treasury Admiral,VUSUX,US-domiciled,FOUSA02SNU
+C2,国债/TIPS,SPDR (State Street),SPDR Bloomberg 1-3 Month T-Bill ETF,BIL,US-domiciled,FOUSA06B85
+C2,国债/TIPS,iShares,iShares Short Treasury Bond ETF,SHV,US-domiciled,FOUSA069WT
+C2,国债/TIPS,iShares,iShares 0-3 Month Treasury Bond ETF,SGOV,US-domiciled,F0000150N8
+C2,国债/TIPS,US Treasury,U.S. Treasury 3 Month Bill ETF,TBIL,US-domiciled,F00001DZ4N
+C2,国债/TIPS,ProShares,ProShares Ultra 7-10 Year Treasury,UST,US-domiciled,F0000045IO
+C2,国债/TIPS,ProShares,ProShares UltraPro 20+ Year Treasury,TMF,US-domiciled,FOUSA08PTL
+C2,国债/TIPS,ProShares,ProShares UltraShort 20+ Year Treasury,TBT,US-domiciled,FOUSA06TO8
+C2,国债/TIPS,Vanguard,Vanguard GNMA,VFIIX,US-domiciled,FOUSA00FQL
+C2,国债/TIPS,Vanguard,Vanguard Mortgage-Backed Securities Index Admiral,VMBSX,US-domiciled,F000003Z3C
+C2,国债/TIPS,iShares,iShares MBS ETF,MBB,US-domiciled,FOUSA069X2
+C2,国债/TIPS,Vanguard,Vanguard GNMA Admiral,VFIJX,US-domiciled,FOUSA02SMJ
+C2,国债/TIPS,TBD,TBD-C2-001,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-002,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-003,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-004,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-005,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-006,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-007,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-008,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-009,TBD,PENDING-SCREENER,
+C2,国债/TIPS,TBD,TBD-C2-010,TBD,PENDING-SCREENER,
+C3,公司债,iShares,iShares iBoxx $ Investment Grade Corporate Bond ETF,LQD,US-domiciled,FEUSA0003B
+C3,公司债,Vanguard,Vanguard Intermediate-Term Corporate Bond ETF,VCIT,US-domiciled,F000003Z3P
+C3,公司债,Vanguard,Vanguard Short-Term Corporate Bond ETF,VCSH,US-domiciled,F000003Z3O
+C3,公司债,Vanguard,Vanguard Long-Term Corporate Bond ETF,VCLT,US-domiciled,F000003Z3S
+C3,公司债,iShares,iShares 1-5 Year Investment Grade Corporate Bond ETF,IGSB,US-domiciled,FOUSA069WW
+C3,公司债,SPDR (State Street),SPDR Portfolio Intermediate Term Corporate Bond ETF,SPIB,US-domiciled,FOUSA08OOS
+C3,公司债,SPDR (State Street),SPDR Portfolio Short Term Corporate Bond ETF,SPSB,US-domiciled,FOUSA06B8A
+C3,公司债,iShares,iShares Broad USD Investment Grade Corporate Bond ETF,USIG,US-domiciled,FOUSA069WZ
+C3,公司债,Vanguard,Vanguard Intermediate-Term Corporate Bond Index Admiral,VICSX,US-domiciled,F000003Z39
+C3,公司债,iShares,iShares Floating Rate Bond ETF,FLOT,US-domiciled,F00000MDER
+C3,公司债,Fidelity,Fidelity Corporate Bond,FCBFX,US-domiciled,F00000GUSQ
+C3,公司债,PIMCO,PIMCO Investment Grade Credit Bond,PIGIX,US-domiciled,FOUSA00L9V
+C3,公司债,PIMCO,PIMCO Intermediate Bond,PIMIX,US-domiciled,FOUSA069X9
+C3,公司债,JPMorgan,JPMorgan Core Plus Bond,JCPUX,US-domiciled,FOUSA05BGL
+C3,公司债,T. Rowe Price,T. Rowe Price Corporate Income,PRPIX,US-domiciled,FOUSA00COU
+C3,公司债,Vanguard,Vanguard Long-Term Investment-Grade Admiral,VWETX,US-domiciled,FOUSA02SNP
+C3,公司债,Vanguard,Vanguard Intermediate-Term Investment-Grade Admiral,VFIDX,US-domiciled,FOUSA02SM8
+C3,公司债,SPDR (State Street),SPDR Portfolio Corporate Bond ETF,SPBO,US-domiciled,F00000M8DJ
+C3,公司债,iShares,iShares 0-5 Year Investment Grade Corporate Bond ETF,SLQD,US-domiciled,F00000Q6KG
+C3,公司债,VanEck,VanEck Fallen Angel High Yield Bond ETF,ANGL,US-domiciled,F00000O2CG
+C3,公司债,Fidelity,Fidelity Short-Term Bond,FSHBX,US-domiciled,FOUSA00CI8
+C3,公司债,Vanguard,Vanguard Short-Term Investment-Grade Admiral,VFSUX,US-domiciled,FOUSA02SL6
+C3,公司债,BlackRock,BlackRock Strategic Income Opportunities,BSIIX,US-domiciled,FOUSA06P2W
+C3,公司债,MetWest,Metropolitan West Total Return Bond,MWTRX,US-domiciled,FOUSA00I2N
+C3,公司债,PIMCO,PIMCO Total Return Instl,PTTRX,US-domiciled,FOUSA00EH4
+C3,公司债,TBD,TBD-C3-001,TBD,PENDING-SCREENER,
+C3,公司债,TBD,TBD-C3-002,TBD,PENDING-SCREENER,
+C3,公司债,TBD,TBD-C3-003,TBD,PENDING-SCREENER,
+C3,公司债,TBD,TBD-C3-004,TBD,PENDING-SCREENER,
+C3,公司债,TBD,TBD-C3-005,TBD,PENDING-SCREENER,
+C4,高收益/可转债,iShares,iShares iBoxx $ High Yield Corporate Bond ETF,HYG,US-domiciled,FOUSA06BYT
+C4,高收益/可转债,SPDR (State Street),SPDR Bloomberg High Yield Bond ETF,JNK,US-domiciled,FOUSA06MW5
+C4,高收益/可转债,SPDR (State Street),SPDR Portfolio High Yield Bond ETF,SPHY,US-domiciled,F00000O2GN
+C4,高收益/可转债,iShares,iShares Broad USD High Yield Corporate Bond ETF,USHY,US-domiciled,F00000ZCS4
+C4,高收益/可转债,Fidelity,Fidelity Fallen Angels ETF,FALN,US-domiciled,F00000X1BS
+C4,高收益/可转债,Xtrackers,Xtrackers USD High Yield Corporate Bond ETF,HYLB,US-domiciled,F00000SCIQ
+C4,高收益/可转债,Vanguard,Vanguard High-Yield Corporate Fund,VWEHX,US-domiciled,FOUSA00FR1
+C4,高收益/可转债,SPDR (State Street),SPDR Bloomberg Short Term High Yield Bond ETF,SJNK,US-domiciled,F00000NZ52
+C4,高收益/可转债,Fidelity,Fidelity High Yield ETF,FJNK,US-domiciled,
+C4,高收益/可转债,VanEck,VanEck High Yield Muni ETF,HYD,US-domiciled,FOUSA06MKI
+C4,高收益/可转债,Vanguard,Vanguard High-Yield Corporate Admiral,VWEAX,US-domiciled,FOUSA02TY8
+C4,高收益/可转债,Fidelity,Fidelity Capital & Income,FAGIX,US-domiciled,FOUSA00CGB
+C4,高收益/可转债,PIMCO,PIMCO High Yield Instl,PHIYX,US-domiciled,FOUSA00EH8
+C4,高收益/可转债,T. Rowe Price,T. Rowe Price High Yield,PRHYX,US-domiciled,FOUSA00EJ9
+C4,高收益/可转债,iShares,iShares Convertible Bond ETF,ICVT,US-domiciled,F00000V7RU
+C4,高收益/可转债,SPDR (State Street),SPDR Bloomberg Convertible Securities ETF,CWB,US-domiciled,FOUSA08OOU
+C4,高收益/可转债,First Trust,First Trust SSI Strategic Convertible Securities ETF,FCVT,US-domiciled,F00000W06P
+C4,高收益/可转债,Janus Henderson,Janus Henderson Opportunistic Income,JNOIX,US-domiciled,
+C4,高收益/可转债,DoubleLine,DoubleLine Flexible Income,DBLFX,US-domiciled,F000005P6L
+C4,高收益/可转债,Lord Abbett,Lord Abbett High Yield,LHYVX,US-domiciled,F00000VKAN
+C4,高收益/可转债,Nuveen,Nuveen High Yield Municipal Bond,NHYMX,US-domiciled,
+C4,高收益/可转债,BlackRock,BlackRock High Yield Bond,BHYIX,US-domiciled,FOUSA00K6F
+C4,高收益/可转债,Guggenheim,Guggenheim Total Return Bond,GIBCX,US-domiciled,F00000MUR1
+C4,高收益/可转债,JPMorgan,JPMorgan High Yield,JHYUX,US-domiciled,FOUSA05BGJ
+C4,高收益/可转债,TBD,TBD-C4-001,TBD,PENDING-SCREENER,
+C4,高收益/可转债,TBD,TBD-C4-002,TBD,PENDING-SCREENER,
+C4,高收益/可转债,TBD,TBD-C4-003,TBD,PENDING-SCREENER,
+C4,高收益/可转债,TBD,TBD-C4-004,TBD,PENDING-SCREENER,
+C4,高收益/可转债,TBD,TBD-C4-005,TBD,PENDING-SCREENER,
+C4,高收益/可转债,TBD,TBD-C4-006,TBD,PENDING-SCREENER,
+C5,市政债,iShares,iShares National Muni Bond ETF,MUB,US-domiciled,FOUSA06L8F
+C5,市政债,Vanguard,Vanguard Tax-Exempt Bond ETF,VTEB,US-domiciled,F00000V75Q
+C5,市政债,SPDR (State Street),SPDR Nuveen Bloomberg Municipal Bond ETF,TFI,US-domiciled,FOUSA06L9U
+C5,市政债,iShares,iShares Short-Term National Muni Bond ETF,SUB,US-domiciled,FOUSA06VPS
+C5,市政债,Vanguard,Vanguard Intermediate-Term Tax-Exempt Fund,VWITX,US-domiciled,FOUSA00FT1
+C5,市政债,Vanguard,Vanguard Long-Term Tax-Exempt Fund,VWLTX,US-domiciled,FOUSA00FT9
+C5,市政债,Vanguard,Vanguard Limited-Term Tax-Exempt Fund,VMLTX,US-domiciled,FOUSA00FR6
+C5,市政债,First Trust,First Trust Managed Municipal ETF,FMB,US-domiciled,F00000SCC3
+C5,市政债,Invesco,Invesco National AMT-Free Muni Bond ETF,PZA,US-domiciled,FOUSA06LRT
+C5,市政债,Nuveen,Nuveen Municipal Value Fund,NUV,US-domiciled,FCUSA00071
+C5,市政债,Vanguard,Vanguard Tax-Exempt Bond Index Admiral,VTEAX,US-domiciled,F00000V75P
+C5,市政债,Vanguard,Vanguard High-Yield Tax-Exempt Admiral,VWALX,US-domiciled,FOUSA02TY9
+C5,市政债,Fidelity,Fidelity Municipal Income,FHIGX,US-domiciled,FOUSA00CGE
+C5,市政债,Fidelity,Fidelity Tax-Free Bond,FTABX,US-domiciled,FOUSA02T6A
+C5,市政债,T. Rowe Price,T. Rowe Price Tax-Free High Yield,PRFHX,US-domiciled,FOUSA00EKN
+C5,市政债,Schwab,Schwab Municipal Bond ETF,SCMB,US-domiciled,F00001E6HC
+C5,市政债,BlackRock,BlackRock National Municipal Fund,MDNLX,US-domiciled,FOUSA00C9H
+C5,市政债,Franklin,Franklin Federal Tax-Free Income,FKTFX,US-domiciled,FOUSA00CRM
+C5,市政债,Nuveen,Nuveen AMT-Free Municipal Credit Income,NVG,US-domiciled,FCUSA04ACN
+C5,市政债,Invesco,Invesco Municipal Income,VKMOX,US-domiciled,
+C5,市政债,Goldman Sachs,Goldman Sachs Municipal Income,GIMIX,US-domiciled,
+C5,市政债,JPMorgan,JPMorgan Municipal Income,JMSIX,US-domiciled,F00000RG43
+C5,市政债,BNY Mellon,BNY Mellon Municipal Income,DMFYX,US-domiciled,
+C5,市政债,VanEck,VanEck Short Muni ETF,SMB,US-domiciled,FOUSA06Q1C
+C5,市政债,TBD,TBD-C5-001,TBD,PENDING-SCREENER,
+C5,市政债,TBD,TBD-C5-002,TBD,PENDING-SCREENER,
+C5,市政债,TBD,TBD-C5-003,TBD,PENDING-SCREENER,
+C5,市政债,TBD,TBD-C5-004,TBD,PENDING-SCREENER,
+C5,市政债,TBD,TBD-C5-005,TBD,PENDING-SCREENER,
+C5,市政债,TBD,TBD-C5-006,TBD,PENDING-SCREENER,
+C6,短债/货币市场,Vanguard,Vanguard Federal Money Market Fund,VMFXX,US-domiciled,
+C6,短债/货币市场,Fidelity,Fidelity Money Market Fund,SPRXX,US-domiciled,
+C6,短债/货币市场,Schwab,Schwab Value Advantage Money Market,SWVXX,US-domiciled,
+C6,短债/货币市场,Vanguard,Vanguard Treasury Money Market Fund,VUSXX,US-domiciled,
+C6,短债/货币市场,Fidelity,Fidelity Treasury Only Money Market,FDLXX,US-domiciled,
+C6,短债/货币市场,Schwab,Schwab Treasury Obligations Money Market,SNOXX,US-domiciled,
+C6,短债/货币市场,Fidelity,Fidelity Government Cash Reserves,FDRXX,US-domiciled,
+C6,短债/货币市场,Vanguard,Vanguard Cash Reserves Federal Money Market,VMRXX,US-domiciled,
+C6,短债/货币市场,Vanguard,Vanguard Municipal Money Market,VMSXX,US-domiciled,
+C6,短债/货币市场,T. Rowe Price,T. Rowe Price Government Money Market,PRRXX,US-domiciled,
+C6,短债/货币市场,Goldman Sachs,Goldman Sachs Financial Square Government Fund,FGTXX,US-domiciled,
+C6,短债/货币市场,JPMorgan,JPMorgan Government Money Market,OGVXX,US-domiciled,
+C6,短债/货币市场,BlackRock,BlackRock Liquidity Funds TempFund,TMPXX,US-domiciled,
+C6,短债/货币市场,Vanguard,Vanguard Ultra-Short-Term Bond Admiral,VUSFX,US-domiciled,F00000V1HO
+C6,短债/货币市场,Fidelity,Fidelity Ultra Short Bond,FUSFX,US-domiciled,
+C6,短债/货币市场,iShares,iShares Ultra Short-Term Bond ETF,ICSH,US-domiciled,F00000PI3E
+C6,短债/货币市场,PIMCO,PIMCO Enhanced Short Maturity Active ESG ETF,EMSH,US-domiciled,F0000143T8
+C6,短债/货币市场,Vanguard,Vanguard Short-Term Treasury Index Admiral,VSBSX,US-domiciled,F000003Z35
+C6,短债/货币市场,Fidelity,Fidelity Limited Term Government,FFXSX,US-domiciled,FOUSA00CFO
+C6,短债/货币市场,Schwab,Schwab U.S. Short-Term Treasury ETF,SCHO,US-domiciled,F00000H62B
+C6,短债/货币市场,iShares,iShares Short-Term Bond ETF,NEAR,US-domiciled,F00000O00R
+C6,短债/货币市场,TBD,TBD-C6-001,TBD,PENDING-SCREENER,
+C6,短债/货币市场,TBD,TBD-C6-002,TBD,PENDING-SCREENER,
+C6,短债/货币市场,TBD,TBD-C6-003,TBD,PENDING-SCREENER,
+C6,短债/货币市场,TBD,TBD-C6-004,TBD,PENDING-SCREENER,
+C6,短债/货币市场,TBD,TBD-C6-005,TBD,PENDING-SCREENER,
+C6,短债/货币市场,TBD,TBD-C6-006,TBD,PENDING-SCREENER,
+C6,短债/货币市场,TBD,TBD-C6-007,TBD,PENDING-SCREENER,
+C6,短债/货币市场,TBD,TBD-C6-008,TBD,PENDING-SCREENER,
+C6,短债/货币市场,TBD,TBD-C6-009,TBD,PENDING-SCREENER,
+C7,主动债券,PIMCO,PIMCO Income D,PONDX,US-domiciled,
+C7,主动债券,PIMCO,PIMCO Active Bond ETF,BOND,US-domiciled,F00000MM7Y
+C7,主动债券,SPDR (State Street),SPDR DoubleLine Total Return Tactical ETF,TOTL,US-domiciled,F00000TIEI
+C7,主动债券,DoubleLine,DoubleLine Total Return Bond,DBLTX,US-domiciled,F000005P6P
+C7,主动债券,Western Asset,Western Asset Core Plus Bond,WATFX,US-domiciled,FOUSA00E5X
+C7,主动债券,Loomis Sayles,Loomis Sayles Bond,LSBDX,US-domiciled,FOUSA00DKF
+C7,主动债券,Vanguard,Vanguard Total International Bond Index Admiral,VTABX,US-domiciled,F00000NBIL
+C7,主动债券,T. Rowe Price,T. Rowe Price New Income,PRCIX,US-domiciled,FOUSA00EK1
+C7,主动债券,PIMCO,PIMCO Low Duration,PTLAX,US-domiciled,FOUSA00H8O
+C7,主动债券,PIMCO,PIMCO Mortgage-Backed Securities,PTMAX,US-domiciled,FOUSA00J1R
+C7,主动债券,BlackRock,BlackRock Core Bond,PNHDX,US-domiciled,
+C7,主动债券,Fidelity,Fidelity Strategic Income,FSICX,US-domiciled,F0000104K7
+C7,主动债券,JPMorgan,JPMorgan Strategic Income Opportunities,JSOAX,US-domiciled,FOUSA06Z1F
+C7,主动债券,Osterweis,Osterweis Strategic Income,OSTIX,US-domiciled,FOUSA04BMD
+C7,主动债券,GMO,GMO Core Plus Bond,GMCPX,US-domiciled,F000010EHT
+C7,主动债券,BNY Mellon,BNY Mellon Bond Market Index,DGISX,US-domiciled,
+C7,主动债券,John Hancock,John Hancock Bond,JTBMX,US-domiciled,
+C7,主动债券,Columbia,Columbia Total Return Bond,RMBFX,US-domiciled,
+C7,主动债券,Hartford,Hartford Total Return Bond,HTRBX,US-domiciled,
+C7,主动债券,T. Rowe Price,T. Rowe Price Spectrum Income,RPSIX,US-domiciled,FOUSA00EKJ
+C7,主动债券,TBD,TBD-C7-001,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-002,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-003,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-004,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-005,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-006,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-007,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-008,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-009,TBD,PENDING-SCREENER,
+C7,主动债券,TBD,TBD-C7-010,TBD,PENDING-SCREENER,
+C8,国际/全球债券,Vanguard,Vanguard Total International Bond ETF,BNDX,US-domiciled,F00000NBIM
+C8,国际/全球债券,Vanguard,Vanguard Total World Bond ETF,BNDW,US-domiciled,F000010J1I
+C8,国际/全球债券,iShares,iShares Core International Aggregate Bond ETF,IAGG,US-domiciled,F00000W5T9
+C8,国际/全球债券,iShares,iShares International Treasury Bond ETF,IGOV,US-domiciled,FOUSA06XOH
+C8,国际/全球债券,iShares,iShares J.P. Morgan USD Emerging Markets Bond ETF,EMB,US-domiciled,FOUSA06LLM
+C8,国际/全球债券,Vanguard,Vanguard Emerging Markets Government Bond ETF,VWOB,US-domiciled,F00000PZVE
+C8,国际/全球债券,Invesco,Invesco Emerging Markets Sovereign Debt ETF,PCY,US-domiciled,FOUSA06LS5
+C8,国际/全球债券,SPDR (State Street),SPDR Bloomberg International Treasury Bond ETF,BWX,US-domiciled,FOUSA06LD1
+C8,国际/全球债券,iShares,iShares J.P. Morgan EM Local Currency Bond ETF,LEMB,US-domiciled,F00000MPCR
+C8,国际/全球债券,VanEck,VanEck Emerging Markets High Yield Bond ETF,HYEM,US-domiciled,F00000O80X
+C8,国际/全球债券,PIMCO,PIMCO Emerging Markets Bond,PEBIX,US-domiciled,FOUSA00HLD
+C8,国际/全球债券,Templeton,Templeton Global Bond,TPINX,US-domiciled,FOUSA00FGA
+C8,国际/全球债券,Fidelity,Fidelity New Markets Income,FNMIX,US-domiciled,FOUSA00BK0
+C8,国际/全球债券,Vanguard,Vanguard International Bond Index Investor,VTIBX,US-domiciled,F00000NBIO
+C8,国际/全球债券,PIMCO,PIMCO Global Bond Opportunities,PGBIX,US-domiciled,FOUSA00G8U
+C8,国际/全球债券,JPMorgan,JPMorgan Emerging Markets Debt,JEMUX,US-domiciled,
+C8,国际/全球债券,Goldman Sachs,Goldman Sachs Emerging Markets Debt,GEDPX,US-domiciled,
+C8,国际/全球债券,T. Rowe Price,T. Rowe Price Emerging Markets Bond,PREMX,US-domiciled,FOUSA00CAK
+C8,国际/全球债券,BlackRock,BlackRock Emerging Markets Bond,BEMBX,US-domiciled,
+C8,国际/全球债券,Fidelity,Fidelity Emerging Markets Debt,FEDDX,US-domiciled,F00000MR4C
+C8,国际/全球债券,GMO,GMO Emerging Country Debt,GMCDX,US-domiciled,FOUSA00L2M
+C8,国际/全球债券,Stone Harbor,Stone Harbor Emerging Markets Debt,SHEDX,US-domiciled,
+C8,国际/全球债券,Nuveen,Nuveen Emerging Markets Debt,NEMZX,US-domiciled,
+C8,国际/全球债券,PIMCO,PIMCO Foreign Bond,PFORX,US-domiciled,FOUSA00EHW
+C8,国际/全球债券,TBD,TBD-C8-001,TBD,PENDING-SCREENER,
+C8,国际/全球债券,TBD,TBD-C8-002,TBD,PENDING-SCREENER,
+C8,国际/全球债券,TBD,TBD-C8-003,TBD,PENDING-SCREENER,
+C8,国际/全球债券,TBD,TBD-C8-004,TBD,PENDING-SCREENER,
+C8,国际/全球债券,TBD,TBD-C8-005,TBD,PENDING-SCREENER,
+C8,国际/全球债券,TBD,TBD-C8-006,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2050,VFIFX,US-domiciled,FOUSA05HZH
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2045,VTIVX,US-domiciled,FOUSA04B9A
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2055,VFFVX,US-domiciled,F00000ISUB
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2035,VTTHX,US-domiciled,FOUSA04B99
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2030,VTHRX,US-domiciled,FOUSA05HZE
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2025,VTTVX,US-domiciled,FOUSA04B98
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2060,VTTSX,US-domiciled,F00000N8OD
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2065,VLXVX,US-domiciled,F00000YE51
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2020,VTWNX,US-domiciled,FOUSA05HZD
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2040,VFORX,US-domiciled,FOUSA05HZF
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement Income,VTINX,US-domiciled,FOUSA04B9B
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2015,VTXVX,US-domiciled,
+D1,Vanguard 目标日期,Vanguard,Vanguard Target Retirement 2050 Select,VSFFX,US-domiciled,
+D1,Vanguard 目标日期,TBD,TBD-D1-001,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-002,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-003,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-004,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-005,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-006,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-007,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-008,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-009,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-010,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-011,TBD,PENDING-SCREENER,
+D1,Vanguard 目标日期,TBD,TBD-D1-012,TBD,PENDING-SCREENER,
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2050,FFFHX,US-domiciled,FOUSA05HWM
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2055,FDEWX,US-domiciled,F00000MJ3M
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2040,FFTFX,US-domiciled,FOUSA00J4U
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2030,FDEEX,US-domiciled,F00000MJ3L
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2060,FDKVX,US-domiciled,F00000TGN8
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2045,FFFGX,US-domiciled,FOUSA05HWL
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2035,FFTHX,US-domiciled,FOUSA04BCQ
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2025,FFTWX,US-domiciled,FOUSA04BCP
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2020,FFFDX,US-domiciled,FOUSA00HPA
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Income,FFFAX,US-domiciled,FOUSA00GKA
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom 2065,FFSZX,US-domiciled,F000013DKI
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2050,FIPFX,US-domiciled,F0000043QA
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2040,FBIFX,US-domiciled,F0000043QG
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2030,FXIFX,US-domiciled,F0000043QH
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2060,FDIFX,US-domiciled,FOUSA04AYQ
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2045,FIOFX,US-domiciled,F0000043QK
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2035,FIHFX,US-domiciled,F0000043QC
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2025,FQIFX,US-domiciled,F0000043QL
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2020,FPIFX,US-domiciled,F0000043QP
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index Income,FIKFX,US-domiciled,F0000043QO
+D2,Fidelity 目标日期,Fidelity,Fidelity Freedom Index 2065,FFIJX,US-domiciled,F000013DKR
+D2,Fidelity 目标日期,Fidelity,Fidelity Advisor Freedom 2050,FFAZX,US-domiciled,
+D2,Fidelity 目标日期,Fidelity,Fidelity Advisor Freedom 2045,FFFZX,US-domiciled,FOUSA05HWA
+D2,Fidelity 目标日期,Fidelity,Fidelity Advisor Freedom 2055,FDEZX,US-domiciled,F000010TXV
+D2,Fidelity 目标日期,Fidelity,Fidelity Advisor Freedom 2060,FDEYX,US-domiciled,
+D3,其他管理人 目标日期,Schwab,Schwab Target 2055,SWYJX,US-domiciled,F00000XBK6
+D3,其他管理人 目标日期,Schwab,Schwab Target 2050,SWORX,US-domiciled,F00000OYB3
+D3,其他管理人 目标日期,Schwab,Schwab Target 2045,SWYNX,US-domiciled,F00000XBK8
+D3,其他管理人 目标日期,Schwab,Schwab Target 2040,SWYFX,US-domiciled,F00000XBJC
+D3,其他管理人 目标日期,Schwab,Schwab Target 2035,SWYEX,US-domiciled,F00000XBI9
+D3,其他管理人 目标日期,Schwab,Schwab Target 2030,SWNRX,US-domiciled,F00000OYB2
+D3,其他管理人 目标日期,Schwab,Schwab Target 2025,SWYAX,US-domiciled,F00000XBI1
+D3,其他管理人 目标日期,Schwab,Schwab Target 2020,SWYLX,US-domiciled,F00000XBI5
+D3,其他管理人 目标日期,Schwab,Schwab Target Income,SWLRX,US-domiciled,FOUSA06R8Z
+D3,其他管理人 目标日期,T. Rowe Price,T. Rowe Price Retirement 2055,TRRJX,US-domiciled,FOUSA0565C
+D3,其他管理人 目标日期,T. Rowe Price,T. Rowe Price Retirement 2050,TRRMX,US-domiciled,FOUSA068A0
+D3,其他管理人 目标日期,T. Rowe Price,T. Rowe Price Retirement 2045,RRJTX,US-domiciled,
+D3,其他管理人 目标日期,T. Rowe Price,T. Rowe Price Retirement 2040,TRRDX,US-domiciled,FOUSA02VND
+D3,其他管理人 目标日期,T. Rowe Price,T. Rowe Price Retirement 2030,TRRCX,US-domiciled,FOUSA02VNC
+D3,其他管理人 目标日期,T. Rowe Price,T. Rowe Price Retirement 2025,TRRHX,US-domiciled,FOUSA0565B
+D3,其他管理人 目标日期,T. Rowe Price,T. Rowe Price Retirement 2020,TRRAX,US-domiciled,FOUSA02VNA
+D3,其他管理人 目标日期,T. Rowe Price,T. Rowe Price Retirement Income,TRRIX,US-domiciled,FOUSA02VN9
+D3,其他管理人 目标日期,American Funds,American Funds 2055 Target Date R6,RFKTX,US-domiciled,F0000045YA
+D3,其他管理人 目标日期,American Funds,American Funds 2050 Target Date R6,RFETX,US-domiciled,F000002Q7X
+D3,其他管理人 目标日期,American Funds,American Funds 2045 Target Date R6,RFHTX,US-domiciled,F000002Q7V
+D3,其他管理人 目标日期,American Funds,American Funds 2040 Target Date R6,RFGTX,US-domiciled,F000002Q7Y
+D3,其他管理人 目标日期,American Funds,American Funds 2035 Target Date R6,RFJTX,US-domiciled,F000002Q7R
+D3,其他管理人 目标日期,American Funds,American Funds 2030 Target Date R6,RFITX,US-domiciled,F000002Q7W
+D3,其他管理人 目标日期,JPMorgan,JPMorgan SmartRetirement 2055,JFFAX,US-domiciled,F00000NC9R
+D3,其他管理人 目标日期,TBD,TBD-D3-001,TBD,PENDING-SCREENER,
+D4,平衡/生命周期,Vanguard,Vanguard Wellesley Income,VWINX,US-domiciled,FOUSA00FV9
+D4,平衡/生命周期,Vanguard,Vanguard Wellesley Income Admiral,VWIAX,US-domiciled,FOUSA02T3B
+D4,平衡/生命周期,Vanguard,Vanguard Balanced Index Admiral,VBIAX,US-domiciled,FOUSA00LAO
+D4,平衡/生命周期,Vanguard,Vanguard Balanced Index Investor,VBINX,US-domiciled,FOUSA00FQI
+D4,平衡/生命周期,Dodge & Cox,Dodge & Cox Balanced,DODBX,US-domiciled,FOUSA00C3I
+D4,平衡/生命周期,Fidelity,Fidelity Puritan,FPURX,US-domiciled,FOUSA00CI3
+D4,平衡/生命周期,Capital Group,American Funds American Balanced A,ABALX,US-domiciled,FOUSA00B4J
+D4,平衡/生命周期,Oakmark,Oakmark Balanced,OAKBX,US-domiciled,FOUSA00EA6
+D4,平衡/生命周期,Vanguard,Vanguard LifeStrategy Moderate Growth,VSMGX,US-domiciled,FOUSA00FK9
+D4,平衡/生命周期,Vanguard,Vanguard LifeStrategy Growth,VASGX,US-domiciled,FOUSA00D9E
+D4,平衡/生命周期,Vanguard,Vanguard LifeStrategy Conservative Growth,VSCGX,US-domiciled,FOUSA00E6C
+D4,平衡/生命周期,Vanguard,Vanguard LifeStrategy Income,VASIX,US-domiciled,FOUSA00BCR
+D4,平衡/生命周期,Vanguard,Vanguard STAR Fund,VGSTX,US-domiciled,FOUSA00FTJ
+D4,平衡/生命周期,T. Rowe Price,T. Rowe Price Capital Appreciation,PRWCX,US-domiciled,FOUSA00EIU
+D4,平衡/生命周期,Fidelity,Fidelity Balanced,FBALX,US-domiciled,FOUSA00CEL
+D4,平衡/生命周期,Vanguard,Vanguard Wellington,VWELX,US-domiciled,FOUSA00FVM
+D4,平衡/生命周期,Vanguard,Vanguard Wellington Admiral,VWENX,US-domiciled,FOUSA02T18
+D4,平衡/生命周期,Fidelity,Fidelity Asset Manager 60%,FSANX,US-domiciled,FOUSA06LCO
+D4,平衡/生命周期,Fidelity,Fidelity Asset Manager 50%,FASMX,US-domiciled,FOUSA00CEH
+D4,平衡/生命周期,Fidelity,Fidelity Asset Manager 40%,FFANX,US-domiciled,FOUSA06LCJ
+D4,平衡/生命周期,BlackRock,BlackRock Balanced Capital,MALBX,US-domiciled,
+D4,平衡/生命周期,Columbia,Columbia Balanced,CBLAX,US-domiciled,FOUSA02VOM
+D4,平衡/生命周期,MFS,MFS Balanced,MABAX,US-domiciled,FOUSA00DQF
+D4,平衡/生命周期,T. Rowe Price,T. Rowe Price Balanced,RPBAX,US-domiciled,FOUSA00BAN
+D4,平衡/生命周期,American Funds,American Funds Balanced Fund,BALFX,US-domiciled,FOUSA02SQN
+D5,保守/收益配置,iShares,iShares Core Aggressive Allocation ETF,AOA,US-domiciled,FOUSA06VV6
+D5,保守/收益配置,iShares,iShares Core Moderate Allocation ETF,AOM,US-domiciled,FOUSA06VUX
+D5,保守/收益配置,iShares,iShares Core Conservative Allocation ETF,AOK,US-domiciled,FOUSA06VUV
+D5,保守/收益配置,iShares,iShares Core Growth Allocation ETF,AOR,US-domiciled,FOUSA06VV9
+D5,保守/收益配置,WisdomTree,WisdomTree U.S. Efficient Core Fund,NTSX,US-domiciled,F0000105F3
+D5,保守/收益配置,Invesco,Invesco CEF Income Composite ETF,PCEF,US-domiciled,F000005HCQ
+D5,保守/收益配置,Fidelity,Fidelity Four-in-One Index,FFNOX,US-domiciled,FOUSA00JPS
+D5,保守/收益配置,iShares,iShares Morningstar Multi-Asset Income ETF,IYLD,US-domiciled,F00000O2DM
+D5,保守/收益配置,Capital Group,Capital Income Builder,CAIBX,US-domiciled,FOUSA00BKS
+D5,保守/收益配置,BlackRock,BlackRock Multi-Asset Income,BIICX,US-domiciled,FOUSA06P2Z
+D5,保守/收益配置,JPMorgan,JPMorgan Global Allocation,GAOAX,US-domiciled,F00000LMTX
+D5,保守/收益配置,PIMCO,PIMCO All Asset,PASAX,US-domiciled,FOUSA04AO4
+D5,保守/收益配置,T. Rowe Price,T. Rowe Price Personal Strategy Income,PRSIX,US-domiciled,FOUSA00DJE
+D5,保守/收益配置,Fidelity,Fidelity Global Strategies,FDYSX,US-domiciled,
+D5,保守/收益配置,Vanguard,Vanguard Global Wellington,VGWIX,US-domiciled,F00000ZBRV
+D5,保守/收益配置,Schwab,Schwab Monthly Income Fund - Enhanced Payout,SWANX,US-domiciled,FOUSA00KJJ
+D5,保守/收益配置,American Funds,American Funds Global Balanced,GBLBX,US-domiciled,
+D5,保守/收益配置,First Trust,First Trust Multi-Asset Diversified Income,MDIV,US-domiciled,F00000OOW8
+D5,保守/收益配置,Fidelity,Fidelity Global Multi-Asset Income,FADMX,US-domiciled,F0000104K7
+D5,保守/收益配置,John Hancock,John Hancock Multifactor Large Cap,JHML,US-domiciled,F00000VQNA
+D5,保守/收益配置,MFS,MFS Global Total Return,MFWTX,US-domiciled,FOUSA00DOC
+D5,保守/收益配置,Vanguard,Vanguard Multi-Fund Portfolio,VMPFX,US-domiciled,
+D5,保守/收益配置,Nuveen,Nuveen Global Equity Income,NGEIX,US-domiciled,
+D5,保守/收益配置,Franklin,Franklin Global Real Estate,FRGEX,US-domiciled,
+D5,保守/收益配置,TBD,TBD-D5-001,TBD,PENDING-SCREENER,
+E1,商品/黄金/能源,SPDR (State Street),SPDR Gold Shares,GLD,US-domiciled,FEUSA04AD2
+E1,商品/黄金/能源,iShares,iShares Silver Trust,SLV,US-domiciled,FEUSA04AFA
+E1,商品/黄金/能源,United States,United States Oil Fund,USO,US-domiciled,FEUSA04AF4
+E1,商品/黄金/能源,Invesco,Invesco DB Commodity Index Tracking Fund,DBC,US-domiciled,FEUSA04AF2
+E1,商品/黄金/能源,Invesco,Invesco Optimum Yield Diversified Commodity Strategy No K-1 ETF,PDBC,US-domiciled,F00000SDI0
+E1,商品/黄金/能源,iShares,iShares Gold Trust,IAU,US-domiciled,FEUSA04AD5
+E1,商品/黄金/能源,abrdn,abrdn Physical Gold Shares ETF,SGOL,US-domiciled,F00000412U
+E1,商品/黄金/能源,VanEck,VanEck Gold Miners ETF,GDX,US-domiciled,FEUSA04AFG
+E1,商品/黄金/能源,VanEck,VanEck Junior Gold Miners ETF,GDXJ,US-domiciled,F00000412F
+E1,商品/黄金/能源,abrdn,abrdn Physical Platinum Shares ETF,PPLT,US-domiciled,F000005NOE
+E1,商品/黄金/能源,SPDR (State Street),SPDR Gold MiniShares Trust,GLDM,US-domiciled,F000010PZ8
+E1,商品/黄金/能源,Global X,Global X Copper Miners ETF,COPX,US-domiciled,F000008R30
+E1,商品/黄金/能源,Invesco,Invesco DB Agriculture Fund,DBA,US-domiciled,FOUSA069V4
+E1,商品/黄金/能源,Invesco,Invesco DB US Dollar Index Bullish Fund,UUP,US-domiciled,FOUSA06B4X
+E1,商品/黄金/能源,Global X,Global X Uranium ETF,URA,US-domiciled,F00000HH7X
+E1,商品/黄金/能源,iShares,iShares MSCI Global Gold Miners ETF,RING,US-domiciled,F00000NFMJ
+E1,商品/黄金/能源,SPDR (State Street),SPDR S&P Oil & Gas Exploration & Production ETF,XOP,US-domiciled,FEUSA04AG8
+E1,商品/黄金/能源,VanEck,VanEck Oil Services ETF,OIH,US-domiciled,F00000MVJ8
+E1,商品/黄金/能源,iShares,iShares U.S. Oil & Gas Exploration & Production ETF,IEO,US-domiciled,FEUSA04AFB
+E1,商品/黄金/能源,First Trust,First Trust Natural Gas ETF,FCG,US-domiciled,FOUSA06IB7
+E1,商品/黄金/能源,Teucrium,Teucrium Wheat Fund,WEAT,US-domiciled,F00000ITFC
+E1,商品/黄金/能源,Teucrium,Teucrium Corn Fund,CORN,US-domiciled,F00000H15R
+E1,商品/黄金/能源,Invesco,Invesco DB Oil Fund,DBO,US-domiciled,FOUSA069V0
+E1,商品/黄金/能源,Global X,Global X Lithium & Battery Tech ETF,LIT,US-domiciled,F00000HH7Z
+E1,商品/黄金/能源,iShares,iShares Global Energy ETF,IXC,US-domiciled,FEUSA00032
+E2,REIT/房地产,Vanguard,Vanguard Real Estate ETF,VNQ,US-domiciled,FEUSA04ACZ
+E2,REIT/房地产,Schwab,Schwab U.S. REIT ETF,SCHH,US-domiciled,F00000JTW9
+E2,REIT/房地产,iShares,iShares U.S. Real Estate ETF,IYR,US-domiciled,FEUSA00013
+E2,REIT/房地产,Vanguard,Vanguard Real Estate Index Fund,VGSIX,US-domiciled,FOUSA00KI9
+E2,REIT/房地产,Fidelity,Fidelity Real Estate Index,FSRNX,US-domiciled,F00000MJRT
+E2,REIT/房地产,SPDR (State Street),SPDR Dow Jones REIT ETF,RWR,US-domiciled,FEUSA0002O
+E2,REIT/房地产,iShares,iShares Core U.S. REIT ETF,USRT,US-domiciled,FOUSA06GJE
+E2,REIT/房地产,Fidelity,Fidelity MSCI Real Estate Index ETF,FREL,US-domiciled,F00000UP6S
+E2,REIT/房地产,iShares,iShares Cohen & Steers REIT ETF,ICF,US-domiciled,FEUSA0002L
+E2,REIT/房地产,Real Estate Select Sector,Real Estate Select Sector SPDR Fund,XLRE,US-domiciled,F00000W4CI
+E2,REIT/房地产,Vanguard,Vanguard Real Estate II Index,VRTPX,US-domiciled,F00000ZA3X
+E2,REIT/房地产,T. Rowe Price,T. Rowe Price Real Estate,TRREX,US-domiciled,FOUSA00HCC
+E2,REIT/房地产,Fidelity,Fidelity Real Estate Income,FRIFX,US-domiciled,FOUSA02W3Q
+E2,REIT/房地产,Cohen & Steers,Cohen & Steers Realty Shares,CSRSX,US-domiciled,FOUSA00BP7
+E2,REIT/房地产,Principal,Principal Real Estate Securities,PRESX,US-domiciled,FOUSA00EIX
+E2,REIT/房地产,American Century,American Century Real Estate,AREEX,US-domiciled,FOUSA00KB2
+E2,REIT/房地产,BlackRock,BlackRock Global Real Estate,BREIX,US-domiciled,F0000045YC
+E2,REIT/房地产,Nuveen,Nuveen Real Estate Securities,FREEX,US-domiciled,FOUSA00DDU
+E2,REIT/房地产,Invesco,Invesco Real Estate Fund,IARAX,US-domiciled,FOUSA00HFL
+E2,REIT/房地产,JPMorgan,JPMorgan U.S. Real Estate,JUSRX,ticker精确匹配；Morningstar名称=JPMorgan US Equity R5 (CSV原名可能笔误),FOUSA05HQC
+E2,REIT/房地产,Morgan Stanley,Morgan Stanley Global Real Estate,MSREX,US-domiciled,
+E2,REIT/房地产,Hartford,Hartford Real Asset,HRAAX,US-domiciled,F00000GYIQ
+E2,REIT/房地产,Cohen & Steers,Cohen & Steers Total Return Realty,CTRRX,US-domiciled,
+E2,REIT/房地产,TBD,TBD-E2-001,TBD,PENDING-SCREENER,
+E2,REIT/房地产,TBD,TBD-E2-002,TBD,PENDING-SCREENER,
+E3,行业板块 ETF,Materials Select Sector,Materials Select Sector SPDR Fund,XLB,US-domiciled,FEUSA00005
+E3,行业板块 ETF,Energy Select Sector,Energy Select Sector SPDR Fund,XLE,US-domiciled,FEUSA00009
+E3,行业板块 ETF,Financial Select Sector,Financial Select Sector SPDR Fund,XLF,US-domiciled,FEUSA0000A
+E3,行业板块 ETF,Industrial Select Sector,Industrial Select Sector SPDR Fund,XLI,US-domiciled,FEUSA0000B
+E3,行业板块 ETF,Technology Select Sector,Technology Select Sector SPDR Fund,XLK,US-domiciled,FEUSA0000C
+E3,行业板块 ETF,Consumer Staples Select Sector,Consumer Staples Select Sector SPDR Fund,XLP,US-domiciled,FEUSA00007
+E3,行业板块 ETF,Utilities Select Sector,Utilities Select Sector SPDR Fund,XLU,US-domiciled,FEUSA0000D
+E3,行业板块 ETF,Health Care Select Sector,Health Care Select Sector SPDR Fund,XLV,US-domiciled,FEUSA00006
+E3,行业板块 ETF,Consumer Discretionary Select Sector,Consumer Discretionary Select Sector SPDR Fund,XLY,US-domiciled,FEUSA00008
+E3,行业板块 ETF,Vanguard,Vanguard Health Care ETF,VHT,US-domiciled,FEUSA04ACB
+E3,行业板块 ETF,Vanguard,Vanguard Information Technology ETF,VGT,US-domiciled,FEUSA04ACD
+E3,行业板块 ETF,Vanguard,Vanguard Financials ETF,VFH,US-domiciled,FEUSA04ACA
+E3,行业板块 ETF,Vanguard,Vanguard Consumer Discretionary ETF,VCR,US-domiciled,FEUSA04AC7
+E3,行业板块 ETF,Vanguard,Vanguard Consumer Staples ETF,VDC,US-domiciled,FEUSA04AC8
+E3,行业板块 ETF,Vanguard,Vanguard Energy ETF,VDE,US-domiciled,FEUSA04AC9
+E3,行业板块 ETF,Vanguard,Vanguard Materials ETF,VAW,US-domiciled,FEUSA04ACE
+E3,行业板块 ETF,Vanguard,Vanguard Industrials ETF,VIS,US-domiciled,FEUSA04ACC
+E3,行业板块 ETF,Vanguard,Vanguard Utilities ETF,VPU,US-domiciled,FEUSA04ACG
+E3,行业板块 ETF,iShares,iShares U.S. Technology ETF,IYW,US-domiciled,FEUSA0000X
+E3,行业板块 ETF,iShares,iShares U.S. Healthcare ETF,IYH,US-domiciled,FEUSA0000V
+E3,行业板块 ETF,iShares,iShares U.S. Financials ETF,IYF,US-domiciled,FEUSA0000U
+E3,行业板块 ETF,iShares,iShares U.S. Energy ETF,IYE,US-domiciled,FEUSA0000T
+E3,行业板块 ETF,iShares,iShares U.S. Consumer Discretionary ETF,IYC,US-domiciled,FEUSA0000R
+E3,行业板块 ETF,Fidelity,Fidelity MSCI Information Technology Index ETF,FTEC,US-domiciled,F00000Q7RX
+E3,行业板块 ETF,TBD,TBD-E3-001,TBD,PENDING-SCREENER,
+E4,主题/科技/医药/杠杆,VanEck,VanEck Semiconductor ETF,SMH,US-domiciled,F00000MVJB
+E4,主题/科技/医药/杠杆,Defiance,Defiance Quantum ETF,QTUM,US-domiciled,F000010GQS
+E4,主题/科技/医药/杠杆,Invesco,Invesco Aerospace & Defense ETF,PPA,US-domiciled,FEUSA04ADX
+E4,主题/科技/医药/杠杆,ARK,ARK Innovation ETF,ARKK,US-domiciled,F00000QERN
+E4,主题/科技/医药/杠杆,ARK,ARK Genomics ETF,ARKG,US-domiciled,F00000QERL
+E4,主题/科技/医药/杠杆,ARK,ARK Next Generation Internet ETF,ARKW,US-domiciled,F00000QERO
+E4,主题/科技/医药/杠杆,ARK,ARK Fintech Innovation ETF,ARKF,US-domiciled,F000011I6V
+E4,主题/科技/医药/杠杆,iShares,iShares Biotechnology ETF,IBB,US-domiciled,FEUSA0002M
+E4,主题/科技/医药/杠杆,SPDR (State Street),SPDR S&P Biotech ETF,XBI,US-domiciled,FEUSA04AER
+E4,主题/科技/医药/杠杆,Fidelity,Fidelity Select Technology,FSPTX,US-domiciled,FOUSA00CJE
+E4,主题/科技/医药/杠杆,Fidelity,Fidelity Select Health Care,FSHCX,US-domiciled,FOUSA00CIU
+E4,主题/科技/医药/杠杆,Vanguard,Vanguard Health Care Fund,VGHCX,US-domiciled,FOUSA00FTZ
+E4,主题/科技/医药/杠杆,Fidelity,Fidelity Select Software and IT Services,FSCSX,US-domiciled,FOUSA00CJC
+E4,主题/科技/医药/杠杆,Fidelity,Fidelity Select Semiconductors,FSELX,US-domiciled,FOUSA00CIJ
+E4,主题/科技/医药/杠杆,iShares,iShares Expanded Tech-Software Sector ETF,IGV,US-domiciled,FEUSA0002S
+E4,主题/科技/医药/杠杆,iShares,iShares Semiconductor ETF,SOXX,US-domiciled,FEUSA0002R
+E4,主题/科技/医药/杠杆,First Trust,First Trust Dow Jones Internet Index Fund,FDN,US-domiciled,FEUSA04AGY
+E4,主题/科技/医药/杠杆,Direxion,Direxion Daily Semiconductor Bull 3X Shares,SOXL,US-domiciled,F00000GY41
+E4,主题/科技/医药/杠杆,Direxion,Direxion Daily Technology Bull 3X Shares,TECL,US-domiciled,FOUSA07XW4
+E4,主题/科技/医药/杠杆,Direxion,Direxion Daily Financial Bull 3X Shares,FAS,US-domiciled,FOUSA07XVN
+E4,主题/科技/医药/杠杆,Global X,Global X Robotics & Artificial Intelligence ETF,BOTZ,US-domiciled,F00000X8Q6
+E4,主题/科技/医药/杠杆,iShares,iShares Expanded Tech Sector ETF,IGM,US-domiciled,FEUSA0002N
+E4,主题/科技/医药/杠杆,Vanguard,Vanguard Communication Services ETF,VOX,US-domiciled,FEUSA04ACF
+E4,主题/科技/医药/杠杆,Global X,Global X Cloud Computing ETF,CLOU,US-domiciled,F000011TP4
+E4,主题/科技/医药/杠杆,TBD,TBD-E4-001,TBD,PENDING-SCREENER,
+E5,另类/多策略,IQ,IQ Hedge Multi-Strategy Tracker ETF,QAI,US-domiciled,FOUSA08POD
+E5,另类/多策略,IQ,IQ Merger Arbitrage ETF,MNA,US-domiciled,F000002PIJ
+E5,另类/多策略,AGFiQ,AGFiQ U.S. Market Neutral Anti-Beta Fund,BTAL,US-domiciled,F00000MM7Z
+E5,另类/多策略,Global X,Global X MLP ETF,MLPA,US-domiciled,F00000MDEO
+E5,另类/多策略,VanEck,VanEck Vectors MLP Income ETF,AMLP,US-domiciled,F00000IT24
+E5,另类/多策略,ProShares,ProShares VIX Short-Term Futures ETF,VIXY,US-domiciled,F00000LI7E
+E5,另类/多策略,iShares,iShares Preferred and Income Securities ETF,PFF,US-domiciled,FOUSA06BRX
+E5,另类/多策略,Invesco,Invesco Preferred ETF,PGX,US-domiciled,FOUSA06MLK
+E5,另类/多策略,VanEck,VanEck Morningstar Wide Moat ETF,MOAT,US-domiciled,F00000O2CJ
+E5,另类/多策略,AQR,AQR Large Cap Defensive Style Fund,AUEIX,US-domiciled,F00000O4CY
+E5,另类/多策略,Goldman Sachs,Goldman Sachs Managed Futures Strategy,GMFIX,US-domiciled,
+E5,另类/多策略,PIMCO,PIMCO Trends Managed Futures Strategy,PQTIX,US-domiciled,F00000QBS9
+E5,另类/多策略,Invesco,Invesco Global Real Estate,GASFX,US-domiciled,FOUSA00B75
+E5,另类/多策略,Vanguard,Vanguard Global Minimum Volatility ETF,VMVFX,US-domiciled,F00000QHIO
+E5,另类/多策略,Fidelity,Fidelity Alternative Strategies,FASIX,US-domiciled,FOUSA00CEJ
+E5,另类/多策略,BlackRock,BlackRock Global Long/Short Credit,BGCAX,US-domiciled,F00000MMV4
+E5,另类/多策略,AQR,AQR Multi-Strategy Fund,AQMIX,US-domiciled,F0000045SG
+E5,另类/多策略,Stone Ridge,Stone Ridge All Asset Variance Risk Premium,SRAIX,US-domiciled,
+E5,另类/多策略,Cliffwater,Cliffwater Enhanced Lending Fund,CELFX,US-domiciled,F0000194HZ
+E5,另类/多策略,KKR,KKR Alternative Opportunities Fund,KAOFX,US-domiciled,
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan U.S. Quality Factor ETF,JQUA,US-domiciled,F00000ZD3V
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan U.S. Value Factor ETF,JVAL,US-domiciled,F00000ZD3R
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan U.S. Momentum Factor ETF,JMOM,US-domiciled,F00000ZD3U
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan Growth Advantage ETF,JGRO,US-domiciled,F00001DYKH
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan Diversified Return U.S. Mid Cap Equity ETF,JPME,US-domiciled,F00000WVVK
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan U.S. Dividend ETF,JDIV,US-domiciled,F00001L4OD
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan Income Builder,JNBAX,US-domiciled,FOUSA06IJZ
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan Equity Income,OIEIX,US-domiciled,FOUSA00D8V
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan Large Cap Growth,SEEGX,US-domiciled,FOUSA00FDW
+F1,JPMorgan/GS 旗舰,JPMorgan,JPMorgan U.S. Equity Fund,JUEAX,US-domiciled,FOUSA02TN1
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs ActiveBeta U.S. Small Cap Equity ETF,GSSC,US-domiciled,F00000V48F
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs Hedge Industry VIP ETF,GVIP,US-domiciled,F00000WUPJ
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs ActiveBeta International Equity ETF,GSIE,US-domiciled,F00000V48G
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs ActiveBeta Emerging Markets Equity ETF,GEM,US-domiciled,F00000V48B
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs Growth Opportunities,GGOIX,US-domiciled,FOUSA00JEH
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs U.S. Equity Dividend and Premium,GSPAX,US-domiciled,FOUSA05CFI
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs U.S. Equity Insights,GUSEX,US-domiciled,
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs Large Cap Core,GSCGX,US-domiciled,FOUSA00D0H
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs Small Cap Value Insights,GSVIX,US-domiciled,
+F1,JPMorgan/GS 旗舰,Goldman Sachs,Goldman Sachs China Equity,GSCEX,US-domiciled,
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Washington Mutual A,AWSHX,US-domiciled,FOUSA00FUP
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Fundamental Investors A,ANCFX,US-domiciled,FOUSA00CTS
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Europacific Growth A,AEPGX,US-domiciled,FOUSA00CBJ
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Global Growth A,RGFAX,US-domiciled,F00000NM0Z
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Capital World Bond A,CWBFX,US-domiciled,FOUSA00BKK
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Corporate Bond A,BFCAX,US-domiciled,F00000OSX7
+F2,American Funds/Capital Group 补充,Capital Group,American Funds High-Income Trust A,AHITX,US-domiciled,FOUSA00B4M
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Global Small Capitalization A,GSCAX,US-domiciled,FOUSA06BKX
+F2,American Funds/Capital Group 补充,Capital Group,Capital Group U.S. Equity ETF,CGUS,US-domiciled,F00001CJWS
+F2,American Funds/Capital Group 补充,Capital Group,Capital Group Dividend Value ETF,CGDV,US-domiciled,F00001CJWU
+F2,American Funds/Capital Group 补充,Capital Group,American Funds New Economy A,ANEFX,US-domiciled,FOUSA00E5P
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Growth and Income A,GAIFX,US-domiciled,F00000NM05
+F2,American Funds/Capital Group 补充,Capital Group,American Funds World Growth and Income A,QWGFX,US-domiciled,FOUSA00BK7
+F2,American Funds/Capital Group 补充,Capital Group,American Funds American High-Income Municipal A,AMHIX,US-domiciled,FOUSA00BU6
+F2,American Funds/Capital Group 补充,Capital Group,American Funds Mortgage A,RMEAX,US-domiciled,F00000JNWX
+F2,American Funds/Capital Group 补充,Capital Group,Capital Group Core Plus Income ETF,CGCP,US-domiciled,F00001CJWT
+F2,American Funds/Capital Group 补充,TBD,TBD-F2-001,TBD,PENDING-SCREENER,
+F2,American Funds/Capital Group 补充,TBD,TBD-F2-002,TBD,PENDING-SCREENER,
+F2,American Funds/Capital Group 补充,TBD,TBD-F2-003,TBD,PENDING-SCREENER,
+F2,American Funds/Capital Group 补充,TBD,TBD-F2-004,TBD,PENDING-SCREENER,
+F3,Dimensional/Avantis/WisdomTree 补充,Dimensional,Dimensional U.S. Targeted Value ETF,DFAT,US-domiciled,F0000162E9
+F3,Dimensional/Avantis/WisdomTree 补充,Dimensional,Dimensional U.S. Small Cap ETF,DFAS,US-domiciled,F0000162EE
+F3,Dimensional/Avantis/WisdomTree 补充,Dimensional,Dimensional U.S. Marketwide Value ETF,DFUV,US-domiciled,F00001CXTS
+F3,Dimensional/Avantis/WisdomTree 补充,Dimensional,Dimensional Emerging Markets Core Equity ETF,DFAE,US-domiciled,F000015DSH
+F3,Dimensional/Avantis/WisdomTree 补充,Dimensional,Dimensional Global Real Estate ETF,DFGR,US-domiciled,F00001EH8Q
+F3,Dimensional/Avantis/WisdomTree 补充,Dimensional,Dimensional World ex U.S. Core Equity 2 ETF,DFAX,US-domiciled,F0000162ED
+F3,Dimensional/Avantis/WisdomTree 补充,Dimensional,Dimensional U.S. Sustainability Core 1 ETF,DFSU,US-domiciled,F00001DQ79
+F3,Dimensional/Avantis/WisdomTree 补充,Avantis,Avantis Core Fixed Income ETF,AVIG,US-domiciled,F000015BF1
+F3,Dimensional/Avantis/WisdomTree 补充,Avantis,Avantis Inflation Focused Equity ETF,AVIE,US-domiciled,F00001E3LE
+F3,Dimensional/Avantis/WisdomTree 补充,WisdomTree,WisdomTree U.S. Total Dividend Fund,DTD,US-domiciled,FEUSA04AFS
+F3,Dimensional/Avantis/WisdomTree 补充,WisdomTree,WisdomTree U.S. SmallCap Fund,EES,US-domiciled,FOUSA06B5Y
+F3,Dimensional/Avantis/WisdomTree 补充,WisdomTree,WisdomTree U.S. MidCap Fund,EZM,US-domiciled,FOUSA06B5X
+F3,Dimensional/Avantis/WisdomTree 补充,WisdomTree,WisdomTree U.S. Quality Dividend Growth Fund,DGRW,US-domiciled,F00000PMNI
+F3,Dimensional/Avantis/WisdomTree 补充,WisdomTree,WisdomTree U.S. High Dividend Fund,DHS,US-domiciled,FEUSA04AFT
+F3,Dimensional/Avantis/WisdomTree 补充,WisdomTree,WisdomTree Europe Hedged Equity Fund,HEDJ,US-domiciled,FOUSA06XOB
+F3,Dimensional/Avantis/WisdomTree 补充,WisdomTree,WisdomTree Japan SmallCap Dividend Fund,DFJ,US-domiciled,FEUSA04AG3
+F3,Dimensional/Avantis/WisdomTree 补充,TBD,TBD-F3-001,TBD,PENDING-SCREENER,
+F3,Dimensional/Avantis/WisdomTree 补充,TBD,TBD-F3-002,TBD,PENDING-SCREENER,
+F3,Dimensional/Avantis/WisdomTree 补充,TBD,TBD-F3-003,TBD,PENDING-SCREENER,
+F3,Dimensional/Avantis/WisdomTree 补充,TBD,TBD-F3-004,TBD,PENDING-SCREENER,
+F4,T. Rowe/MFS/Franklin/Janus 补充,T. Rowe Price,T. Rowe Price Growth & Income,PRGIX,US-domiciled,
+F4,T. Rowe/MFS/Franklin/Janus 补充,T. Rowe Price,T. Rowe Price Equity Index 500,PREIX,US-domiciled,FOUSA00EJ0
+F4,T. Rowe/MFS/Franklin/Janus 补充,T. Rowe Price,T. Rowe Price Science & Technology,PRSCX,US-domiciled,FOUSA00EKD
+F4,T. Rowe/MFS/Franklin/Janus 补充,T. Rowe Price,T. Rowe Price Health Sciences,PRHSX,US-domiciled,FOUSA00J6Q
+F4,T. Rowe/MFS/Franklin/Janus 补充,T. Rowe Price,T. Rowe Price Financial Services,PRISX,US-domiciled,FOUSA00GJO
+F4,T. Rowe/MFS/Franklin/Janus 补充,T. Rowe Price,T. Rowe Price Real Assets,PRAFX,US-domiciled,F00000HGTS
+F4,T. Rowe/MFS/Franklin/Janus 补充,MFS,MFS Massachusetts Investors Trust,MITTX,US-domiciled,FOUSA00DP3
+F4,T. Rowe/MFS/Franklin/Janus 补充,MFS,MFS International Diversification,MDIIX,US-domiciled,FOUSA00JH4
+F4,T. Rowe/MFS/Franklin/Janus 补充,MFS,MFS Global Equity,MWEFX,US-domiciled,FOUSA00EZG
+F4,T. Rowe/MFS/Franklin/Janus 补充,MFS,MFS Research International,MRISX,US-domiciled,
+F4,T. Rowe/MFS/Franklin/Janus 补充,Franklin,Franklin Income,FKINX,US-domiciled,FOUSA00CSN
+F4,T. Rowe/MFS/Franklin/Janus 补充,Franklin,Franklin Mutual Shares,TESIX,US-domiciled,FOUSA00FZ2
+F4,T. Rowe/MFS/Franklin/Janus 补充,Franklin,Franklin Utilities,FKUTX,US-domiciled,FOUSA00CTN
+F4,T. Rowe/MFS/Franklin/Janus 补充,Franklin,Franklin U.S. Government Securities,FKUSX,US-domiciled,FOUSA00CTH
+F4,T. Rowe/MFS/Franklin/Janus 补充,Franklin,Franklin California Tax-Free Income,FCTFX,US-domiciled,FOUSA00CEG
+F4,T. Rowe/MFS/Franklin/Janus 补充,Janus Henderson,Janus Henderson Global Technology and Innovation,JATAX,US-domiciled,F000002PFB
+F4,T. Rowe/MFS/Franklin/Janus 补充,Janus Henderson,Janus Henderson Balanced,JABAX,US-domiciled,FOUSA00D9Q
+F4,T. Rowe/MFS/Franklin/Janus 补充,Janus Henderson,Janus Henderson Global Equity Income,HFQAX,US-domiciled,FOUSA05JUB
+F4,T. Rowe/MFS/Franklin/Janus 补充,Janus Henderson,Janus Henderson Sustainable Equity,JANWX,US-domiciled,F000005IK9
+F4,T. Rowe/MFS/Franklin/Janus 补充,Janus Henderson,Janus Henderson U.S. Venture,JAVTX,US-domiciled,FOUSA00D9Y
+F5,BNY/Northern/Columbia/Hartford/其他,Northern,Northern Stock Index,NOSIX,US-domiciled,FOUSA00KTN
+F5,BNY/Northern/Columbia/Hartford/其他,Northern,Northern Small Cap Index,NSIDX,US-domiciled,FOUSA00H2N
+F5,BNY/Northern/Columbia/Hartford/其他,Northern,Northern International Equity Index,NOINX,US-domiciled,FOUSA05BL3
+F5,BNY/Northern/Columbia/Hartford/其他,Northern,Northern Global Sustainability Index,NSRIX,US-domiciled,FOUSA06L9E
+F5,BNY/Northern/Columbia/Hartford/其他,BNY Mellon,BNY Mellon S&P 500 Index,PEOPX,US-domiciled,FOUSA00EF0
+F5,BNY/Northern/Columbia/Hartford/其他,BNY Mellon,BNY Mellon Tax-Managed Growth,DGTSX,US-domiciled,FOUSA05841
+F5,BNY/Northern/Columbia/Hartford/其他,Columbia,Columbia Select Large Cap Growth,UMBMX,US-domiciled,FOUSA05J32
+F5,BNY/Northern/Columbia/Hartford/其他,Columbia,Columbia Large Cap Value,GIBLX,US-domiciled,F00000VEFQ
+F5,BNY/Northern/Columbia/Hartford/其他,Columbia,Columbia Acorn,LACAX,US-domiciled,FOUSA00LAL
+F5,BNY/Northern/Columbia/Hartford/其他,Columbia,Columbia Strategic Income,CPRIX,US-domiciled,
+F5,BNY/Northern/Columbia/Hartford/其他,Hartford,Hartford Core Equity,HLGQX,US-domiciled,
+F5,BNY/Northern/Columbia/Hartford/其他,Hartford,Hartford International Opportunities,HIOAX,US-domiciled,
+F5,BNY/Northern/Columbia/Hartford/其他,Hartford,Hartford Schroders International Stock,SCIIX,US-domiciled,FOUSA00CKS
+F5,BNY/Northern/Columbia/Hartford/其他,Hartford,Hartford Growth Opportunities,HGOVX,US-domiciled,F00000U60P
+F5,BNY/Northern/Columbia/Hartford/其他,Victory,Victory Capital Diversified Stock,SRTIX,US-domiciled,
+F5,BNY/Northern/Columbia/Hartford/其他,Victory,Victory Tax-Managed Balanced,UXTAX,US-domiciled,
+F5,BNY/Northern/Columbia/Hartford/其他,Federated,Federated Hermes Kaufmann Large Cap,KLCIX,US-domiciled,FOUSA06LDG
+F5,BNY/Northern/Columbia/Hartford/其他,Federated,Federated Hermes Total Return Bond,FTRBX,US-domiciled,FOUSA00EKY
+F5,BNY/Northern/Columbia/Hartford/其他,American Century,American Century Mid Cap Value,AVUAX,US-domiciled,FOUSA05C76
+F5,BNY/Northern/Columbia/Hartford/其他,Nuveen,Nuveen Core Equity,FGLGX,US-domiciled,F00000OWIL

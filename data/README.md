@@ -14,7 +14,17 @@
 | **`market/`** | 日线收盘价、宏观指标 | Tencent / Eastmoney / yfinance | 每日 |
 | **`earnings/`** | 季度财报快照（JSON）| 公开财报 / Morningstar MCP | 每季 |
 | **`factors/`** | 计算后的因子值（Capex/Rev、Q/Q 增速等）| 由 subagent 计算 | 每季 |
+| **`fund_db/`** | 基金数据库设计 + 快照（13 表规范化存储）| Morningstar / FactSet MCP | 日/周/月 视表而定 |
 | **`cache/`** | 临时缓存（中间结果、聚合数据）| 各 subagent | 30 天清 |
+
+### `fund_db/` 子说明
+
+不同于其他子目录以"原始数据文件"为主，`fund_db/` 是一个**结构化数据库项目**：
+
+- 顶层为设计规格书（`schema_v1.0.md`）
+- 落地后会有 DDL 脚本、参考数据快照、衍生缓存
+- 数据源以 Morningstar + FactSet MCP 为主（自动入库率 ≥ 90%）
+- 详见 [`fund_db/README.md`](./fund_db/README.md)
 
 ---
 

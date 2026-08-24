@@ -1,0 +1,937 @@
+{
+ "F00000ZD3V": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P000000GY",
+    "Apple Inc",
+    2.0766
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    2.03347
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    2.02323
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    1.82883
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    1.82157
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    1.81033
+   ],
+   [
+    "0P00000220",
+    "ExxonMobil Holdings Corp",
+    1.78023
+   ],
+   [
+    "0P0000006A",
+    "Advanced Micro Devices Inc",
+    1.73976
+   ],
+   [
+    "0P0000CPCP",
+    "Visa Inc Class A",
+    1.6987
+   ],
+   [
+    "0P0000032S",
+    "Johnson & Johnson",
+    1.69196
+   ]
+  ]
+ },
+ "F00000ZD3R": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    2.11942
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    2.04911
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    1.87332
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    1.86503
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    1.81385
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    1.72068
+   ],
+   [
+    "0P0000032S",
+    "Johnson & Johnson",
+    1.6727
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.64746
+   ],
+   [
+    "0P000002X8",
+    "Intel Corp",
+    1.19351
+   ],
+   [
+    "0P000003KE",
+    "Merck & Co Inc",
+    1.07609
+   ]
+  ]
+ },
+ "F00000ZD3U": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    2.11365
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    2.04213
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    2.00459
+   ],
+   [
+    "0P0000032S",
+    "Johnson & Johnson",
+    1.96072
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    1.91598
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    1.90801
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    1.89655
+   ],
+   [
+    "0P0000006A",
+    "Advanced Micro Devices Inc",
+    1.82245
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.48558
+   ],
+   [
+    "0P0001KOSE",
+    "Palantir Technologies Inc Ordinary Shares - Class A",
+    1.29747
+   ]
+  ]
+ },
+ "F00001DYKH": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    11.91157
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    10.89402
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    5.18679
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    4.46471
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    3.04573
+   ],
+   [
+    "0P0000006A",
+    "Advanced Micro Devices Inc",
+    2.70613
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    2.48112
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    2.39785
+   ],
+   [
+    "F00000OAIR",
+    "JPMorgan Prime Money Market IM",
+    1.9895
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    1.97263
+   ]
+  ]
+ },
+ "F00000WVVK": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P000002KR",
+    "Halozyme Therapeutics Inc",
+    0.53379
+   ],
+   [
+    "0P000002OR",
+    "HF Sinclair Corp",
+    0.52191
+   ],
+   [
+    "0P0000020D",
+    "Equity Residential",
+    0.51237
+   ],
+   [
+    "0P000002TH",
+    "Illumina Inc",
+    0.47032
+   ],
+   [
+    "0P000000GL",
+    "APA Corp",
+    0.46206
+   ],
+   [
+    "0P000001MY",
+    "Darling Ingredients Inc",
+    0.4604
+   ],
+   [
+    "0P000003UY",
+    "NetApp Inc",
+    0.45401
+   ],
+   [
+    "0P000005EL",
+    "Texas Roadhouse Inc",
+    0.45188
+   ],
+   [
+    "0P000185GT",
+    "Permian Resources Corp Class A",
+    0.45149
+   ],
+   [
+    "0P0000037R",
+    "Labcorp Holdings Inc",
+    0.44627
+   ]
+  ]
+ },
+ "F00001L4OD": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    6.43961
+   ],
+   [
+    "0P0000ASAJ",
+    "Taiwan Semiconductor Manufacturing Co Ltd",
+    5.63609
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    2.65213
+   ],
+   [
+    "0P00005U6B",
+    "Mastercard Inc Class A",
+    2.56044
+   ],
+   [
+    "0P0000022S",
+    "NextEra Energy Inc",
+    2.55516
+   ],
+   [
+    "0P0000032S",
+    "Johnson & Johnson",
+    2.18627
+   ],
+   [
+    "0P0000ALDL",
+    "ASML Holding NV",
+    2.04893
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    1.97642
+   ],
+   [
+    "0P0000061H",
+    "Yum Brands Inc",
+    1.89439
+   ],
+   [
+    "0P000003C9",
+    "Lowe's Companies Inc",
+    1.88593
+   ]
+  ]
+ },
+ "FOUSA06IJZ": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "F00001DH2R",
+    "JPMorgan Nasdaq Equity Premium Inc ETF",
+    9.8997
+   ],
+   [
+    "F00000OAIR",
+    "JPMorgan Prime Money Market IM",
+    1.90502
+   ],
+   [
+    "0P0000ASAJ",
+    "Taiwan Semiconductor Manufacturing Co Ltd",
+    1.1392
+   ],
+   [
+    "B1000COGWX",
+    "United States Treasury Notes 4.125%",
+    0.90043
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    0.78627
+   ],
+   [
+    "0P0000ALDL",
+    "ASML Holding NV",
+    0.56277
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    0.51001
+   ],
+   [
+    "0P0000B2XZ",
+    "Samsung Electronics Co Ltd",
+    0.43006
+   ],
+   [
+    "B00037P7RF",
+    "CCO Holdings, LLC/ CCO Holdings Capital Corp. 4.75%",
+    0.41451
+   ],
+   [
+    "0P00005U6B",
+    "Mastercard Inc Class A",
+    0.36451
+   ]
+  ]
+ },
+ "FOUSA00D8V": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    5.34517
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    3.7107
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    3.00562
+   ],
+   [
+    "0P0000032S",
+    "Johnson & Johnson",
+    2.47797
+   ],
+   [
+    "0P0000CUPM",
+    "Philip Morris International Inc",
+    2.30238
+   ],
+   [
+    "0P000003PC",
+    "Morgan Stanley",
+    2.19192
+   ],
+   [
+    "0P000005WD",
+    "Wells Fargo & Co",
+    2.12361
+   ],
+   [
+    "0P000001A2",
+    "Citigroup Inc",
+    2.10782
+   ],
+   [
+    "0P000000PA",
+    "Bank of America Corp",
+    2.06319
+   ],
+   [
+    "0P000001UX",
+    "Eaton Corp PLC",
+    1.97466
+   ]
+  ]
+ },
+ "FOUSA00FDW": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    10.36841
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    9.8072
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    5.48079
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    4.13412
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    3.72461
+   ],
+   [
+    "0P0000006A",
+    "Advanced Micro Devices Inc",
+    3.6658
+   ],
+   [
+    "0P0000OQN8",
+    "Tesla Inc",
+    2.87681
+   ],
+   [
+    "0P00000384",
+    "Lam Research Corp",
+    2.61191
+   ],
+   [
+    "0P000000H9",
+    "Applied Materials Inc",
+    2.6073
+   ],
+   [
+    "0P0001RSOL",
+    "GE Vernova Inc",
+    2.38013
+   ]
+  ]
+ },
+ "FOUSA02TN1": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    8.01404
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    6.85787
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    5.75869
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    4.6166
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    4.00942
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    3.31673
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    3.25387
+   ],
+   [
+    "0P00005U6B",
+    "Mastercard Inc Class A",
+    2.90699
+   ],
+   [
+    "0P000005WD",
+    "Wells Fargo & Co",
+    2.53003
+   ],
+   [
+    "0P000000CU",
+    "American Express Co",
+    2.3744
+   ]
+  ]
+ },
+ "F00000V48F": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "",
+    "E-mini Russell 2000 Index Future Sept 26",
+    1.26226
+   ],
+   [
+    "FMUSA0016Y",
+    "Goldman Sachs FS Treasury Obligs Instl",
+    1.16905
+   ],
+   [
+    "0P0001ID93",
+    "10x Genomics Inc Ordinary Shares - Class A",
+    0.47286
+   ],
+   [
+    "0P00014JLK",
+    "Enova International Inc",
+    0.40313
+   ],
+   [
+    "0P0000008Y",
+    "Alkermes PLC",
+    0.38786
+   ],
+   [
+    "0P0000KN0U",
+    "CareDx Inc",
+    0.3641
+   ],
+   [
+    "0P0000Q5MM",
+    "Travere Therapeutics Inc Ordinary Shares",
+    0.36129
+   ],
+   [
+    "0P00014ACE",
+    "Acadian Asset Management Inc",
+    0.31954
+   ],
+   [
+    "0P0000001A",
+    "ACADIA Pharmaceuticals Inc",
+    0.28286
+   ],
+   [
+    "0P0001O64U",
+    "Dave Inc Ordinary Shares - Class A",
+    0.27876
+   ]
+  ]
+ },
+ "F00000WUPJ": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P0001J7FZ",
+    "Revolution Medicines Inc Ordinary Shares",
+    2.97646
+   ],
+   [
+    "0P0001L8C6",
+    "DoorDash Inc Ordinary Shares - Class A",
+    2.79386
+   ],
+   [
+    "0P000003H5",
+    "Marvell Technology Inc",
+    2.70915
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    2.61178
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    2.57317
+   ],
+   [
+    "0P00009FL7",
+    "MercadoLibre Inc",
+    2.49252
+   ],
+   [
+    "0P0000031C",
+    "JPMorgan Chase & Co",
+    2.42291
+   ],
+   [
+    "0P0001NZF0",
+    "Nu Holdings Ltd Ordinary Shares Class A",
+    2.42069
+   ],
+   [
+    "0P00000129",
+    "Capital One Financial Corp",
+    2.38189
+   ],
+   [
+    "0P0000002X",
+    "ASML Holding NV ADR",
+    2.35592
+   ]
+  ]
+ },
+ "F00000V48G": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P0000ALDL",
+    "ASML Holding NV",
+    2.20283
+   ],
+   [
+    "0P0000687Q",
+    "Royal Bank of Canada",
+    1.09799
+   ],
+   [
+    "0P00007OFH",
+    "HSBC Holdings PLC",
+    1.09608
+   ],
+   [
+    "0P0000AZ48",
+    "Roche Holding AG Ordinary Shares new",
+    1.04535
+   ],
+   [
+    "0P0000A5FH",
+    "Novartis AG Registered Shares",
+    1.02143
+   ],
+   [
+    "0P0000AETE",
+    "Advantest Corp",
+    0.9839
+   ],
+   [
+    "0P0000A5JA",
+    "Banco Santander SA",
+    0.87479
+   ],
+   [
+    "0P00006899",
+    "The Toronto-Dominion Bank",
+    0.77484
+   ],
+   [
+    "0P00007NYP",
+    "AstraZeneca PLC",
+    0.74015
+   ],
+   [
+    "0P00014GKB",
+    "Recruit Holdings Co Ltd",
+    0.73823
+   ]
+  ]
+ },
+ "F00000V48B": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P0000ASAJ",
+    "Taiwan Semiconductor Manufacturing Co Ltd",
+    13.85135
+   ],
+   [
+    "0P0000B2XZ",
+    "Samsung Electronics Co Ltd",
+    6.29333
+   ],
+   [
+    "0P0000AZ1B",
+    "SK hynix Inc",
+    3.93423
+   ],
+   [
+    "FMUSA0016Y",
+    "Goldman Sachs FS Treasury Obligs Instl",
+    3.79795
+   ],
+   [
+    "",
+    "MSCI Emerging Markets Index Future Sept 26",
+    3.73635
+   ],
+   [
+    "0P00009S22",
+    "Tencent Holdings Ltd",
+    2.67047
+   ],
+   [
+    "0P0001ITIV",
+    "Alibaba Group Holding Ltd Ordinary Shares",
+    1.8378
+   ],
+   [
+    "0P0000BZ4C",
+    "MediaTek Inc",
+    1.31816
+   ],
+   [
+    "0P0000D5B8",
+    "Samsung Electronics Co Ltd Participating Preferred",
+    0.75193
+   ],
+   [
+    "0P00009S4K",
+    "China Construction Bank Corp Class H",
+    0.74991
+   ]
+  ]
+ },
+ "FOUSA00JEH": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P0001IEZ0",
+    "Datadog Inc Class A",
+    3.97372
+   ],
+   [
+    "0P0001ID95",
+    "Cloudflare Inc",
+    3.64545
+   ],
+   [
+    "0P000000ER",
+    "Cencora Inc",
+    3.36894
+   ],
+   [
+    "0P000005BD",
+    "Axon Enterprise Inc",
+    3.03078
+   ],
+   [
+    "0P00018S1K",
+    "Vistra Corp",
+    2.79723
+   ],
+   [
+    "0P0001KOSA",
+    "Snowflake Inc Ordinary Shares",
+    2.71335
+   ],
+   [
+    "0P000003BI",
+    "Live Nation Entertainment Inc",
+    2.56962
+   ],
+   [
+    "0P0001OBCD",
+    "Credo Technology Group Holding Ltd",
+    2.45622
+   ],
+   [
+    "0P000001DF",
+    "Comfort Systems USA Inc",
+    2.37802
+   ],
+   [
+    "0P0001EOHC",
+    "Guardant Health Inc",
+    2.37439
+   ]
+  ]
+ },
+ "FOUSA05CFI": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.63253
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    6.71358
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    5.07169
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    4.60969
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.73293
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.95088
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    2.51096
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    2.00934
+   ],
+   [
+    "0P0000OQN8",
+    "Tesla Inc",
+    1.92017
+   ],
+   [
+    "0P0000006A",
+    "Advanced Micro Devices Inc",
+    1.62746
+   ]
+  ]
+ },
+ "FOUSA00D0H": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.02728
+   ],
+   [
+    "0P000000GY",
+    "Apple Inc",
+    5.97236
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    4.40903
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.6613
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    2.90237
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    2.62248
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.35157
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    2.20417
+   ],
+   [
+    "0P0000W3KZ",
+    "Meta Platforms Inc Class A",
+    2.01151
+   ],
+   [
+    "0P0000OQN8",
+    "Tesla Inc",
+    1.89677
+   ]
+  ]
+ }
+}

@@ -1,0 +1,211 @@
+{
+  "batch": "D03",
+  "source_file": "phase_1_data/screener_us100m/fc_need_to_pull.txt",
+  "ids_count": 50,
+  "datapoints": [
+    "MMR04",
+    "RR01Y"
+  ],
+  "data": {
+    "F000011YJJ": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000014JGM": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000014JGN": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015505": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015506": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F0000159J4": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F0000159J5": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015DWH": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015DWI": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015SFM": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015SFN": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YNI": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YNJ": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YNQ": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YNR": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YOG": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YOH": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YOM": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YON": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YOO": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YOP": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YP8": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YP9": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YPC": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YPD": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YPE": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YPF": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YPI": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YPJ": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YPM": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F000015YPN": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F00001DHJX": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F00001DHJY": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F00001MMFN": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F00001MMFQ": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F00001MMFR": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F00001MMFS": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "F00001MMFT": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00961": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00B49": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00B4J": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00B8C": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00BF5": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00BK7": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00BKS": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00BYL": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00C2Q": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00C3M": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00C3O": {
+      "MMR04": null,
+      "RR01Y": null
+    },
+    "FOUSA00CBJ": {
+      "MMR04": null,
+      "RR01Y": null
+    }
+  }
+}

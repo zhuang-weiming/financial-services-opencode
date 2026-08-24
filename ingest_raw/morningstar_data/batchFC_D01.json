@@ -1,0 +1,6 @@
+{
+  "batch": "D01",
+  "source_file": "phase_1_data/screener_us100m/fc_need_to_pull.txt",
+  "ids_count": 50,
+  "datapoints": ["MMR04", "RR01Y"],
+  "data": {

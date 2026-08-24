@@ -1,0 +1,747 @@
+{
+  "F00002JNQZ": {
+    "PM004": "-20.00864",
+    "AA04M": "-20.10107",
+    "OF009": "153056255",
+    "OF003": "Digital Assets",
+    "OF006": "Grayscale",
+    "OS00F": "2026-06-02",
+    "OF00C": "Yes"
+  },
+  "FEUSA0000Y": {
+    "AA04P": "40.55684",
+    "MMR01": "Neutral",
+    "AA04Q": "25.02759",
+    "AA04R": "6.31387",
+    "ESG48": "Average",
+    "RR010": "2.04",
+    "AA04U": "22.24520",
+    "AA04Y": "36.21854",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "PM00C": "40.73514",
+    "OS00F": "2000-05-22",
+    "PM004": "-2.73426",
+    "AA04S": "4.30606",
+    "AA04T": "6.42584",
+    "LI055": "Russell Index",
+    "PM02K": "5.00568",
+    "ZZ006": "0.37000",
+    "OF003": "Communications",
+    "HS05A": "Large Blend",
+    "RR014": "15.638",
+    "PM00A": "22.38503",
+    "OF009": "1256960790",
+    "HR002": "2",
+    "AA04M": "-2.76530"
+  },
+  "FEUSA0000Z": {
+    "AA04Q": "13.26410",
+    "RR014": "14.509",
+    "HS05A": "Mid Value",
+    "AA04R": "9.25999",
+    "ESG48": "Average",
+    "OF003": "Utilities",
+    "HR002": "3",
+    "PM00C": "5.20981",
+    "AA04Y": "12.65430",
+    "AA04T": "10.15543",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "OF009": "1312781879",
+    "AA04M": "-1.93700",
+    "LI055": "Russell Index",
+    "MMR01": "Bronze",
+    "AA04U": "4.84935",
+    "ZZ006": "0.37000",
+    "PM004": "-2.05177",
+    "AA04P": "5.20021",
+    "AA04S": "8.48657",
+    "OS00F": "2000-06-12",
+    "PM02K": "8.34930",
+    "PM00A": "4.85350",
+    "RR010": "0.151"
+  },
+  "FEUSA00016": {
+    "OF009": "27854833448",
+    "OS00F": "2000-07-24",
+    "ESG48": "Above Average",
+    "AA04Y": "12.37904",
+    "AA04M": "1.94281",
+    "AA04Q": "13.70337",
+    "AA04U": "10.37175",
+    "HS05A": "Large Value",
+    "PM00C": "19.75409",
+    "HR002": "3",
+    "OF006": "iShares",
+    "LI055": "Standard and Poors",
+    "OF00C": "Yes",
+    "AA04T": "11.97044",
+    "RR014": "8.518",
+    "PM00A": "10.36590",
+    "AA04P": "19.84449",
+    "ZZ006": "0.04000",
+    "PM004": "1.90508",
+    "OF003": "Large Value",
+    "AA04R": "11.39453",
+    "PM02K": "8.84017",
+    "AA04S": "11.75513",
+    "RR010": "1.722",
+    "MMR01": "Gold"
+  },
+  "FEUSA0000W": {
+    "MMR01": "Neutral",
+    "ESG48": "Above Average",
+    "AA04U": "10.97760",
+    "AA04P": "14.06288",
+    "HR002": "3",
+    "AA04S": "12.44358",
+    "OF006": "iShares",
+    "AA04M": "-1.63816",
+    "OF00C": "Yes",
+    "PM00C": "14.12976",
+    "AA04Y": "14.47664",
+    "AA04R": "8.82110",
+    "RR010": "0.733",
+    "PM02K": "10.47218",
+    "LI055": "Russell Index",
+    "AA04T": "12.75011",
+    "ZZ006": "0.37000",
+    "HS05A": "Large Blend",
+    "PM004": "-1.61864",
+    "OF003": "Industrials",
+    "PM00A": "11.01157",
+    "OS00F": "2000-06-12",
+    "AA04Q": "15.55024",
+    "OF009": "1921348501",
+    "RR014": "14.128"
+  },
+  "F00002JIKT": {
+    "PM004": "-19.08307",
+    "OF003": "Digital Assets",
+    "OF009": "136501691",
+    "AA04M": "-20.06525",
+    "OS00F": "2026-05-14",
+    "OF00C": "Yes",
+    "OF006": "Bitwise Investments"
+  },
+  "F00002JLGP": {
+    "OS00F": "2026-08-05",
+    "HS05A": "Mid Growth",
+    "OF006": "Roundhill Investments",
+    "OF00C": "No",
+    "OF003": "Technology",
+    "OF009": "342656983"
+  },
+  "F000026VBU": {
+    "HS05A": "Large Blend",
+    "LI055": "MSCI Inc.",
+    "OF00C": "No",
+    "OS00F": "2026-08-11",
+    "OF009": "198836649",
+    "OF006": "Guinness Atkinson",
+    "OF003": "Global Large-Stock Growth"
+  },
+  "F0000272JD": {
+    "AA04M": "-59.84615",
+    "OF009": "731964733",
+    "PM004": "-59.87678",
+    "OF00C": "No",
+    "OF006": "Rex",
+    "OF003": "Trading--Leveraged Equity",
+    "OS00F": "2026-06-24"
+  },
+  "F000026RZZ": {
+    "OF009": "539339533",
+    "AA04M": "6.94362",
+    "OF003": "Digital Assets",
+    "PM004": "7.39695",
+    "OF006": "Morgan Stanley",
+    "OF00C": "Yes",
+    "OS00F": "2026-04-07"
+  },
+  "FEUSA0000Q": {
+    "PM004": "-2.15047",
+    "ESG48": "High",
+    "PM00C": "26.79849",
+    "OF003": "Natural Resources",
+    "HR002": "3",
+    "OF009": "1017941370",
+    "AA04Y": "11.96322",
+    "AA04Q": "9.93414",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "AA04S": "10.02121",
+    "HS05A": "Mid Blend",
+    "AA04T": "7.54060",
+    "AA04U": "14.72167",
+    "LI055": "Russell Index",
+    "AA04P": "26.77833",
+    "MMR01": "Bronze",
+    "PM02K": "8.03098",
+    "ZZ006": "0.37000",
+    "AA04R": "7.53539",
+    "OS00F": "2000-06-12",
+    "RR010": "1.144",
+    "PM00A": "14.82754",
+    "RR014": "19.013",
+    "AA04M": "-2.13335"
+  },
+  "FEUSA00011": {
+    "PM00A": "4.11390",
+    "ESG48": "Average",
+    "HS05A": "Large Value",
+    "RR014": "12.412",
+    "OF003": "Financial",
+    "OF006": "iShares",
+    "LI055": "Standard and Poors",
+    "OF00C": "Yes",
+    "PM00C": "10.99835",
+    "HR002": "4",
+    "AA04S": "14.72455",
+    "AA04U": "4.14261",
+    "AA04P": "10.97650",
+    "AA04Q": "20.98211",
+    "RR010": "0.592",
+    "MMR01": "Bronze",
+    "ZZ006": "0.37000",
+    "AA04T": "13.68216",
+    "AA04M": "5.58196",
+    "OS00F": "2000-06-12",
+    "OF009": "2204876117",
+    "AA04R": "10.70212",
+    "PM004": "5.55229",
+    "PM02K": "6.08442",
+    "AA04Y": "18.63972"
+  },
+  "FEUSA0000S": {
+    "OF009": "1420049565",
+    "ESG48": "Below Average",
+    "MMR01": "Neutral",
+    "PM00C": "12.05989",
+    "AA04R": "6.33548",
+    "AA04P": "12.11082",
+    "AA04U": "12.81486",
+    "PM02K": "9.76281",
+    "HS05A": "Large Value",
+    "AA04T": "10.74618",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "AA04S": "9.19595",
+    "RR010": "0.531",
+    "HR002": "4",
+    "RR014": "16.759",
+    "LI055": "Russell Index",
+    "PM00A": "12.75676",
+    "ZZ006": "0.37000",
+    "AA04Y": "7.66760",
+    "OS00F": "2000-06-12",
+    "AA04M": "2.83512",
+    "OF003": "Consumer Defensive",
+    "PM004": "2.77321",
+    "AA04Q": "5.94086"
+  },
+  "F000026ODM": {
+    "OF009": "247953672",
+    "LI055": "NASDAQ Index",
+    "MMR01": "Neutral",
+    "OS00F": "2026-06-23",
+    "AA04M": "-6.57578",
+    "OF006": "State Street Investment Management",
+    "HS05A": "Large Growth",
+    "PM004": "-6.59489",
+    "ESG48": "High",
+    "OF003": "Large Blend",
+    "OF00C": "Yes"
+  },
+  "FEUSA0000N": {
+    "AA04Q": "15.90860",
+    "MMR01": "Neutral",
+    "ZZ006": "0.59000",
+    "AA04R": "9.70470",
+    "ESG48": "Average",
+    "OF003": "Europe Stock",
+    "RR014": "12.417",
+    "HR002": "3",
+    "OF009": "1687860338",
+    "OF006": "iShares",
+    "LI055": "Standard and Poors",
+    "OF00C": "Yes",
+    "AA04P": "23.86898",
+    "AA04M": "1.97666",
+    "PM00C": "24.09332",
+    "AA04U": "10.20254",
+    "AA04Y": "18.37919",
+    "OS00F": "2000-07-25",
+    "PM004": "2.08649",
+    "AA04T": "7.23736",
+    "AA04S": "9.67610",
+    "HS05A": "Large Blend",
+    "PM00A": "10.33518",
+    "RR010": "1.504",
+    "PM02K": "5.50307"
+  },
+  "FEUSA0001Z": {
+    "MMR01": "Neutral",
+    "AA04R": "1.40316",
+    "AA04M": "10.32505",
+    "PM02K": "6.01697",
+    "AA04S": "4.53356",
+    "ESG48": "High",
+    "LI055": "MSCI Inc.",
+    "OF003": "Greater China Region",
+    "AA04Q": "9.75897",
+    "RR014": "18.504",
+    "HS05A": "Large Value",
+    "AA04T": "4.79012",
+    "AA04Y": "28.63824",
+    "MF01F": "No",
+    "PM00A": "9.80053",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "OS00F": "1996-03-12",
+    "AA04U": "10.35052",
+    "HR002": "4",
+    "ZZ006": "0.50000",
+    "PM00C": "16.87852",
+    "MF01D": "No",
+    "PM004": "10.27086",
+    "RR010": "0.724",
+    "AA04P": "16.95589",
+    "OF009": "1258723764"
+  },
+  "FEUSA0001Y": {
+    "OF003": "Focused Region",
+    "PM00C": "32.02221",
+    "ZZ006": "0.50000",
+    "OF009": "1127802025",
+    "PM02K": "3.64880",
+    "ESG48": "Above Average",
+    "AA04U": "15.60327",
+    "AA04S": "14.37217",
+    "PM00A": "15.65287",
+    "PM004": "3.80705",
+    "HS05A": "Large Blend",
+    "LI055": "MSCI Inc.",
+    "AA04Y": "33.03309",
+    "RR010": "1.899",
+    "AA04M": "3.98379",
+    "AA04T": "7.87303",
+    "AA04P": "31.87628",
+    "AA04R": "17.94299",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "RR014": "13.204",
+    "AA04Q": "26.74430",
+    "OS00F": "1996-03-12"
+  },
+  "F00002JUJM": {
+    "ESG48": "Average",
+    "OS00F": "2026-07-21",
+    "OF006": "Hotchkis & Wiley",
+    "OF009": "986873521",
+    "OF00C": "No",
+    "OF003": "Mid-Cap Value",
+    "LI055": "Russell Index",
+    "HS05A": "Mid Value",
+    "RR010": "1.42"
+  },
+  "FEUSA0001V": {
+    "OF003": "Focused Region",
+    "AA04Y": "20.35463",
+    "ZZ006": "0.50000",
+    "PM00C": "37.21138",
+    "AA04R": "8.60353",
+    "OF009": "732049218",
+    "RR014": "19.986",
+    "RR010": "1.503",
+    "ESG48": "High",
+    "AA04U": "18.29777",
+    "LI055": "MSCI Inc.",
+    "AA04T": "10.63794",
+    "AA04Q": "17.75509",
+    "AA04P": "36.65548",
+    "PM02K": "8.08115",
+    "PM00A": "18.45621",
+    "HS05A": "Large Growth",
+    "PM004": "-4.68362",
+    "AA04M": "-5.00426",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "AA04S": "13.18282",
+    "OS00F": "1996-03-12"
+  },
+  "FEUSA0001U": {
+    "PM004": "8.83716",
+    "OF003": "Focused Region",
+    "AA04Y": "33.16794",
+    "ZZ006": "0.50000",
+    "AA04P": "27.18835",
+    "RR010": "1.971",
+    "AA04M": "9.01722",
+    "RR014": "10.542",
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "LI055": "MSCI Inc.",
+    "AA04U": "19.43413",
+    "AA04S": "8.62462",
+    "AA04Q": "22.53406",
+    "PM00A": "19.24862",
+    "OF009": "1228425050",
+    "AA04T": "5.02171",
+    "PM02K": "7.37093",
+    "AA04R": "11.85551",
+    "OF006": "iShares",
+    "PM00C": "26.94956",
+    "OF00C": "Yes",
+    "OS00F": "1996-03-12"
+  },
+  "FEUSA0001W": {
+    "OF003": "Focused Region",
+    "ESG48": "Below Average",
+    "OF009": "1792971809",
+    "AA04M": "2.04597",
+    "AA04U": "12.41011",
+    "RR014": "16.911",
+    "AA04S": "7.25154",
+    "LI055": "MSCI Inc.",
+    "PM02K": "5.58018",
+    "PM00A": "12.48950",
+    "AA04T": "3.84768",
+    "MF01F": "No",
+    "PM004": "2.09782",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "OS00F": "1996-03-12",
+    "AA04P": "32.10625",
+    "ZZ006": "0.50000",
+    "MF01D": "No",
+    "PM00C": "32.11309",
+    "AA04R": "13.03867",
+    "HS05A": "Large Blend",
+    "AA04Y": "21.51991",
+    "AA04Q": "9.53571",
+    "RR010": "1.516"
+  },
+  "F000027I56": {
+    "HS05A": "Large Blend",
+    "LI055": "STOXX Ltd",
+    "OF006": "SEI Investments Co",
+    "OF009": "447586603",
+    "OS00F": "2026-08-06",
+    "OF003": "Large Blend",
+    "OF00C": "Yes"
+  },
+  "F000026KKP": {
+    "LI055": "NASDAQ Index",
+    "OF003": "Large Growth",
+    "OS00F": "2026-07-08",
+    "OF009": "374416387",
+    "HS05A": "Large Growth",
+    "OF006": "iShares",
+    "OF00C": "Yes"
+  },
+  "FEUSA0001R": {
+    "AA04Q": "17.32546",
+    "PM00A": "8.67016",
+    "OF003": "Focused Region",
+    "AA04S": "9.90441",
+    "AA04P": "23.68190",
+    "PM00C": "23.57450",
+    "AA04Y": "17.02845",
+    "AA04R": "4.95193",
+    "HS05A": "Large Blend",
+    "LI055": "MSCI Inc.",
+    "AA04M": "4.74190",
+    "OF009": "758318914",
+    "AA04T": "7.34589",
+    "RR010": "1.122",
+    "AA04U": "8.83405",
+    "PM004": "4.60143",
+    "ZZ006": "0.51000",
+    "RR014": "16.812",
+    "PM02K": "7.37920",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "ESG48": "Low",
+    "OS00F": "1996-03-12"
+  },
+  "FEUSA00022": {
+    "AA04U": "10.63906",
+    "OF003": "Focused Region",
+    "RR010": "1.902",
+    "AA04M": "3.03609",
+    "AA04S": "11.21956",
+    "PM02K": "6.81036",
+    "RR014": "12.425",
+    "ESG48": "Average",
+    "LI055": "MSCI Inc.",
+    "OF009": "6918615986",
+    "AA04T": "6.68406",
+    "MF01F": "No",
+    "PM00A": "10.53510",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "OS00F": "1996-03-12",
+    "ZZ006": "0.50000",
+    "AA04R": "11.97896",
+    "MF01D": "No",
+    "PM004": "2.84242",
+    "HS05A": "Large Blend",
+    "AA04P": "30.36490",
+    "AA04Y": "25.62117",
+    "PM00C": "30.27671",
+    "AA04Q": "20.31892"
+  },
+  "FEUSA0001Q": {
+    "OF003": "Focused Region",
+    "AA04U": "7.19915",
+    "ESG48": "Below Average",
+    "ZZ006": "0.50000",
+    "AA04R": "6.78840",
+    "PM004": "0.52571",
+    "AA04S": "9.84335",
+    "RR010": "1.208",
+    "AA04P": "21.92073",
+    "PM00C": "21.99371",
+    "PM00A": "7.25611",
+    "HS05A": "Large Blend",
+    "LI055": "MSCI Inc.",
+    "AA04T": "8.32176",
+    "PM02K": "7.63392",
+    "AA04M": "0.49324",
+    "RR014": "14.215",
+    "AA04Q": "11.91345",
+    "AA04Y": "13.97741",
+    "OF009": "2442993018",
+    "OF006": "iShares",
+    "OF00C": "Yes",
+    "OS00F": "1996-03-12"
+  },
+  "FEUSA0001S": {
+    "AA04S": "12.45718",
+    "OF009": "2257470020",
+    "OF003": "Focused Region",
+    "AA04U": "15.84983",
+    "PM00C": "41.36838",
+    "ZZ006": "0.50000",
+    "AA04T": "7.17120",
+    "AA04R": "20.99899",
+    "PM004": "3.40962",
+    "ESG48": "Above Average",
+    "AA04Y": "42.30794",
+    "PM00A": "15.95014",
+    "HS05A": "Large Blend",
+    "LI055": "MSCI Inc.",
+    "AA04M": "3.51911",
+    "PM02K": "5.84400",
+    "AA04P": "41.61242",
+    "RR010": "2.726",
+    "OF006": "iShares",
+    "AA04Q": "32.23788",
+    "OF00C": "Yes",
+    "RR014": "11.724",
+    "OS00F": "1996-03-12"
+  },
+  "FEUSA00021": {
+    "PM004": "2.48186",
+    "OF003": "Focused Region",
+    "AA04U": "5.92654",
+    "AA04S": "9.77528",
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "LI055": "MSCI Inc.",
+    "PM00A": "5.99867",
+    "RR010": "0.803",
+    "PM02K": "5.15934",
+    "AA04M": "2.46533",
+    "OF009": "337364630",
+    "RR014": "13.124",
+    "AA04R": "7.54982",
+    "PM00C": "14.42921",
+    "AA04P": "14.20653",
+    "ZZ006": "0.51000",
+    "AA04Y": "13.19991",
+    "OF006": "iShares",
+    "AA04T": "7.09628",
+    "AA04Q": "9.08766",
+    "OF00C": "Yes",
+    "OS00F": "1996-03-12"
+  },
+  "F00002K176": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K178": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002JUYT": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K17D": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002JUJL": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K17F": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K17A": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K174": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K17B": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K17C": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K17G": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K17E": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002JUYS": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002JVZL": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002JUYW": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K173": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K17H": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K177": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002K175": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002JUJJ": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002JUYV": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00002JUYU": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  }
+}

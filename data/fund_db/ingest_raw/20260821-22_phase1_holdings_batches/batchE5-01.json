@@ -1,0 +1,912 @@
+{
+ "FOUSA08POD": {
+  "as_of": "2026-08-17",
+  "h": [
+   [
+    "F000003Z3H",
+    "Vanguard Short-Term Treasury ETF",
+    23.97035
+   ],
+   [
+    "F00000MDER",
+    "iShares Floating Rate Bond ETF",
+    15.00988
+   ],
+   [
+    "FOUSA06JJS",
+    "Vanguard FTSE Developed Markets ETF",
+    9.1669
+   ],
+   [
+    "F00001087B",
+    "Franklin Senior Loan ETF",
+    8.13288
+   ],
+   [
+    "F00000NEKG",
+    "State Street SPDR Blmbg InvGrdFltRtETF",
+    5.80178
+   ],
+   [
+    "F000003Z3H",
+    "Vanguard Short-Term Treasury ETF",
+    -5.03783
+   ],
+   [
+    "FEUSA04AF1",
+    "Invesco CurrencyShares Euro Currency",
+    -4.81826
+   ],
+   [
+    "FEUSA0000K",
+    "iShares Core S&P Small-Cap ETF",
+    4.58807
+   ],
+   [
+    "F00000YP5E",
+    "iShares MSCI Emerging Mkts ex China ETF",
+    3.90919
+   ],
+   [
+    "F00000V75Q",
+    "Vanguard Tax-Exempt Bond ETF",
+    3.57129
+   ]
+  ]
+ },
+ "F000002PIJ": {
+  "as_of": "2026-08-17",
+  "h": [
+   [
+    "0P00011HZW",
+    "American Airlines Group Inc",
+    -5.96327
+   ],
+   [
+    "0P00011HZW",
+    "American Airlines Group Inc",
+    5.62749
+   ],
+   [
+    "0P00005ROL",
+    "Teck Resources Ltd Class B (Sub Voting)",
+    5.47853
+   ],
+   [
+    "0P000000T2",
+    "Black Hills Corp",
+    -3.64237
+   ],
+   [
+    "0P000003YZ",
+    "NorthWestern Energy Group Inc",
+    3.58655
+   ],
+   [
+    "0P0000022S",
+    "NextEra Energy Inc",
+    -3.57735
+   ],
+   [
+    "0P000001R8",
+    "Dominion Energy Inc",
+    3.50616
+   ],
+   [
+    "0P000001QJ",
+    "Warner Bros. Discovery Inc Ordinary Shares - Class A",
+    3.31227
+   ],
+   [
+    "0P000080EZ",
+    "ARC Resources Ltd",
+    3.11634
+   ],
+   [
+    "0P0001497T",
+    "Caesars Entertainment Inc",
+    3.09006
+   ]
+  ]
+ },
+ "F00000MM7Z": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "",
+    "Portfolio Swap Dj Thematic Neutral Anti-Beta (U",
+    -2.40186
+   ],
+   [
+    "",
+    "Portfolio Swap Dow Jones Thematic Neu Anti-Beta",
+    1.34291
+   ],
+   [
+    "0P0001F631",
+    "Moderna Inc",
+    -1.28388
+   ],
+   [
+    "0P00018NVI",
+    "e.l.f. Beauty Inc",
+    -0.6503
+   ],
+   [
+    "0P0001N1NE",
+    "CCC Intelligent Solutions Holdings Inc",
+    0.63865
+   ],
+   [
+    "0P0001KOSD",
+    "Unity Software Inc Ordinary Shares",
+    -0.63852
+   ],
+   [
+    "0P00000174",
+    "Charles River Laboratories International Inc",
+    -0.63084
+   ],
+   [
+    "0P0001A2H3",
+    "Okta Inc Class A",
+    0.61435
+   ],
+   [
+    "0P0001HEZO",
+    "Avantor Inc",
+    -0.61201
+   ],
+   [
+    "0P0001M51B",
+    "UiPath Inc Class A",
+    0.5809
+   ]
+  ]
+ },
+ "F00000MDEO": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P00000AKK",
+    "Energy Transfer LP",
+    13.96895
+   ],
+   [
+    "0P000001Z9",
+    "Enterprise Products Partners LP",
+    12.15865
+   ],
+   [
+    "0P0000X7UQ",
+    "MPLX LP Partnership Units",
+    11.24921
+   ],
+   [
+    "0P000004DK",
+    "Plains All American Pipeline LP",
+    10.08712
+   ],
+   [
+    "0P0000XP82",
+    "Western Midstream Partners LP",
+    9.69143
+   ],
+   [
+    "0P0000X0U1",
+    "Sunoco LP",
+    8.53198
+   ],
+   [
+    "0P0001A1QW",
+    "Hess Midstream LP Class A",
+    8.25542
+   ],
+   [
+    "0P000085PY",
+    "Cheniere Energy Partners LP",
+    6.83466
+   ],
+   [
+    "0P0000XWEW",
+    "USA Compression Partners LP",
+    5.32639
+   ],
+   [
+    "0P000002DZ",
+    "Genesis Energy LP",
+    4.40777
+   ]
+  ]
+ },
+ "F00000IT24": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "0P0000X0U1",
+    "Sunoco LP",
+    14.50135
+   ],
+   [
+    "0P00000AKK",
+    "Energy Transfer LP",
+    13.79805
+   ],
+   [
+    "0P0000XP82",
+    "Western Midstream Partners LP",
+    13.66114
+   ],
+   [
+    "0P000004DK",
+    "Plains All American Pipeline LP",
+    13.05878
+   ],
+   [
+    "0P0000X7UQ",
+    "MPLX LP Partnership Units",
+    12.69935
+   ],
+   [
+    "0P000001Z9",
+    "Enterprise Products Partners LP",
+    12.49589
+   ],
+   [
+    "0P0001A1QW",
+    "Hess Midstream LP Class A",
+    8.86992
+   ],
+   [
+    "0P000085PY",
+    "Cheniere Energy Partners LP",
+    4.76137
+   ],
+   [
+    "0P0000XWEW",
+    "USA Compression Partners LP",
+    3.79009
+   ],
+   [
+    "0P000002DZ",
+    "Genesis Energy LP",
+    3.06331
+   ]
+  ]
+ },
+ "F00000LI7E": {
+  "as_of": "2026-08-20",
+  "h": [
+   [
+    "",
+    "Cboe Vix Future Sep26",
+    45.89938
+   ],
+   [
+    "",
+    "Cash",
+    19.52242
+   ],
+   [
+    "",
+    "Bny Mellon Cash Reserve",
+    16.49668
+   ],
+   [
+    "F00001TKJ9",
+    "ProShares GENIUS Money Market ETF",
+    15.29973
+   ],
+   [
+    "",
+    "Cboe Vix Future Oct26",
+    2.78179
+   ]
+  ]
+ },
+ "FOUSA06BRX": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "F00001S6L0",
+    "Strategy Inc VR PRF PERPETUAL USD 100 - Ser A",
+    3.73762
+   ],
+   [
+    "F00001OBN1",
+    "Boeing Co 6% PRF CONVERT 15/10/2027 USD 50 - Dep Rep 1/20th Sr A",
+    3.72866
+   ],
+   [
+    "F00002JQGL",
+    "Alphabet Inc PRF PERPETUAL USD 1000 - 1/20th Int Ser B",
+    2.24526
+   ],
+   [
+    "F00002JRWZ",
+    "Super Micro Computer Inc PRF PERPETUAL USD - 1/20th Int Ser A",
+    2.19567
+   ],
+   [
+    "F000002HIS",
+    "Wells Fargo & Co 7 1/2 % Non Cum Perp Conv Pfd Shs -A- Series -L-",
+    2.1876
+   ],
+   [
+    "F00002JQGQ",
+    "Alphabet Inc PRF PERPETUAL USD 1000 - 1/20th Int Ser A",
+    2.14169
+   ],
+   [
+    "",
+    "Oracle Corp. 6.5%",
+    2.13414
+   ],
+   [
+    "F00001NE3W",
+    "Hewlett Packard Enterprise Co 7.625% PRF CONVERT 01/09/2027 USD 50 - Ser C",
+    1.93057
+   ],
+   [
+    "F000000RBE",
+    "Bank of America Corp 7 1/4 % Non-Cum Perp Conv Pfd Shs Series -L-",
+    1.43694
+   ],
+   [
+    "F00001JX9O",
+    "Albemarle Corp PRF PERPETUAL USD 1000 - Ser A 1/20th Pref St",
+    1.19518
+   ]
+  ]
+ },
+ "FOUSA06MLK": {
+  "as_of": "2026-08-19",
+  "h": [
+   [
+    "F000011UNG",
+    "JPMorgan Chase & Co 6% PRF PERPETUAL USD 25 - Dep rep 1/400 Ser EE",
+    1.79137
+   ],
+   [
+    "F00001180O",
+    "JPMorgan Chase & Co Pfd",
+    1.54267
+   ],
+   [
+    "F000014PHM",
+    "Wells Fargo & Co 4.75% PRF PERPETUAL USD 25 Series Z Class A",
+    1.42781
+   ],
+   [
+    "F0000171TT",
+    "JPMorgan Chase & Co PRF PERPETUAL USD - Ser LL 1/400th Int",
+    1.31074
+   ],
+   [
+    "F000010GMV",
+    "Bank of America Corp 6% PRF PERPETUAL USD 25 - Ser GG 1/1000th int",
+    1.29477
+   ],
+   [
+    "F00001BBJA",
+    "JPMorgan Chase & Co PRF PERPETUAL USD - Ser MM 1/400th",
+    1.29075
+   ],
+   [
+    "F000014TL4",
+    "AT&T Inc 4.75% PRF PERPETUAL USD 25 - 1/1000th Int Ser C",
+    1.15185
+   ],
+   [
+    "F000013S9T",
+    "Bank of America Corp Pfd",
+    1.12099
+   ],
+   [
+    "F000016N19",
+    "JPMorgan Chase & Co PRF PERPETUAL USD 25 - Ser JJ 1/400 int",
+    1.04268
+   ],
+   [
+    "F000014548",
+    "Capital One Financial Corp Series I",
+    1.03993
+   ]
+  ]
+ },
+ "F00000O2CJ": {
+  "as_of": "2026-08-20",
+  "h": [
+   [
+    "0P0000ZOOL",
+    "Veeva Systems Inc Class A",
+    3.10735
+   ],
+   [
+    "0P0001L8LC",
+    "Airbnb Inc Ordinary Shares - Class A",
+    3.042
+   ],
+   [
+    "0P00000175",
+    "Charles Schwab Corp",
+    2.68662
+   ],
+   [
+    "0P0000RRUZ",
+    "LPL Financial Holdings Inc",
+    2.67599
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    2.60803
+   ],
+   [
+    "0P000000VL",
+    "Bristol-Myers Squibb Co",
+    2.60092
+   ],
+   [
+    "0P000003H7",
+    "Masco Corp",
+    2.49387
+   ],
+   [
+    "0P0000061X",
+    "Zimmer Biomet Holdings Inc",
+    2.45721
+   ],
+   [
+    "0P000001MV",
+    "Danaher Corp",
+    2.44163
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    2.43122
+   ]
+  ]
+ },
+ "F00000O4CY": {
+  "as_of": "2026-03-31",
+  "h": [
+   [
+    "0P000005NQ",
+    "United Therapeutics Corp",
+    1.77519
+   ],
+   [
+    "F00001CINM",
+    "Limited Purpose Cash Investment",
+    1.75105
+   ],
+   [
+    "0P00000220",
+    "Exxon Mobil Corp",
+    1.6922
+   ],
+   [
+    "0P0000036H",
+    "The Kroger Co",
+    1.61193
+   ],
+   [
+    "0P00000031",
+    "AT&T Inc",
+    1.59202
+   ],
+   [
+    "0P0000005M",
+    "Adobe Inc",
+    1.55667
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    1.55513
+   ],
+   [
+    "0P000005QY",
+    "Verizon Communications Inc",
+    1.54497
+   ],
+   [
+    "0P000001IK",
+    "Costco Wholesale Corp",
+    1.5289
+   ],
+   [
+    "0P0000032S",
+    "Johnson & Johnson",
+    1.5127
+   ]
+  ]
+ },
+ "F00000QBS9": {
+  "as_of": "2026-03-31",
+  "h": [
+   [
+    "",
+    "Pimco Fds",
+    35.00941
+   ],
+   [
+    "",
+    "Pimco Cayman Commodity Fund Viii Ltd",
+    25.90035
+   ],
+   [
+    "",
+    "3 Year Australian Treasury Bond Future June 26",
+    -9.12127
+   ],
+   [
+    "",
+    "2 Year Treasury Note Future June 26",
+    9.09666
+   ],
+   [
+    "",
+    "Short-Term Euro BTP Future June 26",
+    -7.06639
+   ],
+   [
+    "",
+    "Pimco Fds",
+    3.80341
+   ],
+   [
+    "B00033JAOA",
+    "Federal National Mortgage Association 5%",
+    -3.68324
+   ],
+   [
+    "",
+    "FIN FUT IFSC NIFTY NGC 04/28/26",
+    -3.18983
+   ],
+   [
+    "B00033JAOQ",
+    "Federal National Mortgage Association 6%",
+    -3.16843
+   ],
+   [
+    "",
+    "Xinhua China A50 Index Future Apr 26",
+    3.12214
+   ]
+  ]
+ },
+ "FOUSA00B75": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P0000063T",
+    "Berkshire Hathaway Inc Class A",
+    5.05102
+   ],
+   [
+    "0P000005YA",
+    "Williams Companies Inc",
+    5.03718
+   ],
+   [
+    "0P000004W4",
+    "Sempra",
+    4.99872
+   ],
+   [
+    "0P0000017T",
+    "Cheniere Energy Inc",
+    4.99055
+   ],
+   [
+    "0P0000SDEF",
+    "Kinder Morgan Inc Class P",
+    4.93567
+   ],
+   [
+    "0P000000KX",
+    "Atmos Energy Corp",
+    4.92295
+   ],
+   [
+    "0P0000042P",
+    "ONEOK Inc",
+    4.87393
+   ],
+   [
+    "0P0000051F",
+    "Southern Co",
+    4.86757
+   ],
+   [
+    "0P0000689D",
+    "TC Energy Corp",
+    4.7881
+   ],
+   [
+    "0P0000681O",
+    "Enbridge Inc",
+    4.74888
+   ]
+  ]
+ },
+ "F00000QHIO": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "0P0000006G",
+    "ASE Technology Holding Co Ltd ADR",
+    1.7507
+   ],
+   [
+    "0P000005AR",
+    "Taiwan Semiconductor Manufacturing Co Ltd ADR",
+    1.74186
+   ],
+   [
+    "0P000005N7",
+    "United Microelectronics Corp ADR",
+    1.67741
+   ],
+   [
+    "0P0000D5B8",
+    "Samsung Electronics Co Ltd Participating Preferred",
+    1.55028
+   ],
+   [
+    "0P0000019Y",
+    "Cisco Systems Inc",
+    1.53444
+   ],
+   [
+    "0P000001BW",
+    "Coca-Cola Co",
+    1.527
+   ],
+   [
+    "0P000002RH",
+    "International Business Machines Corp",
+    1.5194
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    1.47857
+   ],
+   [
+    "0P00007O5C",
+    "Compass Group PLC",
+    1.46745
+   ],
+   [
+    "0P000004NU",
+    "Republic Services Inc",
+    1.43824
+   ]
+  ]
+ },
+ "FOUSA00CEJ": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "F000016QSH",
+    "Fidelity Cash Central Fund",
+    19.97011
+   ],
+   [
+    "F00001I5QD",
+    "Fidelity Low Duration Bond ETF",
+    4.21304
+   ],
+   [
+    "",
+    "Us 10y Nte Fut (Cbt)sep26 Tyu6",
+    1.51716
+   ],
+   [
+    "B1000453G8",
+    "United States Treasury Notes 0.04%",
+    1.51427
+   ],
+   [
+    "B1000HC2XE",
+    "United States Treasury Notes 0.0425%",
+    1.44543
+   ],
+   [
+    "B1000KZN6C",
+    "United States Treasury Notes 0.04125%",
+    1.37298
+   ],
+   [
+    "",
+    "Fidelity Garrison Str Tr",
+    1.37164
+   ],
+   [
+    "F00001GGKO",
+    "Fidelity Enhanced Small Cap Core ETF",
+    1.21207
+   ],
+   [
+    "",
+    "Us 2yr Note (Cbt) Sep26 Tuu6",
+    1.17596
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    1.07193
+   ]
+  ]
+ },
+ "F00000MMV4": {
+  "as_of": "2026-06-30",
+  "h": [
+   [
+    "FMUSA000FC",
+    "BlackRock Liquidity T-Fund Instl",
+    15.71761
+   ],
+   [
+    "",
+    "Us 2Yr Note Sep 26",
+    4.71894
+   ],
+   [
+    "",
+    "Euro Bobl Future Sept 26",
+    4.35165
+   ],
+   [
+    "",
+    "Us 5Yr Note Sep 26",
+    2.59466
+   ],
+   [
+    "B1000IJDO2",
+    "Italy (Republic Of)",
+    2.42687
+   ],
+   [
+    "",
+    "Us 10Yr Note Sep 26",
+    1.81025
+   ],
+   [
+    "FOUSA06BYT",
+    "iShares iBoxx $ High Yield Corp Bd ETF",
+    1.61645
+   ],
+   [
+    "",
+    "Euro Schatz Future Sept 26",
+    1.50451
+   ],
+   [
+    "",
+    "British Airways Pass Through Trust Prvt",
+    1.49686
+   ],
+   [
+    "B10003XANW",
+    "Palomino Funding Trust I",
+    1.10064
+   ]
+  ]
+ },
+ "F0000045SG": {
+  "as_of": "2026-03-31",
+  "h": [
+   [
+    "",
+    "Ois Tonar /1.5% Jpy0628",
+    -23.05826
+   ],
+   [
+    "",
+    "Ois Tonar /1.5% Jpy0628",
+    23.04319
+   ],
+   [
+    "",
+    "Ois Tonar /1.5% Jpy0628",
+    -22.45518
+   ],
+   [
+    "",
+    "Ois Tonar /1.5% Jpy0628",
+    22.44011
+   ],
+   [
+    "",
+    "Ubs Relationship Fds",
+    18.56848
+   ],
+   [
+    "F00001CINM",
+    "Limited Purpose Cash Investment",
+    17.66523
+   ],
+   [
+    "",
+    "Ois Sofr /3.5% Usd0928",
+    7.61046
+   ],
+   [
+    "",
+    "Ois Sofr /3.5% Usd0928",
+    -7.5995
+   ],
+   [
+    "",
+    "Ois Sofr /3.5% Usd0928",
+    7.54463
+   ],
+   [
+    "",
+    "Ois Sofr /3.5% Usd0928",
+    -7.53367
+   ]
+  ]
+ },
+ "F0000194HZ": {
+  "as_of": "2026-03-31",
+  "h": [
+   [
+    "",
+    "Dawson Portfolio Finance Evergreen",
+    4.81272
+   ],
+   [
+    "FMUSA04AZT",
+    "State Street Instl US Govt MMkt Premier",
+    3.92593
+   ],
+   [
+    "",
+    "Hercules Evergreen Fund Lp",
+    3.09221
+   ],
+   [
+    "",
+    "Dawson Port Finance Sicav",
+    2.30281
+   ],
+   [
+    "",
+    "Pg Lending Fund I,lp",
+    2.29468
+   ],
+   [
+    "",
+    "Symbiotic Capital Credit Parallel",
+    2.28666
+   ],
+   [
+    "",
+    "Banner Ridge Secondary Fund V Lp",
+    2.26166
+   ],
+   [
+    "",
+    "Bsof Srt Onshore Class Srt Series 6",
+    2.11966
+   ],
+   [
+    "",
+    "Ag Asset Based Credi Evergreen Fund Lp",
+    1.80103
+   ],
+   [
+    "",
+    "Silver Point Specialty Lending",
+    1.72148
+   ]
+  ]
+ }
+}

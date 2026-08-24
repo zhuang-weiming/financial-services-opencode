@@ -1,0 +1,792 @@
+{
+  "FOUSA02UZD": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.02139",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZD/quote"
+  },
+  "FOUSA02UZC": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZC/quote"
+  },
+  "FOUSA02UZB": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZB/quote"
+  },
+  "FOUSA02UZA": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZA/quote"
+  },
+  "FOUSA02UZH": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZH/quote"
+  },
+  "FOUSA02UZE": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.02139",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZE/quote"
+  },
+  "FOUSA02UZL": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZL/quote"
+  },
+  "FOUSA02UZK": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      },
+      {
+        "datapointId": "FID01",
+        "value": "0.03518",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZK/quote"
+  },
+  "FOUSA02UZJ": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZJ/quote"
+  },
+  "FOUSA02UZI": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZI/quote"
+  },
+  "FOUSA02UZP": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZP/quote"
+  },
+  "FOUSA02UZO": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZO/quote"
+  },
+  "FOUSA02UZN": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      },
+      {
+        "datapointId": "FID01",
+        "value": "0.03518",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZN/quote"
+  },
+  "FOUSA02UZM": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      },
+      {
+        "datapointId": "FID01",
+        "value": "0.03518",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZM/quote"
+  },
+  "FOUSA02UZT": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZT/quote"
+  },
+  "FOUSA02UZS": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZS/quote"
+  },
+  "FOUSA02UZQ": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZQ/quote"
+  },
+  "FOUSA02UZX": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZX/quote"
+  },
+  "FOUSA02V3P": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3P/quote"
+  },
+  "FOUSA02V3O": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.02139",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3O/quote"
+  },
+  "FOUSA02UZW": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZW/quote"
+  },
+  "FOUSA02V3N": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3N/quote"
+  },
+  "FOUSA02UZV": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZV/quote"
+  },
+  "FOUSA02UZU": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZU/quote"
+  },
+  "FOUSA02V45": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V45/quote"
+  },
+  "FOUSA02V3S": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      },
+      {
+        "datapointId": "FID01",
+        "value": "0.03518",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3S/quote"
+  },
+  "FOUSA02V00": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V00/quote"
+  },
+  "FOUSA02V3R": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3R/quote"
+  },
+  "FOUSA02UZZ": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZZ/quote"
+  },
+  "FOUSA02UZY": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZY/quote"
+  },
+  "FOUSA02V3Q": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3Q/quote"
+  },
+  "FOUSA02V3X": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      },
+      {
+        "datapointId": "FID01",
+        "value": "0.08488",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3X/quote"
+  },
+  "FOUSA02V3W": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3W/quote"
+  },
+  "FOUSA02V3V": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3V/quote"
+  },
+  "FOUSA02V03": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      },
+      {
+        "datapointId": "FID01",
+        "value": "0.08488",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V03/quote"
+  },
+  "FOUSA02V02": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      },
+      {
+        "datapointId": "FID01",
+        "value": "0.08488",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V02/quote"
+  },
+  "FOUSA02V09": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V09/quote"
+  },
+  "FOUSA02V07": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V07/quote"
+  },
+  "FOUSA02V3Z": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      },
+      {
+        "datapointId": "FID01",
+        "value": "0.08488",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3Z/quote"
+  },
+  "FOUSA02V06": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V06/quote"
+  },
+  "FOUSA02V3Y": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V3Y/quote"
+  },
+  "FOUSA02V0E": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V0E/quote"
+  },
+  "FOUSA02V0I": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V0I/quote"
+  },
+  "FOUSA02V0H": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V0H/quote"
+  },
+  "FOUSA02V0G": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V0G/quote"
+  },
+  "FOUSA02V0F": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V0F/quote"
+  },
+  "FOUSA02V0J": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V0J/quote"
+  },
+  "FOUSA02V0O": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V0O/quote"
+  },
+  "FOUSA02V0N": {
+    "values": [
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02V0N/quote"
+  },
+  "FOUSA02UZ9": {
+    "values": [
+      {
+        "datapointId": "FID01",
+        "value": "0.00000",
+        "datapointName": "Fixd-Inc YTM Detail - Brkdwn 0-1% (Calc) (Net) (FI%)"
+      },
+      {
+        "datapointId": "MIR01",
+        "value": "Yes",
+        "datapointName": "Managed Investment Report Availability"
+      }
+    ],
+    "errors": [],
+    "url": "https://www.morningstar.com/integrations/mcp-redirects/security/FOUSA02UZ9/quote"
+  }
+}

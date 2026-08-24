@@ -1,0 +1,4 @@
+{
+  "FOUSA00FFO": {"OF003": "Foreign Large Value", "OF006": "Franklin Templeton Investments", "LS012": "A", "LI055": "MSCI Inc.", "OF00C": "No", "OS00F": "1982-10-05", "OF009": "2460005010", "ZZ006": "1.10000", "HS05A": "Large Blend", "HR002": "1", "MMR01": "Neutral", "ESG48": "Average", "AA04M": "1.72414", "AA04U": "12.14361", "AA04P": "23.37388", "AA04Q": "12.34729", "AA04R": "9.61454", "AA04S": "7.23823", "PM02K": "5.03096", "RR010": "1.367", "RR014": "13.295"},
+  "FOUSA05IBR": {"OF003": "Foreign Large Blend", "OF006": "Lazard", "LS012": "Inst", "LI055": "MSCI Inc.", "OF00C": "No", "OS00F": "2005-10-31", "OF009": "1425048650", "ZZ006": "0.84000", "HS05A": "Large Growth", "HR002": "2", "MMR01": "Neutral", "ESG48": "Average", "AA04M": "-1.28988", "AA04U": "10.82317", "AA04P": "17.33320", "AA04Q": "12.40246", "AA04R": "5.49433", "AA04S": "7.44668", "PM02K": "5.86546", "RR010": "0.853", "RR014": "15.688"}
+}

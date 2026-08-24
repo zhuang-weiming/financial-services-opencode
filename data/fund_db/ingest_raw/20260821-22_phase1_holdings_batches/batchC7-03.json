@@ -1,0 +1,57 @@
+{
+ "FOUSA00J1R": {
+  "as_of": "2026-07-31",
+  "h": [
+   [
+    "0P000000GY",
+    "Apple Inc",
+    7.54298
+   ],
+   [
+    "0P000003RE",
+    "NVIDIA Corp",
+    7.36018
+   ],
+   [
+    "0P000003MH",
+    "Microsoft Corp",
+    5.40013
+   ],
+   [
+    "0P000000B7",
+    "Amazon.com Inc",
+    3.75994
+   ],
+   [
+    "0P000002HD",
+    "Alphabet Inc Class A",
+    2.90502
+   ],
+   [
+    "0P0000KU35",
+    "Broadcom Inc",
+    2.34955
+   ],
+   [
+    "0P00012BBI",
+    "Alphabet Inc Class C",
+    2.34911
+   ],
+   [
+    "0P000001WJ",
+    "Eli Lilly and Co",
+    1.69229
+   ],
+   [
+    "0P000003MC",
+    "Micron Technology Inc",
+    1.56662
+   ],
+   [
+    "0P000000H9",
+    "Applied Materials Inc",
+    1.51992
+   ]
+  ]
+ }
+}

@@ -1,0 +1,5849 @@
+[
+  {
+    "idx": 1,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H001.json",
+    "ids": [
+      "0P0000M1K0",
+      "0P0000M4TU",
+      "0P0000M4TV",
+      "0P0000M4TW",
+      "0P0000M4TX",
+      "0P0000M4TY",
+      "0P0000M4TZ",
+      "0P0000M4U0",
+      "0P0000M4U1",
+      "0P0000M4U4"
+    ]
+  },
+  {
+    "idx": 2,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H002.json",
+    "ids": [
+      "0P0000M4U5",
+      "0P0000M4U6",
+      "0P0000M4U7",
+      "0P0000M4U8",
+      "0P0000M4U9",
+      "0P0000M4UA",
+      "0P0000M4UB",
+      "0P0000M4UD",
+      "0P0000M4UE",
+      "0P0000M4UF"
+    ]
+  },
+  {
+    "idx": 3,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H003.json",
+    "ids": [
+      "0P0000M4UG",
+      "0P0000M4UH",
+      "0P0000M4UI",
+      "0P0000M4UJ",
+      "0P0000M4UK",
+      "0P0000M4UL",
+      "0P0000M4UM",
+      "0P0000M4UR",
+      "0P0000M4UU",
+      "0P0000M4UW"
+    ]
+  },
+  {
+    "idx": 4,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H004.json",
+    "ids": [
+      "0P0000M4UX",
+      "0P0000M4UZ",
+      "0P0000M4V1",
+      "0P0000M4V3",
+      "0P0000M4V5",
+      "0P0000M4V7",
+      "0P0000M4V9",
+      "0P0000M4VG",
+      "0P0000M4VJ",
+      "0P0000M4VK"
+    ]
+  },
+  {
+    "idx": 5,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H005.json",
+    "ids": [
+      "0P0000M4VL",
+      "0P0000M4VM",
+      "0P0000M4VN",
+      "0P0000M4VO",
+      "0P0000M4VP",
+      "0P0000M4VQ",
+      "0P0000M4VR",
+      "0P0000M4VS",
+      "0P0000M4VT",
+      "0P0000M4VU"
+    ]
+  },
+  {
+    "idx": 6,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H006.json",
+    "ids": [
+      "0P0000M4VV",
+      "0P0000M4VW",
+      "0P0000M4VX",
+      "0P0000M4VY",
+      "0P0000M4VZ",
+      "0P0000M4W0",
+      "0P0000M4W1",
+      "0P0000M4W2",
+      "0P0000M4W3",
+      "0P0000M4W4"
+    ]
+  },
+  {
+    "idx": 7,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H007.json",
+    "ids": [
+      "0P0000M4W5",
+      "0P0000M4W6",
+      "0P0000M4W7",
+      "0P0000M4W8",
+      "0P0000M4W9",
+      "0P0000M4WB",
+      "0P0000M4WC",
+      "0P0000M4WD",
+      "0P0000M4WE",
+      "0P0000M4WF"
+    ]
+  },
+  {
+    "idx": 8,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H008.json",
+    "ids": [
+      "0P0000M4WG",
+      "0P0000M4WH",
+      "0P0000M4WI",
+      "0P0000M4WJ",
+      "0P0000M4WK",
+      "0P0000M4WL",
+      "0P0000M4WM",
+      "0P0000M4WN",
+      "0P0000M4WO",
+      "0P0000M4WP"
+    ]
+  },
+  {
+    "idx": 9,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H009.json",
+    "ids": [
+      "0P0000M4WQ",
+      "0P0000M4WR",
+      "0P0000M4WS",
+      "0P0000M4WT",
+      "0P0000M4WU",
+      "0P0000M4WV",
+      "0P0000M4WW",
+      "0P0000M4WX",
+      "0P0000M4WY",
+      "0P0000M4WZ"
+    ]
+  },
+  {
+    "idx": 10,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H010.json",
+    "ids": [
+      "0P0000M4X0",
+      "0P0000M4X1",
+      "0P0000M4X2",
+      "0P0000M4X3",
+      "0P0000M4X4",
+      "0P0000M4X5",
+      "0P0000M4X6",
+      "0P0000M4X7",
+      "0P0000M4X8",
+      "0P0000M4X9"
+    ]
+  },
+  {
+    "idx": 11,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H011.json",
+    "ids": [
+      "0P0000M4XA",
+      "0P0000M4XB",
+      "0P0000M4XD",
+      "0P0000M4XE",
+      "0P0000M4XF",
+      "0P0000M4XG",
+      "0P0000M4XH",
+      "0P0000M4XI",
+      "0P0000M4XJ",
+      "0P0000M4XK"
+    ]
+  },
+  {
+    "idx": 12,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H012.json",
+    "ids": [
+      "0P0000M4XL",
+      "0P0000M4XM",
+      "0P0000M4XN",
+      "0P0000M4XO",
+      "0P0000M4XP",
+      "0P0000M4XQ",
+      "0P0000M4XR",
+      "0P0000M4XS",
+      "0P0000M4XT",
+      "0P0000M4XU"
+    ]
+  },
+  {
+    "idx": 13,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H013.json",
+    "ids": [
+      "0P0000M4XW",
+      "0P0000M4XX",
+      "0P0000M4XY",
+      "0P0000M4XZ",
+      "0P0000M4Y1",
+      "0P0000M4Y2",
+      "0P0000M4Y3",
+      "0P0000M4Y5",
+      "0P0000M4Y6",
+      "0P0000M4Y7"
+    ]
+  },
+  {
+    "idx": 14,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H014.json",
+    "ids": [
+      "0P0000M4Y8",
+      "0P0000M4Y9",
+      "0P0000M4YA",
+      "0P0000M4YB",
+      "0P0000M4YC",
+      "0P0000M4YD",
+      "0P0000M4YE",
+      "0P0000M4YF",
+      "0P0000M4YG",
+      "0P0000M4YH"
+    ]
+  },
+  {
+    "idx": 15,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H015.json",
+    "ids": [
+      "0P0000M4YI",
+      "0P0000M4YJ",
+      "0P0000M4YK",
+      "0P0000M4YL",
+      "0P0000M4YM",
+      "0P0000M4YN",
+      "0P0000M4YO",
+      "0P0000M4YP",
+      "0P0000M4YQ",
+      "0P0000M4YR"
+    ]
+  },
+  {
+    "idx": 16,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H016.json",
+    "ids": [
+      "0P0000M4YS",
+      "0P0000M4YT",
+      "0P0000M4YU",
+      "0P0000M4YV",
+      "0P0000M4YW",
+      "0P0000M4YX",
+      "0P0000M4YY",
+      "0P0000M4YZ",
+      "0P0000M4Z0",
+      "0P0000M4Z1"
+    ]
+  },
+  {
+    "idx": 17,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H017.json",
+    "ids": [
+      "0P0000M4Z2",
+      "0P0000M7NO",
+      "0P0000M7NP",
+      "0P0000M7NQ",
+      "0P0000MM7A",
+      "0P0000MM7J",
+      "0P0000MM7R",
+      "0P0000MNOA",
+      "0P0000MVMC",
+      "0P0000MVMD"
+    ]
+  },
+  {
+    "idx": 18,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H018.json",
+    "ids": [
+      "0P0000MVME",
+      "0P0000MVMG",
+      "0P0000MVMH",
+      "0P0000MVMJ",
+      "0P0000MVMK",
+      "0P0000MVML",
+      "0P0000MVMM",
+      "0P0000MVMN",
+      "0P0000MVMO",
+      "0P0000MVMP"
+    ]
+  },
+  {
+    "idx": 19,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H019.json",
+    "ids": [
+      "0P0000MVMQ",
+      "0P0000MVMR",
+      "0P0000MVMS",
+      "0P0000MVMT",
+      "0P0000MVMU",
+      "0P0000MVMV",
+      "0P0000MVMW",
+      "0P0000MVMX",
+      "0P0000MVMY",
+      "0P0000MVMZ"
+    ]
+  },
+  {
+    "idx": 20,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H020.json",
+    "ids": [
+      "0P0000MVN0",
+      "0P0000N6W3",
+      "0P0000NA4V",
+      "0P0000NA4W",
+      "0P0000NA4X",
+      "0P0000NA4Y",
+      "0P0000NAEC",
+      "0P0000NAEF",
+      "0P0000NAF9",
+      "0P0000NAFA"
+    ]
+  },
+  {
+    "idx": 21,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H021.json",
+    "ids": [
+      "0P0000NAFB",
+      "0P0000NAFC",
+      "0P0000NAS0",
+      "0P0000NAS2",
+      "0P0000NAS3",
+      "0P0000NAS4",
+      "0P0000NAS5",
+      "0P0000NAS6",
+      "0P0000NAS7",
+      "0P0000NAS8"
+    ]
+  },
+  {
+    "idx": 22,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H022.json",
+    "ids": [
+      "0P0000NAS9",
+      "0P0000NASB",
+      "0P0000NASC",
+      "0P0000NASE",
+      "0P0000NASF",
+      "0P0000NASG",
+      "0P0000NASH",
+      "0P0000NASI",
+      "0P0000NASJ",
+      "0P0000NASK"
+    ]
+  },
+  {
+    "idx": 23,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H023.json",
+    "ids": [
+      "0P0000NASN",
+      "0P0000NASO",
+      "0P0000NBHJ",
+      "0P0000NEA2",
+      "0P0000NEA3",
+      "0P0000NEA4",
+      "0P0000NEA5",
+      "0P0000NEA6",
+      "0P0000NEA7",
+      "0P0000NEA8"
+    ]
+  },
+  {
+    "idx": 24,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H024.json",
+    "ids": [
+      "0P0000NEA9",
+      "0P0000NEAA",
+      "0P0000NEAB",
+      "0P0000NEAC",
+      "0P0000NEAD",
+      "0P0000NEAE",
+      "0P0000NEAF",
+      "0P0000NHFB",
+      "0P0000NHFC",
+      "0P0000NRWC"
+    ]
+  },
+  {
+    "idx": 25,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H025.json",
+    "ids": [
+      "0P0000NRWD",
+      "0P0000NRWE",
+      "0P0000NRWF",
+      "0P0000NRWG",
+      "0P0000NRWH",
+      "0P0000NRWI",
+      "0P0000OQDI",
+      "0P0000OQDJ",
+      "0P0000OQDL",
+      "0P0000OXM4"
+    ]
+  },
+  {
+    "idx": 26,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H026.json",
+    "ids": [
+      "0P0000PSNF",
+      "0P0000PSNG",
+      "0P0000PSNH",
+      "0P0000PSNI",
+      "0P0000PSNJ",
+      "0P0000PSNK",
+      "0P0000PSNL",
+      "0P0000PSNM",
+      "0P0000PSNN",
+      "0P0000PSNO"
+    ]
+  },
+  {
+    "idx": 27,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H027.json",
+    "ids": [
+      "0P0000PSNQ",
+      "0P0000PSNR",
+      "0P0000PSNS",
+      "0P0000RXZK",
+      "0P0000RXZL",
+      "0P0000RXZM",
+      "0P0000RXZN",
+      "0P0000S1ZZ",
+      "0P0000S200",
+      "0P0000S201"
+    ]
+  },
+  {
+    "idx": 28,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H028.json",
+    "ids": [
+      "0P0000S202",
+      "0P0000S203",
+      "0P0000S204",
+      "0P0000S205",
+      "0P0000SF3Q",
+      "0P0000SF3R",
+      "0P0000SMUH",
+      "0P0000SMUI",
+      "0P0000SMUJ",
+      "0P0000SMUK"
+    ]
+  },
+  {
+    "idx": 29,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H029.json",
+    "ids": [
+      "0P0000SMUL",
+      "0P0000SMUM",
+      "0P0000SMUP",
+      "0P0000SMUQ",
+      "0P0000SMUR",
+      "0P0000SMUS",
+      "0P0000SMUT",
+      "0P0000SMUV",
+      "0P0000SMUW",
+      "0P0000SMUX"
+    ]
+  },
+  {
+    "idx": 30,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H030.json",
+    "ids": [
+      "0P0000SMUZ",
+      "0P0000SMV0",
+      "0P0000SMWK",
+      "0P0000SUCO",
+      "0P0000SUCP",
+      "0P0000SUCQ",
+      "0P0000SUCR",
+      "0P0000SUCS",
+      "0P0000SUCT",
+      "0P0000SUCY"
+    ]
+  },
+  {
+    "idx": 31,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H031.json",
+    "ids": [
+      "0P0000SUD2",
+      "0P0000SUD5",
+      "0P0000SUD8",
+      "0P0000SUDC",
+      "0P0000SUDD",
+      "0P0000SUDF",
+      "0P0000SUDG",
+      "0P0000SUDH",
+      "0P0000SUDI",
+      "0P0000SUDJ"
+    ]
+  },
+  {
+    "idx": 32,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H032.json",
+    "ids": [
+      "0P0000SUDK",
+      "0P0000SUDL",
+      "0P0000SUDM",
+      "0P0000SUDN",
+      "0P0000SUDO",
+      "0P0000SUDP",
+      "0P0000SUDQ",
+      "0P0000SUDR",
+      "0P0000SUDS",
+      "0P0000SUDU"
+    ]
+  },
+  {
+    "idx": 33,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H033.json",
+    "ids": [
+      "0P0000SUDV",
+      "0P0000SUDW",
+      "0P0000SUDX",
+      "0P0000SUDY",
+      "0P0000SUDZ",
+      "0P0000SUE0",
+      "0P0000SUE1",
+      "0P0000SUE2",
+      "0P0000SUE3",
+      "0P0000SVX5"
+    ]
+  },
+  {
+    "idx": 34,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H034.json",
+    "ids": [
+      "0P0000SVX6",
+      "0P0000SVX7",
+      "0P0000TPNJ",
+      "0P0000TPNK",
+      "0P0000TPNL",
+      "0P0000TPNM",
+      "0P0000TPNN",
+      "0P0000TPNO",
+      "0P0000TPNP",
+      "0P0000TPNQ"
+    ]
+  },
+  {
+    "idx": 35,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H035.json",
+    "ids": [
+      "0P0000TPNR",
+      "0P0000TPNS",
+      "0P0000TPNT",
+      "0P0000TPNU",
+      "0P0000TPNV",
+      "0P0000TPNW",
+      "0P0000TPNX",
+      "0P0000TPNZ",
+      "0P0000TPO0",
+      "0P0000TPO1"
+    ]
+  },
+  {
+    "idx": 36,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H036.json",
+    "ids": [
+      "0P0000TPO2",
+      "0P0000TQOS",
+      "0P0000TQOT",
+      "0P0000TQOU",
+      "0P0000TQOV",
+      "0P0000U274",
+      "0P0000U276",
+      "0P0000U277",
+      "0P0000U278",
+      "0P0000U279"
+    ]
+  },
+  {
+    "idx": 37,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H037.json",
+    "ids": [
+      "0P0000U27A",
+      "0P0000U27B",
+      "0P0000U27C",
+      "0P0000U27D",
+      "0P0000U27E",
+      "0P0000U27F",
+      "0P0000U27G",
+      "0P0000U27H",
+      "0P0000U27I",
+      "0P0000U27J"
+    ]
+  },
+  {
+    "idx": 38,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H038.json",
+    "ids": [
+      "0P0000UB2W",
+      "0P0000UB2X",
+      "0P0000UB2Y",
+      "0P0000UB2Z",
+      "0P0000UEIY",
+      "0P0000UEIZ",
+      "0P0000UEJ0",
+      "0P0000UEJ1",
+      "0P0000UEJ2",
+      "0P0000UEJ3"
+    ]
+  },
+  {
+    "idx": 39,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H039.json",
+    "ids": [
+      "0P0000UGG3",
+      "0P0000UGG4",
+      "0P0000UGG5",
+      "0P0000UGG6",
+      "0P0000UGG7",
+      "0P0000UGG8",
+      "0P0000UGG9",
+      "0P0000UGGB",
+      "0P0000UGGC",
+      "0P0000UGGD"
+    ]
+  },
+  {
+    "idx": 40,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H040.json",
+    "ids": [
+      "0P0000UGGF",
+      "0P0000UGGG",
+      "0P0000UGGH",
+      "0P0000UGGI",
+      "0P0000UGGJ",
+      "0P0000UGGL",
+      "0P0000UGGM",
+      "0P0000UGGO",
+      "0P0000UGGP",
+      "0P0000UGGQ"
+    ]
+  },
+  {
+    "idx": 41,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H041.json",
+    "ids": [
+      "0P0000UGGR",
+      "0P0000UGGS",
+      "0P0000UGGT",
+      "0P0000UGGU",
+      "0P0000UGGV",
+      "0P0000UGGX",
+      "0P0000UGGY",
+      "0P0000UGH0",
+      "0P0000UGH1",
+      "0P0000UGH2"
+    ]
+  },
+  {
+    "idx": 42,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H042.json",
+    "ids": [
+      "0P0000UHB4",
+      "0P0000UHB5",
+      "0P0000VN5D",
+      "0P0000VN5E",
+      "0P0000VN5F",
+      "0P0000VN5G",
+      "0P0000WMLM",
+      "0P0000WMLN",
+      "0P0000WMLO",
+      "0P0000WMLP"
+    ]
+  },
+  {
+    "idx": 43,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H043.json",
+    "ids": [
+      "0P0000WMLQ",
+      "0P0000WMLR",
+      "0P0000WMLS",
+      "0P0000WMLT",
+      "0P0000WMLU",
+      "0P0000WUV2",
+      "0P0000WUV8",
+      "0P0000WUVG",
+      "0P0000WUVH",
+      "0P0000WUVM"
+    ]
+  },
+  {
+    "idx": 44,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H044.json",
+    "ids": [
+      "0P0000WUVQ",
+      "0P0000WUVT",
+      "0P0000WUVU",
+      "0P0000WUVV",
+      "0P0000WUVW",
+      "0P0000WVLV",
+      "0P0000XRUW",
+      "0P0000XRVN",
+      "0P0000Z52W",
+      "0P00011OOG"
+    ]
+  },
+  {
+    "idx": 45,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H045.json",
+    "ids": [
+      "0P00011UKU",
+      "0P00011UKV",
+      "0P00015FC6",
+      "0P00015FC7",
+      "0P00015FC8",
+      "0P00015FC9",
+      "0P00015FCA",
+      "0P00015FCC",
+      "0P00015FCD",
+      "0P00015FCE"
+    ]
+  },
+  {
+    "idx": 46,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H046.json",
+    "ids": [
+      "0P00015FCF",
+      "0P00015FCG",
+      "0P00015FCH",
+      "0P00015FCI",
+      "0P00015FCJ",
+      "0P00015FCK",
+      "0P00015FCL",
+      "0P00015FCM",
+      "0P00015FCN",
+      "0P00015FCO"
+    ]
+  },
+  {
+    "idx": 47,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H047.json",
+    "ids": [
+      "0P00015R0S",
+      "0P00015WUZ",
+      "0P00016366",
+      "0P0001663A",
+      "0P0001663C",
+      "0P00017I6I",
+      "0P00017I6J",
+      "0P00017I6K",
+      "0P00017I6L",
+      "0P00017I6M"
+    ]
+  },
+  {
+    "idx": 48,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H048.json",
+    "ids": [
+      "0P00017I6N",
+      "0P00017I6O",
+      "0P00017I6Q",
+      "0P00017I6R",
+      "0P00017I6S",
+      "0P00017I6T",
+      "0P00017I6U",
+      "0P00017I6V",
+      "0P00017I71",
+      "0P00017I72"
+    ]
+  },
+  {
+    "idx": 49,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H049.json",
+    "ids": [
+      "0P00017I75",
+      "0P00017I76",
+      "0P00017I78",
+      "0P00017I79",
+      "0P00017I7A",
+      "0P00017I7B",
+      "0P00017I7E",
+      "0P00017I7I",
+      "0P00017I7J",
+      "0P00017I7K"
+    ]
+  },
+  {
+    "idx": 50,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H050.json",
+    "ids": [
+      "0P00017I7M",
+      "0P00017I7N",
+      "0P00017I7O",
+      "0P00017I7P",
+      "0P00017I7Q",
+      "0P00017I7R",
+      "0P00017I7S",
+      "0P00017I7T",
+      "0P00017I7V",
+      "0P00017I7W"
+    ]
+  },
+  {
+    "idx": 51,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H051.json",
+    "ids": [
+      "0P00017I7X",
+      "0P00017I7Y",
+      "0P00017I7Z",
+      "0P00017I81",
+      "0P00017I82",
+      "0P00017I83",
+      "0P00017I84",
+      "0P00017I85",
+      "0P00017I86",
+      "0P00017I87"
+    ]
+  },
+  {
+    "idx": 52,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H052.json",
+    "ids": [
+      "0P00017I88",
+      "0P00017I89",
+      "0P00017I8A",
+      "0P00017I8B",
+      "0P00017I8C",
+      "0P00017I8D",
+      "0P00017I8E",
+      "0P00017I8F",
+      "0P00017I8G",
+      "0P00017I8H"
+    ]
+  },
+  {
+    "idx": 53,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H053.json",
+    "ids": [
+      "0P00017I8I",
+      "0P00017I8Q",
+      "0P00017I8R",
+      "0P00017I8S",
+      "0P00017I8T",
+      "0P00017I8U",
+      "0P00017I8V",
+      "0P00017I8W",
+      "0P00017I8Y",
+      "0P00017I8Z"
+    ]
+  },
+  {
+    "idx": 54,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H054.json",
+    "ids": [
+      "0P00017I90",
+      "0P00017I91",
+      "0P00017I93",
+      "0P00017I96",
+      "0P00017I97",
+      "0P00017I98",
+      "0P00017I99",
+      "0P00017I9A",
+      "0P00017I9B",
+      "0P00017I9C"
+    ]
+  },
+  {
+    "idx": 55,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H055.json",
+    "ids": [
+      "0P00017I9D",
+      "0P00017I9E",
+      "0P00017I9F",
+      "0P00017I9G",
+      "0P00017I9H",
+      "0P00017I9I",
+      "0P00017I9J",
+      "0P00017I9K",
+      "0P00017I9L",
+      "0P00017I9M"
+    ]
+  },
+  {
+    "idx": 56,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H056.json",
+    "ids": [
+      "0P00017I9N",
+      "0P00017I9O",
+      "0P00017I9P",
+      "0P00017I9Q",
+      "0P00017I9R",
+      "0P00017I9S",
+      "0P00017I9T",
+      "0P00017I9U",
+      "0P00017I9V",
+      "0P00017I9W"
+    ]
+  },
+  {
+    "idx": 57,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H057.json",
+    "ids": [
+      "0P00017I9X",
+      "0P00017I9Y",
+      "0P00017I9Z",
+      "0P00017RZT",
+      "0P0001AE5G",
+      "0P0001AE5H",
+      "0P0001H687",
+      "0P0001H688",
+      "0P0001L74W",
+      "0P0001LZJR"
+    ]
+  },
+  {
+    "idx": 58,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H058.json",
+    "ids": [
+      "0P0001MV1C",
+      "0P0001MZEX",
+      "0P0001O5WC",
+      "0P0001O74E",
+      "0P0001O74F",
+      "0P0001PQQT",
+      "0P0001SRL6",
+      "0P0001SRL7",
+      "0P0001SRL8",
+      "0P0001SRL9"
+    ]
+  },
+  {
+    "idx": 59,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H059.json",
+    "ids": [
+      "0P0001SRLA",
+      "0P0001SSGI",
+      "0P0001SSGJ",
+      "0P0001SSGK",
+      "0P0001SSGL",
+      "0P0001SSGM",
+      "0P0001SSGN",
+      "0P0001SSGP",
+      "0P0001SSGQ",
+      "0P0001SSGR"
+    ]
+  },
+  {
+    "idx": 60,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H060.json",
+    "ids": [
+      "0P0001SSGS",
+      "0P0001SSGT",
+      "0P0001SSGU",
+      "0P0001STTA",
+      "0P0001STTB",
+      "0P0001STTC",
+      "0P0001STTD",
+      "0P0001STTE",
+      "0P0001STTF",
+      "0P0001SUH0"
+    ]
+  },
+  {
+    "idx": 61,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H061.json",
+    "ids": [
+      "0P0001SUH1",
+      "0P0001SVXQ",
+      "0P0001SVXR",
+      "0P0001SXPL",
+      "0P0001SXPM",
+      "0P0001SXPN",
+      "0P0001SY39",
+      "0P0001SY3A",
+      "0P0001SY3B",
+      "0P0001SY3C"
+    ]
+  },
+  {
+    "idx": 62,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H062.json",
+    "ids": [
+      "0P0001SY3D",
+      "0P0001SY3E",
+      "0P0001SY3F",
+      "0P0001SY3G",
+      "0P0001SY3H",
+      "0P0001SY3I",
+      "0P0001SY3J",
+      "0P0001SY3K",
+      "0P0001SY3L",
+      "0P0001SY3M"
+    ]
+  },
+  {
+    "idx": 63,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H063.json",
+    "ids": [
+      "0P0001SY3N",
+      "0P0001SY3O",
+      "0P0001SY3P",
+      "0P0001SY3Q",
+      "0P0001SY3R",
+      "0P0001SY3S",
+      "0P0001SY3T",
+      "0P0001SY3U",
+      "0P0001SY3V",
+      "0P0001SY3W"
+    ]
+  },
+  {
+    "idx": 64,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H064.json",
+    "ids": [
+      "0P0001SY3X",
+      "0P0001SY3Y",
+      "0P0001SY3Z",
+      "0P0001SY40",
+      "0P0001SY41",
+      "0P0001SY42",
+      "0P0001SY43",
+      "0P0001SY44",
+      "0P0001SY45",
+      "0P0001SY46"
+    ]
+  },
+  {
+    "idx": 65,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H065.json",
+    "ids": [
+      "0P0001SY47",
+      "0P0001SY49",
+      "0P0001SY4A",
+      "0P0001SY4B",
+      "0P0001SY4C",
+      "0P0001SY4D",
+      "0P0001SY4E",
+      "0P0001SY4F",
+      "0P0001SY4G",
+      "0P0001SY4H"
+    ]
+  },
+  {
+    "idx": 66,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H066.json",
+    "ids": [
+      "0P0001SY4I",
+      "0P0001SY4J",
+      "0P0001SY4K",
+      "0P0001SY4L",
+      "0P0001SY4M",
+      "0P0001SY4P",
+      "0P0001SY4T",
+      "0P0001SY4W",
+      "0P0001SY4X",
+      "0P0001SY4Y"
+    ]
+  },
+  {
+    "idx": 67,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H067.json",
+    "ids": [
+      "0P0001SY52",
+      "0P0001SY53",
+      "0P0001SY54",
+      "0P0001T0C4",
+      "0P0001T0C7",
+      "0P0001T0C8",
+      "0P0001T0CC",
+      "0P0001T0CD",
+      "0P0001T0CE",
+      "0P0001T0CG"
+    ]
+  },
+  {
+    "idx": 68,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H068.json",
+    "ids": [
+      "0P0001T0CH",
+      "0P0001T0CI",
+      "0P0001T0CJ",
+      "0P0001T0CK",
+      "0P0001T0CL",
+      "0P0001T0CM",
+      "0P0001T0CN",
+      "0P0001T0CO",
+      "0P0001T0CQ",
+      "0P0001T0CS"
+    ]
+  },
+  {
+    "idx": 69,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H069.json",
+    "ids": [
+      "0P0001T0CT",
+      "0P0001T0M1",
+      "0P0001T2C7",
+      "0P0001T2C8",
+      "0P0001T3L8",
+      "0P0001T3L9",
+      "0P0001T3LA",
+      "0P0001T3LB",
+      "0P0001T3LC",
+      "0P0001T3LD"
+    ]
+  },
+  {
+    "idx": 70,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H070.json",
+    "ids": [
+      "0P0001T3LE",
+      "0P0001T3LF",
+      "0P0001T3LG",
+      "0P0001T3LH",
+      "0P0001T3LI",
+      "0P0001T3LJ",
+      "0P0001T3LK",
+      "0P0001T3LL",
+      "0P0001T3LN",
+      "0P0001T3LO"
+    ]
+  },
+  {
+    "idx": 71,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H071.json",
+    "ids": [
+      "0P0001T3LP",
+      "0P0001T3LQ",
+      "0P0001T4O0",
+      "0P0001T4O1",
+      "0P0001T4O2",
+      "0P0001T4O3",
+      "0P0001T4O4",
+      "0P0001T4O5",
+      "0P0001T4O6",
+      "0P0001T4O7"
+    ]
+  },
+  {
+    "idx": 72,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H072.json",
+    "ids": [
+      "0P0001T4O9",
+      "0P0001T4OA",
+      "0P0001T4OB",
+      "0P0001T4OC",
+      "0P0001T4OD",
+      "0P0001T4OE",
+      "0P0001T4OF",
+      "0P0001T4OH",
+      "0P0001T4OI",
+      "0P0001T4OJ"
+    ]
+  },
+  {
+    "idx": 73,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H073.json",
+    "ids": [
+      "0P0001T4OK",
+      "0P0001T4OL",
+      "0P0001T4OM",
+      "0P0001T4ON",
+      "0P0001T4OR",
+      "0P0001T4OS",
+      "0P0001T4OV",
+      "0P0001T4OW",
+      "0P0001T4OX",
+      "0P0001T4OY"
+    ]
+  },
+  {
+    "idx": 74,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H074.json",
+    "ids": [
+      "0P0001T4P0",
+      "0P0001T4P1",
+      "0P0001T4P2",
+      "0P0001T4P3",
+      "0P0001T4P4",
+      "0P0001T4P5",
+      "0P0001T4P6",
+      "0P0001T4P8",
+      "0P0001T4P9",
+      "0P0001T4PA"
+    ]
+  },
+  {
+    "idx": 75,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H075.json",
+    "ids": [
+      "0P0001T4PB",
+      "0P0001T4PC",
+      "0P0001T4PD",
+      "0P0001T4PE",
+      "0P0001T4PF",
+      "0P0001T4PG",
+      "0P0001T4PH",
+      "0P0001T4PI",
+      "0P0001T4PJ",
+      "0P0001T4PK"
+    ]
+  },
+  {
+    "idx": 76,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H076.json",
+    "ids": [
+      "0P0001T4PL",
+      "0P0001T4PM",
+      "0P0001T4PN",
+      "0P0001T4PO",
+      "0P0001T4PP",
+      "0P0001T4PQ",
+      "0P0001T4PR",
+      "0P0001T4PS",
+      "0P0001T4PT",
+      "0P0001T4PU"
+    ]
+  },
+  {
+    "idx": 77,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H077.json",
+    "ids": [
+      "0P0001T4PV",
+      "0P0001T4PY",
+      "0P0001T4Q0",
+      "0P0001T4Q1",
+      "0P0001T4Q2",
+      "0P0001T4Q3",
+      "0P0001T4Q4",
+      "0P0001T4Q5",
+      "0P0001T4Q6",
+      "0P0001T4Q7"
+    ]
+  },
+  {
+    "idx": 78,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H078.json",
+    "ids": [
+      "0P0001T4Q8",
+      "0P0001T8OD",
+      "0P0001T8OE",
+      "0P0001T8OF",
+      "0P0001T8OG",
+      "0P0001T8OI",
+      "0P0001T8OJ",
+      "0P0001T8OK",
+      "0P0001T8OL",
+      "0P0001T8OM"
+    ]
+  },
+  {
+    "idx": 79,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H079.json",
+    "ids": [
+      "0P0001T8ON",
+      "0P0001T8OO",
+      "0P0001T8OP",
+      "0P0001T8OQ",
+      "0P0001T91O",
+      "0P0001T91P",
+      "0P0001T91Q",
+      "0P0001T91R",
+      "0P0001T91S",
+      "0P0001T91T"
+    ]
+  },
+  {
+    "idx": 80,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H080.json",
+    "ids": [
+      "0P0001T91U",
+      "0P0001T91V",
+      "0P0001T91W",
+      "0P0001T91X",
+      "0P0001T91Y",
+      "0P0001T91Z",
+      "0P0001T920",
+      "0P0001T921",
+      "0P0001T922",
+      "0P0001T923"
+    ]
+  },
+  {
+    "idx": 81,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H081.json",
+    "ids": [
+      "0P0001TH68",
+      "0P0001TH69",
+      "0P0001THIZ",
+      "0P0001TW81",
+      "0P0001TW82",
+      "0P0001UCZF",
+      "0P0001UCZG",
+      "0P0001UL7F",
+      "0P0001UMGP",
+      "0P0001UQ7T"
+    ]
+  },
+  {
+    "idx": 82,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H082.json",
+    "ids": [
+      "0P0001UQ7U",
+      "0P0001UQ7V",
+      "0P0001UQ9G",
+      "0P0001UQ9H",
+      "0P0001URET",
+      "0P0001V042",
+      "0P0001V3HW",
+      "0P0001V8SL",
+      "0P0001V8SM",
+      "0P0001V8SN"
+    ]
+  },
+  {
+    "idx": 83,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H083.json",
+    "ids": [
+      "0P0001V8SO",
+      "0P0001V8SP",
+      "0P0001V8SQ",
+      "0P0001V8SR",
+      "0P0001V8SS",
+      "0P0001V8ST",
+      "0P0001V8SU",
+      "0P0001V8SV",
+      "0P0001V8SW",
+      "0P0001V8SX"
+    ]
+  },
+  {
+    "idx": 84,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H084.json",
+    "ids": [
+      "0P0001V8SY",
+      "0P0001V8SZ",
+      "0P0001V8T0",
+      "0P0001V8T1",
+      "0P0001V8T2",
+      "0P0001V8T3",
+      "0P0001V8T4",
+      "0P0001V8T5",
+      "0P0001V8T6",
+      "0P0001V8T7"
+    ]
+  },
+  {
+    "idx": 85,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H085.json",
+    "ids": [
+      "0P0001V8T8",
+      "0P0001V8T9",
+      "0P0001V8TA",
+      "0P0001V8TB",
+      "0P0001V8TC",
+      "0P0001V8TD",
+      "0P0001V8TE",
+      "0P0001V8TF",
+      "0P0001V8TG",
+      "0P0001V8TH"
+    ]
+  },
+  {
+    "idx": 86,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H086.json",
+    "ids": [
+      "0P0001V8TI",
+      "0P0001V8TJ",
+      "0P0001V8TK",
+      "0P0001V8TL",
+      "0P0001V8TM",
+      "0P0001V8TN",
+      "0P0001V8V2",
+      "0P0001V8WD",
+      "0P0001V8WE",
+      "0P0001V8WF"
+    ]
+  },
+  {
+    "idx": 87,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H087.json",
+    "ids": [
+      "0P0001V8WG",
+      "0P0001V8WH",
+      "0P0001V8WI",
+      "0P0001V8WJ",
+      "0P0001V8WK",
+      "0P0001V8WL",
+      "0P0001V8WM",
+      "0P0001V8WN",
+      "0P0001V8WO",
+      "0P0001V8WP"
+    ]
+  },
+  {
+    "idx": 88,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H088.json",
+    "ids": [
+      "0P0001V8WQ",
+      "0P0001V8WR",
+      "0P0001V8WS",
+      "0P0001V8WT",
+      "0P0001V8WV",
+      "0P0001V8WW",
+      "0P0001V8WX",
+      "0P0001V8WY",
+      "0P0001V8WZ",
+      "0P0001V8X0"
+    ]
+  },
+  {
+    "idx": 89,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H089.json",
+    "ids": [
+      "0P0001V8X1",
+      "0P0001V8X2",
+      "0P0001V8X3",
+      "0P0001V8X4",
+      "0P0001V8X5",
+      "0P0001V8X6",
+      "0P0001V8X7",
+      "0P0001V8X8",
+      "0P0001V8X9",
+      "0P0001V8XA"
+    ]
+  },
+  {
+    "idx": 90,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H090.json",
+    "ids": [
+      "0P0001V8XB",
+      "0P0001V8XC",
+      "0P0001V94M",
+      "0P0001V94N",
+      "0P0001V94O",
+      "0P0001V94P",
+      "0P0001V94Q",
+      "0P0001V94R",
+      "0P0001V94S",
+      "0P0001V94T"
+    ]
+  },
+  {
+    "idx": 91,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H091.json",
+    "ids": [
+      "0P0001V94U",
+      "0P0001V94V",
+      "0P0001V94W",
+      "0P0001V94X",
+      "0P0001V94Y",
+      "0P0001V978",
+      "0P0001V979",
+      "0P0001V97A",
+      "0P0001V97B",
+      "0P0001V97C"
+    ]
+  },
+  {
+    "idx": 92,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H092.json",
+    "ids": [
+      "0P0001V97D",
+      "0P0001V97E",
+      "0P0001V97F",
+      "0P0001V97G",
+      "0P0001V97H",
+      "0P0001V97I",
+      "0P0001V97J",
+      "0P0001V97K",
+      "0P0001V97L",
+      "0P0001V97M"
+    ]
+  },
+  {
+    "idx": 93,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H093.json",
+    "ids": [
+      "0P0001V97N",
+      "0P0001V97O",
+      "0P0001V97P",
+      "0P0001V97Q",
+      "0P0001V97R",
+      "0P0001V97S",
+      "0P0001V97T",
+      "0P0001V97U",
+      "0P0001V97V",
+      "0P0001V97X"
+    ]
+  },
+  {
+    "idx": 94,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H094.json",
+    "ids": [
+      "0P0001V97Y",
+      "0P0001V97Z",
+      "0P0001V980",
+      "0P0001V981",
+      "0P0001V982",
+      "0P0001V983",
+      "0P0001V984",
+      "0P0001V985",
+      "0P0001V9TJ",
+      "0P0001V9VY"
+    ]
+  },
+  {
+    "idx": 95,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H095.json",
+    "ids": [
+      "0P0001V9VZ",
+      "0P0001V9W0",
+      "0P0001V9W1",
+      "0P0001V9W2",
+      "0P0001V9W3",
+      "0P0001V9W4",
+      "0P0001V9W5",
+      "0P0001V9W6",
+      "0P0001V9W7",
+      "0P0001V9W8"
+    ]
+  },
+  {
+    "idx": 96,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H096.json",
+    "ids": [
+      "0P0001V9W9",
+      "0P0001V9WA",
+      "0P0001V9WB",
+      "0P0001V9WC",
+      "0P0001V9WD",
+      "0P0001V9WE",
+      "0P0001V9WF",
+      "0P0001V9WG",
+      "0P0001V9WH",
+      "0P0001V9WI"
+    ]
+  },
+  {
+    "idx": 97,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H097.json",
+    "ids": [
+      "0P0001V9WJ",
+      "0P0001V9WK",
+      "0P0001V9WL",
+      "0P0001VINN",
+      "0P0001VINO",
+      "0P0001VIYA",
+      "0P0001VPW6",
+      "0P0001X61R",
+      "0P0001X61S",
+      "0P0001X61U"
+    ]
+  },
+  {
+    "idx": 98,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H098.json",
+    "ids": [
+      "0P0001X61V",
+      "0P0001X61W",
+      "0P0001X61X",
+      "0P0001X61Y",
+      "0P0001X61Z",
+      "0P0001X9PJ",
+      "0P0001XELO",
+      "0P0001XTQH",
+      "0P0001XTQI",
+      "0P0001XTQJ"
+    ]
+  },
+  {
+    "idx": 99,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H099.json",
+    "ids": [
+      "0P0001XYCZ",
+      "0P0001XYD0",
+      "0P0001Y2WP",
+      "0P0001Y382",
+      "0P0001YIBO",
+      "0P0001YJEX",
+      "0P0001YJEY",
+      "0P0001YMDP",
+      "0P0001YMXL",
+      "0P00020GJ5"
+    ]
+  },
+  {
+    "idx": 100,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H100.json",
+    "ids": [
+      "0P00020GJ6",
+      "0P00020GJ7",
+      "0P00020GJ9",
+      "0P00020GJA",
+      "0P00020GJC",
+      "0P00020GVF",
+      "0P00020GVG",
+      "0P00020GVH",
+      "0P00020GVI",
+      "0P00020GVJ"
+    ]
+  },
+  {
+    "idx": 101,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H101.json",
+    "ids": [
+      "0P00020GVK",
+      "0P00020GVL",
+      "0P00020GVM",
+      "0P00020IQV",
+      "0P00021H9Z",
+      "0P0002DZWS",
+      "0P0002DZWT",
+      "0P0002PG4V",
+      "0P0002PG4W",
+      "0P0002PG4X"
+    ]
+  },
+  {
+    "idx": 102,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H102.json",
+    "ids": [
+      "0P0002PG4Y",
+      "0P00035G32",
+      "0P00035G33",
+      "0P00035G34",
+      "0P00035G35",
+      "0P00035G36",
+      "0P00035G37",
+      "0P00035G38",
+      "0P00035G39",
+      "0P00035TSF"
+    ]
+  },
+  {
+    "idx": 103,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H103.json",
+    "ids": [
+      "0P00036037",
+      "0P00036O8Z",
+      "0P00036O91",
+      "0P00036O92",
+      "0P00036O93",
+      "0P00036O94",
+      "0P00036O96",
+      "0P00036O9J",
+      "0P00036O9Q",
+      "0P00036OX8"
+    ]
+  },
+  {
+    "idx": 104,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H104.json",
+    "ids": [
+      "0P00036OX9",
+      "0P00036OXA",
+      "0P00036OXD",
+      "0P00036OXE",
+      "0P00036PW5",
+      "0P00036PW6",
+      "0P00036PXV",
+      "0P00036PXX",
+      "F000002N19",
+      "F000002RC6"
+    ]
+  },
+  {
+    "idx": 105,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H105.json",
+    "ids": [
+      "F000002XOA",
+      "F000002Y2S",
+      "F000002YFG",
+      "F000003SVT",
+      "F000003WKP",
+      "F000003WKQ",
+      "F000003WKR",
+      "F000003X1A",
+      "F000003XHK",
+      "F000003XHL"
+    ]
+  },
+  {
+    "idx": 106,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H106.json",
+    "ids": [
+      "F000003Y0I",
+      "F000003Y0J",
+      "F000003Y0K",
+      "F000003Y0M",
+      "F000003Y0N",
+      "F000003Y6K",
+      "F000003Y6V",
+      "F000003Z3U",
+      "F000003ZVP",
+      "F0000040LU"
+    ]
+  },
+  {
+    "idx": 107,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H107.json",
+    "ids": [
+      "F00000417G",
+      "F0000043QW",
+      "F0000044CR",
+      "F000005H5F",
+      "F000005ID8",
+      "F000005JSX",
+      "F000005NOD",
+      "F000005OGT",
+      "F000005OGV",
+      "F000005OGW"
+    ]
+  },
+  {
+    "idx": 108,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H108.json",
+    "ids": [
+      "F000005OGX",
+      "F000005Q7T",
+      "F000005Q7V",
+      "F000005QF5",
+      "F000008RRQ",
+      "F00000D56Q",
+      "F00000GUSD",
+      "F00000GVJM",
+      "F00000GWS9",
+      "F00000GWSA"
+    ]
+  },
+  {
+    "idx": 109,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H109.json",
+    "ids": [
+      "F00000GX0C",
+      "F00000GXK0",
+      "F00000GY40",
+      "F00000GY6M",
+      "F00000GY82",
+      "F00000GY87",
+      "F00000GYBD",
+      "F00000GYBE",
+      "F00000GYDF",
+      "F00000GYDH"
+    ]
+  },
+  {
+    "idx": 110,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H110.json",
+    "ids": [
+      "F00000H189",
+      "F00000H5BK",
+      "F00000H5C4",
+      "F00000H5C6",
+      "F00000H62A",
+      "F00000J3JY",
+      "F00000J3K1",
+      "F00000J3K5",
+      "F00000J3K6",
+      "F00000J3KC"
+    ]
+  },
+  {
+    "idx": 111,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H111.json",
+    "ids": [
+      "F00000J3KG",
+      "F00000J3KI",
+      "F00000J3KL",
+      "F00000J3KM",
+      "F00000J74G",
+      "F00000J8TJ",
+      "F00000JPG5",
+      "F00000JXA8",
+      "F00000JXAL",
+      "F00000JXAM"
+    ]
+  },
+  {
+    "idx": 112,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H112.json",
+    "ids": [
+      "F00000JXAN",
+      "F00000JXAO",
+      "F00000JYFV",
+      "F00000JYKV",
+      "F00000LI6Q",
+      "F00000LI6W",
+      "F00000LI6X",
+      "F00000LI6Z",
+      "F00000LI7D",
+      "F00000LKUY"
+    ]
+  },
+  {
+    "idx": 113,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H113.json",
+    "ids": [
+      "F00000LKUZ",
+      "F00000LKV2",
+      "F00000LM03",
+      "F00000M1JE",
+      "F00000M7W6",
+      "F00000M7WA",
+      "F00000M7WD",
+      "F00000M7WE",
+      "F00000M7WF",
+      "F00000M7WG"
+    ]
+  },
+  {
+    "idx": 114,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H114.json",
+    "ids": [
+      "F00000M7WH",
+      "F00000M8DA",
+      "F00000MAIO",
+      "F00000MBN7",
+      "F00000MBN8",
+      "F00000MBNM",
+      "F00000MBNO",
+      "F00000MBNR",
+      "F00000MBNT",
+      "F00000MFK2"
+    ]
+  },
+  {
+    "idx": 115,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H115.json",
+    "ids": [
+      "F00000MFKA",
+      "F00000MFKB",
+      "F00000MFKC",
+      "F00000MJYF",
+      "F00000MJYG",
+      "F00000MM7X",
+      "F00000MM85",
+      "F00000MPCP",
+      "F00000MPCW",
+      "F00000MPCX"
+    ]
+  },
+  {
+    "idx": 116,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H116.json",
+    "ids": [
+      "F00000MSGR",
+      "F00000MVJ1",
+      "F00000MVJ5",
+      "F00000MVJ9",
+      "F00000MVJA",
+      "F00000MVJV",
+      "F00000MW4L",
+      "F00000MY5Q",
+      "F00000MY5R",
+      "F00000N298"
+    ]
+  },
+  {
+    "idx": 117,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H117.json",
+    "ids": [
+      "F00000N3H2",
+      "F00000N3H3",
+      "F00000N4NG",
+      "F00000N4NH",
+      "F00000N7ZF",
+      "F00000N8MH",
+      "F00000NAUK",
+      "F00000NAUV",
+      "F00000NC80",
+      "F00000NEKG"
+    ]
+  },
+  {
+    "idx": 118,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H118.json",
+    "ids": [
+      "F00000NFLH",
+      "F00000NFLI",
+      "F00000NFLP",
+      "F00000NFLZ",
+      "F00000NFM0",
+      "F00000NFM7",
+      "F00000NFM8",
+      "F00000NFMF",
+      "F00000NFMH",
+      "F00000NFMI"
+    ]
+  },
+  {
+    "idx": 119,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H119.json",
+    "ids": [
+      "F00000NFMK",
+      "F00000NFML",
+      "F00000NFMO",
+      "F00000NFMZ",
+      "F00000NFN0",
+      "F00000NFNA",
+      "F00000NHW8",
+      "F00000NQ4G",
+      "F00000NQ52",
+      "F00000O2BW"
+    ]
+  },
+  {
+    "idx": 120,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H120.json",
+    "ids": [
+      "F00000O2BX",
+      "F00000O2BY",
+      "F00000O2BZ",
+      "F00000O2FF",
+      "F00000O2G6",
+      "F00000O2H1",
+      "F00000O2M4",
+      "F00000O7NE",
+      "F00000OBQA",
+      "F00000ODJM"
+    ]
+  },
+  {
+    "idx": 121,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H121.json",
+    "ids": [
+      "F00000ODUA",
+      "F00000OEH0",
+      "F00000OEUT",
+      "F00000OEUU",
+      "F00000OJJS",
+      "F00000OK2Q",
+      "F00000OOW9",
+      "F00000OP8L",
+      "F00000OPP8",
+      "F00000OPW3"
+    ]
+  },
+  {
+    "idx": 122,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H122.json",
+    "ids": [
+      "F00000OPW5",
+      "F00000OPW6",
+      "F00000OPW7",
+      "F00000OS3A",
+      "F00000P26T",
+      "F00000P2I8",
+      "F00000P8R1",
+      "F00000P8R3",
+      "F00000PAX8",
+      "F00000PGIA"
+    ]
+  },
+  {
+    "idx": 123,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H123.json",
+    "ids": [
+      "F00000PGIJ",
+      "F00000PHVV",
+      "F00000PHVY",
+      "F00000PI2V",
+      "F00000PI3D",
+      "F00000PI5G",
+      "F00000PI8A",
+      "F00000PI8P",
+      "F00000PKT4",
+      "F00000PKTB"
+    ]
+  },
+  {
+    "idx": 124,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H124.json",
+    "ids": [
+      "F00000PLH9",
+      "F00000PMNH",
+      "F00000PN04",
+      "F00000PNZM",
+      "F00000PNZR",
+      "F00000PO73",
+      "F00000PRO0",
+      "F00000PSEX",
+      "F00000PSOK",
+      "F00000PSTP"
+    ]
+  },
+  {
+    "idx": 125,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H125.json",
+    "ids": [
+      "F00000PUQK",
+      "F00000PV9L",
+      "F00000PWB8",
+      "F00000PXXQ",
+      "F00000PYA5",
+      "F00000PYHL",
+      "F00000PZ6Y",
+      "F00000Q2NQ",
+      "F00000Q3JU",
+      "F00000Q3JW"
+    ]
+  },
+  {
+    "idx": 126,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H126.json",
+    "ids": [
+      "F00000Q4HJ",
+      "F00000Q5Q4",
+      "F00000Q6KM",
+      "F00000Q7RO",
+      "F00000Q7RQ",
+      "F00000Q7RS",
+      "F00000Q7RT",
+      "F00000Q7RU",
+      "F00000Q7RV",
+      "F00000Q7RW"
+    ]
+  },
+  {
+    "idx": 127,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H127.json",
+    "ids": [
+      "F00000Q7RY",
+      "F00000Q7RZ",
+      "F00000Q7S0",
+      "F00000Q7S1",
+      "F00000Q7S3",
+      "F00000Q9UI",
+      "F00000Q9WN",
+      "F00000QAEO",
+      "F00000QCFF",
+      "F00000QCTU"
+    ]
+  },
+  {
+    "idx": 128,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H128.json",
+    "ids": [
+      "F00000QCTV",
+      "F00000QEPV",
+      "F00000QERM",
+      "F00000QESU",
+      "F00000QF75",
+      "F00000QGDE",
+      "F00000QHO4",
+      "F00000QHVG",
+      "F00000QHVM",
+      "F00000QIPI"
+    ]
+  },
+  {
+    "idx": 129,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H129.json",
+    "ids": [
+      "F00000QJWS",
+      "F00000QKT2",
+      "F00000QLPL",
+      "F00000QSTV",
+      "F00000QT4E",
+      "F00000S6Q4",
+      "F00000S6Q6",
+      "F00000S85D",
+      "F00000SBVR",
+      "F00000SCC4"
+    ]
+  },
+  {
+    "idx": 130,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H130.json",
+    "ids": [
+      "F00000SCC8",
+      "F00000SFWB",
+      "F00000SFWD",
+      "F00000SFYM",
+      "F00000SINO",
+      "F00000SIWE",
+      "F00000SJ8U",
+      "F00000SRRK",
+      "F00000SRRM",
+      "F00000SSEA"
+    ]
+  },
+  {
+    "idx": 131,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H131.json",
+    "ids": [
+      "F00000SSEB",
+      "F00000SSRN",
+      "F00000SXZU",
+      "F00000T1ES",
+      "F00000T1FY",
+      "F00000T3DC",
+      "F00000T5I7",
+      "F00000T5TI",
+      "F00000T6IW",
+      "F00000T7T7"
+    ]
+  },
+  {
+    "idx": 132,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H132.json",
+    "ids": [
+      "F00000T8QF",
+      "F00000T8QG",
+      "F00000T8QH",
+      "F00000T8QI",
+      "F00000TEY0",
+      "F00000TFF7",
+      "F00000TGCK",
+      "F00000TGPH",
+      "F00000TNI4",
+      "F00000TNI7"
+    ]
+  },
+  {
+    "idx": 133,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H133.json",
+    "ids": [
+      "F00000TOQ0",
+      "F00000TOVJ",
+      "F00000TPOV",
+      "F00000TVJ4",
+      "F00000TWPE",
+      "F00000TX9Q",
+      "F00000TYAW",
+      "F00000U2I4",
+      "F00000U4WN",
+      "F00000U8AA"
+    ]
+  },
+  {
+    "idx": 134,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H134.json",
+    "ids": [
+      "F00000UDGC",
+      "F00000UDGE",
+      "F00000UEQO",
+      "F00000UGCL",
+      "F00000UH3G",
+      "F00000UHR8",
+      "F00000UIKZ",
+      "F00000UIL0",
+      "F00000UIL3",
+      "F00000UIVU"
+    ]
+  },
+  {
+    "idx": 135,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H135.json",
+    "ids": [
+      "F00000UKSR",
+      "F00000ULAQ",
+      "F00000ULAR",
+      "F00000UNFW",
+      "F00000V1QM",
+      "F00000V48C",
+      "F00000V4K9",
+      "F00000V4KA",
+      "F00000V5DR",
+      "F00000V6DZ"
+    ]
+  },
+  {
+    "idx": 136,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H136.json",
+    "ids": [
+      "F00000V6E7",
+      "F00000V6JC",
+      "F00000V6K2",
+      "F00000V7L9",
+      "F00000V7LB",
+      "F00000V7RT",
+      "F00000V88H",
+      "F00000V88J",
+      "F00000V88K",
+      "F00000V9PR"
+    ]
+  },
+  {
+    "idx": 137,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H137.json",
+    "ids": [
+      "F00000VB50",
+      "F00000VB52",
+      "F00000VBK0",
+      "F00000VFWF",
+      "F00000VFWH",
+      "F00000VFWI",
+      "F00000VGYS",
+      "F00000VH5Q",
+      "F00000VKBG",
+      "F00000VKZL"
+    ]
+  },
+  {
+    "idx": 138,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H138.json",
+    "ids": [
+      "F00000VN2S",
+      "F00000VN2V",
+      "F00000VOV5",
+      "F00000VOV6",
+      "F00000VQNC",
+      "F00000VR20",
+      "F00000VRI3",
+      "F00000VSZI",
+      "F00000VWQP",
+      "F00000VX76"
+    ]
+  },
+  {
+    "idx": 139,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H139.json",
+    "ids": [
+      "F00000VYES",
+      "F00000VZJK",
+      "F00000W0D1",
+      "F00000W206",
+      "F00000W999",
+      "F00000W9Z4",
+      "F00000W9Z5",
+      "F00000W9Z9",
+      "F00000WBOA",
+      "F00000WBOD"
+    ]
+  },
+  {
+    "idx": 140,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H140.json",
+    "ids": [
+      "F00000WBOF",
+      "F00000WCRE",
+      "F00000WDGH",
+      "F00000WECM",
+      "F00000WEIT",
+      "F00000WG05",
+      "F00000WGN9",
+      "F00000WGNA",
+      "F00000WI9G",
+      "F00000WI9H"
+    ]
+  },
+  {
+    "idx": 141,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H141.json",
+    "ids": [
+      "F00000WITZ",
+      "F00000WK54",
+      "F00000WNW0",
+      "F00000WNWE",
+      "F00000WOX5",
+      "F00000WP8Y",
+      "F00000WP8Z",
+      "F00000WQK1",
+      "F00000WQK3",
+      "F00000WQK4"
+    ]
+  },
+  {
+    "idx": 142,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H142.json",
+    "ids": [
+      "F00000WTHP",
+      "F00000WTHT",
+      "F00000WUF1",
+      "F00000WUF2",
+      "F00000WWXZ",
+      "F00000WWY0",
+      "F00000WYEA",
+      "F00000WYEB",
+      "F00000WYYG",
+      "F00000WYYT"
+    ]
+  },
+  {
+    "idx": 143,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H143.json",
+    "ids": [
+      "F00000WYZ4",
+      "F00000WYZB",
+      "F00000WYZH",
+      "F00000WZVN",
+      "F00000WZVT",
+      "F00000X0UL",
+      "F00000X1BM",
+      "F00000X1NR",
+      "F00000X1NS",
+      "F00000X2ET"
+    ]
+  },
+  {
+    "idx": 144,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H144.json",
+    "ids": [
+      "F00000X3DK",
+      "F00000X4NV",
+      "F00000X4NW",
+      "F00000X4SK",
+      "F00000X4WM",
+      "F00000X6BS",
+      "F00000X6JJ",
+      "F00000X8BJ",
+      "F00000X8Q4",
+      "F00000X8Q5"
+    ]
+  },
+  {
+    "idx": 145,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H145.json",
+    "ids": [
+      "F00000X906",
+      "F00000X9LF",
+      "F00000X9LG",
+      "F00000X9S8",
+      "F00000XAEN",
+      "F00000XAEO",
+      "F00000XAH5",
+      "F00000XAHJ",
+      "F00000XCZE",
+      "F00000XD1S"
+    ]
+  },
+  {
+    "idx": 146,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H146.json",
+    "ids": [
+      "F00000XE99",
+      "F00000XE9A",
+      "F00000XGMN",
+      "F00000XH9K",
+      "F00000XHXJ",
+      "F00000XI93",
+      "F00000XJJ2",
+      "F00000XK9G",
+      "F00000XLEO",
+      "F00000XLZY"
+    ]
+  },
+  {
+    "idx": 147,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H147.json",
+    "ids": [
+      "F00000XM00",
+      "F00000XM03",
+      "F00000XM82",
+      "F00000XMD2",
+      "F00000XNET",
+      "F00000XNEU",
+      "F00000XNEV",
+      "F00000XO7G",
+      "F00000XOBX",
+      "F00000XRYW"
+    ]
+  },
+  {
+    "idx": 148,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H148.json",
+    "ids": [
+      "F00000XTV7",
+      "F00000XTV8",
+      "F00000XTWN",
+      "F00000XTWO",
+      "F00000XTWP",
+      "F00000XUNP",
+      "F00000Y4BV",
+      "F00000Y4BW",
+      "F00000Y4CO",
+      "F00000Y5QZ"
+    ]
+  },
+  {
+    "idx": 149,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H149.json",
+    "ids": [
+      "F00000Y5ZP",
+      "F00000Y61W",
+      "F00000Y75U",
+      "F00000Y91L",
+      "F00000Y9W8",
+      "F00000YB87",
+      "F00000YC30",
+      "F00000YF6V",
+      "F00000YFPN",
+      "F00000YFPQ"
+    ]
+  },
+  {
+    "idx": 150,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H150.json",
+    "ids": [
+      "F00000YFTE",
+      "F00000YGQA",
+      "F00000YGZ7",
+      "F00000YGZ8",
+      "F00000YHL6",
+      "F00000YHL7",
+      "F00000YHL8",
+      "F00000YIJ4",
+      "F00000YIJV",
+      "F00000YJFI"
+    ]
+  },
+  {
+    "idx": 151,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H151.json",
+    "ids": [
+      "F00000YJFJ",
+      "F00000YJWJ",
+      "F00000YLZR",
+      "F00000YLZS",
+      "F00000YMRB",
+      "F00000YMRC",
+      "F00000YMRI",
+      "F00000YOHP",
+      "F00000YP5E",
+      "F00000YP5F"
+    ]
+  },
+  {
+    "idx": 152,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H152.json",
+    "ids": [
+      "F00000YP5G",
+      "F00000YPTC",
+      "F00000YPTD",
+      "F00000YQLQ",
+      "F00000YQS8",
+      "F00000YS9I",
+      "F00000YT6Z",
+      "F00000YTHS",
+      "F00000YTHT",
+      "F00000YWEA"
+    ]
+  },
+  {
+    "idx": 153,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H153.json",
+    "ids": [
+      "F00000YWEI",
+      "F00000YXWV",
+      "F00000YZ82",
+      "F00000YZ83",
+      "F00000YZ84",
+      "F00000Z04T",
+      "F00000Z1FB",
+      "F00000Z1U7",
+      "F00000Z1UE",
+      "F00000Z43R"
+    ]
+  },
+  {
+    "idx": 154,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H154.json",
+    "ids": [
+      "F00000Z43X",
+      "F00000Z5LY",
+      "F00000Z5LZ",
+      "F00000Z660",
+      "F00000Z661",
+      "F00000Z74E",
+      "F00000Z74F",
+      "F00000Z74G",
+      "F00000Z74H",
+      "F00000Z74I"
+    ]
+  },
+  {
+    "idx": 155,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H155.json",
+    "ids": [
+      "F00000Z74J",
+      "F00000Z9ZE",
+      "F00000Z9ZJ",
+      "F00000Z9ZK",
+      "F00000ZAFH",
+      "F00000ZAXE",
+      "F00000ZB22",
+      "F00000ZC71",
+      "F00000ZCS5",
+      "F00000ZDHL"
+    ]
+  },
+  {
+    "idx": 156,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H156.json",
+    "ids": [
+      "F00000ZEHE",
+      "F00000ZELY",
+      "F00000ZELZ",
+      "F00000ZEM0",
+      "F00000ZEM2",
+      "F00000ZEM4",
+      "F00000ZEM5",
+      "F00000ZEM6",
+      "F00000ZEMA",
+      "F00000ZEMB"
+    ]
+  },
+  {
+    "idx": 157,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H157.json",
+    "ids": [
+      "F00000ZEMC",
+      "F00000ZEMI",
+      "F00000ZEML",
+      "F00000ZF5E",
+      "F00000ZFXR",
+      "F00000ZFY4",
+      "F00000ZG26",
+      "F00000ZGFE",
+      "F00000ZH43",
+      "F00000ZI06"
+    ]
+  },
+  {
+    "idx": 158,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H158.json",
+    "ids": [
+      "F00000ZIPW",
+      "F00000ZJ3N",
+      "F00000ZJ5H",
+      "F00000ZLCT",
+      "F00000ZM82",
+      "F00000ZNPC",
+      "F00000ZNPD",
+      "F00000ZP8S",
+      "F00000ZPPG",
+      "F00000ZQQI"
+    ]
+  },
+  {
+    "idx": 159,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H159.json",
+    "ids": [
+      "F00000ZRHY",
+      "F00000ZTQ3",
+      "F00000ZTQX",
+      "F00000ZTXY",
+      "F00000ZTY0",
+      "F00000ZU6S",
+      "F00000ZUMM",
+      "F00000ZUPK",
+      "F00000ZVJ2",
+      "F00000ZWDS"
+    ]
+  },
+  {
+    "idx": 160,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H160.json",
+    "ids": [
+      "F00000ZWDU",
+      "F00000ZZ3F",
+      "F00000ZZ3I",
+      "F00000ZZ3K",
+      "F00000ZZ90",
+      "F00000ZZBI",
+      "F0000100UM",
+      "F0000101II",
+      "F0000101IJ",
+      "F0000104DJ"
+    ]
+  },
+  {
+    "idx": 161,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H161.json",
+    "ids": [
+      "F0000106AL",
+      "F0000107DK",
+      "F000010879",
+      "F00001087A",
+      "F00001087B",
+      "F00001087N",
+      "F0000108JM",
+      "F00001099C",
+      "F00001099D",
+      "F00001099E"
+    ]
+  },
+  {
+    "idx": 162,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H162.json",
+    "ids": [
+      "F00001099F",
+      "F00001099G",
+      "F0000109AE",
+      "F000010AMS",
+      "F000010AMT",
+      "F000010BEN",
+      "F000010BJF",
+      "F000010CCS",
+      "F000010CIX",
+      "F000010CIY"
+    ]
+  },
+  {
+    "idx": 163,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H163.json",
+    "ids": [
+      "F000010DI1",
+      "F000010DIK",
+      "F000010EH4",
+      "F000010EHU",
+      "F000010ET2",
+      "F000010ET3",
+      "F000010ET7",
+      "F000010GI4",
+      "F000010I3T",
+      "F000010I8V"
+    ]
+  },
+  {
+    "idx": 164,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H164.json",
+    "ids": [
+      "F000010I8Y",
+      "F000010I8Z",
+      "F000010IG2",
+      "F000010IMX",
+      "F000010IMY",
+      "F000010IN4",
+      "F000010IN5",
+      "F000010IN6",
+      "F000010IS0",
+      "F000010KNT"
+    ]
+  },
+  {
+    "idx": 165,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H165.json",
+    "ids": [
+      "F000010M5H",
+      "F000010M5J",
+      "F000010M5Q",
+      "F000010M5R",
+      "F000010MVO",
+      "F000010NWN",
+      "F000010O92",
+      "F000010O93",
+      "F000010OL2",
+      "F000010OUX"
+    ]
+  },
+  {
+    "idx": 166,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H166.json",
+    "ids": [
+      "F000010OUY",
+      "F000010PB1",
+      "F000010PF2",
+      "F000010PMG",
+      "F000010PMM",
+      "F000010PMS",
+      "F000010Q3G",
+      "F000010QMB",
+      "F000010QVA",
+      "F000010RBX"
+    ]
+  },
+  {
+    "idx": 167,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H167.json",
+    "ids": [
+      "F000010RTM",
+      "F000010UL5",
+      "F000010UU8",
+      "F000010V2C",
+      "F000010V2F",
+      "F000010V2G",
+      "F000010W28",
+      "F000010W29",
+      "F000010W2A",
+      "F000010YTF"
+    ]
+  },
+  {
+    "idx": 168,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H168.json",
+    "ids": [
+      "F000010Z65",
+      "F000010Z66",
+      "F000010Z6N",
+      "F000010ZGP",
+      "F000010ZGQ",
+      "F000010ZGR",
+      "F00001103Q",
+      "F0000110XC",
+      "F0000118TV",
+      "F0000118ZF"
+    ]
+  },
+  {
+    "idx": 169,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H169.json",
+    "ids": [
+      "F0000119SB",
+      "F0000119SC",
+      "F0000119SD",
+      "F0000119SE",
+      "F000011A1I",
+      "F000011D68",
+      "F000011D69",
+      "F000011D6A",
+      "F000011D6C",
+      "F000011D6F"
+    ]
+  },
+  {
+    "idx": 170,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H170.json",
+    "ids": [
+      "F000011D6I",
+      "F000011DGT",
+      "F000011E8J",
+      "F000011ET3",
+      "F000011GZD",
+      "F000011IZ1",
+      "F000011J09",
+      "F000011J8O",
+      "F000011JZC",
+      "F000011JZE"
+    ]
+  },
+  {
+    "idx": 171,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H171.json",
+    "ids": [
+      "F000011JZF",
+      "F000011JZG",
+      "F000011N5C",
+      "F000011OMG",
+      "F000011PC3",
+      "F000011PZM",
+      "F000011RC9",
+      "F000011RGI",
+      "F000011TPD",
+      "F000011TPE"
+    ]
+  },
+  {
+    "idx": 172,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H172.json",
+    "ids": [
+      "F000011TSR",
+      "F000011TSS",
+      "F000011TST",
+      "F000011WMI",
+      "F000011WMJ",
+      "F000011X4R",
+      "F00001259L",
+      "F00001259O",
+      "F00001259R",
+      "F00001259U"
+    ]
+  },
+  {
+    "idx": 173,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H173.json",
+    "ids": [
+      "F0000125JO",
+      "F0000125RZ",
+      "F0000125S0",
+      "F0000125S1",
+      "F0000139JZ",
+      "F000013DCI",
+      "F000013G6H",
+      "F000013GDG",
+      "F000013HKL",
+      "F000013JZB"
+    ]
+  },
+  {
+    "idx": 174,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H174.json",
+    "ids": [
+      "F000013JZC",
+      "F000013KXG",
+      "F000013KXH",
+      "F000013LUJ",
+      "F000013LUK",
+      "F000013LUL",
+      "F000013MIG",
+      "F000013MIH",
+      "F000013OB6",
+      "F000013OB7"
+    ]
+  },
+  {
+    "idx": 175,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H175.json",
+    "ids": [
+      "F000013OBC",
+      "F000013OBD",
+      "F000013OCY",
+      "F000013QCF",
+      "F000013QTR",
+      "F000013R7U",
+      "F000013RHV",
+      "F000013RHW",
+      "F000013RHX",
+      "F000013RY8"
+    ]
+  },
+  {
+    "idx": 176,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H176.json",
+    "ids": [
+      "F000013RYB",
+      "F000013SOL",
+      "F000013SZV",
+      "F000013TEC",
+      "F000013TED",
+      "F000013UOV",
+      "F000013UOW",
+      "F000013UOY",
+      "F000013W3T",
+      "F000013WH9"
+    ]
+  },
+  {
+    "idx": 177,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H177.json",
+    "ids": [
+      "F000013WHA",
+      "F000013WHD",
+      "F000013WVF",
+      "F000013WVG",
+      "F000013WVH",
+      "F000013WVQ",
+      "F000013WVR",
+      "F000013Y9G",
+      "F000013Z48",
+      "F000013ZG2"
+    ]
+  },
+  {
+    "idx": 178,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H178.json",
+    "ids": [
+      "F000013ZG5",
+      "F000013ZOQ",
+      "F000013ZOR",
+      "F000013ZOS",
+      "F000014098",
+      "F0000140DS",
+      "F0000140DT",
+      "F0000140DU",
+      "F0000140MI",
+      "F0000142QJ"
+    ]
+  },
+  {
+    "idx": 179,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H179.json",
+    "ids": [
+      "F0000142Z6",
+      "F0000142Z9",
+      "F0000143TE",
+      "F0000143TF",
+      "F0000144UB",
+      "F00001462A",
+      "F00001462C",
+      "F00001468L",
+      "F0000146LZ",
+      "F0000146M0"
+    ]
+  },
+  {
+    "idx": 180,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H180.json",
+    "ids": [
+      "F0000146M1",
+      "F00001475M",
+      "F00001475O",
+      "F0000147XJ",
+      "F0000149CM",
+      "F0000149CN",
+      "F0000149CP",
+      "F0000149CQ",
+      "F0000149ID",
+      "F0000149IE"
+    ]
+  },
+  {
+    "idx": 181,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H181.json",
+    "ids": [
+      "F0000149IF",
+      "F000014ADI",
+      "F000014B3M",
+      "F000014CXD",
+      "F000014EE1",
+      "F000014EE2",
+      "F000014EE3",
+      "F000014EE4",
+      "F000014FRI",
+      "F000014GIK"
+    ]
+  },
+  {
+    "idx": 182,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H182.json",
+    "ids": [
+      "F000014GIL",
+      "F000014GIM",
+      "F000014HHY",
+      "F000014HHZ",
+      "F000014HXU",
+      "F000014JOG",
+      "F000014K9J",
+      "F000014K9K",
+      "F000014K9L",
+      "F000014K9M"
+    ]
+  },
+  {
+    "idx": 183,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H183.json",
+    "ids": [
+      "F000014KT6",
+      "F000014KTG",
+      "F000014KTH",
+      "F000014KTI",
+      "F000014L91",
+      "F000014LSQ",
+      "F000014M8X",
+      "F000014M8Y",
+      "F000014M8Z",
+      "F000014N0U"
+    ]
+  },
+  {
+    "idx": 184,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H184.json",
+    "ids": [
+      "F000014N6U",
+      "F000014N6V",
+      "F000014PGE",
+      "F000014PGF",
+      "F000014PGG",
+      "F000014PGH",
+      "F000014R1R",
+      "F000014R1S",
+      "F000014RQT",
+      "F000014S66"
+    ]
+  },
+  {
+    "idx": 185,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H185.json",
+    "ids": [
+      "F000014SEY",
+      "F000014SFM",
+      "F000014TT1",
+      "F000014TT2",
+      "F000014TT3",
+      "F000014UYO",
+      "F000014V32",
+      "F000014V33",
+      "F000014V34",
+      "F000014V35"
+    ]
+  },
+  {
+    "idx": 186,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H186.json",
+    "ids": [
+      "F000014X71",
+      "F000014X72",
+      "F000014XCL",
+      "F000014XCN",
+      "F000014XTX",
+      "F000014YRM",
+      "F000014ZDE",
+      "F000014ZDF",
+      "F0000150Z8",
+      "F0000150Z9"
+    ]
+  },
+  {
+    "idx": 187,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H187.json",
+    "ids": [
+      "F0000150ZB",
+      "F0000151N9",
+      "F0000151U4",
+      "F0000151U5",
+      "F0000152B9",
+      "F0000152TO",
+      "F0000155V6",
+      "F0000156AN",
+      "F0000157JO",
+      "F0000157JQ"
+    ]
+  },
+  {
+    "idx": 188,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H188.json",
+    "ids": [
+      "F0000157JR",
+      "F00001587V",
+      "F0000158FU",
+      "F0000159JA",
+      "F000015BF2",
+      "F000015BF3",
+      "F000015BW0",
+      "F000015BW1",
+      "F000015C9B",
+      "F000015C9C"
+    ]
+  },
+  {
+    "idx": 189,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H189.json",
+    "ids": [
+      "F000015C9D",
+      "F000015DDK",
+      "F000015DO4",
+      "F000015DSF",
+      "F000015DSG",
+      "F000015EAJ",
+      "F000015EAK",
+      "F000015EAL",
+      "F000015EAM",
+      "F000015EAW"
+    ]
+  },
+  {
+    "idx": 190,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H190.json",
+    "ids": [
+      "F000015EH6",
+      "F000015FRF",
+      "F000015FZN",
+      "F000015HLC",
+      "F000015HLD",
+      "F000015JA3",
+      "F000015JNR",
+      "F000015KBT",
+      "F000015KYV",
+      "F000015LRM"
+    ]
+  },
+  {
+    "idx": 191,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H191.json",
+    "ids": [
+      "F000015LWJ",
+      "F000015LWK",
+      "F000015N1U",
+      "F000015NZW",
+      "F000015OMU",
+      "F000015OUC",
+      "F000015Q9O",
+      "F000015QLQ",
+      "F000015QLR",
+      "F000015R4U"
+    ]
+  },
+  {
+    "idx": 192,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H192.json",
+    "ids": [
+      "F000015R4V",
+      "F000015RIL",
+      "F000015RIM",
+      "F000015RIO",
+      "F000015SAR",
+      "F000015SPD",
+      "F000015STJ",
+      "F000015STS",
+      "F000015STZ",
+      "F000015TCC"
+    ]
+  },
+  {
+    "idx": 193,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H193.json",
+    "ids": [
+      "F000015TYJ",
+      "F000015UFZ",
+      "F000015UG0",
+      "F000015UPH",
+      "F000015VVK",
+      "F000015WL4",
+      "F000015WL5",
+      "F000015WL6",
+      "F000015YFZ",
+      "F000015YG1"
+    ]
+  },
+  {
+    "idx": 194,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H194.json",
+    "ids": [
+      "F000015YPO",
+      "F000016047",
+      "F000016049",
+      "F0000160FQ",
+      "F00001614E",
+      "F0000162EA",
+      "F0000164UO",
+      "F0000164ZA",
+      "F00001654N",
+      "F0000165JZ"
+    ]
+  },
+  {
+    "idx": 195,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H195.json",
+    "ids": [
+      "F0000165QF",
+      "F0000165QL",
+      "F0000165QX",
+      "F0000166S8",
+      "F0000166S9",
+      "F0000167SB",
+      "F0000167SC",
+      "F00001689R",
+      "F0000168XW",
+      "F0000169TF"
+    ]
+  },
+  {
+    "idx": 196,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H196.json",
+    "ids": [
+      "F0000169TG",
+      "F0000169TH",
+      "F0000169TI",
+      "F0000169TJ",
+      "F000016A4B",
+      "F000016A4C",
+      "F000016A4D",
+      "F000016BG9",
+      "F000016BGA",
+      "F000016BTX"
+    ]
+  },
+  {
+    "idx": 197,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H197.json",
+    "ids": [
+      "F000016CI6",
+      "F000016DAR",
+      "F000016DRE",
+      "F000016DX9",
+      "F000016DXA",
+      "F000016DXB",
+      "F000016GO8",
+      "F000016GZJ",
+      "F000016GZY",
+      "F000016J38"
+    ]
+  },
+  {
+    "idx": 198,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H198.json",
+    "ids": [
+      "F000016J39",
+      "F000016K8G",
+      "F000016KBB",
+      "F000016KPG",
+      "F000016KPH",
+      "F000016L39",
+      "F000016N0M",
+      "F000016POE",
+      "F000016PYV",
+      "F000016QKD"
+    ]
+  },
+  {
+    "idx": 199,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H199.json",
+    "ids": [
+      "F000016R0E",
+      "F000016RMA",
+      "F000016S61",
+      "F000016SOC",
+      "F000016SOD",
+      "F000016SOE",
+      "F000016SOF",
+      "F000016SOG",
+      "F000016SOI",
+      "F000016SOJ"
+    ]
+  },
+  {
+    "idx": 200,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H200.json",
+    "ids": [
+      "F000016SOL",
+      "F000016TNL",
+      "F000016TNO",
+      "F000016TV6",
+      "F000016XG1",
+      "F000016Y1C",
+      "F000016YCL",
+      "F000016ZGM",
+      "F000016ZO8",
+      "F0000170CM"
+    ]
+  },
+  {
+    "idx": 201,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H201.json",
+    "ids": [
+      "F0000170CO",
+      "F0000170CP",
+      "F0000171R9",
+      "F0000172XK",
+      "F0000174G2",
+      "F0000174XM",
+      "F0000175BE",
+      "F0000176LM",
+      "F0000176LN",
+      "F0000176LO"
+    ]
+  },
+  {
+    "idx": 202,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H202.json",
+    "ids": [
+      "F000017PD7",
+      "F000017PD8",
+      "F00001834W",
+      "F00001834Y",
+      "F00001834Z",
+      "F000018350",
+      "F000018418",
+      "F00001841B",
+      "F00001841H",
+      "F000018AZT"
+    ]
+  },
+  {
+    "idx": 203,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H203.json",
+    "ids": [
+      "F000018KM1",
+      "F000018SQE",
+      "F000018SQF",
+      "F000018SQG",
+      "F000018SQH",
+      "F000019E5Q",
+      "F000019E5R",
+      "F000019E60",
+      "F00001ADM7",
+      "F00001ADM8"
+    ]
+  },
+  {
+    "idx": 204,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H204.json",
+    "ids": [
+      "F00001ADM9",
+      "F00001ADMA",
+      "F00001ADMB",
+      "F00001ADME",
+      "F00001AEZW",
+      "F00001B0C3",
+      "F00001B0CF",
+      "F00001B0CG",
+      "F00001B0CK",
+      "F00001BBHO"
+    ]
+  },
+  {
+    "idx": 205,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H205.json",
+    "ids": [
+      "F00001BNF7",
+      "F00001CBJD",
+      "F00001CBJG",
+      "F00001CFD2",
+      "F00001CFD3",
+      "F00001CHJ1",
+      "F00001CHJ2",
+      "F00001CHJ3",
+      "F00001CHJ4",
+      "F00001CIHZ"
+    ]
+  },
+  {
+    "idx": 206,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H206.json",
+    "ids": [
+      "F00001CJWV",
+      "F00001CJWX",
+      "F00001CJWY",
+      "F00001CKW0",
+      "F00001CL5F",
+      "F00001CNB0",
+      "F00001CNRL",
+      "F00001COEG",
+      "F00001CPU8",
+      "F00001CQ8E"
+    ]
+  },
+  {
+    "idx": 207,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H207.json",
+    "ids": [
+      "F00001CQ8J",
+      "F00001CQHH",
+      "F00001CQHI",
+      "F00001CR7J",
+      "F00001CRFN",
+      "F00001CRNH",
+      "F00001CRO0",
+      "F00001CROG",
+      "F00001CRTI",
+      "F00001CRTJ"
+    ]
+  },
+  {
+    "idx": 208,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H208.json",
+    "ids": [
+      "F00001CTR2",
+      "F00001CU8H",
+      "F00001CUJ3",
+      "F00001CV81",
+      "F00001CWKN",
+      "F00001CX95",
+      "F00001CY4W",
+      "F00001CY4X",
+      "F00001CY4Y",
+      "F00001CY4Z"
+    ]
+  },
+  {
+    "idx": 209,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H209.json",
+    "ids": [
+      "F00001CYQN",
+      "F00001CYWH",
+      "F00001CYWM",
+      "F00001CYWN",
+      "F00001CYWP",
+      "F00001CZ2M",
+      "F00001D12N",
+      "F00001D12O",
+      "F00001D12P",
+      "F00001D12R"
+    ]
+  },
+  {
+    "idx": 210,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H210.json",
+    "ids": [
+      "F00001D12S",
+      "F00001D12U",
+      "F00001D12V",
+      "F00001D12W",
+      "F00001D1E8",
+      "F00001D242",
+      "F00001D246",
+      "F00001D2PG",
+      "F00001D2PH",
+      "F00001D2PI"
+    ]
+  },
+  {
+    "idx": 211,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H211.json",
+    "ids": [
+      "F00001D2PJ",
+      "F00001D2PN",
+      "F00001D2XI",
+      "F00001D3M5",
+      "F00001D420",
+      "F00001D4RU",
+      "F00001D52O",
+      "F00001D6GA",
+      "F00001D6GB",
+      "F00001D6GC"
+    ]
+  },
+  {
+    "idx": 212,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H212.json",
+    "ids": [
+      "F00001D6X3",
+      "F00001D7LY",
+      "F00001D8F8",
+      "F00001D8F9",
+      "F00001D929",
+      "F00001D92E",
+      "F00001DANJ",
+      "F00001DAUY",
+      "F00001DC2E",
+      "F00001DC2F"
+    ]
+  },
+  {
+    "idx": 213,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H213.json",
+    "ids": [
+      "F00001DD7W",
+      "F00001DDDE",
+      "F00001DDDF",
+      "F00001DDNE",
+      "F00001DER1",
+      "F00001DEXH",
+      "F00001DEXZ",
+      "F00001DHL0",
+      "F00001DHL1",
+      "F00001DHL3"
+    ]
+  },
+  {
+    "idx": 214,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H214.json",
+    "ids": [
+      "F00001DHL5",
+      "F00001DKMT",
+      "F00001DKMX",
+      "F00001DKMY",
+      "F00001DKPP",
+      "F00001DKPT",
+      "F00001DKPU",
+      "F00001DL18",
+      "F00001DMRI",
+      "F00001DNKE"
+    ]
+  },
+  {
+    "idx": 215,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H215.json",
+    "ids": [
+      "F00001DNKF",
+      "F00001DNV3",
+      "F00001DO27",
+      "F00001DPEG",
+      "F00001DPEH",
+      "F00001DPPY",
+      "F00001DPYO",
+      "F00001DQ7A",
+      "F00001DQ7B",
+      "F00001DQ7C"
+    ]
+  },
+  {
+    "idx": 216,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H216.json",
+    "ids": [
+      "F00001DR11",
+      "F00001DR19",
+      "F00001DR1A",
+      "F00001DR1D",
+      "F00001DR1E",
+      "F00001DR1T",
+      "F00001DRUF",
+      "F00001DRVH",
+      "F00001DRVI",
+      "F00001DRVJ"
+    ]
+  },
+  {
+    "idx": 217,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H217.json",
+    "ids": [
+      "F00001DULJ",
+      "F00001DXB1",
+      "F00001DXB2",
+      "F00001DXRZ",
+      "F00001DXS0",
+      "F00001DY0Z",
+      "F00001DYKF",
+      "F00001DYKI",
+      "F00001DYKK",
+      "F00001DYUH"
+    ]
+  },
+  {
+    "idx": 218,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H218.json",
+    "ids": [
+      "F00001DYZG",
+      "F00001DYZH",
+      "F00001DYZI",
+      "F00001DYZJ",
+      "F00001DYZK",
+      "F00001DZ4K",
+      "F00001DZ4O",
+      "F00001DZ4P",
+      "F00001DZ4Q",
+      "F00001DZ4S"
+    ]
+  },
+  {
+    "idx": 219,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H219.json",
+    "ids": [
+      "F00001DZ58",
+      "F00001DZDI",
+      "F00001DZDJ",
+      "F00001DZDK",
+      "F00001DZV6",
+      "F00001DZV9",
+      "F00001E0GC",
+      "F00001E0GD",
+      "F00001E0ZH",
+      "F00001E233"
+    ]
+  },
+  {
+    "idx": 220,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H220.json",
+    "ids": [
+      "F00001E234",
+      "F00001E235",
+      "F00001E236",
+      "F00001E237",
+      "F00001E238",
+      "F00001E239",
+      "F00001E23A",
+      "F00001E23B",
+      "F00001E24Z",
+      "F00001E250"
+    ]
+  },
+  {
+    "idx": 221,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H221.json",
+    "ids": [
+      "F00001E251",
+      "F00001E2HZ",
+      "F00001E31S",
+      "F00001E39Y",
+      "F00001E3A0",
+      "F00001E3LF",
+      "F00001E3LG",
+      "F00001E3LH",
+      "F00001E3T3",
+      "F00001E55R"
+    ]
+  },
+  {
+    "idx": 222,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H222.json",
+    "ids": [
+      "F00001E5ED",
+      "F00001E5EN",
+      "F00001E5EO",
+      "F00001E5EQ",
+      "F00001E5LW",
+      "F00001E5LX",
+      "F00001E5RX",
+      "F00001E688",
+      "F00001E689",
+      "F00001E68A"
+    ]
+  },
+  {
+    "idx": 223,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H223.json",
+    "ids": [
+      "F00001E69K",
+      "F00001E69L",
+      "F00001E69M",
+      "F00001E69Q",
+      "F00001E69U",
+      "F00001E69V",
+      "F00001E6HD",
+      "F00001E6HF",
+      "F00001E8F9",
+      "F00001E8FA"
+    ]
+  },
+  {
+    "idx": 224,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H224.json",
+    "ids": [
+      "F00001E8RV",
+      "F00001E93A",
+      "F00001E9DW",
+      "F00001E9UG",
+      "F00001E9UI",
+      "F00001E9UJ",
+      "F00001E9UK",
+      "F00001EAG8",
+      "F00001EAGK",
+      "F00001EAGL"
+    ]
+  },
+  {
+    "idx": 225,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H225.json",
+    "ids": [
+      "F00001EB9M",
+      "F00001EBKD",
+      "F00001EC02",
+      "F00001EC04",
+      "F00001EC05",
+      "F00001EC07",
+      "F00001EC6E",
+      "F00001ECP7",
+      "F00001EDBQ",
+      "F00001EDEO"
+    ]
+  },
+  {
+    "idx": 226,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H226.json",
+    "ids": [
+      "F00001EDEP",
+      "F00001EDW2",
+      "F00001EDW6",
+      "F00001EDW7",
+      "F00001EE7D",
+      "F00001EE7E",
+      "F00001EGDP",
+      "F00001EGGG",
+      "F00001EGGH",
+      "F00001EGGI"
+    ]
+  },
+  {
+    "idx": 227,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H227.json",
+    "ids": [
+      "F00001EH1E",
+      "F00001EH1F",
+      "F00001EH1I",
+      "F00001EHNG",
+      "F00001EHNK",
+      "F00001EHNL",
+      "F00001EIAV",
+      "F00001EJ2T",
+      "F00001EJ2U",
+      "F00001EJ2Z"
+    ]
+  },
+  {
+    "idx": 228,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H228.json",
+    "ids": [
+      "F00001EJIL",
+      "F00001EJXR",
+      "F00001EKWV",
+      "F00001EMPI",
+      "F00001EOCH",
+      "F00001EOCI",
+      "F00001EOCJ",
+      "F00001EOTO",
+      "F00001EQOY",
+      "F00001EQXQ"
+    ]
+  },
+  {
+    "idx": 229,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H229.json",
+    "ids": [
+      "F00001ERHG",
+      "F00001ERNU",
+      "F00001ERNV",
+      "F00001ERO5",
+      "F00001ERO6",
+      "F00001ERO7",
+      "F00001ERO8",
+      "F00001ESOE",
+      "F00001ESOL",
+      "F00001EVA8"
+    ]
+  },
+  {
+    "idx": 230,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H230.json",
+    "ids": [
+      "F00001EVA9",
+      "F00001EVAA",
+      "F00001EVAB",
+      "F00001EVSW",
+      "F00001EVSX",
+      "F00001EVSY",
+      "F00001EVSZ",
+      "F00001EVT0",
+      "F00001EVX1",
+      "F00001EVX3"
+    ]
+  },
+  {
+    "idx": 231,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H231.json",
+    "ids": [
+      "F00001EVX4",
+      "F00001EW4V",
+      "F00001EW4W",
+      "F00001EWT1",
+      "F00001EXYL",
+      "F00001EYK5",
+      "F00001EYS5",
+      "F00001EYS6",
+      "F00001EZ2R",
+      "F00001EZ3P"
+    ]
+  },
+  {
+    "idx": 232,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H232.json",
+    "ids": [
+      "F00001EZIO",
+      "F00001F01Y",
+      "F00001F11I",
+      "F00001F11L",
+      "F00001F163",
+      "F00001F164",
+      "F00001F166",
+      "F00001F167",
+      "F00001F168",
+      "F00001F169"
+    ]
+  },
+  {
+    "idx": 233,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H233.json",
+    "ids": [
+      "F00001F4ED",
+      "F00001F4TZ",
+      "F00001F4U0",
+      "F00001F56U",
+      "F00001F5C2",
+      "F00001F5GY",
+      "F00001F662",
+      "F00001F6RQ",
+      "F00001F6RS",
+      "F00001F6U4"
+    ]
+  },
+  {
+    "idx": 234,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H234.json",
+    "ids": [
+      "F00001F6ZA",
+      "F00001F7DZ",
+      "F00001F7E4",
+      "F00001F7JP",
+      "F00001F7JQ",
+      "F00001F7JR",
+      "F00001F7ZC",
+      "F00001F7ZD",
+      "F00001F8EZ",
+      "F00001F8F0"
+    ]
+  },
+  {
+    "idx": 235,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H235.json",
+    "ids": [
+      "F00001F8F1",
+      "F00001F8F2",
+      "F00001F8F3",
+      "F00001F8F4",
+      "F00001F8F5",
+      "F00001F8UH",
+      "F00001F96G",
+      "F00001F96H",
+      "F00001F96J",
+      "F00001F96L"
+    ]
+  },
+  {
+    "idx": 236,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H236.json",
+    "ids": [
+      "F00001F9LW",
+      "F00001F9W2",
+      "F00001FA2X",
+      "F00001FAAJ",
+      "F00001FAAK",
+      "F00001FALG",
+      "F00001FALX",
+      "F00001FALY",
+      "F00001FALZ",
+      "F00001FAM0"
+    ]
+  },
+  {
+    "idx": 237,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H237.json",
+    "ids": [
+      "F00001FAM1",
+      "F00001FEMK",
+      "F00001FFZK",
+      "F00001FFZM",
+      "F00001FFZN",
+      "F00001FGJ0",
+      "F00001FHQR",
+      "F00001FIAL",
+      "F00001FIAM",
+      "F00001FJTP"
+    ]
+  },
+  {
+    "idx": 238,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H238.json",
+    "ids": [
+      "F00001FLIG",
+      "F00001FLIH",
+      "F00001FORP",
+      "F00001FSEZ",
+      "F00001FSF0",
+      "F00001FSF1",
+      "F00001FSF3",
+      "F00001FSF6",
+      "F00001FSF7",
+      "F00001FT0S"
+    ]
+  },
+  {
+    "idx": 239,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H239.json",
+    "ids": [
+      "F00001FUNZ",
+      "F00001FUQ2",
+      "F00001FUQ3",
+      "F00001FUQ5",
+      "F00001FUQ6",
+      "F00001FV9Y",
+      "F00001FVA6",
+      "F00001FVAH",
+      "F00001FWI3",
+      "F00001FX3N"
+    ]
+  },
+  {
+    "idx": 240,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H240.json",
+    "ids": [
+      "F00001FYDH",
+      "F00001FYDJ",
+      "F00001FYDN",
+      "F00001FYDO",
+      "F00001FYOS",
+      "F00001FYOT",
+      "F00001FYOU",
+      "F00001G009",
+      "F00001G2KA",
+      "F00001G4BK"
+    ]
+  },
+  {
+    "idx": 241,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H241.json",
+    "ids": [
+      "F00001G5OR",
+      "F00001G5OS",
+      "F00001G5OT",
+      "F00001G5OU",
+      "F00001G6XL",
+      "F00001G6XN",
+      "F00001G6XR",
+      "F00001G6XS",
+      "F00001G8R6",
+      "F00001G8R7"
+    ]
+  },
+  {
+    "idx": 242,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H242.json",
+    "ids": [
+      "F00001GBFP",
+      "F00001GCYZ",
+      "F00001GCZ0",
+      "F00001GCZ1",
+      "F00001GCZ2",
+      "F00001GDOP",
+      "F00001GDOQ",
+      "F00001GDOR",
+      "F00001GDOS",
+      "F00001GE95"
+    ]
+  },
+  {
+    "idx": 243,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H243.json",
+    "ids": [
+      "F00001GEYY",
+      "F00001GFE5",
+      "F00001GFG5",
+      "F00001GG5G",
+      "F00001GG5L",
+      "F00001GG5M",
+      "F00001GG5O",
+      "F00001GG5P",
+      "F00001GG5Q",
+      "F00001GG5S"
+    ]
+  },
+  {
+    "idx": 244,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H244.json",
+    "ids": [
+      "F00001GG5T",
+      "F00001GGJW",
+      "F00001GGKO",
+      "F00001GGKP",
+      "F00001GGKQ",
+      "F00001GGKR",
+      "F00001GGKS",
+      "F00001GGKT",
+      "F00001GGS0",
+      "F00001GGXC"
+    ]
+  },
+  {
+    "idx": 245,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H245.json",
+    "ids": [
+      "F00001GIBA",
+      "F00001GJ3I",
+      "F00001GJA7",
+      "F00001GJA8",
+      "F00001GJAF",
+      "F00001GJGD",
+      "F00001GKMG",
+      "F00001GKMH",
+      "F00001GKMY",
+      "F00001GKMZ"
+    ]
+  },
+  {
+    "idx": 246,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H246.json",
+    "ids": [
+      "F00001GKN0",
+      "F00001GKN2",
+      "F00001GL08",
+      "F00001GL09",
+      "F00001GL0C",
+      "F00001GL0D",
+      "F00001GL0E",
+      "F00001GL0G",
+      "F00001GL0H",
+      "F00001GL0I"
+    ]
+  },
+  {
+    "idx": 247,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H247.json",
+    "ids": [
+      "F00001GLFK",
+      "F00001GLFW",
+      "F00001GLMF",
+      "F00001GLWC",
+      "F00001GM48",
+      "F00001GM4A",
+      "F00001GM4C",
+      "F00001GM4D",
+      "F00001GM9Z",
+      "F00001GMA0"
+    ]
+  },
+  {
+    "idx": 248,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H248.json",
+    "ids": [
+      "F00001GMDZ",
+      "F00001GMXR",
+      "F00001GN8R",
+      "F00001GN8S",
+      "F00001GNG3",
+      "F00001GNGB",
+      "F00001GNT7",
+      "F00001GO12",
+      "F00001GO1Q",
+      "F00001GODM"
+    ]
+  },
+  {
+    "idx": 249,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H249.json",
+    "ids": [
+      "F00001GODN",
+      "F00001GOGW",
+      "F00001GOGX",
+      "F00001GOLF",
+      "F00001GP9V",
+      "F00001GPG0",
+      "F00001GSFN",
+      "F00001GSFP",
+      "F00001GX0U",
+      "F00001GZKI"
+    ]
+  },
+  {
+    "idx": 250,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H250.json",
+    "ids": [
+      "F00001GZKJ",
+      "F00001GZKO",
+      "F00001H0U6",
+      "F00001H0UE",
+      "F00001H1FM",
+      "F00001H1FN",
+      "F00001H21O",
+      "F00001H4V4",
+      "F00001H4V5",
+      "F00001H4VP"
+    ]
+  },
+  {
+    "idx": 251,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H251.json",
+    "ids": [
+      "F00001H4VQ",
+      "F00001H4VR",
+      "F00001H5GA",
+      "F00001H5GB",
+      "F00001H5GC",
+      "F00001H6QN",
+      "F00001H6QT",
+      "F00001HAWM",
+      "F00001HJKB",
+      "F00001HJKC"
+    ]
+  },
+  {
+    "idx": 252,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H252.json",
+    "ids": [
+      "F00001HLX4",
+      "F00001HLX5",
+      "F00001HLXD",
+      "F00001HLXE",
+      "F00001HLXI",
+      "F00001HLXM",
+      "F00001HLXN",
+      "F00001HLY1",
+      "F00001HMK9",
+      "F00001HMKC"
+    ]
+  },
+  {
+    "idx": 253,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H253.json",
+    "ids": [
+      "F00001HMKD",
+      "F00001HRLK",
+      "F00001HRLL",
+      "F00001HVVS",
+      "F00001HVW2",
+      "F00001HVW3",
+      "F00001HWIS",
+      "F00001HX77",
+      "F00001HZM8",
+      "F00001I0KG"
+    ]
+  },
+  {
+    "idx": 254,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H254.json",
+    "ids": [
+      "F00001I3AA",
+      "F00001I3AB",
+      "F00001I5QD",
+      "F00001I6F4",
+      "F00001IBGO",
+      "F00001ICA7",
+      "F00001IDX1",
+      "F00001IFDG",
+      "F00001IFDH",
+      "F00001IIVV"
+    ]
+  },
+  {
+    "idx": 255,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H255.json",
+    "ids": [
+      "F00001IIVX",
+      "F00001IIVY",
+      "F00001IIW5",
+      "F00001IJL2",
+      "F00001IJL3",
+      "F00001IJL5",
+      "F00001IJL6",
+      "F00001IL3S",
+      "F00001IMRZ",
+      "F00001IRIG"
+    ]
+  },
+  {
+    "idx": 256,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H256.json",
+    "ids": [
+      "F00001IRIT",
+      "F00001IRIU",
+      "F00001IRIV",
+      "F00001IRJ4",
+      "F00001IRJ7",
+      "F00001IRJ8",
+      "F00001IW21",
+      "F00001IW2F",
+      "F00001IWSY",
+      "F00001IWSZ"
+    ]
+  },
+  {
+    "idx": 257,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H257.json",
+    "ids": [
+      "F00001IWT0",
+      "F00001IWT1",
+      "F00001IWT2",
+      "F00001IWT3",
+      "F00001IWT4",
+      "F00001IWXO",
+      "F00001IXKV",
+      "F00001IXKY",
+      "F00001IXL2",
+      "F00001IZ9S"
+    ]
+  },
+  {
+    "idx": 258,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H258.json",
+    "ids": [
+      "F00001J01W",
+      "F00001J0OK",
+      "F00001J1CI",
+      "F00001J1CL",
+      "F00001J1CM",
+      "F00001JD9C",
+      "F00001JDAZ",
+      "F00001JGYF",
+      "F00001JGYG",
+      "F00001JGYI"
+    ]
+  },
+  {
+    "idx": 259,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H259.json",
+    "ids": [
+      "F00001JGYJ",
+      "F00001JHMY",
+      "F00001JRQ3",
+      "F00001JSB8",
+      "F00001JXWR",
+      "F00001JXWT",
+      "F00001JXX2",
+      "F00001JXX8",
+      "F00001K08A",
+      "F00001K08C"
+    ]
+  },
+  {
+    "idx": 260,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H260.json",
+    "ids": [
+      "F00001K08D",
+      "F00001K0X9",
+      "F00001K0XA",
+      "F00001K0XB",
+      "F00001K0XG",
+      "F00001K0XH",
+      "F00001K0XK",
+      "F00001K0XL",
+      "F00001K0XM",
+      "F00001K0XP"
+    ]
+  },
+  {
+    "idx": 261,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H261.json",
+    "ids": [
+      "F00001K0Y3",
+      "F00001K0Y4",
+      "F00001K4Q8",
+      "F00001K4QB",
+      "F00001K4QD",
+      "F00001K4QJ",
+      "F00001K5HA",
+      "F00001K95D",
+      "F00001K9VN",
+      "F00001K9WT"
+    ]
+  },
+  {
+    "idx": 262,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H262.json",
+    "ids": [
+      "F00001K9X5",
+      "F00001KCUT",
+      "F00001KCUU",
+      "F00001KHPE",
+      "F00001KM4B",
+      "F00001KM4L",
+      "F00001KM4M",
+      "F00001KM4N",
+      "F00001KM4Q",
+      "F00001KM4S"
+    ]
+  },
+  {
+    "idx": 263,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H263.json",
+    "ids": [
+      "F00001KMUC",
+      "F00001KMUD",
+      "F00001KMUN",
+      "F00001KMUO",
+      "F00001KMUP",
+      "F00001KMUY",
+      "F00001KMV2",
+      "F00001KR5H",
+      "F00001KWYQ",
+      "F00001KWYR"
+    ]
+  },
+  {
+    "idx": 264,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H264.json",
+    "ids": [
+      "F00001KWYS",
+      "F00001KWYT",
+      "F00001KWYU",
+      "F00001KWZ5",
+      "F00001KWZ8",
+      "F00001KWZ9",
+      "F00001KWZA",
+      "F00001KWZB",
+      "F00001KZAR",
+      "F00001KZAV"
+    ]
+  },
+  {
+    "idx": 265,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H265.json",
+    "ids": [
+      "F00001KZAW",
+      "F00001KZB1",
+      "F00001KZZF",
+      "F00001KZZH",
+      "F00001L00I",
+      "F00001L00J",
+      "F00001L3LP",
+      "F00001L3LQ",
+      "F00001L3VE",
+      "F00001L6QO"
+    ]
+  },
+  {
+    "idx": 266,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H266.json",
+    "ids": [
+      "F00001L6QP",
+      "F00001L6QQ",
+      "F00001L7EW",
+      "F00001L8XM",
+      "F00001L9H4",
+      "F00001L9HU",
+      "F00001LB2A",
+      "F00001LB2C",
+      "F00001LB2O",
+      "F00001LB5P"
+    ]
+  },
+  {
+    "idx": 267,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H267.json",
+    "ids": [
+      "F00001LBS8",
+      "F00001LBSA",
+      "F00001LBSD",
+      "F00001LBT9",
+      "F00001LBTB",
+      "F00001LBTC",
+      "F00001LBTD",
+      "F00001LBUG",
+      "F00001LBUH",
+      "F00001LCHR"
+    ]
+  },
+  {
+    "idx": 268,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H268.json",
+    "ids": [
+      "F00001LDJM",
+      "F00001LE7O",
+      "F00001LG8A",
+      "F00001LWP5",
+      "F00001LWRA",
+      "F00001LWRB",
+      "F00001LWRD",
+      "F00001LWRG",
+      "F00001LWRH",
+      "F00001LWRI"
+    ]
+  },
+  {
+    "idx": 269,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H269.json",
+    "ids": [
+      "F00001LWRJ",
+      "F00001LWRL",
+      "F00001LXDZ",
+      "F00001LXE0",
+      "F00001LXRT",
+      "F00001LY3E",
+      "F00001LYOS",
+      "F00001M105",
+      "F00001M116",
+      "F00001M11L"
+    ]
+  },
+  {
+    "idx": 270,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H270.json",
+    "ids": [
+      "F00001M1VS",
+      "F00001M1WU",
+      "F00001M2JO",
+      "F00001M2JX",
+      "F00001M5K1",
+      "F00001M93C",
+      "F00001ME1V",
+      "F00001ME25",
+      "F00001ME28",
+      "F00001ME29"
+    ]
+  },
+  {
+    "idx": 271,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H271.json",
+    "ids": [
+      "F00001ME2G",
+      "F00001MEOV",
+      "F00001MEPX",
+      "F00001MEPY",
+      "F00001MEQC",
+      "F00001MEQD",
+      "F00001MEQI",
+      "F00001MEQM",
+      "F00001MEQN",
+      "F00001MGRV"
+    ]
+  },
+  {
+    "idx": 272,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H272.json",
+    "ids": [
+      "F00001MGRW",
+      "F00001MJ38",
+      "F00001MJT2",
+      "F00001ML1H",
+      "F00001ML1L",
+      "F00001ML1R",
+      "F00001ML26",
+      "F00001MMPZ",
+      "F00001MMR2",
+      "F00001MNE7"
+    ]
+  },
+  {
+    "idx": 273,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H273.json",
+    "ids": [
+      "F00001MNE8",
+      "F00001MO6U",
+      "F00001MO6V",
+      "F00001MOSI",
+      "F00001MOSL",
+      "F00001MP8O",
+      "F00001MP8P",
+      "F00001MQES",
+      "F00001MR3I",
+      "F00001MS05"
+    ]
+  },
+  {
+    "idx": 274,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H274.json",
+    "ids": [
+      "F00001MS06",
+      "F00001MS07",
+      "F00001MS08",
+      "F00001MS0U",
+      "F00001MS0W",
+      "F00001MS0X",
+      "F00001MS0Y",
+      "F00001MS0Z",
+      "F00001MSPS",
+      "F00001MSTA"
+    ]
+  },
+  {
+    "idx": 275,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H275.json",
+    "ids": [
+      "F00001MSTC",
+      "F00001MSTE",
+      "F00001MSTG",
+      "F00001MSTH",
+      "F00001MV0C",
+      "F00001MV0V",
+      "F00001MV0Y",
+      "F00001MV0Z",
+      "F00001MVPJ",
+      "F00001MWDA"
+    ]
+  },
+  {
+    "idx": 276,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H276.json",
+    "ids": [
+      "F00001MWDS",
+      "F00001MWDT",
+      "F00001MWDW",
+      "F00001MX0I",
+      "F00001MZA6",
+      "F00001MZA7",
+      "F00001MZA9",
+      "F00001MZAH",
+      "F00001MZAI",
+      "F00001MZAJ"
+    ]
+  },
+  {
+    "idx": 277,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H277.json",
+    "ids": [
+      "F00001MZAL",
+      "F00001MZZ7",
+      "F00001MZZ8",
+      "F00001N0ME",
+      "F00001N0MH",
+      "F00001N0MI",
+      "F00001N1A0",
+      "F00001N3HW",
+      "F00001N77K",
+      "F00001N77L"
+    ]
+  },
+  {
+    "idx": 278,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H278.json",
+    "ids": [
+      "F00001N8KC",
+      "F00001N8L6",
+      "F00001N9YG",
+      "F00001NHH7",
+      "F00001NHH8",
+      "F00001NHH9",
+      "F00001NHHA",
+      "F00001NHS1",
+      "F00001NHS2",
+      "F00001NLIZ"
+    ]
+  },
+  {
+    "idx": 279,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H279.json",
+    "ids": [
+      "F00001NLJ1",
+      "F00001NLJ2",
+      "F00001NLJ4",
+      "F00001NLJ5",
+      "F00001NNOF",
+      "F00001NNPW",
+      "F00001NNPX",
+      "F00001NNQ8",
+      "F00001NNQ9",
+      "F00001NNQC"
+    ]
+  },
+  {
+    "idx": 280,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H280.json",
+    "ids": [
+      "F00001NQVA",
+      "F00001NQVI",
+      "F00001NQVK",
+      "F00001NQVP",
+      "F00001NQVQ",
+      "F00001NQVS",
+      "F00001NQVV",
+      "F00001NSJL",
+      "F00001NSJO",
+      "F00001NSJP"
+    ]
+  },
+  {
+    "idx": 281,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H281.json",
+    "ids": [
+      "F00001NT7V",
+      "F00001O334",
+      "F00001O3P8",
+      "F00001O5A6",
+      "F00001OB87",
+      "F00001OB88",
+      "F00001OB8D",
+      "F00001OB8G",
+      "F00001OEKQ",
+      "F00001OEKR"
+    ]
+  },
+  {
+    "idx": 282,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H282.json",
+    "ids": [
+      "F00001OGV1",
+      "F00001OHO8",
+      "F00001OHO9",
+      "F00001OJWO",
+      "F00001ONWN",
+      "F00001OPOR",
+      "F00001OPOS",
+      "F00001OPOT",
+      "F00001OPRN",
+      "F00001OPRV"
+    ]
+  },
+  {
+    "idx": 283,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H283.json",
+    "ids": [
+      "F00001OPRW",
+      "F00001OPRX",
+      "F00001OPSJ",
+      "F00001OPST",
+      "F00001OQJO",
+      "F00001OQJY",
+      "F00001OQK5",
+      "F00001OQK6",
+      "F00001ORPA",
+      "F00001ORPF"
+    ]
+  },
+  {
+    "idx": 284,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H284.json",
+    "ids": [
+      "F00001ORPG",
+      "F00001OW1U",
+      "F00001OW20",
+      "F00001OW22",
+      "F00001OW8T",
+      "F00001OW8X",
+      "F00001OX0N",
+      "F00001OYRH",
+      "F00001OZJQ",
+      "F00001P088"
+    ]
+  },
+  {
+    "idx": 285,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H285.json",
+    "ids": [
+      "F00001P3F2",
+      "F00001P3F3",
+      "F00001P41X",
+      "F00001P41Y",
+      "F00001P41Z",
+      "F00001P421",
+      "F00001P423",
+      "F00001P4Q8",
+      "F00001P5PE",
+      "F00001P9XT"
+    ]
+  },
+  {
+    "idx": 286,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H286.json",
+    "ids": [
+      "F00001P9XU",
+      "F00001P9XV",
+      "F00001PAIP",
+      "F00001PAKR",
+      "F00001PAKT",
+      "F00001PAL3",
+      "F00001PB9B",
+      "F00001PB9C",
+      "F00001PB9U",
+      "F00001PCDP"
+    ]
+  },
+  {
+    "idx": 287,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H287.json",
+    "ids": [
+      "F00001PJVG",
+      "F00001PM50",
+      "F00001PN38",
+      "F00001PN39",
+      "F00001PN3B",
+      "F00001POWS",
+      "F00001PTUA",
+      "F00001PV70",
+      "F00001PV75",
+      "F00001PWDJ"
+    ]
+  },
+  {
+    "idx": 288,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H288.json",
+    "ids": [
+      "F00001PWDK",
+      "F00001PX02",
+      "F00001Q0GU",
+      "F00001Q10L",
+      "F00001Q16V",
+      "F00001Q186",
+      "F00001Q1ME",
+      "F00001Q229",
+      "F00001Q28I",
+      "F00001Q2LY"
+    ]
+  },
+  {
+    "idx": 289,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H289.json",
+    "ids": [
+      "F00001Q2LZ",
+      "F00001Q2M0",
+      "F00001Q2M1",
+      "F00001Q3T6",
+      "F00001Q3TD",
+      "F00001Q431",
+      "F00001Q432",
+      "F00001Q433",
+      "F00001Q434",
+      "F00001Q435"
+    ]
+  },
+  {
+    "idx": 290,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H290.json",
+    "ids": [
+      "F00001Q436",
+      "F00001Q437",
+      "F00001Q438",
+      "F00001Q439",
+      "F00001Q43A",
+      "F00001Q43C",
+      "F00001Q43D",
+      "F00001Q43H",
+      "F00001Q43I",
+      "F00001Q5RS"
+    ]
+  },
+  {
+    "idx": 291,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H291.json",
+    "ids": [
+      "F00001Q5RU",
+      "F00001Q5RW",
+      "F00001Q60J",
+      "F00001Q60K",
+      "F00001Q60L",
+      "F00001Q60W",
+      "F00001Q60X",
+      "F00001Q6UF",
+      "F00001Q6UI",
+      "F00001Q73W"
+    ]
+  },
+  {
+    "idx": 292,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H292.json",
+    "ids": [
+      "F00001Q7LO",
+      "F00001Q7LP",
+      "F00001QDJW",
+      "F00001QEBR",
+      "F00001QELL",
+      "F00001QEM0",
+      "F00001QEMU",
+      "F00001QEP7",
+      "F00001QEPQ",
+      "F00001QEPR"
+    ]
+  },
+  {
+    "idx": 293,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H293.json",
+    "ids": [
+      "F00001QEWE",
+      "F00001QEWX",
+      "F00001QFF2",
+      "F00001QFF3",
+      "F00001QFPL",
+      "F00001QK92",
+      "F00001QNJK",
+      "F00001QO2D",
+      "F00001QO8V",
+      "F00001QSJ8"
+    ]
+  },
+  {
+    "idx": 294,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H294.json",
+    "ids": [
+      "F00001QSJ9",
+      "F00001QT4F",
+      "F00001QT4G",
+      "F00001R4LK",
+      "F00001R5F3",
+      "F00001R5F4",
+      "F00001R5F5",
+      "F00001R6UT",
+      "F00001RCG5",
+      "F00001RCI2"
+    ]
+  },
+  {
+    "idx": 295,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H295.json",
+    "ids": [
+      "F00001RCIA",
+      "F00001RHSE",
+      "F00001RHSJ",
+      "F00001RPDS",
+      "F00001RPDT",
+      "F00001RRIN",
+      "F00001RRIP",
+      "F00001RY4Q",
+      "F00001S17R",
+      "F00001S2JS"
+    ]
+  },
+  {
+    "idx": 296,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H296.json",
+    "ids": [
+      "F00001S2U8",
+      "F00001S50P",
+      "F00001S5VU",
+      "F00001S5VW",
+      "F00001S6KX",
+      "F00001S6XQ",
+      "F00001S789",
+      "F00001S8CL",
+      "F00001SA6A",
+      "F00001SAFG"
+    ]
+  },
+  {
+    "idx": 297,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H297.json",
+    "ids": [
+      "F00001SAO9",
+      "F00001SAOA",
+      "F00001SC6V",
+      "F00001SC6X",
+      "F00001SD2P",
+      "F00001SD2T",
+      "F00001SD2X",
+      "F00001SEC5",
+      "F00001SF7Q",
+      "F00001SG6U"
+    ]
+  },
+  {
+    "idx": 298,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H298.json",
+    "ids": [
+      "F00001SGPY",
+      "F00001SGQ3",
+      "F00001SJFI",
+      "F00001SJKL",
+      "F00001SKXX",
+      "F00001SO9M",
+      "F00001SPMK",
+      "F00001SQBM",
+      "F00001SRTD",
+      "F00001SS55"
+    ]
+  },
+  {
+    "idx": 299,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H299.json",
+    "ids": [
+      "F00001SS6E",
+      "F00001SSAE",
+      "F00001STOH",
+      "F00001SUD4",
+      "F00001SUDV",
+      "F00001SUJ5",
+      "F00001SUJ6",
+      "F00001SUJ7",
+      "F00001SUJ8",
+      "F00001SUJ9"
+    ]
+  },
+  {
+    "idx": 300,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H300.json",
+    "ids": [
+      "F00001SUJA",
+      "F00001SUJB",
+      "F00001SUJC",
+      "F00001SUJD",
+      "F00001SUJE",
+      "F00001SUJF",
+      "F00001SUJG",
+      "F00001SUKG",
+      "F00001SUM3",
+      "F00001SUM6"
+    ]
+  },
+  {
+    "idx": 301,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H301.json",
+    "ids": [
+      "F00001SUM7",
+      "F00001SUR1",
+      "F00001SUUA",
+      "F00001SUUB",
+      "F00001SUUQ",
+      "F00001SUV0",
+      "F00001SUV5",
+      "F00001SUV6",
+      "F00001SV8B",
+      "F00001SW47"
+    ]
+  },
+  {
+    "idx": 302,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H302.json",
+    "ids": [
+      "F00001SW48",
+      "F00001SW5H",
+      "F00001SW5K",
+      "F00001SW66",
+      "F00001SXUB",
+      "F00001SXUF",
+      "F00001SXZN",
+      "F00001SY11",
+      "F00001SY65",
+      "F00001SYAA"
+    ]
+  },
+  {
+    "idx": 303,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H303.json",
+    "ids": [
+      "F00001SYG8",
+      "F00001SYJP",
+      "F00001SYL8",
+      "F00001SYPP",
+      "F00001SZO7",
+      "F00001SZVF",
+      "F00001T00F",
+      "F00001T00G",
+      "F00001T00H",
+      "F00001T0EX"
+    ]
+  },
+  {
+    "idx": 304,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H304.json",
+    "ids": [
+      "F00001T0I7",
+      "F00001T0I9",
+      "F00001T0IM",
+      "F00001T0KE",
+      "F00001T17D",
+      "F00001T1EU",
+      "F00001T2JE",
+      "F00001T31K",
+      "F00001T3MG",
+      "F00001T56D"
+    ]
+  },
+  {
+    "idx": 305,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H305.json",
+    "ids": [
+      "F00001T56E",
+      "F00001T56F",
+      "F00001T5VK",
+      "F00001T734",
+      "F00001T73K",
+      "F00001T7A4",
+      "F00001T7A5",
+      "F00001T7H0",
+      "F00001T7M7",
+      "F00001T7ME"
+    ]
+  },
+  {
+    "idx": 306,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H306.json",
+    "ids": [
+      "F00001TAEG",
+      "F00001TAEM",
+      "F00001TAEN",
+      "F00001TAQ0",
+      "F00001TAW6",
+      "F00001TAW7",
+      "F00001TAYP",
+      "F00001TAZ0",
+      "F00001TAZ1",
+      "F00001TAZW"
+    ]
+  },
+  {
+    "idx": 307,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H307.json",
+    "ids": [
+      "F00001TBIE",
+      "F00001TCGF",
+      "F00001TCJR",
+      "F00001TF5H",
+      "F00001TGKW",
+      "F00001TGL6",
+      "F00001TGL7",
+      "F00001TIKJ",
+      "F00001TIMW",
+      "F00001TIMX"
+    ]
+  },
+  {
+    "idx": 308,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H308.json",
+    "ids": [
+      "F00001TIN1",
+      "F00001TIUW",
+      "F00001TIVN",
+      "F00001TIVO",
+      "F00001TJ5I",
+      "F00001TJFH",
+      "F00001TJFI",
+      "F00001TJLY",
+      "F00001TJM1",
+      "F00001TJM2"
+    ]
+  },
+  {
+    "idx": 309,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H309.json",
+    "ids": [
+      "F00001TJTF",
+      "F00001TKE2",
+      "F00001TKE7",
+      "F00001TKJ9",
+      "F00001UF95",
+      "F00001UF9D",
+      "F00001UHJW",
+      "F00001UHJX",
+      "F00001UI2W",
+      "F00001UIRZ"
+    ]
+  },
+  {
+    "idx": 310,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H310.json",
+    "ids": [
+      "F00001UJUD",
+      "F000024ZLA",
+      "F000024ZLB",
+      "F000024ZOL",
+      "F000025R0T",
+      "F000025R1F",
+      "F000025UXJ",
+      "F0000261IH",
+      "F0000264QW",
+      "F00002691X"
+    ]
+  },
+  {
+    "idx": 311,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H311.json",
+    "ids": [
+      "F000026KKP",
+      "F000026ODM",
+      "F000026RZZ",
+      "F000026VBU",
+      "F0000272JD",
+      "F000027I56",
+      "F00002JIKT",
+      "F00002JLGP",
+      "F00002JNQZ",
+      "F00002JUJJ"
+    ]
+  },
+  {
+    "idx": 312,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H312.json",
+    "ids": [
+      "F00002JUJL",
+      "F00002JUJM",
+      "F00002JUYS",
+      "F00002JUYT",
+      "F00002JUYU",
+      "F00002JUYV",
+      "F00002JUYW",
+      "F00002JVZL",
+      "F00002K173",
+      "F00002K174"
+    ]
+  },
+  {
+    "idx": 313,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H313.json",
+    "ids": [
+      "F00002K175",
+      "F00002K176",
+      "F00002K177",
+      "F00002K178",
+      "F00002K17A",
+      "F00002K17B",
+      "F00002K17C",
+      "F00002K17D",
+      "F00002K17E",
+      "F00002K17F"
+    ]
+  },
+  {
+    "idx": 314,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H314.json",
+    "ids": [
+      "F00002K17G",
+      "F00002K17H",
+      "FEUSA0000N",
+      "FEUSA0000Q",
+      "FEUSA0000S",
+      "FEUSA0000W",
+      "FEUSA0000Y",
+      "FEUSA0000Z",
+      "FEUSA00011",
+      "FEUSA00016"
+    ]
+  },
+  {
+    "idx": 315,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H315.json",
+    "ids": [
+      "FEUSA0001Q",
+      "FEUSA0001R",
+      "FEUSA0001S",
+      "FEUSA0001U",
+      "FEUSA0001V",
+      "FEUSA0001W",
+      "FEUSA0001Y",
+      "FEUSA0001Z",
+      "FEUSA00021",
+      "FEUSA00022"
+    ]
+  },
+  {
+    "idx": 316,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H316.json",
+    "ids": [
+      "FEUSA00024",
+      "FEUSA00025",
+      "FEUSA00026",
+      "FEUSA00027",
+      "FEUSA0002F",
+      "FEUSA0002Q",
+      "FEUSA0002Y",
+      "FEUSA0002Z",
+      "FEUSA00030",
+      "FEUSA00031"
+    ]
+  },
+  {
+    "idx": 317,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H317.json",
+    "ids": [
+      "FEUSA00033",
+      "FEUSA00034",
+      "FEUSA00035",
+      "FEUSA00036",
+      "FEUSA04ABO",
+      "FEUSA04ABP",
+      "FEUSA04ABQ",
+      "FEUSA04ABT",
+      "FEUSA04AC0",
+      "FEUSA04AC1"
+    ]
+  },
+  {
+    "idx": 318,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H318.json",
+    "ids": [
+      "FEUSA04ACM",
+      "FEUSA04ACN",
+      "FEUSA04ACQ",
+      "FEUSA04ACR",
+      "FEUSA04ACS",
+      "FEUSA04ACT",
+      "FEUSA04ACU",
+      "FEUSA04ACV",
+      "FEUSA04AD0",
+      "FEUSA04AD3"
+    ]
+  },
+  {
+    "idx": 319,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H319.json",
+    "ids": [
+      "FEUSA04AD7",
+      "FEUSA04AD8",
+      "FEUSA04AD9",
+      "FEUSA04ADA",
+      "FEUSA04ADB",
+      "FEUSA04ADC",
+      "FEUSA04ADD",
+      "FEUSA04ADH",
+      "FEUSA04ADI",
+      "FEUSA04ADJ"
+    ]
+  },
+  {
+    "idx": 320,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H320.json",
+    "ids": [
+      "FEUSA04ADL",
+      "FEUSA04ADN",
+      "FEUSA04ADO",
+      "FEUSA04ADP",
+      "FEUSA04ADS",
+      "FEUSA04ADV",
+      "FEUSA04ADZ",
+      "FEUSA04AE5",
+      "FEUSA04AE7",
+      "FEUSA04AEB"
+    ]
+  },
+  {
+    "idx": 321,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H321.json",
+    "ids": [
+      "FEUSA04AEC",
+      "FEUSA04AED",
+      "FEUSA04AEE",
+      "FEUSA04AEL",
+      "FEUSA04AEM",
+      "FEUSA04AES",
+      "FEUSA04AET",
+      "FEUSA04AEW",
+      "FEUSA04AEX",
+      "FEUSA04AEY"
+    ]
+  },
+  {
+    "idx": 322,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H322.json",
+    "ids": [
+      "FEUSA04AEZ",
+      "FEUSA04AF0",
+      "FEUSA04AF1",
+      "FEUSA04AF3",
+      "FEUSA04AF5",
+      "FEUSA04AF6",
+      "FEUSA04AF9",
+      "FEUSA04AFC",
+      "FEUSA04AFD",
+      "FEUSA04AFE"
+    ]
+  },
+  {
+    "idx": 323,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H323.json",
+    "ids": [
+      "FEUSA04AFF",
+      "FEUSA04AFH",
+      "FEUSA04AFI",
+      "FEUSA04AFJ",
+      "FEUSA04AFK",
+      "FEUSA04AFL",
+      "FEUSA04AFO",
+      "FEUSA04AFP",
+      "FEUSA04AFQ",
+      "FEUSA04AFW"
+    ]
+  },
+  {
+    "idx": 324,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H324.json",
+    "ids": [
+      "FEUSA04AFZ",
+      "FEUSA04AG2",
+      "FEUSA04AG5",
+      "FEUSA04AG7",
+      "FEUSA04AG9",
+      "FEUSA04AGA",
+      "FEUSA04AGB",
+      "FEUSA04AGC",
+      "FEUSA04AGF",
+      "FEUSA04AGG"
+    ]
+  },
+  {
+    "idx": 325,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H325.json",
+    "ids": [
+      "FEUSA04AGQ",
+      "FEUSA04AGR",
+      "FEUSA04AGS",
+      "FEUSA04AGT",
+      "FEUSA04AGU",
+      "FEUSA04AGW",
+      "FEUSA04AGX",
+      "FEUSA04AH5",
+      "FEUSA04AH8",
+      "FEUSA04AHC"
+    ]
+  },
+  {
+    "idx": 326,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H326.json",
+    "ids": [
+      "FEUSA04AHD",
+      "FEUSA04AHG",
+      "FEUSA04AHH",
+      "FEUSA04AHJ",
+      "FOUSA00AR5",
+      "FOUSA00AS0",
+      "FOUSA00ATI",
+      "FOUSA00AZP",
+      "FOUSA00B0T",
+      "FOUSA00D9F"
+    ]
+  },
+  {
+    "idx": 327,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H327.json",
+    "ids": [
+      "FOUSA00EU8",
+      "FOUSA00EUD",
+      "FOUSA00G2L",
+      "FOUSA00G3L",
+      "FOUSA00H40",
+      "FOUSA00H4I",
+      "FOUSA00HQN",
+      "FOUSA00ILE",
+      "FOUSA00INH",
+      "FOUSA00K6Y"
+    ]
+  },
+  {
+    "idx": 328,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H328.json",
+    "ids": [
+      "FOUSA00KC8",
+      "FOUSA02TMY",
+      "FOUSA02VB3",
+      "FOUSA02VF1",
+      "FOUSA04AEB",
+      "FOUSA04AED",
+      "FOUSA04BLE",
+      "FOUSA059D8",
+      "FOUSA05GES",
+      "FOUSA05GKL"
+    ]
+  },
+  {
+    "idx": 329,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H329.json",
+    "ids": [
+      "FOUSA05J20",
+      "FOUSA05J6R",
+      "FOUSA05J6S",
+      "FOUSA05J6U",
+      "FOUSA05J6V",
+      "FOUSA05J6X",
+      "FOUSA05J7G",
+      "FOUSA05K04",
+      "FOUSA05K3G",
+      "FOUSA05K3H"
+    ]
+  },
+  {
+    "idx": 330,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H330.json",
+    "ids": [
+      "FOUSA05K3I",
+      "FOUSA05K3J",
+      "FOUSA05K3K",
+      "FOUSA05KB4",
+      "FOUSA05KB5",
+      "FOUSA05KB6",
+      "FOUSA05KBA",
+      "FOUSA05KBG",
+      "FOUSA05KBH",
+      "FOUSA05V5H"
+    ]
+  },
+  {
+    "idx": 331,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H331.json",
+    "ids": [
+      "FOUSA05V5I",
+      "FOUSA05V5J",
+      "FOUSA05V5K",
+      "FOUSA05V5L",
+      "FOUSA05V5M",
+      "FOUSA05V5N",
+      "FOUSA05V5O",
+      "FOUSA05V5P",
+      "FOUSA05XNZ",
+      "FOUSA0606X"
+    ]
+  },
+  {
+    "idx": 332,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H332.json",
+    "ids": [
+      "FOUSA0607U",
+      "FOUSA0609H",
+      "FOUSA068WY",
+      "FOUSA068WZ",
+      "FOUSA069P0",
+      "FOUSA069PD",
+      "FOUSA069PJ",
+      "FOUSA069PK",
+      "FOUSA069PO",
+      "FOUSA069V1"
+    ]
+  },
+  {
+    "idx": 333,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H333.json",
+    "ids": [
+      "FOUSA069V2",
+      "FOUSA069V5",
+      "FOUSA069WX",
+      "FOUSA069WY",
+      "FOUSA069X0",
+      "FOUSA069X1",
+      "FOUSA06A9B",
+      "FOUSA06AMU",
+      "FOUSA06B0X",
+      "FOUSA06B2Y"
+    ]
+  },
+  {
+    "idx": 334,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H334.json",
+    "ids": [
+      "FOUSA06B4Y",
+      "FOUSA06B59",
+      "FOUSA06B5V",
+      "FOUSA06B5W",
+      "FOUSA06B87",
+      "FOUSA06BRG",
+      "FOUSA06BRZ",
+      "FOUSA06C1U",
+      "FOUSA06C1W",
+      "FOUSA06C1X"
+    ]
+  },
+  {
+    "idx": 335,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H335.json",
+    "ids": [
+      "FOUSA06C6A",
+      "FOUSA06C6C",
+      "FOUSA06C6D",
+      "FOUSA06C9E",
+      "FOUSA06GHH",
+      "FOUSA06GID",
+      "FOUSA06GIE",
+      "FOUSA06GIF",
+      "FOUSA06GIG",
+      "FOUSA06GIH"
+    ]
+  },
+  {
+    "idx": 336,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H336.json",
+    "ids": [
+      "FOUSA06GII",
+      "FOUSA06GIJ",
+      "FOUSA06GIK",
+      "FOUSA06GIL",
+      "FOUSA06GIM",
+      "FOUSA06GIN",
+      "FOUSA06GIO",
+      "FOUSA06GIP",
+      "FOUSA06GIQ",
+      "FOUSA06GIR"
+    ]
+  },
+  {
+    "idx": 337,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H337.json",
+    "ids": [
+      "FOUSA06GIY",
+      "FOUSA06GJA",
+      "FOUSA06GJD",
+      "FOUSA06GO1",
+      "FOUSA06IAO",
+      "FOUSA06IB8",
+      "FOUSA06ITW",
+      "FOUSA06ITZ",
+      "FOUSA06IU0",
+      "FOUSA06IVV"
+    ]
+  },
+  {
+    "idx": 338,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H338.json",
+    "ids": [
+      "FOUSA06JMK",
+      "FOUSA06K0R",
+      "FOUSA06K0S",
+      "FOUSA06L33",
+      "FOUSA06LA0",
+      "FOUSA06LPG",
+      "FOUSA06LPH",
+      "FOUSA06LRU",
+      "FOUSA06LRV",
+      "FOUSA06LRW"
+    ]
+  },
+  {
+    "idx": 339,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H339.json",
+    "ids": [
+      "FOUSA06LUR",
+      "FOUSA06LY1",
+      "FOUSA06M9D",
+      "FOUSA06MKC",
+      "FOUSA06MKG",
+      "FOUSA06MLF",
+      "FOUSA06MLL",
+      "FOUSA06MPQ",
+      "FOUSA06N3T",
+      "FOUSA06NWM"
+    ]
+  },
+  {
+    "idx": 340,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H340.json",
+    "ids": [
+      "FOUSA06O2J",
+      "FOUSA06O2K",
+      "FOUSA06OFJ",
+      "FOUSA06P1W",
+      "FOUSA06P6R",
+      "FOUSA06PHB",
+      "FOUSA06PHD",
+      "FOUSA06PHE",
+      "FOUSA06Q1D",
+      "FOUSA06QPZ"
+    ]
+  },
+  {
+    "idx": 341,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H341.json",
+    "ids": [
+      "FOUSA06QQD",
+      "FOUSA06R3V",
+      "FOUSA06R7Z",
+      "FOUSA06R8V",
+      "FOUSA06R9F",
+      "FOUSA06SIS",
+      "FOUSA06SP1",
+      "FOUSA06TIT",
+      "FOUSA06TIV",
+      "FOUSA06TUR"
+    ]
+  },
+  {
+    "idx": 342,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H342.json",
+    "ids": [
+      "FOUSA06TZN",
+      "FOUSA06UQ5",
+      "FOUSA06VAA",
+      "FOUSA06XOI",
+      "FOUSA06XS4",
+      "FOUSA07WOY",
+      "FOUSA07XV9",
+      "FOUSA07XVF",
+      "FOUSA07XVL",
+      "FOUSA07XVU"
+    ]
+  },
+  {
+    "idx": 343,
+    "count": 10,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H343.json",
+    "ids": [
+      "FOUSA07XVY",
+      "FOUSA07XW0",
+      "FOUSA07Y2Y",
+      "FOUSA08642",
+      "FOUSA086IR",
+      "FOUSA088XQ",
+      "FOUSA08MU9",
+      "FOUSA08MUJ",
+      "FOUSA08MUM",
+      "FOUSA08MW7"
+    ]
+  },
+  {
+    "idx": 344,
+    "count": 9,
+    "outfile": "ingest_raw/morningstar_holdings/batchFE_H344.json",
+    "ids": [
+      "FOUSA08MW8",
+      "FOUSA08N39",
+      "FOUSA08N3A",
+      "FOUSA08OOT",
+      "FOUSA08OOV",
+      "FOUSA08OPU",
+      "FOUSA08P85",
+      "FOUSA08PEE",
+      "FOUSA08PTM"
+    ]
+  }
+]

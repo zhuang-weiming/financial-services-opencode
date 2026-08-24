@@ -1,0 +1,602 @@
+{
+  "F00001SEC5": {
+    "OF006": "Federated",
+    "OF009": "122050593",
+    "OS00F": "2025-09-24",
+    "HS05A": "Mid Blend",
+    "OF003": "Equity Market Neutral",
+    "OF00C": "No",
+    "AA04U": "6.45513",
+    "PM004": "5.09063",
+    "PM00A": "6.19641",
+    "AA04M": "5.15980",
+    "ZZ006": "0.95000"
+  },
+  "F00001S50P": {
+    "PM00A": "16.41368",
+    "HS05A": "Large Value",
+    "OF00C": "No",
+    "PM004": "-0.84436",
+    "ESG48": "Above Average",
+    "ZZ006": "0.56000",
+    "AA04M": "-0.75853",
+    "OF006": "John Hancock",
+    "AA04U": "16.46539",
+    "OF009": "900009000",
+    "OS00F": "2025-08-05",
+    "OF003": "Large Value"
+  },
+  "F00001SAOA": {
+    "ESG48": "Average",
+    "ZZ006": "0.08000",
+    "AA04M": "-1.17995",
+    "AA04U": "0.17727",
+    "PM00A": "0.21826",
+    "OF009": "3919248029",
+    "OS00F": "2025-09-23",
+    "OF003": "Global Bond-USD Hedged",
+    "LI055": "Bloomberg Index",
+    "PM004": "-1.08381",
+    "OF00C": "Yes",
+    "OF006": "Nuveen"
+  },
+  "F00001SGPY": {
+    "OF009": "231737813",
+    "HS05A": "Mid Growth",
+    "OF006": "AXS",
+    "OF00C": "No",
+    "AA04U": "130.63830",
+    "AA04M": "-63.09159",
+    "OS00F": "2025-09-08",
+    "PM00A": "129.93705",
+    "OF003": "Trading--Leveraged Equity",
+    "ZZ006": "1.30000",
+    "PM004": "-63.17821"
+  },
+  "F00001SJFI": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OS00F": "2025-09-16",
+    "OF00C": "No",
+    "OF009": "193476702",
+    "ZZ006": "0.61000",
+    "OF003": "Derivative Income",
+    "AA04U": "8.82899",
+    "AA04M": "1.70683",
+    "OF006": "Neos Funds",
+    "PM004": "1.77815",
+    "PM00A": "9.12895"
+  },
+  "F00001SA6A": {
+    "AA04U": "0.45568",
+    "OF003": "Intermediate Core-Plus Bond",
+    "OS00F": "2025-08-12",
+    "OF009": "239260695",
+    "AA04M": "-1.15296",
+    "OF00C": "No",
+    "PM00A": "0.57051",
+    "PM004": "-1.00276",
+    "OF006": "Weitz",
+    "LI055": "Bloomberg Index",
+    "ZZ006": "0.45000"
+  },
+  "F00001SAO9": {
+    "AA04U": "1.69552",
+    "OF003": "High Yield Bond",
+    "AA04M": "-0.31864",
+    "OS00F": "2025-09-23",
+    "PM00A": "1.86575",
+    "LI055": "ICE Data Indices",
+    "PM004": "-0.21020",
+    "OF009": "1737688947",
+    "OF00C": "Yes",
+    "OF006": "Nuveen",
+    "ESG48": "Low"
+  },
+  "F00001SKXX": {
+    "OS00F": "2025-12-09",
+    "PM004": "-4.24884",
+    "ESG48": "Below Average",
+    "PM00A": "20.64641",
+    "OF00C": "No",
+    "OF009": "150636793",
+    "AA04U": "17.50262",
+    "AA04M": "-4.27632",
+    "HS05A": "Small Blend",
+    "ZZ006": "0.45000",
+    "OF003": "Small Blend",
+    "OF006": "Franklin Templeton Investments"
+  },
+  "F00001SGQ3": {
+    "ESG48": "Average",
+    "AA04M": "-0.06452",
+    "OF009": "113529005",
+    "ZZ006": "0.59000",
+    "OF00C": "No",
+    "PM004": "0.13164",
+    "OS00F": "2025-09-09",
+    "PM00A": "1.61536",
+    "OF006": "State Street Investment Management",
+    "OF003": "Short-Term Bond",
+    "AA04U": "1.49176"
+  },
+  "F00001SUDV": {
+    "ZZ006": "0.20000",
+    "OF009": "103462598",
+    "OS00F": "2025-12-11",
+    "OF00C": "No",
+    "OF006": "Columbia Threadneedle",
+    "AA04U": "2.70927",
+    "AA04M": "0.23257",
+    "PM00A": "2.81530",
+    "OF003": "Securitized Bond - Focused",
+    "LI055": "Bloomberg Index",
+    "PM004": "0.38444"
+  },
+  "F00001SG6U": {
+    "ESG48": "Average",
+    "AA04U": "0.57683",
+    "ZZ006": "0.29000",
+    "OF003": "Trading--Miscellaneous",
+    "OF009": "140119387",
+    "OF006": "Roundhill Investments",
+    "HS05A": "Large Growth",
+    "PM004": "2.42071",
+    "AA04M": "2.58121",
+    "PM00A": "0.07107",
+    "OS00F": "2025-09-03",
+    "OF00C": "Yes"
+  },
+  "F00001SD2T": {
+    "PM00A": "34.46390",
+    "OF009": "476453346",
+    "PM004": "15.47178",
+    "ESG48": "Below Average",
+    "HS05A": "Large Value",
+    "OF006": "Portfolio Building Block ETFs",
+    "AA04U": "35.91838",
+    "AA04M": "15.99509",
+    "OF003": "Equity Energy",
+    "OS00F": "2025-11-25",
+    "OF00C": "Yes"
+  },
+  "F00001SC6X": {
+    "AA04U": "0.87664",
+    "PM004": "-0.27668",
+    "OF009": "139411256",
+    "OF003": "Muni National Short",
+    "AA04M": "-0.32239",
+    "ZZ006": "0.05000",
+    "OS00F": "2025-08-18",
+    "OF00C": "Yes",
+    "PM00A": "0.95393",
+    "OF006": "Northern Trust"
+  },
+  "F00001SC6V": {
+    "AA04U": "-0.06214",
+    "PM004": "-1.18187",
+    "AA04M": "-1.26148",
+    "OF009": "164164775",
+    "ZZ006": "0.05000",
+    "OS00F": "2025-08-18",
+    "OF003": "Muni National Interm",
+    "OF00C": "Yes",
+    "PM00A": "0.07746",
+    "OF006": "Northern Trust"
+  },
+  "F00001S6KX": {
+    "AA04M": "-0.83309",
+    "OF009": "101159374",
+    "OF00C": "No",
+    "OS00F": "2026-01-26",
+    "OF006": "Simplify Asset Management",
+    "OF003": "Commodities Broad Basket",
+    "PM004": "-1.01514"
+  },
+  "F00001SS6E": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OS00F": "2025-10-02",
+    "OF006": "Myriad Asset Management Advisors LLC",
+    "OF003": "Long-Short Equity",
+    "AA04M": "-3.75705",
+    "AA04U": "12.93652",
+    "PM00A": "14.23989",
+    "OF00C": "No",
+    "PM004": "-3.17411",
+    "OF009": "451165789"
+  },
+  "F00001SD2P": {
+    "HS05A": "Large Blend",
+    "AA04U": "22.92554",
+    "PM00A": "21.67553",
+    "AA04M": "6.96753",
+    "OF009": "460412321",
+    "OF006": "Portfolio Building Block ETFs",
+    "OF003": "Financial",
+    "PM004": "6.98094",
+    "ESG48": "High",
+    "OS00F": "2025-11-25",
+    "OF00C": "Yes"
+  },
+  "F00001S8CL": {
+    "OF003": "Intermediate Core Bond",
+    "AA04M": "-1.40727",
+    "AA04U": "-0.99142",
+    "OS00F": "2025-08-11",
+    "ZZ006": "0.39000",
+    "PM00A": "-0.93639",
+    "PM004": "-1.36812",
+    "OF006": "F/m investments, LLC",
+    "OF009": "147908999",
+    "OF00C": "Yes"
+  },
+  "F00001SUM6": {
+    "OF009": "227906369",
+    "OF003": "Multisector Bond",
+    "PM00A": "1.68537",
+    "AA04M": "-0.33104",
+    "OF00C": "No",
+    "OF006": "Sterling Capital Funds",
+    "AA04U": "2.12354",
+    "PM004": "-0.25276",
+    "OS00F": "2025-12-10"
+  },
+  "F00001SQBM": {
+    "PM00A": "-39.54499",
+    "PM004": "-0.25595",
+    "OF009": "148541551",
+    "AA04U": "-39.61749",
+    "OS00F": "2025-11-17",
+    "OF003": "Digital Assets",
+    "OF006": "Fidelity Investments",
+    "AA04M": "-0.34642",
+    "OF00C": "Yes"
+  },
+  "F00001SUM3": {
+    "HS05A": "Large Blend",
+    "PM004": "0.22059",
+    "AA04U": "3.30806",
+    "AA04M": "0.05930",
+    "OF00C": "No",
+    "OF006": "Sterling Capital Funds",
+    "ESG48": "Above Average",
+    "OF003": "Equity Hedged",
+    "PM00A": "4.01721",
+    "OF009": "238440966",
+    "OS00F": "2025-12-10"
+  },
+  "F00001S5VW": {
+    "PM00A": "1.10571",
+    "ESG48": "Below Average",
+    "MMR01": "Silver",
+    "OF009": "623096413",
+    "RR014": "1.383",
+    "OF003": "Corporate Bond",
+    "PM00C": "3.79204",
+    "AA04P": "3.79649",
+    "ZZ006": "0.20000",
+    "OF00C": "No",
+    "OF006": "PGIM",
+    "RR010": "-0.08",
+    "AA04M": "-0.10351",
+    "PM004": "-0.02429",
+    "AA04U": "0.61831",
+    "OS00F": "2025-07-29"
+  },
+  "F00001SSAE": {
+    "ESG48": "Average",
+    "OF009": "264124000",
+    "OS00F": "2025-09-30",
+    "AA04U": "17.28174",
+    "LI055": "FTSE International Ltd Index",
+    "PM004": "-3.85258",
+    "OF006": "Vanguard",
+    "OF003": "Diversified Emerging Mkts",
+    "AA04M": "-3.77005",
+    "HS05A": "Large Growth",
+    "PM00A": "17.56148",
+    "OF00C": "Yes"
+  },
+  "F00001S5VU": {
+    "ESG48": "Below Average",
+    "RR014": "3.594",
+    "OF009": "527320842",
+    "MMR01": "Silver",
+    "AA04M": "-0.65372",
+    "RR010": "-0.187",
+    "PM00A": "-0.59472",
+    "ZZ006": "0.25000",
+    "OF003": "Corporate Bond",
+    "PM004": "-1.27826",
+    "OF00C": "No",
+    "OF006": "PGIM",
+    "PM00C": "3.16220",
+    "AA04U": "0.14147",
+    "AA04P": "3.90924",
+    "OS00F": "2025-07-29"
+  },
+  "F00001S2U8": {
+    "OF003": "Securitized Bond - Diversified",
+    "AA04U": "2.70201",
+    "PM00A": "2.58295",
+    "AA04M": "0.28703",
+    "OF00C": "No",
+    "PM004": "0.28547",
+    "OS00F": "2025-09-23",
+    "OF009": "231786456",
+    "OF006": "Nuveen"
+  },
+  "F00001SS55": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OF003": "Long-Short Equity",
+    "PM004": "0.78245",
+    "OF00C": "No",
+    "OF009": "106274241",
+    "AA04M": "1.44653",
+    "OS00F": "2025-10-27",
+    "AA04U": "4.79053",
+    "PM00A": "4.70567",
+    "OF006": "Arin Risk Advisors LLC"
+  },
+  "F00001SUKG": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "OF006": "Alpha Architect",
+    "PM004": "0.28632",
+    "OF00C": "No",
+    "OF009": "368042830",
+    "AA04M": "-0.89964",
+    "OS00F": "2026-03-18",
+    "OF003": "Large Blend"
+  },
+  "F00001SPMK": {
+    "PM00A": "-78.48773",
+    "OF00C": "No",
+    "PM004": "54.11116",
+    "OS00F": "2025-09-25",
+    "OF006": "Rex",
+    "OF009": "315473118",
+    "ZZ006": "1.54000",
+    "OF003": "Trading--Leveraged Equity",
+    "AA04M": "52.69461",
+    "AA04U": "-78.66109"
+  },
+  "F00001S6XQ": {
+    "HS05A": "Large Blend",
+    "ZZ006": "0.34000",
+    "OF009": "482343397",
+    "ESG48": "Below Average",
+    "OF003": "Foreign Large Blend",
+    "PM00A": "14.52718",
+    "AA04U": "14.17983",
+    "OF00C": "No",
+    "AA04M": "-0.20788",
+    "OF006": "MFS",
+    "PM004": "0.85429",
+    "OS00F": "2025-10-22"
+  },
+  "F00001STOH": {
+    "ESG48": "Average",
+    "PM00A": "133.00111",
+    "PM004": "-63.10714",
+    "AA04M": "-63.14961",
+    "OF00C": "No",
+    "OF006": "Graniteshares",
+    "OF003": "Trading--Leveraged Equity",
+    "OS00F": "2025-10-06",
+    "AA04U": "133.10643",
+    "OF009": "201993468"
+  },
+  "F00001SJKL": {
+    "PM004": "-0.31238",
+    "HS05A": "Small Value",
+    "OS00F": "2025-09-16",
+    "OF00C": "No",
+    "OF006": "Vanguard",
+    "OF003": "High Yield Bond",
+    "AA04U": "1.63322",
+    "OF009": "310992000",
+    "PM00A": "1.56771",
+    "AA04M": "-0.14497",
+    "ZZ006": "0.22000"
+  },
+  "F00001SD2X": {
+    "ESG48": "Average",
+    "OF003": "Health",
+    "PM004": "0.12165",
+    "HS05A": "Large Value",
+    "AA04U": "7.71388",
+    "OF009": "1045390345",
+    "OF006": "Portfolio Building Block ETFs",
+    "PM00A": "7.70512",
+    "AA04M": "0.04783",
+    "OS00F": "2025-11-25",
+    "OF00C": "Yes"
+  },
+  "F00001SUD4": {
+    "PM00A": "5.88197",
+    "AA04M": "0.65792",
+    "OF00C": "No",
+    "PM004": "0.18030",
+    "OF003": "Derivative Income",
+    "OF006": "TrueShares",
+    "OS00F": "2025-12-29",
+    "AA04U": "6.80912",
+    "ESG48": "High",
+    "OF009": "136190320"
+  },
+  "F00001SO9M": {
+    "AA04M": "-17.69363",
+    "AA04U": "-1.48615",
+    "PM004": "-17.79817",
+    "OF003": "Technology",
+    "OS00F": "2025-09-25",
+    "OF006": "Defiance ETFs LLC",
+    "PM00A": "-1.49920",
+    "OF009": "192407559",
+    "HS05A": "Small Growth",
+    "OF00C": "Yes",
+    "ZZ006": "0.69000"
+  },
+  "F00001SAFG": {
+    "OS00F": "2025-11-12",
+    "AA04U": "143.34398",
+    "OF006": "AXS",
+    "AA04M": "-61.79569",
+    "OF00C": "No",
+    "PM004": "-61.80072",
+    "OF003": "Trading--Leveraged Equity",
+    "OF009": "154935987",
+    "PM00A": "142.65991"
+  },
+  "F00001SRTD": {
+    "ESG48": "Average",
+    "HS05A": "Large Blend",
+    "PM00A": "4.77124",
+    "OS00F": "2025-09-30",
+    "OF00C": "No",
+    "ZZ006": "0.79000",
+    "AA04U": "4.70828",
+    "AA04M": "0.54554",
+    "OF003": "Defined Outcome",
+    "PM004": "0.55758",
+    "OF009": "100694874",
+    "OF006": "Innovator ETFs"
+  },
+  "F00001SF7Q": {
+    "PM004": "5.22518",
+    "OF009": "178653914",
+    "OF006": "Dana Investment Advisors Inc",
+    "OS00F": "2025-09-15",
+    "AA04U": "8.20805",
+    "OF00C": "No",
+    "ESG48": "Above Average",
+    "PM00A": "8.10694",
+    "AA04M": "4.80126",
+    "HS05A": "Large Growth",
+    "OF003": "Large Blend"
+  },
+  "F00001S789": {
+    "OF00C": "No",
+    "OS00F": "2025-08-06",
+    "AA04U": "-70.20244",
+    "PM004": "-7.04040",
+    "AA04M": "-7.49415",
+    "OF009": "140078942",
+    "OF003": "Trading--Leveraged Equity",
+    "ZZ006": "0.95000",
+    "PM00A": "-70.02597",
+    "OF006": "ProShares"
+  },
+  "F00001SUJ5": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJ6": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJ7": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJ8": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJ9": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJA": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJB": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJC": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJD": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJF": {
+    "__errors__": [
+      {
+        "message": "Invalid Morningstar investment ID",
+        "code": "INVALID_ID"
+      }
+    ]
+  },
+  "F00001SUJE": {
+    "OF009": "8002877084",
+    "OS00F": "2026-03-19",
+    "ESG48": "Below Average",
+    "LI055": "Russell Index",
+    "LS012": "ETF",
+    "AA04M": "-1.83710",
+    "OF003": "Small Blend",
+    "RR010": "1.968",
+    "PM004": "-1.82307",
+    "OF00C": "No",
+    "HS05A": "Small Blend",
+    "OF006": "Dimensional Fund Advisors",
+    "MMR01": "Gold"
+  },
+  "F00001SUJG": {
+    "OF009": "2027852155",
+    "PM004": "-1.63581",
+    "OF00C": "No",
+    "ESG48": "Above Average",
+    "LI055": "Russell Index",
+    "OF003": "Small Growth",
+    "OS00F": "2026-05-05",
+    "AA04M": "-0.79789",
+    "HS05A": "Small Growth",
+    "RR010": "0.953",
+    "OF006": "Dimensional Fund Advisors",
+    "MMR01": "Gold"
+  }
+}
