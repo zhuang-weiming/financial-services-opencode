@@ -35,20 +35,24 @@
     │   ├── sell-ladder/ · buy-ladder/       # 判定引擎 + runs 历史
     │   ├── research/                        # 概率客观化算法 alg1-4 + 化债模型 py
     │   └── backtests/                       # BT-001~016 完整回测资产
-    ├── 现行报告 reports/（仅存 3 个有效版本）
+    ├── 现行报告 reports/（**5 个有效版本**）
     │   ├── global-relay-debt-monetization-scenario-map-v3-2026-08-25.md  ⭐ 终版情景图（HYP-032 配套）
     │   ├── ai-bubble-inflation-stages-deep-2026-08-18.md               # AI泡沫×通胀阶段×大类资产
-    │   └── ai-bubble-bank-indicators-consolidated-2026-08-19.md        # 银行指标合并
+    │   ├── ai-bubble-bank-indicators-consolidated-2026-08-19.md        # 银行指标合并
+    │   ├── china-silicon-wafer-landscape-2026-08-25.md ⭐ NEW          # 中国半导体硅片厂商竞争格局
+    │   └── 稳定币全景研究_发布版v3-fixed.md 2026-08-26                 # 稳定币政策/储备/赛道全图
     ├── theses/ · data/ · regime-watch.md
 ```
 
-**已删除（2026-08-25 清理令）:** `raw-log/`（17 文件）、`distillation-log/`、`skill-changelog/`、`market-regime/`、`2.1.HYP-UNUSED.md`（归档库）、假设库内 13 个失效/归档/Tier3 低价值条目（HYP-001/003/004/005/007/009/010/012/013/018/019/022/023/031）、reports/ 内 11 个过程稿与被取代版本。→ git 历史可恢复。
+**已删除（清理记录）：**
+- **2026-08-25 清理令:** `raw-log/`（17 文件）、`distillation-log/`、`skill-changelog/`、`market-regime/`、`2.1.HYP-UNUSED.md`（归档库）、假设库内 13 个失效/归档/Tier3 低价值条目（HYP-001/003/004/005/007/009/010/012/013/018/019/022/023/031）、reports/ 内 11 个过程稿与被取代版本。→ git 历史可恢复。
+- **2026-08-27 清理令:** `/out/` 8 个文件全部处理——`china-silicon-wafer-landscape-20260825.md` 入库至 reports/（唯一非冗余），其余 7 个（bank-indicator-registry-20260824.md / bank-views-synthesis-20260824.md / institutional-methodology-review-20260824.md / methodology-deep-dive-20260824.md / methodology-review-final-20260824.md / peer-review-round-5-2026-08-19.md / crisis-playbook/scripts/chain_consistency_check.py）= 已被 reports/ 内 MCP-backed 版本取代的过程稿；/out/ 目录清空。→ git 历史可恢复。
 
 ---
 
 ## 当前活跃内容
 
-**最后更新:** 2026-08-25 23:10（结构大清理 + HYP-032 入库）
+**最后更新:** **2026-08-27 09:45（NVDA Q2 FY27 财报刷新 + /out 清理 + 中国硅片专题入库）**
 
 | 项目 | 状态 |
 |------|------|
