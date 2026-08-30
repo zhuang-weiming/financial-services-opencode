@@ -111,3 +111,7 @@ def _vol_adjust(self, signals, data_map):
 ## Supporting Files
 
 - [example_signal_engine.py](example_signal_engine.py) — complete cross-market strategy example
+
+## Related llmquant skills
+
+- `llmquant-strategies` — workflow-router layer (equity-long-short, long-biased, event-driven, macro, quant, multi-strategy). Load it for PM playbook mental models + risk management; this skill supplies the `SignalEngine` implementation contract.

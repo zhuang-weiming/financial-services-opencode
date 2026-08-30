@@ -279,3 +279,7 @@ Market environment judgment:
 5. **Exchange risk**: centralized exchanges can freeze assets or fail; diversify across venues
 6. **Data acquisition**: OKX data is available through the OKX data source, while Deribit requires an additional interface
 7. **Regulatory risk**: regulation of crypto derivatives is tightening across jurisdictions, so strategy compliance must be assessed separately
+
+## Related llmquant skills
+
+- `llmquant-crypto` — workflow-router layer (crypto-market-regime, crypto-token-research, crypto-perp-funding-monitor). Load it for regime/token/funding workflows grounded in LLMQuant Data; this skill supplies the derivatives/funding/basis mechanics.

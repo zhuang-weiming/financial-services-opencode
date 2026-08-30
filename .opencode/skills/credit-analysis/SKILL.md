@@ -1129,3 +1129,7 @@ Z-Score 风险信号：
 | 评级报告 | 中诚信、联合资信、东方金诚官网 |
 | 违约数据 | Wind、中国债券信息网（chinamoney.com.cn） |
 | ABS数据 | CNABS（中国资产证券化分析网） |
+
+## Related llmquant skills
+
+- `llmquant-credit` — workflow-router layer (issuer-credit-risk-review, credit-spread-regime, high-yield-stress-monitor). Load it for issuer/HY stress workflows grounded in LLMQuant Data (filings, debt schedules, spreads); this skill supplies the rating/spread/违约-risk methodology.

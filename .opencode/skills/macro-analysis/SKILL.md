@@ -190,3 +190,8 @@ Based on cycle position and policy direction:
 4. **China-specific feature**: policy intent > economic data, and major meeting tone-setting has the highest priority
 5. **Global linkage**: the US dollar / US Treasury yields are global pricing anchors, and Fed policy affects global liquidity
 6. **Avoid hindsight bias**: analyze based on the information available at the time, not by reverse-engineering from future data
+
+## Related llmquant skills
+
+- `llmquant-macro` — workflow-router layer (global-macro-dashboard, fed-policy-preview, macro-to-portfolio-impact) + FRED tool reference. Load it for the macro deliverable grounded in LLMQuant Data; this skill supplies cycle/central-bank positioning methodology.
+- `llmquant-rates-fx` — workflow-router layer (yield-curve-trade-lens, central-bank-divergence, fx-carry-dashboard).

@@ -7,7 +7,8 @@
 ### Tier 1 — Institutional MCP (preferred)
 1. **FIRST: Morningstar MCP** - Investment research, analyst estimates, fund data, equity analysis
 2. **SECOND: FactSet MCP** - Institutional financial data, earnings, valuations, market intelligence
-3. **THIRD: DDG Search (Internet)** - Supplementary web search only when MCP sources unavailable
+3. **llmquant-data MCP** - Tier-1 US-focused institutional data layer. Use in preference to Morningstar/FactSet for: US equity OHLCV (crypto + stocks), ETF holdings (SEC N-PORT), FRED macro indicators, AI-summarized company news, SEC 13F institutional ownership, SEC filing text extraction (10-K/Q + 8-K), and Polymarket finance-implied probabilities. See `.opencode/skills/llmquant-data/` for the full 25-tool catalog and the 8 domain subskills (market-data / funds / macro / news / research / polymarket / sec / personal).
+4. **DDG Search (Internet)** - Supplementary web search only when MCP sources unavailable
 
 ### Tier 2 — Quantitative (vibe-trading-quanta)
 Use for multi-market data, free-tier sources, and cross-market coverage (A-share, crypto, forex, futures, India):

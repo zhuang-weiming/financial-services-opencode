@@ -312,3 +312,7 @@ Optional:
 5. **Monte Carlo seed**: set a random seed for reproducibility, and use at least 10,000 paths for stability
 6. **Holding-period scaling**: the square-root-of-time rule only applies under i.i.d. returns; it becomes inaccurate under autocorrelation
 7. **Risk in backtests**: `metrics.csv` already includes `max_drawdown` and `sharpe`; this skill provides deeper analysis
+
+## Related llmquant skills
+
+- `llmquant-risk` — workflow-router layer (fear-score, vix-status, hedge-advisor, research-health-check). Load it for per-ticker panic scores / VIX regime / hedge design workflows; this skill supplies VaR/CVaR/Monte Carlo/stress-test methodology.

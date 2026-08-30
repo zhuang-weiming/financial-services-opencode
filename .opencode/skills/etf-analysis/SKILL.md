@@ -868,3 +868,8 @@ def cross_etf_flow_comparison(
 5. **货币ETF**：本质是货币市场基金，与普通ETF逻辑不同，流动性管理工具而非投资工具
 6. **流动性差的ETF**：大额交易应拆分多日，避免自我冲击
 7. **税务处理**：ETF 基金分红中若含股息收益，征税规则与资本利得不同，注意区分
+
+## Related llmquant skills
+
+- `llmquant-etfs` — workflow-router layer (etf-overlap-report). Load it for holdings overlap / concentration via SEC N-PORT (match by CUSIP/ISIN); this skill supplies selection/fees/tracking-error methodology.
+- `llmquant-funds` — tool-reference layer for `etf_lookup` / `etf_holdings` MCP calls.

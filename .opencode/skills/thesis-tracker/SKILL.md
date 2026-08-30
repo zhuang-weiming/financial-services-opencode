@@ -158,3 +158,7 @@ Use `write_file` to append this check to the tracking table in `reports/{company
 - **Thesis breaking ≠ stock falling** — a 30% price drop doesn't force a sell; a broken thesis does.
 - **Be honest about mistakes** — if the thesis was wrong, admit it; don't defend it to save face.
 - **Weigh macro headwinds for consumer names** — demographic decline and consumption downgrade are slow but can be fatal for consumer/property/education theses; bake them into red lines, not just quarterly checks.
+
+## Related llmquant skills
+
+- `llmquant-portfolio` — workflow-router layer (company-profile, investment-thesis-tracker, theme-research, watchlist-monitor, alert-manager). Load it for the persistent research workspace; this skill supplies the quarterly re-check + red-line discipline.

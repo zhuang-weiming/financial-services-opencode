@@ -204,3 +204,7 @@ commodity_score = {
 - Copper’s financial characteristics have strengthened since 2020 (copper futures are used as a macro hedge), so pure fundamental analysis may be insufficient
 - Inventory data is lagged (hidden inventories cannot be tracked in real time), so cross-check with price and basis behavior
 - This framework is for research backtesting only and does not constitute investment advice
+
+## Related llmquant skills
+
+- `llmquant-commodities` — workflow-router layer (commodity-market-lens, futures-curve-monitor). Load it for the curve/inventory/macro brief; this skill supplies the supply-demand/pricing signal methodology.

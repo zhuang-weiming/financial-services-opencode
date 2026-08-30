@@ -176,3 +176,7 @@ Call the options_pricing tool with:
 ```
 
 It returns the theoretical price and Greeks, which is suitable for interactive analysis.
+
+## Related llmquant skills
+
+- `llmquant-options` — workflow-router layer (10 workflows: IV rank, Greeks dashboard, P&L simulator, vol surface/smile, unusual activity, earnings IV crush, option backtests). Load it for the *deliverable*; this skill supplies the pricing/Greeks methodology.

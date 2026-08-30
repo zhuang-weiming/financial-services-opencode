@@ -119,6 +119,36 @@ below maps common triggers to the right skill.
 | Performance attribution (Brinson / factor alpha / beta) | `factor-researcher` | `performance-attribution` |
 | Earnings beat / miss analysis | `earnings-reviewer` | `earnings-analysis` / `earnings-preview` |
 | Earnings forecast / PEAD / SUE / estimate revision | `earnings-reviewer` | `earnings-forecast` / `earnings-revision` |
+| US equity / ETF OHLCV (any ticker, daily or 1h intraday) | `market-router` (data) | `llmquant-data` (master) → `llmquant-market-data` |
+| Crypto spot OHLCV (BTC, ETH, SOL, …) | `market-router` (data) | `llmquant-data` → `llmquant-market-data` |
+| ETF holdings / overlap / top constituents (SPY, QQQ, IBIT, …) | `market-researcher` / `financial-analysis` | `llmquant-data` → `llmquant-funds` |
+| FRED macro indicator (CPI, Fed Funds, NFCI, PCE, …) | `market-router` | `llmquant-data` → `llmquant-macro` |
+| AI-summarized company news / earnings press release / product launch | `earnings-reviewer` / `equity-research` | `llmquant-data` → `llmquant-news` |
+| Methodology / factor paper lookup (arxiv academic) | `alpha-researcher` / `backtest-builder` | `llmquant-data` → `llmquant-research` (papers) |
+| Finance concept / tutorial lookup (zh-leaning wiki) | `market-researcher` / `wealth-management` | `llmquant-data` → `llmquant-research` (wiki) |
+| Polymarket-implied probability (Fed cut, M&A, regulation) | `market-researcher` / `market-router` | `llmquant-data` → `llmquant-polymarket` |
+| SEC 13F institutional ownership (Top-1,000 managers) | `market-researcher` / `wealth-management` | `llmquant-data` → `llmquant-sec` |
+| SEC 10-K / 10-Q / 8-K text extraction (earnings release, MD&A) | `earnings-reviewer` / `equity-research` | `llmquant-data` → `llmquant-sec` |
+| Read user's saved profile / holdings from LLMQuant Dashboard | `wealth-management` | `llmquant-data` → `llmquant-personal` |
+| Commodity spot / futures curve / inventory / roll yield (WTI, gold, copper) | `market-researcher` / `market-router` | `llmquant-commodities` |
+| Issuer credit risk / CDS / spread regime / high-yield stress / refinancing | `financial-analysis` / `market-researcher` | `llmquant-credit` |
+| Crypto regime / token research / perp funding / basis / open interest | `market-router` / `factor-researcher` | `llmquant-crypto` |
+| Stock analysis (5-lens) / equity compare / research memo / merger arb / take-profit | `equity-research` / `earnings-reviewer` | `llmquant-equities` |
+| Single-stock derivative / convertible / warrant / dilution / hybrid security | `financial-analysis` / `factor-researcher` | `llmquant-equity-derivatives` |
+| ETF holdings / overlap / concentration / exposure report | `market-researcher` / `financial-analysis` | `llmquant-etfs` |
+| Earnings event brief / M&A tracker / regulatory / legal / policy risk | `earnings-reviewer` / `market-researcher` | `llmquant-events` |
+| Investor-style reasoning (Buffett / Graham / Munger / Lynch / Burry / Taleb / …) | `equity-research` / `wealth-management` | `llmquant-investor-lenses` |
+| Macro dashboard / Fed policy preview / macro-to-portfolio impact | `market-router` / `factor-researcher` / `wealth-management` | `llmquant-macro` |
+| Market sentiment / macro view / event-probability signals | `market-researcher` / `equity-research` | `llmquant-market-intelligence` |
+| Options IV rank / Greeks / strategy builder / vol surface / unusual activity / P&L | `factor-researcher` / `financial-analysis` | `llmquant-options` |
+| Company profile / thesis tracker / theme / watchlist / alert management | `wealth-management` / `equity-research` | `llmquant-portfolio` |
+| Portfolio exposure map / what-if simulation / pro-forma scenarios | `wealth-management` / `valuation-reviewer` | `llmquant-portfolio-lab` |
+| Prediction-market odds / event probability / arb / options-implied vs market odds | `market-researcher` / `market-router` | `llmquant-prediction-markets` |
+| Yield curve / duration / central-bank divergence / FX carry / real rate | `market-router` / `factor-researcher` | `llmquant-rates-fx` |
+| Fear score / VIX regime / hedge design / research health check | `valuation-reviewer` / `factor-researcher` | `llmquant-risk` |
+| Long/short / long-biased / event-driven / macro / quant / multi-strategy playbooks | `backtest-builder` / `swarm-orchestrator` | `llmquant-strategies` |
+
+> **LLMQuant workflow skills** (17 routers, 75 workflows, imported from `github.com/LLMQuant/skills`): see `.opencode/instructions/llmquant-skills.md` for the full category → scenario → trigger → subagent mapping and the legacy-skill cross-reference matrix.
 
 > **Skill loading protocol**: the subagent calls the `skill` tool with the
 > skill name (e.g. `skill("alpha-engine-v21")`). The skill's `SKILL.md` then

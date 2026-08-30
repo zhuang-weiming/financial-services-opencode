@@ -2,7 +2,7 @@
 
 > **创建:** 2026-08-04
 > **目的:** 把 5-Why 事前质控延伸到事后校准。每个概率性预测登记一次，季度打分。
-> **配套:** `2.3.HYP_UPDATE_RULES.md`（更新规则）/ `brier-quarterly/`（季度评分）/ `2.HYPOTHESES.md`（描述）
+> **配套:** `2.HYPOTHESES.md`（各 HYP 的上修/下修信号 + 证伪条件）/ `brier-quarterly/`（季度评分）
 
 ---
 
@@ -53,7 +53,7 @@ Brier = (forecast_prob - actual_outcome)^2
 3. **计算** Brier = mean((p - outcome)^2)
 4. **写入** `decision-journal/brier-quarterly/YYYY-QN.md`
 5. **触发** 任何 Brier > 0.25 → 写入 `6.CONFLICTS.md`（类型 `METHOD-CALIBRATION`）
-6. **5-Why 蒸馏** 连续 2 季度 Brier > 0.20 的 HYP → 重新审核 `2.3.HYP_UPDATE_RULES.md`
+6. **5-Why 蒸馏** 连续 2 季度 Brier > 0.20 的 HYP → 重新审核该 HYP 在 `2.HYPOTHESES.md` 的上修/下修信号
 
 ---
 

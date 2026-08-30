@@ -7,6 +7,13 @@
     "factset": {
       "type": "http",
       "url": "https://mcp.factset.com/content/v1"
+    },
+    "llmquant-data": {
+      "type": "local",
+      "command": ["npx", "-y", "@llmquant/data-mcp"],
+      "environment": {
+        "LLMQUANT_API_KEY": "${env:LLMQUANT_API_KEY}"
+      }
     }
   }
 }
