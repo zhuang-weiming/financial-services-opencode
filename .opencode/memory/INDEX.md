@@ -20,7 +20,7 @@
     ├── 框架层
     │   ├── 3.US_FRAMEWORK.md                # 美股独立框架 v2.1（含监控指标）
     │   ├── 3.1.CHINA_FRAMEWORK.md           # A股独立框架 v1.4
-    │   └── 3.2.未来5年的预判2026～2030.md    # ⭐ 5年全景预判（框架一致性 + 7 预判）
+    │   └── 3.2.未来5年的预判2026～2030.md    # 5年全景预判（框架一致性 + 7 预判）
     ├── 观察层
     │   ├── 4.BROKER_OBSERVATION.md          # 券商板块指标体系 v1.4
     │   ├── 4.1.NATIONAL_TEAM_OBSERVATION.md # 国家队资金监测
@@ -36,10 +36,10 @@
     │   ├── research/                        # 概率客观化算法 alg1-4 + 化债模型 py
     │   └── backtests/                       # BT-001~016 完整回测资产
     ├── 现行报告 reports/（**5 个有效版本**）
-    │   ├── global-relay-debt-monetization-scenario-map-v3-2026-08-25.md  ⭐ 终版情景图（HYP-032 配套）
+    │   ├── global-relay-debt-monetization-scenario-map-v3-2026-08-25.md  # 终版情景图（HYP-032 配套）
     │   ├── ai-bubble-inflation-stages-deep-2026-08-18.md               # AI泡沫×通胀阶段×大类资产
     │   ├── ai-bubble-bank-indicators-consolidated-2026-08-19.md        # 银行指标合并
-    │   ├── china-silicon-wafer-landscape-2026-08-25.md ⭐ NEW          # 中国半导体硅片厂商竞争格局
+    │   ├── china-silicon-wafer-landscape-2026-08-25.md               # 中国半导体硅片厂商竞争格局
     │   └── 稳定币全景研究_发布版v3-fixed.md 2026-08-26                 # 稳定币政策/储备/赛道全图
     └── theses/ · data/
 ```
