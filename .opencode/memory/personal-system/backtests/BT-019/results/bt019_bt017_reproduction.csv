@@ -1,0 +1,5 @@
+tier,hold,n_trades,bt017_style_sharpe,active_win_sharpe
+ge3,20,371,0.476,0.4761
+ge3,60,371,0.427,0.4268
+ge4,20,299,0.343,0.3434
+ge4,60,299,0.557,0.5573

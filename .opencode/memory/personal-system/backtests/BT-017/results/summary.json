@@ -1,0 +1,22 @@
+{
+ "events": {
+  "clustered_ge3": 348,
+  "clustered_ge4": 289,
+  "raw_ge4": 12298,
+  "raw_ge3": 16353
+ },
+ "factor_coverage": {
+  "f2_fund": 1.0,
+  "f3_val": 1.0,
+  "f4_vol": 1.0,
+  "f5_liq": 1.0,
+  "f6_trend": 1.0,
+  "f7_regime": 1.0
+ },
+ "notes": [
+  "f8 analyst=1.0 constant (discretionary overlay, not backtestable)",
+  "regime = CSI300 ETF MA60 single proxy (MCI/国家队 not backtestable as series)",
+  "PB percentile = trailing 252d PIT; ROE/debt = latest FY annual by Apr30 deadline",
+  "event cluster = first score>=3 per code per 60-trading-day window"
+ ]
+}

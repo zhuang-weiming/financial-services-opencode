@@ -1,0 +1,6 @@
+hold,n_reps,random_sharpe_mean,random_sharpe_p5,random_sharpe_median,random_sharpe_p95,random_total_ret_mean,random_total_ret_p5,random_total_ret_p95,v5_sharpe,v5_pctile_of_random,v5_total_ret,label
+5,300,1.334,0.732,1.325,1.978,0.884,0.358,1.544,-0.14,0.0,-0.144,
+20,300,1.451,1.093,1.45,1.81,1.003,0.638,1.398,1.145,0.09,0.678,
+20,150,1.19,0.86,1.171,1.567,0.746,,,0.875,0.067,0.459,20d_net_ge3
+30,150,1.464,1.202,1.47,1.767,1.013,,,1.247,0.1,0.79,30d_gross_ge3
+20,150,1.505,1.149,1.484,1.923,1.095,,,1.468,0.46,1.035,20d_gross_ge4

@@ -26,7 +26,7 @@
     │   ├── 4.1.NATIONAL_TEAM_OBSERVATION.md # 国家队资金监测
     │   └── 4.2.AI_BUBBLE_TRACKING.md        # AI 泡沫跟踪 v5.1
     ├── 操作层
-    │   ├── 5.BACKTEST_INDEX.md              # 回测台账 BT-001~016
+    │   ├── 5.BACKTEST_INDEX.md              # 回测台账 BT-001~018
     │   ├── 6.CONFLICTS.md                   # 开放/已解决冲突登记
     │   ├── 7.SELL_LADDER.md                 # 卖出梯子 v2.x
     │   ├── 7.1.POSITION_SIZING.md           # 仓位管理
@@ -34,7 +34,7 @@
     ├── 可执行能力
     │   ├── sell-ladder/ · buy-ladder/       # 判定引擎 + runs 历史
     │   ├── research/                        # 概率客观化算法 alg1-4 + 化债模型 py
-    │   └── backtests/                       # BT-001~016 完整回测资产
+    │   └── backtests/                       # BT-001~018 完整回测资产
     ├── 现行报告 reports/（**5 个有效版本**）
     │   ├── global-relay-debt-monetization-scenario-map-v3-2026-08-25.md  # 终版情景图（HYP-032 配套）
     │   ├── ai-bubble-inflation-stages-deep-2026-08-18.md               # AI泡沫×通胀阶段×大类资产
@@ -53,7 +53,7 @@
 
 ## 当前活跃内容
 
-**最后更新:** **2026-08-30（新增 3.2 五年预判 + 删除 3 个冗余文档 + 波动率放大修正）**
+**最后更新:** **2026-09-01（BT-018 入库 — 信号持续期持有口径下信心缩放 vs 均匀 50%：V4 组合级方向性支持但事件级不显著；BT-016 α 定位在信号死亡后 20-60d；BT-017 口径链闭环）**
 
 | 项目 | 状态 |
 |------|------|
@@ -63,7 +63,7 @@
 | **决策链** | decision-journal 登记预测挂 HYP 编号，季度 Brier 评分运行中（更新规则已并入 2.HYPOTHESES.md） |
 | **国家队 regime** | 🔴 净卖出（持续监控） |
 | **框架版本** | CHINA v1.4（CDS 双层阈值）· US v2.1（双剧本联动+AI附录）· **五年预判 v2（新增 3.2）** |
-| **回测总数** | 16（BT-001~016，最新 BT-015/016 = BUY_LADDER v3.1 定案） |
+| **回测总数** | 18（BT-001~018，最新 BT-018 = 信号持续期持有口径下信心缩放 vs 均匀 50% 验证） |
 
 ---
 

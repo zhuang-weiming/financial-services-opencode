@@ -1,0 +1,14 @@
+# Technical Analysis Skills — Python Dependencies
+# 运行 .opencode/skills/*/examples/ 下所有技术分析 example 所需依赖
+# 安装: bash .opencode/skills/_shared/setup_requirements.sh
+
+# 核心依赖（全部 8 框架）
+pandas>=2.0
+numpy>=1.24
+
+# 可选加速/官方库（缺失时各 skill 自动回退纯 Python 实现）
+ta-lib>=0.4        # candlestick / technical-basic 加速（可选）
+smartmoneyconcepts>=0.1   # SMC 官方库（可选，有纯 Python 替代）
+pyharmonics>=0.1   # Harmonic 官方库（可选，有纯 Python 替代）
+# czsc>=0.10       # Chanlun 官方库（⚠️ rs_czsc Rust 扩展上游损坏，
+#                  #   使用 pure-Python 替代实现，见 chanlun/examples/spcx_analysis.py）

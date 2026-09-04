@@ -1,0 +1,7 @@
+hold,metric,breakeven_cost_per_side
+10,ann_sharpe,0.0036
+10,total_ret,0.0027
+20,ann_sharpe,0.0116
+20,total_ret,0.0102
+30,ann_sharpe,0.0191
+30,total_ret,0.0169

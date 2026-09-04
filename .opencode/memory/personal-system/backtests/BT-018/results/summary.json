@@ -1,0 +1,21 @@
+{
+ "primary": {
+  "thr": 4,
+  "exit": "both",
+  "n_episodes": 3243,
+  "ep_len_mean": 3.19,
+  "ep_len_median": 2,
+  "ep_alpha_mean": -0.00108,
+  "ep_alpha_t": -0.79,
+  "ep_alpha_p": 0.4313
+ },
+ "comparison_BT017": {
+  "BT017_first_entry_alpha60_mean": -0.002,
+  "BT017_first_entry_n": 299,
+  "note": "BT-017 first-entry (60d cluster) alpha60 = -0.20%, ns"
+ },
+ "conventions": {
+  "A": "exit at close of last lit day (1-day eps -> 0 return)",
+  "B": "exit at close of day after signal death (T+1 action)"
+ }
+}

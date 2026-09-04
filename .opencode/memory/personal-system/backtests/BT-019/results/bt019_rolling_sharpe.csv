@@ -1,0 +1,17 @@
+tag,metric,value
+gross,min,-0.855
+gross,median,2.832
+gross,max,5.123
+gross,pct_gt0,0.796
+gross,win_2025-H1,-0.153
+gross,win_2025-H2,2.559
+gross,win_2026-H1,3.85
+gross,win_2026-H2,0.135
+net,min,-1.06
+net,median,2.584
+net,max,4.837
+net,pct_gt0,0.766
+net,win_2025-H1,-0.478
+net,win_2025-H2,2.236
+net,win_2026-H1,3.602
+net,win_2026-H2,-0.075

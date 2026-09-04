@@ -1,0 +1,11 @@
+metric,value
+events_per_year_full,569.6
+events_2025,590.0
+events_2026_to_aug13,290.0
+events_2024h2,171.0
+codes_with_events,200.0
+events_per_code_mean,5.26
+events_per_code_max,7.0
+top10_codes_share,0.067
+top25_codes_share,0.159
+single_code_max_share,0.007

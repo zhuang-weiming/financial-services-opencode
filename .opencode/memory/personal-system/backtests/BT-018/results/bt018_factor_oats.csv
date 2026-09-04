@@ -1,0 +1,8 @@
+factor_neutralized,full_sw_alpha,neutral_sw_alpha,delta,note
+f1_sig,-0.00079,-0.00079,0.0,delta<0 => factor ADDS value (neutralizing lowers sw-alpha)
+f2_fund,-0.00079,-0.00107,-0.00028,delta<0 => factor ADDS value (neutralizing lowers sw-alpha)
+f3_val,-0.00079,-0.00075,5e-05,delta<0 => factor ADDS value (neutralizing lowers sw-alpha)
+f4_vol,-0.00079,-0.00098,-0.00018,delta<0 => factor ADDS value (neutralizing lowers sw-alpha)
+f5_liq,-0.00079,-0.00103,-0.00023,delta<0 => factor ADDS value (neutralizing lowers sw-alpha)
+f6_trend,-0.00079,-0.00079,1e-05,delta<0 => factor ADDS value (neutralizing lowers sw-alpha)
+f7_regime,-0.00079,-0.00044,0.00035,delta<0 => factor ADDS value (neutralizing lowers sw-alpha)

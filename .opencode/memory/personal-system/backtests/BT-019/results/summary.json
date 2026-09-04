@@ -1,0 +1,161 @@
+{
+ "question": "Is V5 (ge3 observation-zone, uniform 50%, short-hold) a robust edge or a 2026 sample artifact?",
+ "sample": "2024-10-08..2026-08-13",
+ "events_td60": {
+  "ge3": 1051,
+  "ge4": 838
+ },
+ "v5_20d": {
+  "gross_sharpe": null,
+  "gross_total": null,
+  "net_sharpe": 0.8755,
+  "net_total": 0.4592,
+  "net_t1_sharpe": 1.0521,
+  "net_t1_total": 0.6081
+ },
+ "bt017_repro": [
+  {
+   "tier": "ge3",
+   "hold": 20,
+   "n_trades": 371,
+   "bt017_style_sharpe": 0.476,
+   "active_win_sharpe": 0.4761
+  },
+  {
+   "tier": "ge3",
+   "hold": 60,
+   "n_trades": 371,
+   "bt017_style_sharpe": 0.427,
+   "active_win_sharpe": 0.4268
+  },
+  {
+   "tier": "ge4",
+   "hold": 20,
+   "n_trades": 299,
+   "bt017_style_sharpe": 0.343,
+   "active_win_sharpe": 0.3434
+  },
+  {
+   "tier": "ge4",
+   "hold": 60,
+   "n_trades": 299,
+   "bt017_style_sharpe": 0.557,
+   "active_win_sharpe": 0.5573
+  }
+ ],
+ "random_control": [
+  {
+   "hold": 5,
+   "n_reps": 300,
+   "random_sharpe_mean": 1.334,
+   "random_sharpe_p5": 0.732,
+   "random_sharpe_median": 1.325,
+   "random_sharpe_p95": 1.978,
+   "random_total_ret_mean": 0.884,
+   "random_total_ret_p5": 0.358,
+   "random_total_ret_p95": 1.544,
+   "v5_sharpe": -0.14,
+   "v5_pctile_of_random": 0.0,
+   "v5_total_ret": -0.144,
+   "label": NaN
+  },
+  {
+   "hold": 20,
+   "n_reps": 300,
+   "random_sharpe_mean": 1.451,
+   "random_sharpe_p5": 1.093,
+   "random_sharpe_median": 1.45,
+   "random_sharpe_p95": 1.81,
+   "random_total_ret_mean": 1.003,
+   "random_total_ret_p5": 0.638,
+   "random_total_ret_p95": 1.398,
+   "v5_sharpe": 1.145,
+   "v5_pctile_of_random": 0.09,
+   "v5_total_ret": 0.678,
+   "label": NaN
+  },
+  {
+   "hold": 20,
+   "n_reps": 150,
+   "random_sharpe_mean": 1.19,
+   "random_sharpe_p5": 0.86,
+   "random_sharpe_median": 1.171,
+   "random_sharpe_p95": 1.567,
+   "random_total_ret_mean": 0.746,
+   "random_total_ret_p5": NaN,
+   "random_total_ret_p95": NaN,
+   "v5_sharpe": 0.875,
+   "v5_pctile_of_random": 0.067,
+   "v5_total_ret": 0.459,
+   "label": "20d_net_ge3"
+  },
+  {
+   "hold": 30,
+   "n_reps": 150,
+   "random_sharpe_mean": 1.464,
+   "random_sharpe_p5": 1.202,
+   "random_sharpe_median": 1.47,
+   "random_sharpe_p95": 1.767,
+   "random_total_ret_mean": 1.013,
+   "random_total_ret_p5": NaN,
+   "random_total_ret_p95": NaN,
+   "v5_sharpe": 1.247,
+   "v5_pctile_of_random": 0.1,
+   "v5_total_ret": 0.79,
+   "label": "30d_gross_ge3"
+  },
+  {
+   "hold": 20,
+   "n_reps": 150,
+   "random_sharpe_mean": 1.505,
+   "random_sharpe_p5": 1.149,
+   "random_sharpe_median": 1.484,
+   "random_sharpe_p95": 1.923,
+   "random_total_ret_mean": 1.095,
+   "random_total_ret_p5": NaN,
+   "random_total_ret_p95": NaN,
+   "v5_sharpe": 1.468,
+   "v5_pctile_of_random": 0.46,
+   "v5_total_ret": 1.035,
+   "label": "20d_gross_ge4"
+  }
+ ],
+ "breakeven": [
+  {
+   "hold": 10,
+   "metric": "ann_sharpe",
+   "breakeven_cost_per_side": 0.0036
+  },
+  {
+   "hold": 10,
+   "metric": "total_ret",
+   "breakeven_cost_per_side": 0.0027
+  },
+  {
+   "hold": 20,
+   "metric": "ann_sharpe",
+   "breakeven_cost_per_side": 0.0116
+  },
+  {
+   "hold": 20,
+   "metric": "total_ret",
+   "breakeven_cost_per_side": 0.0102
+  },
+  {
+   "hold": 30,
+   "metric": "ann_sharpe",
+   "breakeven_cost_per_side": 0.0191
+  },
+  {
+   "hold": 30,
+   "metric": "total_ret",
+   "breakeven_cost_per_side": 0.0169
+  }
+ ],
+ "limit_up_entry_fraction": 0.0761,
+ "notes": [
+  "BT-017 reported V5-20d Sharpe 0.839 used (a) event-index clustering (gap>=60 events, not trading days)",
+  "and (b) full-calendar NAV anchored 2022-11 (~450 flat pre-sample days) -> Sharpe inflated.",
+  "BT-019 fixes both; comparisons vs BT-017 must account for this."
+ ]
+}

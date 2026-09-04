@@ -16,7 +16,8 @@
   "mcp": {
     "morningstar": {
       "type": "remote",
-      "url": "https://mcp.morningstar.com/mcp"
+      "url": "https://mcp.morningstar.com/mcp",
+      "enabled": true
     },
     "factset": {
       "type": "remote",

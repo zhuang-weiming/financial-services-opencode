@@ -1,0 +1,4 @@
+component,n,mean_alpha,win_rate
+first_day,3243,-0.00083,0.436
+rest_of_episode,3243,-0.00024,0.237
+full_episode,3243,-0.00108,0.399

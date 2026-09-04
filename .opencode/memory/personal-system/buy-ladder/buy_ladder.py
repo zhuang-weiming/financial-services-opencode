@@ -429,15 +429,18 @@ def check_layer0_regime(force_unlock=False):
         m2_df = pd.read_csv(m2_csv)
         pmi_df['月份'] = pd.to_datetime(pmi_df['月份'])
         m2_df['月份'] = pd.to_datetime(m2_df['月份'])
-        macro = pd.merge(pmi_df[['月份', 'PMI']], m2_df[['月份', 'M2_YoY']], on='月份', how='inner')
-        macro = macro.sort_values('月份')
-        last = macro.iloc[-1]
-        pmi_norm = max(0.0, min(1.0, (float(last['PMI']) - 47.0) / 6.0))
-        m2_norm = max(0.0, min(1.0, (float(last['M2_YoY']) - 6.0) / 9.0))
+        # v3.0.2 修复: 原 how='inner' 导致 PMI/M2 发布不同步时取到旧月(PMI已到08、M2仅到06 → 读到6月旧PMI)
+        # 改为分别取各自最新值, 避免内连接丢最新PMI
+        pmi_df = pmi_df.sort_values('月份')
+        m2_df = m2_df.sort_values('月份')
+        last_pmi = pmi_df.iloc[-1]
+        last_m2 = m2_df.iloc[-1]
+        pmi_norm = max(0.0, min(1.0, (float(last_pmi['PMI']) - 47.0) / 6.0))
+        m2_norm = max(0.0, min(1.0, (float(last_m2['M2_YoY']) - 6.0) / 9.0))
         mci_value = round(0.5 * pmi_norm + 0.5 * m2_norm, 4)
-        mci_month = str(last['月份'].date())
+        mci_month = f"{str(last_pmi['月份'].date())}(PMI) / {str(last_m2['月份'].date())}(M2)"
         mci_ok = mci_value > LAYER0_MCI_THRESHOLD
-        mci_source = f"WIF v2.7 公式实时计算 (PMI={last['PMI']} M2={last['M2_YoY']} @{mci_month})"
+        mci_source = f"WIF v2.7 公式实时计算 (PMI={last_pmi['PMI']} @{last_pmi['月份'].date()} / M2={last_m2['M2_YoY']} @{last_m2['月份'].date()})"
     except Exception as e:
         mci_value = 0.386
         mci_ok = mci_value > LAYER0_MCI_THRESHOLD
