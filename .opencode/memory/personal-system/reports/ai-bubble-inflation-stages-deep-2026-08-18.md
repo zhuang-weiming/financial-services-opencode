@@ -2,7 +2,7 @@
 
 > **用途**: 支撑"AI 科技泡沫破裂后大类资产配置判断", 提供多轮危机的分阶段 × 大类资产 × 巴菲特操作完整数据集
 > **数据口径**: 价格回报为主 (不含股息再投资); 1966-82 因 ETF 未上市采用代表性成分股/历史指数/大宗商品 Spot
-> **关联**: 与 `ai-bubble-inflation-asset-returns-2026-08-13.md` (总览) + `ai-bubble-inflation-historical-analogues-2026-08-13.md` (叙事) 互补
+> **关联**: 本文件为 AI 泡沫宏观研究的**历史资产回报数据集**（自足，已展开覆盖原 companion）；配套见 `ai-bubble-bank-indicators-consolidated-2026-08-19.md`（投行 AI 泡沫指标）。原 `ai-bubble-inflation-asset-returns-2026-08-13.md` / `ai-bubble-inflation-historical-analogues-2026-08-13.md` 已在 2026-08-25 清理令删除，其内容被本文件展开覆盖。
 >
 > **⚠️ v2.0 升级 (2026-09-01)**: 新增 **§7 第 4 次危机 (2022) + 跨周期 4 危机综合评分 (合并检查修正版)** — 与本文件配套的 4 危机 × 5 资产 backtest 回答合并检查, 关键冲突数据点经 llmquant-data MCP 重新验证, 修正 2 处 backtest 错误 (XLU/XLP 2000-02 数据), 见 §7。
 >

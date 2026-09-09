@@ -1,0 +1,73 @@
+{
+  "metadata": {
+    "title": "AI 巨头投资关系网络图 — 2026年9月",
+    "date": "2026-09-08",
+    "version": "v1.0",
+    "node_count": 39,
+    "edge_count": 52,
+    "sources": [
+      "SEC EDGAR 10-Q (NVDA/AMZN/GOOGL/MSFT/META/ORCL)",
+      "NVIDIA Press Release 8-K (Q2 FY27, Aug 26 2026)",
+      "Amazon Q2 2026 10-Q (accession 0001018724-26-000026)",
+      "Google Q2 2026 10-Q (accession 0001652044-26-000066)",
+      "CoreWeave Q2 2026 Earnings (Aug 11 2026)",
+      "xAI/SpaceX S-1 Registration Statement (June 2026)",
+      "TSMC Q2 2026 Earnings Release (7/16/2026)",
+      "SK Hynix Q2 2026 Results (7/29/2026)",
+      "Oracle Stargate Press Release (Sept 2025)",
+      "Jassy 2026 股东信 (April 9 2026 8-K)"
+    ],
+    "verification_notes": [
+      "NVDA Q2 FY27 全部数字已与 SEC EDGAR 原文逐项核对 ✓",
+      "AMZN Q2 2026 数字已与 SEC EDGAR 原文核对 ✓",
+      "GOOGL Q2 2026 数字已与 SEC EDGAR 原文核对 ✓",
+      "TSMC Q2 2026 已与官方 IR 报告核对 ✓",
+      "ORCL-OpenAI $300B 长协已确认（5年，$260B OCI + $30B 数据 + $10B 服务）✓",
+      "NVDA $500B SPV (6 金融机构) 已确认 ✓",
+      "SK Hynix 与 NVDA $500B 内存长协已确认 ✓",
+      "xAI/SpaceX Colossus 租赁交易已确认 (Anthropic + Google) ✓",
+      "CoreWeave $104B Backlog 已确认 (Aug 11 财报) ✓"
+    ],
+    "corrections_from_user_reports": [
+      {"item": "AMZN TTM FCF", "user_report": "-$27B (H1)", "actual": "-$7.6B (TTM, vs prior year +$18.2B)", "source": "AMZN Q2 2026 10-Q"},
+      {"item": "AMZN 2026 CapEx 指引", "user_report": "~$200B", "actual": "$200-220B (Jassy/IR)", "source": "AWS IR + Q2 press release"},
+      {"item": "GOOGL Cloud 增速", "user_report": "48%", "actual": "82% (18 季度最快)", "source": "GOOGL Q2 2026 10-Q"},
+      {"item": "GOOGL 2026 CapEx 指引", "user_report": "$180B", "actual": "$195-205B", "source": "GOOGL Q2 earnings call"},
+      {"item": "hyperscaler 2026 CapEx 总", "user_report": "$535B (含 META $145B)", "actual": "$280-340B (4家主流预算)", "source": "Datacentre.com + Reuters"}
+    ]
+  },
+  "key_metrics": {
+    "internal_loop_GMV": {"value_usd_b": "1500-1800", "year": "2026", "source": "Multi-Hyperscaler AI Loop Network Report"},
+    "external_loop_ARR": {"value_usd_b": "160-225", "year": "2026", "source": "Same"},
+    "loop_ratio": "8-11x",
+    "external_share_of_revenue": "7-10%",
+    "hyperscaler_total_FCF_2026H1": {"value_usd_b": -42, "note": "5 hyperscaler + NVDA 合计"},
+    "nvidia_ar_q2fy27": {"value_usd_b": 63.059, "yoy_pct": 64, "source": "NVDA Q2 FY27 10-Q"},
+    "nvidia_long_term_debt_q2fy27": {"value_usd_b": 32.366, "yoy_pct": 333, "source": "NVDA Q2 FY27 10-Q"},
+    "nvidia_marketable_equity_sec": {"value_usd_b": 42.783, "yoy_pct": 232, "source": "NVDA Q2 FY27 10-Q"},
+    "nvidia_non_marketable_sec": {"value_usd_b": 51.157, "yoy_pct": 130, "source": "NVDA Q2 FY27 10-Q"},
+    "amzn_q2_revenue": {"value_usd_b": 200.606, "yoy_pct": 20, "source": "AMZN Q2 2026 10-Q"},
+    "amzn_aws_revenue": {"value_usd_b": 42.232, "yoy_pct": 37, "source": "AMZN Q2 2026 10-Q"},
+    "amzn_anthropic_gain": {"value_usd_b": 53.4, "source": "AMZN Q2 2026 10-Q (Q2 净利含 $53.4B 一次性)"},
+    "amzn_ttm_fcf": {"value_usd_b": -7.6, "note": "TTM FCF 转负 (vs prior year +$18.2B)", "source": "AMZN Q2 2026 10-Q"},
+    "googl_q2_revenue": {"value_usd_b": 119.796, "yoy_pct": 24, "source": "GOOGL Q2 2026 10-Q"},
+    "googl_cloud_revenue": {"value_usd_b": 24.8, "yoy_pct": 82, "source": "GOOGL Q2 2026 10-Q"},
+    "googl_other_income": {"value_usd_b": 97.983, "note": "主要是 Anthropic + SpaceX 估值重估", "source": "GOOGL Q2 2026 10-Q"},
+    "tsmc_q2_revenue": {"value_usd_b": 40.2, "yoy_pct": 33.7, "source": "TSMC Q2 2026 IR"},
+    "tsmc_hpc_share": {"value_pct": 66, "note": "HPC/AI 占 Q2 营收 66%", "source": "TSMC Q2 2026 IR"},
+    "skhynix_q2_revenue": {"value_krw_t": 79.3187, "value_usd_b": 54.55, "yoy_pct": 257, "source": "SK Hynix Q2 2026 Results"},
+    "coreweave_q2_revenue": {"value_usd_b": 2.58, "yoy_pct": 112, "source": "CoreWeave Q2 2026 Earnings"},
+    "coreweave_backlog": {"value_usd_b": 104, "yoy_pct": 246, "note": "后增 $25B (Aug 财报)", "source": "CoreWeave Q2 2026 Earnings"},
+    "oracle_openai_contract": {"value_usd_b": 300, "years": 5, "note": "Stargate 4.5GW; Texas扩建暂停, MSFT 接手", "source": "ORCL Q1 FY26 10-Q + Stargate Press"}
+  },
+  "external_demand_industries": {
+    "EXT_Bank_5banks": "~$15-20B/yr AI 投入 (Copilot/Agentforce/Bedrock)",
+    "EXT_Mfg_industrial": "~$10B/yr (预测维护/质检/数字孪生)",
+    "EXT_Energy_oil_gas": "~$5-8B/yr (能源勘探/优化)",
+    "EXT_Mining_minerals": "~$3-5B/yr (矿山自动化)",
+    "EXT_Consumer_retail": "~$8-12B/yr (推荐/库存/营销)",
+    "EXT_Auto_autonomous": "~$15-20B/yr (自动驾驶 + 智能座舱)",
+    "EXT_Health_pharma": "~$6-10B/yr (诊断/药物发现)",
+    "EXT_Telecom_network": "~$4-6B/yr (网络优化 + 客服 AI)"
+  }
+}

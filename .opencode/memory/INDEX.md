@@ -35,10 +35,15 @@
     │   ├── sell-ladder/ · buy-ladder/       # 判定引擎 + runs 历史
     │   ├── research/                        # 概率客观化算法 alg1-4 + 化债模型 py
     │   └── backtests/                       # BT-001~018 完整回测资产
-    ├── 现行报告 reports/（**5 个有效版本**）
+    ├── 现行报告 reports/（**当前 8 个有效文件**）
+    │   ├── **AI 巨头估值与债务研究线**
+    │   │   ├── ai_valuation_thresholds.md                # 【主】AI 巨头估值+泡沫阈值（五方法双情景，2026-09-07 最新）
+    │   │   ├── tech_giants_corporate_debt.md             # AI 巨头企业债全面画像（债务姊妹篇）
+    │   │   ├── ai-bubble-bank-indicators-consolidated-2026-08-19.md  # 投行 AI 泡沫指标
+    │   │   └── ai-bubble-inflation-stages-deep-2026-08-18.md         # 危机×通胀×大类资产回报数据集
+    │   ├── **SPCX (SpaceX) 主报告**（2026-09-01 五维合并版）
+    │   │   └── SPCX-master-2026-09-01.md                 # 评级/目标价/红线/催化剂（Q2财报+估值+技术+竞争合并）
     │   ├── global-relay-debt-monetization-scenario-map-v3-2026-08-25.md  # 终版情景图（HYP-032 配套）
-    │   ├── ai-bubble-inflation-stages-deep-2026-08-18.md               # AI泡沫×通胀阶段×大类资产
-    │   ├── ai-bubble-bank-indicators-consolidated-2026-08-19.md        # 银行指标合并
     │   ├── china-silicon-wafer-landscape-2026-08-25.md               # 中国半导体硅片厂商竞争格局
     │   └── 稳定币全景研究_发布版v3-fixed.md 2026-08-26                 # 稳定币政策/储备/赛道全图
     └── theses/ · data/
@@ -48,6 +53,8 @@
 - **2026-08-25 清理令:** `raw-log/`（17 文件）、`distillation-log/`、`skill-changelog/`、`market-regime/`、`2.1.HYP-UNUSED.md`（归档库）、假设库内 13 个失效/归档/Tier3 低价值条目（HYP-001/003/004/005/007/009/010/012/013/018/019/022/023/031）、reports/ 内 11 个过程稿与被取代版本。→ git 历史可恢复。
 - **2026-08-27 清理令:** `/out/` 8 个文件全部处理——`china-silicon-wafer-landscape-20260825.md` 入库至 reports/（唯一非冗余），其余 7 个（bank-indicator-registry-20260824.md / bank-views-synthesis-20260824.md / institutional-methodology-review-20260824.md / methodology-deep-dive-20260824.md / methodology-review-final-20260824.md / peer-review-round-5-2026-08-19.md / crisis-playbook/scripts/chain_consistency_check.py）= 已被 reports/ 内 MCP-backed 版本取代的过程稿；/out/ 目录清空。→ git 历史可恢复。
 - **2026-08-30 独立性清理令:** 删除 3 个冗余文档——`1.1.FAILED_LAWS.md`（FAILED-001 已被 LAW-003 完整吸收）、`2.3.HYP_UPDATE_RULES.md`（Brier 规则已内化于 decision-journal/README.md，量化信号已分散到 2.HYPOTHESES.md 各 HYP）、`regime-watch.md`（监控指标已分散到 3.US_FRAMEWORK §1.3 + 4.2.AI_BUBBLE_TRACKING，零引用）。新增 `3.2.未来5年的预判2026～2030.md`。→ git 历史可恢复。
+- **2026-09-07 报告合并清理令:** `reports/ai_bubble_analysis.md`（2026-09-06 版，数据已被多轮审查修正）→ 被 `reports/ai_valuation_thresholds.md`（2026-09-07 五方法版）取代。独有价值内容（§5 泡沫触发链、煤矿金丝雀、破裂情景）已并入主报告新 §8；旧文件物理删除（备份 /tmp/report-backup-20260907/）。`ai-bubble-inflation-stages-deep` 头部关联声明更新（原 companion 已于 08-25 删，现自足）。INDEX reports 树同步为 11 个有效文件。→ git 历史可恢复。
+- **2026-09-07 SPCX 五维合并令:** `reports/SPCX-*` 五份（Q2财报/股价/估值压力/技术/竞争叙事，共 2,573 行）→ 合并压缩为 **`SPCX-master-2026-09-01.md`**（1 份主报告：评级 1-star AVOID、FV $50/65/90、红线/催化剂/监控指标统一）。五份原始文件物理删除（备份 /tmp/report-backup-20260907/）。INDEX reports 树更新为 8 个有效文件。→ git 历史可恢复。
 
 ---
 
