@@ -1,19 +1,4 @@
-"""Credit-risk primitives: Altman Z-Score, Merton/KMV, and spread analytics.
-
-Executable form of the credit models that used to live as markdown code blocks
-in ``src/skills/credit-analysis/SKILL.md``. Differences from those originals are
-deliberate and each is called out in the relevant docstring; the two that bite
-hardest are:
-
-* **Spread input units are explicit.** The markdown's two spread helpers
-  disagreed with each other -- :func:`credit_spread_analysis` multiplied by 100
-  (yields in percent) while :func:`spread_term_structure` multiplied by 10000
-  (yields in decimals). Both now take ``input_unit``, defaulting to whatever the
-  markdown silently assumed, so neither changes behaviour but neither can be
-  misread.
-* **Altman's X4 denominator is total liabilities**, not "total debt". The skill's
-  own variable table says 总负债账面值; the markdown's parameter name said
-  ``total_debt``. The name here follows the model.
+"""Credit-risk primitives: Altman Z-Score, Merton/KMV, CDS pricing, and spread analytics.
 
 All rates and ratios are decimals unless a name ends in ``_bp``.
 """
@@ -48,6 +33,12 @@ __all__ = [
     "edf_reference_band",
     "credit_spread_analysis",
     "spread_term_structure",
+    "hazard_rate_to_survival_probability",
+    "survival_probability_to_hazard_rate",
+    "cds_price",
+    "expected_loss",
+    "vasicek_credit_var",
+    "credit_spread_dv01",
 ]
 
 
@@ -78,9 +69,7 @@ ALTMAN_MODELS: Mapping[str, AltmanModelSpec] = {
     # Altman (1968), listed manufacturers.
     "original": AltmanModelSpec((1.2, 1.4, 3.3, 0.6, 1.0), 2.99, 1.81, True, "market"),
     # Z' -- privately held firms; X4 switches to book equity.
-    "prime": AltmanModelSpec(
-        (0.717, 0.847, 3.107, 0.420, 0.998), 2.90, 1.23, True, "book"
-    ),
+    "prime": AltmanModelSpec((0.717, 0.847, 3.107, 0.420, 0.998), 2.90, 1.23, True, "book"),
     # Z'' -- non-manufacturers / emerging markets; X5 dropped entirely.
     "double_prime": AltmanModelSpec((6.56, 3.26, 6.72, 1.05, 0.0), 2.60, 1.10, False, "book"),
 }
@@ -115,6 +104,26 @@ class AltmanZScore:
     components: Mapping[str, float | None]
     safe_threshold: float
     distress_threshold: float
+
+
+def _require_finite(value: float, name: str) -> float:
+    """Check a value is a finite number, refusing NaN and infinity.
+
+    Args:
+        value: The candidate value.
+        name: Field name for the error message.
+
+    Returns:
+        ``value`` unchanged (its int/float type is preserved).
+
+    Raises:
+        ValueError: If the value is not a finite number. A non-finite input
+            here would otherwise flow through the range guards (which are all
+            false for NaN) and surface as a NaN score, probability or zone.
+    """
+    if not math.isfinite(value):
+        raise ValueError(f"{name} must be a finite number, got {value!r}")
+    return value
 
 
 def altman_z_score(
@@ -163,6 +172,14 @@ def altman_z_score(
         raise ValueError(
             f"unknown model {model!r}; expected one of {tuple(ALTMAN_MODELS)}"
         )
+    working_capital = _require_finite(working_capital, "working_capital")
+    retained_earnings = _require_finite(retained_earnings, "retained_earnings")
+    ebit = _require_finite(ebit, "ebit")
+    equity_value = _require_finite(equity_value, "equity_value")
+    total_liabilities = _require_finite(total_liabilities, "total_liabilities")
+    total_assets = _require_finite(total_assets, "total_assets")
+    if revenue is not None:
+        revenue = _require_finite(revenue, "revenue")
     if total_assets == 0:
         raise ValueError("total_assets must be non-zero")
     if total_liabilities == 0:
@@ -261,12 +278,7 @@ def _merton_d1_d2(
     return d1, d1 - vol_t
 
 
-#: Step tolerance handed to the Merton root finder. ``fsolve``'s ``xtol`` bounds
-#: the *step*, and because the unknowns are solved in log space that step is a
-#: relative move in ``sigma_V``. At the SciPy default (~1.5e-8) a low-volatility,
-#: high-leverage issuer -- exactly the case Merton is used for -- halts while the
-#: scaled residual is still ~1e-7, so convergence is judged on the residual below
-#: and the step tolerance is pinned near machine precision instead.
+#: Step tolerance handed to the Merton root finder (pinned near machine precision in log space).
 MERTON_SOLVER_STEP_TOL: float = 1e-13
 
 #: Extra solves started from the previous answer when the residual still misses.
@@ -288,9 +300,7 @@ def merton_asset_solve(
         E       = V*N(d1) - D*exp(-r*T)*N(d2)
         sigma_E = N(d1) * sigma_V * V / E
 
-    The unknowns are solved in log space so the root finder cannot wander into a
-    negative asset value or a negative volatility, which the markdown version
-    could.
+    The unknowns are solved in log space to enforce strictly positive domain.
 
     Args:
         equity_value: Market capitalisation.
@@ -298,16 +308,19 @@ def merton_asset_solve(
         debt_face: Face value of debt, treated as a single zero-coupon claim.
         risk_free: Continuously compounded risk-free rate as a decimal.
         horizon: Years to the debt's maturity.
-        tolerance: Largest residual, relative to ``equity_value``, accepted as a
-            solution.
+        tolerance: Largest acceptable relative residual to ``equity_value``.
 
     Returns:
         Tuple ``(asset_value, asset_vol)``.
 
     Raises:
-        ValueError: If any input is non-positive, or the system does not
-            converge to within ``tolerance``.
+        ValueError: If any input is non-positive or system fails to converge.
     """
+    equity_value = _require_finite(equity_value, "equity_value")
+    equity_vol = _require_finite(equity_vol, "equity_vol")
+    debt_face = _require_finite(debt_face, "debt_face")
+    risk_free = _require_finite(risk_free, "risk_free")
+    horizon = _require_finite(horizon, "horizon")
     if min(equity_value, equity_vol, debt_face, horizon) <= 0:
         raise ValueError(
             "equity_value, equity_vol, debt_face and horizon must all be positive"
@@ -422,6 +435,11 @@ def distance_to_default(
         ValueError: If any of the value, volatility, default point or horizon is
             non-positive.
     """
+    asset_value = _require_finite(asset_value, "asset_value")
+    asset_vol = _require_finite(asset_vol, "asset_vol")
+    default_point = _require_finite(default_point, "default_point")
+    horizon = _require_finite(horizon, "horizon")
+    drift = _require_finite(drift, "drift")
     if min(asset_value, asset_vol, default_point, horizon) <= 0:
         raise ValueError(
             "asset_value, asset_vol, default_point and horizon must all be positive"
@@ -453,6 +471,9 @@ def kmv_default_point(
         ValueError: If either debt figure is negative, or the weight is outside
             ``[0, 1]``.
     """
+    short_term_debt = _require_finite(short_term_debt, "short_term_debt")
+    long_term_debt = _require_finite(long_term_debt, "long_term_debt")
+    long_term_weight = _require_finite(long_term_weight, "long_term_weight")
     if short_term_debt < 0 or long_term_debt < 0:
         raise ValueError("debt figures must be non-negative")
     if not 0.0 <= long_term_weight <= 1.0:
@@ -485,6 +506,9 @@ def kmv_distance_to_default(
     Raises:
         ValueError: If ``asset_value`` or ``asset_vol`` is non-positive.
     """
+    asset_value = _require_finite(asset_value, "asset_value")
+    asset_vol = _require_finite(asset_vol, "asset_vol")
+    default_point = _require_finite(default_point, "default_point")
     if asset_value <= 0 or asset_vol <= 0:
         raise ValueError("asset_value and asset_vol must be positive")
     return (asset_value - default_point) / (asset_value * asset_vol)
@@ -600,6 +624,9 @@ def credit_spread_analysis(
             ``lookback_periods`` is not positive, or if ``input_unit`` is
             unknown.
     """
+    window = _require_finite(window, "window")
+    lookback_periods = _require_finite(lookback_periods, "lookback_periods")
+    signal_z = _require_finite(signal_z, "signal_z")
     if window <= 0 or lookback_periods <= 0:
         raise ValueError("window and lookback_periods must be positive")
     if len(bond_yields) != len(risk_free_yields) or not bond_yields.index.equals(
@@ -673,3 +700,294 @@ def spread_term_structure(
             )
         records.append(pd.Series(row, name=issuer))
     return pd.DataFrame(records)
+
+
+def hazard_rate_to_survival_probability(hazard_rate: float, tenor_years: float) -> float:
+    """Convert a constant hazard rate lambda to cumulative survival probability Q(T) = exp(-lambda * T).
+
+    Args:
+        hazard_rate: Annualised default intensity / hazard rate lambda >= 0.
+        tenor_years: Time horizon in years >= 0.
+
+    Returns:
+        Survival probability in [0.0, 1.0].
+
+    Raises:
+        ValueError: If hazard_rate or tenor_years is negative.
+    """
+    hazard_rate = _require_finite(hazard_rate, "hazard_rate")
+    tenor_years = _require_finite(tenor_years, "tenor_years")
+    if hazard_rate < 0.0 or tenor_years < 0.0:
+        raise ValueError(f"hazard_rate and tenor_years must be non-negative, got {hazard_rate}, {tenor_years}")
+    return float(np.exp(-hazard_rate * tenor_years))
+
+
+def survival_probability_to_hazard_rate(survival_prob: float, tenor_years: float) -> float:
+    """Convert a survival probability Q(T) to implied constant hazard rate lambda = -ln(Q(T)) / T.
+
+    Args:
+        survival_prob: Survival probability in (0.0, 1.0].
+        tenor_years: Time horizon in years > 0.
+
+    Returns:
+        Annualised hazard rate lambda.
+
+    Raises:
+        ValueError: If survival_prob is not in (0.0, 1.0] or tenor_years <= 0.
+    """
+    survival_prob = _require_finite(survival_prob, "survival_prob")
+    tenor_years = _require_finite(tenor_years, "tenor_years")
+    if survival_prob <= 0.0 or survival_prob > 1.0:
+        raise ValueError(f"survival_prob must be in (0.0, 1.0], got {survival_prob}")
+    if tenor_years <= 0.0:
+        raise ValueError(f"tenor_years must be strictly positive, got {tenor_years}")
+    return float(-np.log(survival_prob) / tenor_years)
+
+
+def cds_price(
+    spread_bps: float,
+    recovery_rate: float = 0.40,
+    tenor_years: float = 5.0,
+    risk_free_rate: float = 0.03,
+    coupon_bps: float = 100.0,
+    notional: float = 10_000_000.0,
+    payment_frequency: int = 4,
+) -> dict:
+    """Flat-hazard single-name Credit Default Swap (CDS) valuation engine.
+
+    Computes the implied hazard rate, survival probability curve, Risky Present Value
+    of a Basis Point (RPV01), protection leg PV, premium leg PV, fair par spread,
+    and mark-to-market (MTM) upfront cash payment.
+
+    The hazard rate comes from the credit triangle (``lambda = s / (1 - R)``) rather
+    than being bootstrapped by root-finding the way the ISDA Standard Model does, so
+    ``par_spread_bps`` -- recomputed from the discretised legs -- lands near, not
+    exactly on, the quoted ``spread_bps`` (~0.4% apart for a 5y investment-grade
+    name). Value the contract against ``par_spread_bps``; read ``hazard_rate`` as the
+    triangle approximation it is.
+
+    Args:
+        spread_bps: Market quoted par CDS spread in basis points (e.g. 150.0 for 150 bps).
+        recovery_rate: Expected recovery rate on default in [0.0, 1.0) (standard senior unsecured = 0.40).
+        tenor_years: Contract maturity in years > 0 (standard benchmark = 5.0 years).
+        risk_free_rate: Continuously compounded annual risk-free discount rate.
+        coupon_bps: Fixed running coupon in basis points (standard 100 bps IG, 500 bps HY).
+        notional: Contract notional amount in currency units.
+        payment_frequency: Premium coupon payment frequency per year (standard quarterly = 4).
+
+    Returns:
+        dict with keys:
+            * ``hazard_rate`` (float): Implied constant hazard rate (default intensity).
+            * ``survival_probability`` (float): Probability of survival to maturity Q(T).
+            * ``default_probability`` (float): Cumulative probability of default 1 - Q(T).
+            * ``rpv01`` (float): Risky annuity (present value of unit running spread per dollar notional).
+            * ``protection_leg_pv`` (float): Present value of default protection per dollar notional.
+            * ``premium_leg_pv`` (float): Present value of fixed running premium per dollar notional.
+            * ``par_spread_bps`` (float): Model par spread in basis points.
+            * ``upfront_pct`` (float): Upfront payment as decimal fraction of notional.
+            * ``upfront_amount`` (float): Net upfront cash payment (positive = buyer pays seller).
+            * ``buyer_mtm`` (float): Mark-to-market value for the protection buyer.
+
+    Raises:
+        ValueError: If spread_bps < 0, recovery_rate not in [0, 1), tenor_years <= 0, or notional <= 0.
+    """
+    spread_bps = _require_finite(spread_bps, "spread_bps")
+    recovery_rate = _require_finite(recovery_rate, "recovery_rate")
+    tenor_years = _require_finite(tenor_years, "tenor_years")
+    risk_free_rate = _require_finite(risk_free_rate, "risk_free_rate")
+    coupon_bps = _require_finite(coupon_bps, "coupon_bps")
+    notional = _require_finite(notional, "notional")
+    payment_frequency = _require_finite(payment_frequency, "payment_frequency")
+    if spread_bps < 0.0:
+        raise ValueError(f"spread_bps must be non-negative, got {spread_bps}")
+    if not (0.0 <= recovery_rate < 1.0):
+        raise ValueError(f"recovery_rate must be in [0.0, 1.0), got {recovery_rate}")
+    if tenor_years <= 0.0:
+        raise ValueError(f"tenor_years must be strictly positive, got {tenor_years}")
+    if notional <= 0.0:
+        raise ValueError(f"notional must be strictly positive, got {notional}")
+    if payment_frequency <= 0:
+        raise ValueError(f"payment_frequency must be positive, got {payment_frequency}")
+
+    s_dec = spread_bps / 10_000.0
+    c_dec = coupon_bps / 10_000.0
+    lgd = 1.0 - recovery_rate
+
+    # Implied hazard rate lambda ≈ s / LGD
+    lambda_hazard = float(s_dec / lgd) if lgd > 0 else 0.0
+
+    n_periods = max(1, int(round(tenor_years * payment_frequency)))
+    t_grid = np.linspace(tenor_years / n_periods, tenor_years, n_periods)
+    t_prev = np.r_[0.0, t_grid[:-1]]
+    dts = t_grid - t_prev
+    t_mid = 0.5 * (t_prev + t_grid)
+
+    # Survival probabilities Q(t) = exp(-lambda * t)
+    q_grid = np.exp(-lambda_hazard * t_grid)
+    q_prev = np.r_[1.0, q_grid[:-1]]
+
+    # Discount factors D(t) = exp(-r * t)
+    df_grid = np.exp(-risk_free_rate * t_grid)
+    df_mid = np.exp(-risk_free_rate * t_mid)
+
+    # Premium leg / RPV01: sum(dt_i * D(t_i) * Q(t_i)) + accrual on default
+    premium_cashflow = np.sum(dts * df_grid * q_grid)
+    accrual_cashflow = np.sum(0.5 * dts * df_mid * (q_prev - q_grid))
+    rpv01 = float(premium_cashflow + accrual_cashflow)
+
+    # Protection leg: sum( LGD * D(t_mid) * (Q(t_{i-1}) - Q(t_i)) )
+    default_prob_steps = q_prev - q_grid
+    prot_leg_pv = float(lgd * np.sum(df_mid * default_prob_steps))
+
+    # Par spread in bps
+    par_spread = float((prot_leg_pv / rpv01) * 10_000.0) if rpv01 > 0 else spread_bps
+
+    # Premium leg PV for running coupon c
+    prem_leg_pv = float(c_dec * rpv01)
+
+    # Upfront percentage and amount
+    upfront_pct = float(prot_leg_pv - prem_leg_pv)
+    upfront_amt = float(upfront_pct * notional)
+
+    survival_T = float(np.exp(-lambda_hazard * tenor_years))
+    default_prob_T = float(1.0 - survival_T)
+
+    return {
+        "hazard_rate": lambda_hazard,
+        "survival_probability": survival_T,
+        "default_probability": default_prob_T,
+        "rpv01": rpv01,
+        "protection_leg_pv": prot_leg_pv,
+        "premium_leg_pv": prem_leg_pv,
+        "par_spread_bps": par_spread,
+        "upfront_pct": upfront_pct,
+        "upfront_amount": upfront_amt,
+        "buyer_mtm": upfront_amt,
+    }
+def expected_loss(ead: float, pd: float, lgd: float) -> float:
+    """Compute regulatory Expected Loss (EL = EAD * PD * LGD).
+
+    Args:
+        ead: Exposure at Default in currency units >= 0.
+        pd: Probability of Default in [0.0, 1.0].
+        lgd: Loss Given Default in [0.0, 1.0].
+
+    Returns:
+        Expected loss amount in currency units.
+
+    Raises:
+        ValueError: If ead < 0, pd not in [0, 1], or lgd not in [0, 1].
+    """
+    ead = _require_finite(ead, "ead")
+    pd = _require_finite(pd, "pd")
+    lgd = _require_finite(lgd, "lgd")
+    if ead < 0.0:
+        raise ValueError(f"ead must be non-negative, got {ead}")
+    if not (0.0 <= pd <= 1.0):
+        raise ValueError(f"pd must be in [0.0, 1.0], got {pd}")
+    if not (0.0 <= lgd <= 1.0):
+        raise ValueError(f"lgd must be in [0.0, 1.0], got {lgd}")
+    return float(ead * pd * lgd)
+
+
+def vasicek_credit_var(
+    ead: float,
+    pd: float,
+    lgd: float,
+    asset_correlation: float,
+    confidence: float = 0.999,
+) -> dict:
+    """Vasicek single-factor asymptotic credit risk portfolio model (Basel II/III capital framework).
+
+    Under the Asymptotic Single Risk Factor (ASRF) model, conditional default
+    probability at confidence level alpha is:
+        WCDR(alpha) = Phi( (Phi^{-1}(PD) + sqrt(rho) * Phi^{-1}(alpha)) / sqrt(1 - rho) )
+
+    where rho is the pairwise asset return correlation.
+
+    Args:
+        ead: Exposure at Default in currency units (positive).
+        pd: Probability of Default in (0.0, 1.0).
+        lgd: Loss Given Default fraction in [0.0, 1.0].
+        asset_correlation: Pairwise systematic asset correlation rho in [0.0, 1.0).
+        confidence: VaR confidence level in (0.0, 1.0) (Basel standard = 0.999).
+
+    Returns:
+        dict with keys:
+            * ``expected_loss`` (float): Base expected loss (EL).
+            * ``wcdr`` (float): Worst-case conditional default rate at confidence.
+            * ``worst_case_loss`` (float): Total portfolio loss at confidence (WCL).
+            * ``unexpected_loss`` (float): Economic capital / Credit VaR (WCL - EL).
+            * ``capital_ratio`` (float): Capital required as decimal fraction of EAD.
+
+    Raises:
+        ValueError: If parameters violate domain constraints.
+    """
+    ead = _require_finite(ead, "ead")
+    pd = _require_finite(pd, "pd")
+    lgd = _require_finite(lgd, "lgd")
+    asset_correlation = _require_finite(asset_correlation, "asset_correlation")
+    confidence = _require_finite(confidence, "confidence")
+    if ead <= 0.0:
+        raise ValueError(f"ead must be strictly positive, got {ead}")
+    if not (0.0 < pd < 1.0):
+        raise ValueError(f"pd must be in (0.0, 1.0), got {pd}")
+    if not (0.0 <= lgd <= 1.0):
+        raise ValueError(f"lgd must be in [0.0, 1.0], got {lgd}")
+    if not (0.0 <= asset_correlation < 1.0):
+        raise ValueError(f"asset_correlation must be in [0.0, 1.0), got {asset_correlation}")
+    if not (0.0 < confidence < 1.0):
+        raise ValueError(f"confidence must be in (0.0, 1.0), got {confidence}")
+
+    rho = asset_correlation
+    inv_pd = float(norm.ppf(pd))
+    inv_conf = float(norm.ppf(confidence))
+
+    numerator = inv_pd + np.sqrt(rho) * inv_conf
+    denominator = np.sqrt(1.0 - rho)
+    wcdr = float(norm.cdf(numerator / denominator))
+
+    el = expected_loss(ead, pd, lgd)
+    wcl = float(ead * lgd * wcdr)
+    ul = float(max(0.0, wcl - el))
+    capital_ratio = float(ul / ead) if ead > 0 else 0.0
+
+    return {
+        "expected_loss": el,
+        "wcdr": wcdr,
+        "worst_case_loss": wcl,
+        "unexpected_loss": ul,
+        "capital_ratio": capital_ratio,
+    }
+
+
+def credit_spread_dv01(
+    spread_duration: float,
+    price: float = 100.0,
+    face: float = 100.0,
+    par_amount: float = 1_000_000.0,
+) -> float:
+    """Calculate Credit Spread DV01 (CS01 / Spread DV01) - dollar value of a 1 bp widening in credit spread.
+
+    CS01 = Spread Duration * (Price / Face) * 0.0001 * Par Position
+
+    Args:
+        spread_duration: Modified/spread duration in years.
+        price: Current clean market price of the credit instrument.
+        face: Quoted par base (standard 100.0).
+        par_amount: Total par notional held in position.
+
+    Returns:
+        Dollar loss for a 1 bp increase in credit spread (positive float).
+
+    Raises:
+        ValueError: If price, face, or par_amount is not positive, or if
+            spread_duration is negative.
+    """
+    spread_duration = _require_finite(spread_duration, "spread_duration")
+    price = _require_finite(price, "price")
+    face = _require_finite(face, "face")
+    par_amount = _require_finite(par_amount, "par_amount")
+    if face <= 0.0 or price <= 0.0 or par_amount <= 0.0 or spread_duration < 0.0:
+        raise ValueError("price, face, par_amount must be positive and spread_duration non-negative")
+    return float(spread_duration * (price / face) * 1e-4 * par_amount)

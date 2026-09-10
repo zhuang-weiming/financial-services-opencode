@@ -1,5 +1,5 @@
 {
-  "_note": "Toy DSR table — what DSR does when you sweep n_configs (López de Prado 2018 Eq 12.7-12.8). Real numbers from deflated_sharpe_ratio() in vibe_trading_quanta.backtest.validation.",
+  "_note": "Toy DSR table — what DSR does when you sweep n_configs (López de Prado 2018 Eq 12.7-12.8). Real numbers from deflated_sharpe_ratio() in src.quantlib.multipletesting.",
   "strategy": "V21 (lv+wt, A-share monthly)",
   "sr_observed_annual": 0.869,
   "skewness": 0.85,

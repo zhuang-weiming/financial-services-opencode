@@ -12,7 +12,6 @@ from __future__ import annotations
 import base64
 import json
 import logging
-from pathlib import Path
 from typing import Any
 
 from src.agent.tools import BaseTool
@@ -128,14 +127,19 @@ class AnalyzeImageTool(BaseTool):
             }
         ]
 
+        llm = None
         try:
             from src.providers.chat import ChatLLM
 
-            response = ChatLLM().chat(messages, timeout=_VISION_TIMEOUT_S)
+            llm = ChatLLM()
+            response = llm.chat(messages, timeout=_VISION_TIMEOUT_S)
             answer = (response.content or "").strip()
         except Exception as exc:  # noqa: BLE001 - provider errors go back to the agent
             logger.warning("analyze_image failed for %s: %s", path, exc)
             return _error(f"vision call failed: {type(exc).__name__}: {exc}")
+        finally:
+            if llm is not None:
+                llm.close()
 
         if not answer:
             return _error("the model returned an empty answer (provider may not support image input)")

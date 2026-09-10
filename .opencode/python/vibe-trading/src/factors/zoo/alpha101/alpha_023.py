@@ -88,4 +88,9 @@ def compute(panel: dict) -> pd.DataFrame:
     where_ternary = _where_ternary
     mh = rolling_sum(high, 20) / 20.0
     out = where_ternary(mh < high, -1.0 * delta(high, 2), 0.0 * close)
-    return out
+    # A NaN comparison is False, not NaN, so where_ternary's own
+    # np.isfinite safety net never fires here: the else branch is 0.0
+    # times a finite close, so it stays finite well before mh's 20-day
+    # lookback is available, fabricating a signal during warmup instead
+    # of NaN.
+    return out.where(mh.notna())

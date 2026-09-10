@@ -18,8 +18,8 @@ Real-time and historical OHLCV for **crypto spot** (top BASE-QUOTE pairs) and **
 
 ## When NOT to use
 
-- **A-shares / HK / futures** → `vibe-trading-quanta` (mootdx / akshare / tushare)
-- **Minute / tick bars** → `vibe-trading-quanta`; `llmquant-data` caps at 1h
+- **A-shares / HK / futures** → `vibe-trading-ai` (mootdx / akshare / tushare)
+- **Minute / tick bars** → `vibe-trading-ai`; `llmquant-data` caps at 1h
 - **Options / implied vol** → `qveris` marketplace
 - **Fundamentals / earnings** → `llmquant-sec` (filings) or `llmquant-news`
 

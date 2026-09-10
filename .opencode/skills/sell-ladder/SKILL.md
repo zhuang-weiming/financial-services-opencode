@@ -63,9 +63,9 @@ python3 .opencode/memory/personal-system/sell-ladder/backtest_v090.py --variant 
 
 | 级别 | 信号 | 权重 |
 |------|------|:---:|
-| 事件信号（明确买卖点） | `candlestick`、`chanlun`、`turnover_anomaly` | **×2 票** |
-| 趋势信号（方向判定） | `alpha_engine_v21`、`technical_basic`、`ichimoku`、`smc`、`alpha_zoo`、`multi_factor`、`ml_strategy`、`sector_relative` | ×1 票 |
-| 辅助观察（不参与计票） | `harmonic`、`pair_trading`、`volatility`、`factor_research`、`ad_line` | 0 票 |
+| 事件信号（明确买卖点） | `vibe-trading-candlestick`、`vibe-trading-chanlun`、`turnover_anomaly` | **×2 票** |
+| 趋势信号（方向判定） | `alpha_engine_v21`、`technical_basic`、`vibe-trading-ichimoku`、`vibe-trading-smc`、`alpha_zoo`、`multi_factor`、`ml_strategy`、`sector_relative` | ×1 票 |
+| 辅助观察（不参与计票） | `vibe-trading-harmonic`、`pair_trading`、`vibe-trading-volatility`、`factor_research`、`ad_line` | 0 票 |
 
 **v2.5 新增/重要指标:**
 - **`turnover_anomaly`** (事件×2): 量比 > 1.5 + 位置 > 80% + 5d 滞涨 = 高位放量滞涨 (-1); 底部放量吸筹 (+1)

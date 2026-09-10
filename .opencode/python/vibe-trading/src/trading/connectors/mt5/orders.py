@@ -245,7 +245,10 @@ def _sized_volume(
         volume = math.floor(raw / step + 1e-9) * step
         volume = round(volume, 8)
     if volume > volume_max:
-        volume = volume_max
+        return (
+            f"order volume {volume} lots exceeds the symbol maximum {volume_max} "
+            f"for {name!r}; split the order or lower the size"
+        )
     if volume < volume_min:
         return (
             f"order volume {volume} lots is below the symbol minimum {volume_min} "

@@ -60,6 +60,7 @@ class RunResponse(BaseModel):
     run_id: str = Field(..., description="Run identifier")
     elapsed_seconds: float = Field(..., description="Execution time in seconds")
     reason: Optional[str] = Field(None, description="Failure reason when available")
+    prompt: Optional[str] = Field(None, description="Original natural-language request")
 
     planner_output: Optional[Dict[str, Any]] = Field(None, description="Planner output")
     strategy_spec: Optional[Dict[str, Any]] = Field(None, description="Strategy specification")
@@ -67,6 +68,7 @@ class RunResponse(BaseModel):
 
     metrics: Optional[BacktestMetrics] = Field(None, description="Backtest metrics")
     artifacts: List[Artifact] = Field(default_factory=list, description="Run artifacts")
+    has_factor_artifacts: bool = Field(False, description="Whether the run produced factor-analysis artifacts")
     run_card: Optional[Dict[str, Any]] = Field(None, description="Trust Layer run card payload")
     llm_usage: Optional[Dict[str, Any]] = Field(None, description="Provider-reported AgentLoop usage summary")
 
@@ -76,6 +78,12 @@ class RunResponse(BaseModel):
     artifacts_equity_csv: Optional[List[Dict[str, Any]]] = Field(None, description="Full equity rows")
     artifacts_metrics_csv: Optional[List[Dict[str, Any]]] = Field(None, description="Full metrics rows")
     artifacts_trades_csv: Optional[List[Dict[str, Any]]] = Field(None, description="Full trade rows")
+    artifacts_positions_csv: Optional[List[Dict[str, Any]]] = Field(
+        None, description="Actual post-execution position weights"
+    )
+    artifacts_target_positions_csv: Optional[List[Dict[str, Any]]] = Field(
+        None, description="Optimizer-requested target weights"
+    )
     validation: Optional[Dict[str, Any]] = Field(None, description="Statistical validation results")
     risk_xray: Optional[Dict[str, Any]] = Field(
         None, description="Portfolio risk x-ray payload when the run emitted one"

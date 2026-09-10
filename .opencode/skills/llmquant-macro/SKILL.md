@@ -20,7 +20,7 @@ U.S. macro indicators backed by **FRED** (Federal Reserve Economic Data), no FRE
 
 ## When NOT to use
 
-- **Non-U.S. macro** (China GDP, BoJ rate, ECB) → `vibe-trading-quanta` (akshare / tushare / qveris)
+- **Non-U.S. macro** (China GDP, BoJ rate, ECB) → `vibe-trading-ai` (akshare / tushare / qveris)
 - **Pre-1947 history** → most series start at 1947-01-01 (CPI) or later
 - **Daily macro** (some series are weekly / monthly only) — confirm the `frequency` field
 - **Custom FRED series** outside the ~50 curated → use `qveris` (FRED capability)

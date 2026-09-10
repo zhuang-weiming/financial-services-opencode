@@ -1,4 +1,4 @@
-"""Curated read/write classification for Binance (ccxt) spot operations.
+"""Curated read/write classification for supported Binance ccxt operations.
 
 Keys are the ccxt unified method names this connector uses. Order-mutating ccxt
 calls are pinned WRITE so the live gate never treats them as plain reads;
@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from src.live.classification import ToolClass
 
-#: Binance (ccxt) spot operation read/write catalog.
+#: Binance ccxt operation read/write catalog, including two USD-M signed reads.
 BINANCE_TOOL_CLASS: dict[str, ToolClass] = {
     # READ
     "fetch_balance": ToolClass.READ,
@@ -18,6 +18,9 @@ BINANCE_TOOL_CLASS: dict[str, ToolClass] = {
     "fetch_my_trades": ToolClass.READ,
     "fetch_ticker": ToolClass.READ,
     "fetch_ohlcv": ToolClass.READ,
+    "load_markets": ToolClass.READ,
+    "fapiprivatev2_get_account": ToolClass.READ,
+    "fapiprivatev3_get_positionrisk": ToolClass.READ,
     # WRITE
     "create_order": ToolClass.WRITE,
     "cancel_order": ToolClass.WRITE,

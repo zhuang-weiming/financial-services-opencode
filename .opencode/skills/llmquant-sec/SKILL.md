@@ -25,8 +25,8 @@ Five tools, all read-only.
 
 ## When NOT to use
 
-- **Free deep historical EDGAR XBRL series** → `sec-edgar` (free, no credits, but slower)
-- **Insider trades (Form 4)** → not in `llmquant-data`; use `sec-edgar` or `edgar-sec-filings`
+- **Free deep historical EDGAR XBRL series** → `vibe-trading-sec-edgar` (free, no credits, but slower)
+- **Insider trades (Form 4)** → not in `llmquant-data`; use `vibe-trading-sec-edgar` or `vibe-trading-edgar-sec-filings`
 - **Proxy / DEF 14A / Section 16 specifics** → may be covered; check `sec_filing_browse` first
 - **Private fund / non-13F institutional ownership** → out of scope (only registered investment advisers with $100M+ AUM file 13F)
 
@@ -415,6 +415,6 @@ q2 = sec_filing_read(ticker="GOOG", filing={"filing_type":"10-Q", "year":2025, "
 
 ## See also
 
-- `sec-edgar` skill — for free, no-credit XBRL series and edge cases llmquant-data doesn't cover
+- `vibe-trading-sec-edgar` skill — for free, no-credit XBRL series and edge cases llmquant-data doesn't cover
 - `llmquant-news` — for AI-summarized company announcements (high-signal pre-filter before reading the full 8-K)
 - `llmquant-data` master — for credit / pagination / error handling

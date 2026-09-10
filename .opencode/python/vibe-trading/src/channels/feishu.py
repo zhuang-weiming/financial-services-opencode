@@ -7,12 +7,14 @@ import importlib.util
 import json
 import os
 import re
+import tempfile
 import threading
 import time
 import uuid
 from collections import OrderedDict
 from contextlib import suppress
 from dataclasses import dataclass
+from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
 from pydantic import Field
@@ -21,7 +23,7 @@ from rich.markup import escape
 from rich.panel import Panel
 from rich.text import Text
 
-from src.channels.bus.events import OutboundMessage
+from src.channels.bus.events import DeliveryReceipt, OutboundMessage
 from src.channels.bus.queue import MessageBus
 from src.channels.base import BaseChannel
 from src.channels.utils import get_media_dir
@@ -34,6 +36,80 @@ if TYPE_CHECKING:
 
 FEISHU_AVAILABLE = importlib.util.find_spec("lark_oapi") is not None
 _LOGIN_CONSOLE = Console()
+
+
+def _persist_login_credentials(
+    app_id: str,
+    app_secret: str,
+    domain: str,
+    *,
+    config_path: Path | None = None,
+) -> Path:
+    """Persist Feishu login credentials in the operator JSON config.
+
+    The QR flow creates a bot application and returns its secret only once, so
+    reporting a successful login without durably storing that secret leaves the
+    channel unusable after the CLI process exits.  Write through a private
+    same-directory temporary file and atomically replace the config so readers
+    never observe a partial credential record.
+    """
+    from src.config.loader import _read_config_file
+    from src.config.paths import get_config_path
+
+    path = config_path or get_config_path()
+    if path.suffix.lower() != ".json":
+        raise ValueError(
+            "Feishu QR login requires a JSON agent config; use "
+            "~/.vibe-trading/agent.json"
+        )
+
+    payload: dict[str, Any] = {}
+    if path.exists():
+        payload = _read_config_file(path)
+    channels = payload.setdefault("channels", {})
+    if not isinstance(channels, dict):
+        raise ValueError("agent config 'channels' must be an object")
+    section = channels.setdefault("feishu", {})
+    if not isinstance(section, dict):
+        raise ValueError("agent config 'channels.feishu' must be an object")
+    section.update(
+        {
+            "enabled": True,
+            "app_id": app_id,
+            "app_secret": app_secret,
+            "domain": domain,
+        }
+    )
+
+    path.parent.mkdir(parents=True, exist_ok=True, mode=0o700)
+    content = (json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+    fd, temporary = tempfile.mkstemp(
+        dir=path.parent,
+        prefix=f".{path.name}.",
+        suffix=".tmp",
+    )
+    try:
+        try:
+            with os.fdopen(fd, "wb") as handle:
+                fd = -1
+                handle.write(content)
+                handle.flush()
+                if hasattr(os, "fchmod"):
+                    os.fchmod(handle.fileno(), 0o600)
+                os.fsync(handle.fileno())
+        finally:
+            if fd >= 0:
+                os.close(fd)
+        os.replace(temporary, path)
+    except BaseException:
+        with suppress(OSError):
+            os.unlink(temporary)
+        raise
+    try:
+        os.chmod(path, 0o600)
+    except OSError:
+        pass
+    return path
 
 
 def _load_lark_runtime() -> tuple[Any, str, str]:
@@ -644,18 +720,25 @@ class FeishuChannel(BaseChannel):
         self.config.app_secret = result["app_secret"]
         self.config.domain = result.get("domain", "feishu")
 
-        # Write credentials back to config
-        # VT-TODO: persist feishu credentials via VT config system
+        # Write credentials back to the operator config before claiming login
+        # success. The registration endpoint returns the secret only once.
         try:
-            from src.config.loader import load_agent_config
-            # Credentials stored in-memory on self.config; persist via VT config
-            # when channel config persistence is wired up.
-        except Exception:
-            pass
+            config_path = _persist_login_credentials(
+                self.config.app_id,
+                self.config.app_secret,
+                self.config.domain,
+            )
+        except (OSError, ValueError) as exc:
+            _LOGIN_CONSOLE.print(
+                "[red]Feishu/Lark authorization succeeded, but credentials "
+                f"could not be saved:[/red] {escape(str(exc))}"
+            )
+            return False
 
         _LOGIN_CONSOLE.print("\n[green]Feishu/Lark login complete.[/green]")
         _LOGIN_CONSOLE.print(f"App ID: {escape(result['app_id'])}")
         _LOGIN_CONSOLE.print(f"Domain: {escape(self.config.domain)}")
+        _LOGIN_CONSOLE.print(f"Config: {escape(str(config_path))}")
         return True
 
     @staticmethod
@@ -691,7 +774,7 @@ class FeishuChannel(BaseChannel):
             .app_id(self.config.app_id)
             .app_secret(self.config.app_secret)
             .domain(domain)
-            .log_level(lark.LogLevel.INFO)
+            .log_level(lark.LogLevel.WARNING)
             .build()
         )
         builder = lark.EventDispatcherHandler.builder(
@@ -732,7 +815,7 @@ class FeishuChannel(BaseChannel):
             self.config.app_secret,
             domain=domain,
             event_handler=event_handler,
-            log_level=lark.LogLevel.INFO,
+            log_level=lark.LogLevel.WARNING,
         )
 
         # Start WebSocket client in a separate thread with reconnect loop.
@@ -1958,8 +2041,7 @@ class FeishuChannel(BaseChannel):
     async def send(self, msg: OutboundMessage) -> None:
         """Send a message through Feishu, including media (images/files) if present."""
         if not self._client:
-            self.logger.warning("client not initialized")
-            return
+            raise RuntimeError("Feishu client is not initialized")
 
         try:
             receive_id_type = "chat_id" if msg.chat_id.startswith("oc_") else "open_id"
@@ -2110,6 +2192,63 @@ class FeishuChannel(BaseChannel):
         except Exception:
             self.logger.exception("Error sending message")
             raise
+
+    async def send_with_receipt(self, msg: OutboundMessage) -> DeliveryReceipt:
+        """Send a non-reply message and retain Feishu's provider message id.
+
+        Scheduled briefings use this path. Rich reply/media sends keep the
+        generic adapter contract because Feishu's reply and upload APIs do not
+        expose one uniform receipt shape.
+        """
+        if msg.media or msg.reply_to or msg.metadata:
+            return await super().send_with_receipt(msg)
+        if not self._client:
+            raise RuntimeError("Feishu client is not initialized")
+        content = (msg.content or "").strip()
+        if not content:
+            raise ValueError("Feishu message content must not be empty")
+
+        receive_id_type = "chat_id" if msg.chat_id.startswith("oc_") else "open_id"
+        loop = asyncio.get_running_loop()
+        payloads: list[tuple[str, str]] = []
+        fmt = self._detect_msg_format(content)
+        if fmt == "text":
+            payloads.append(("text", json.dumps({"text": content}, ensure_ascii=False)))
+        elif fmt == "post":
+            payloads.append(("post", self._markdown_to_post(content)))
+        else:
+            elements = self._build_card_elements(content)
+            for chunk in self._split_elements_by_table_limit(elements):
+                payloads.append(
+                    (
+                        "interactive",
+                        json.dumps(
+                            {"config": {"wide_screen_mode": True}, "elements": chunk},
+                            ensure_ascii=False,
+                        ),
+                    )
+                )
+
+        message_ids: list[str] = []
+        for message_type, payload in payloads:
+            message_id = await loop.run_in_executor(
+                None,
+                self._send_message_sync,
+                receive_id_type,
+                msg.chat_id,
+                message_type,
+                payload,
+            )
+            if not message_id:
+                raise RuntimeError(
+                    f"Feishu did not acknowledge {message_type} message delivery"
+                )
+            message_ids.append(message_id)
+        return DeliveryReceipt(
+            status="sent",
+            provider_message_id=message_ids[-1],
+            sent_at=int(time.time() * 1000),
+        )
 
     def _on_message_sync(self, data: Any) -> None:
         """

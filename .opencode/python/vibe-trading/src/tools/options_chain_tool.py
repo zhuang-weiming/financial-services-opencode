@@ -97,12 +97,53 @@ class OptionsChainTool(BaseTool):
         except Exception as exc:  # noqa: BLE001 - surface as error envelope
             return _error(f"yahoo options request failed: {exc}")
 
+        # When the caller explicitly requested an expiration, validate that
+        # Yahoo returned a chain for that exact expiration.  A non-matching
+        # expiration returns an empty or stale chain silently, which is
+        # misleading.  The tool owns the guarantee that its envelope
+        # corresponds to the caller's requested expiration; the Yahoo client
+        # only guarantees raw data.
+        if normalized_expiration is not None:
+            dates = result.get("expirationDates")
+            if not isinstance(dates, list):
+                return _error(
+                    "malformed Yahoo response: expirationDates is not a list"
+                )
+            if normalized_expiration not in dates:
+                return _error(
+                    f"expiration {normalized_expiration} is not among the "
+                    f"available dates; available: {dates[:8]}"
+                    f"{'...' if len(dates) > 8 else ''}"
+                )
+            options = result.get("options") or []
+            if not isinstance(options, list) or not options:
+                # The date IS listed (checked above), so this is Yahoo
+                # returning no chain block for it — not an unlisted ticker.
+                return _error(
+                    f"no option chain returned for expiration "
+                    f"{normalized_expiration} although Yahoo lists that date; "
+                    f"retry, or pick another expiration from: {dates[:8]}"
+                )
+            block = options[0]
+            if not isinstance(block, dict):
+                return _error(
+                    "malformed Yahoo response: options block is not a dict"
+                )
+            block_date = block.get("expirationDate")
+            if block_date != normalized_expiration:
+                return _error(
+                    f"expiration {normalized_expiration} did not match the "
+                    f"returned chain (block expiration is {block_date})"
+                )
+
         return _success(ticker, result)
 
 
 def _coerce_expiration(value: Any) -> Optional[int]:
     """Coerce an epoch-second expiration to ``int``; ``None`` when absent/bad."""
     if value is None:
+        return None
+    if isinstance(value, bool):
         return None
     try:
         return int(value)
@@ -116,7 +157,7 @@ def _success(ticker: str, result: Dict[str, Any]) -> str:
         epoch for epoch in (result.get("expirationDates") or []) if epoch is not None
     ]
     options = result.get("options") or []
-    block = options[0] if options else {}
+    block = options[0] if options and isinstance(options[0], dict) else {}
 
     calls = _contracts(block.get("calls"))
     puts = _contracts(block.get("puts"))

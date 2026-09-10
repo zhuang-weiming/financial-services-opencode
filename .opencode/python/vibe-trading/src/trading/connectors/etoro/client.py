@@ -28,6 +28,12 @@ CONFIG_FILENAME = "etoro.json"
 BASE_URL = "https://public-api.etoro.com"
 PAPER_GUARD = "path_separated_key_bound"
 
+# Market-data routes are profile-neutral (no demo/real path prefix).
+MARKET_DATA_INSTRUMENTS_PATH = "/api/v1/market-data/instruments"
+MARKET_DATA_INSTRUMENT_TYPES_PATH = "/api/v1/market-data/instrument-types"
+MARKET_DATA_RATES_PATH = "/api/v1/market-data/instruments/rates"
+MARKET_DATA_SEARCH_PATH = "/api/v1/market-data/search"
+
 PROFILE_ENVIRONMENTS = {
     "paper": "paper",
     "live-readonly": "live",
@@ -238,8 +244,28 @@ def positions_root(cfg: EtoroConfig) -> str:
     return "/api/v2/trading/demo" if cfg.is_paper else "/api/v2/trading"
 
 
+COPY_TRADING_PAPER_UNSUPPORTED = (
+    "eToro Public API copy trading is not available on demo (paper) accounts. "
+    "Use a live profile (e.g. etoro-live-trade) with a real account."
+)
+
+
 def copy_root(cfg: EtoroConfig) -> str:
-    return "/api/v2/trading/copy/demo" if cfg.is_paper else "/api/v2/trading/copy"
+    """Copy-trading routes share one path for demo and real (no ``/demo`` prefix).
+
+    Every other root above encodes paper/live in the path, which is half of this
+    connector's ``path_separated_key_bound`` guard. Copy has no demo path to
+    encode, so for this one surface the guard has to be a refusal instead: a
+    paper config has no legitimate copy route, and handing it the real one would
+    point demo credentials at a live endpoint. Raising here keeps that
+    structural rather than leaving each call site to remember it.
+
+    Raises:
+        EtoroConfigError: If ``cfg`` targets the demo (paper) environment.
+    """
+    if cfg.is_paper:
+        raise EtoroConfigError(COPY_TRADING_PAPER_UNSUPPORTED)
+    return "/api/v2/trading/copy"
 
 
 class EtoroClient:

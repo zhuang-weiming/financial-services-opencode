@@ -97,6 +97,12 @@ Markdown, in this order:
 4. `## Announcements since last report` — dated, one line each.
 5. `## Reporting after the horizon` — symbol and date only.
 6. `## Data gaps` — always present; write `none` when nothing was missing.
+7. `## Verdict` — the machine-readable tail, and the only section
+   nothing may follow. One line per symbol tracked this run:
+   `- SYMBOL: STATE - one short reason`, with STATE one of `FILED`, `REVISED`, `QUIET`.
+   When nothing moved, write the heading with no lines under it; that
+   is a real answer, not an absence. This section reports state, not
+   advice: the Boundaries above still apply.
 
 ## Boundaries
 

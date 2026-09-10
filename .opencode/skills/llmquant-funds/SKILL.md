@@ -20,7 +20,7 @@ ETF fund identity and full holdings via **SEC N-PORT** (the regulatory snapshot 
 ## When NOT to use
 
 - **ETF prices / intraday bars** → `llmquant-market-data`
-- **Mutual funds (open-end)** → not yet supported by `llmquant-data`; use `morningstar` MCP or `vibe-trading-quanta`
+- **Mutual funds (open-end)** → not yet supported by `llmquant-data`; use `morningstar` MCP or `vibe-trading-ai`
 - **Daily constituent changes** → N-PORT is **quarterly**; for daily holdings use issuer site or `qveris`
 
 ## Tools

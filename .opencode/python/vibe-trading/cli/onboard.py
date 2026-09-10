@@ -129,14 +129,27 @@ def _render_env(values: dict[str, str]) -> str:
 
 
 def _save_partial(values: dict[str, str]) -> None:
-    """Best-effort write to ``.env.partial`` (crash-resilience nicety)."""
+    """Best-effort atomic write to ``.env.partial`` (crash-resilience nicety).
+
+    Mirrors :func:`_finalize`: ``mkstemp`` creates the temp file 0600-only, so
+    the mode is never applied to an already-visible file, and ``replace`` swaps
+    it in atomically. Writing to the destination directly would defeat the whole
+    point of the file — unlinking it first, or truncating it on open, throws away
+    the recovery state this function exists to preserve if the very next write
+    fails.
+    """
     try:
         _env_dir().mkdir(parents=True, exist_ok=True)
-        _partial_path().write_text(_render_env(values), encoding="utf-8")
+        fd, tmp_name = tempfile.mkstemp(prefix=".env.partial.", dir=str(_env_dir()))
         try:
-            _partial_path().chmod(0o600)
-        except OSError:
-            pass
+            with os.fdopen(fd, "w", encoding="utf-8") as handle:
+                handle.write(_render_env(values))
+            Path(tmp_name).replace(_partial_path())
+        finally:
+            try:
+                Path(tmp_name).unlink()
+            except (FileNotFoundError, OSError):
+                pass
     except OSError:
         pass
 

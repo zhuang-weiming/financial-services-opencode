@@ -56,6 +56,10 @@ def place_order(
     clean_type = str(order_type or "market").strip().lower()
     if clean_type not in ("market", "limit"):
         return _order_error(cfg, "order_type must be 'market' or 'limit'", symbol=symbol, side=clean_side)
+    if clean_type == "limit" and limit_price is None:
+        # eToro limit orders are MIT orders keyed on TriggerRate; without one
+        # the order rests untriggered while looking accepted.
+        return _order_error(cfg, "limit orders require limit_price", symbol=symbol, side=clean_side)
 
     try:
         instrument_ref = _order_instrument_ref(symbol, cfg)

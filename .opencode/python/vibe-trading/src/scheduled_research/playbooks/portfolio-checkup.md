@@ -99,6 +99,12 @@ Markdown, in this order:
 5. `## Drawdown` — maximum drawdown, its date range, current distance from
    peak; the same for the benchmark.
 6. `## Data gaps` — always present; write `none` when nothing was missing.
+7. `## Verdict` — the machine-readable tail, and the only section
+   nothing may follow. One line per symbol tracked this run:
+   `- SYMBOL: STATE - one short reason`, with STATE one of `DRIFT`, `FLAT`.
+   When nothing moved, write the heading with no lines under it; that
+   is a real answer, not an absence. This section reports state, not
+   advice: the Boundaries above still apply.
 
 ## Boundaries
 

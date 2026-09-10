@@ -54,8 +54,10 @@ class SignalEngine:
             # Example: Mean-reversion strategy (Avramov & Chordia 2006)
 
             # Compute signal indicator
-            returns = df["close"].pct_change(self.lookback)
-            volatility = df["close"].pct_change().rolling(self.lookback).std()
+            returns = df["close"].pct_change(self.lookback, fill_method=None)
+            volatility = (
+                df["close"].pct_change(fill_method=None).rolling(self.lookback).std()
+            )
 
             # Normalized signal: return / volatility
             normalized = returns / volatility.replace(0, float("nan"))

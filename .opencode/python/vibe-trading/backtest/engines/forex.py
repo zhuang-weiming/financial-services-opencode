@@ -4,7 +4,7 @@ Market rules:
   - 24x5 (Mon Sydney open to Fri NYC close)
   - Spread replaces explicit commission (bid-ask)
   - Leverage: 50:1 to 500:1 (configurable)
-  - Standard lot = 100,000 units of base currency
+  - Standard lot = 100,000 units of base currency (metals differ: see _METAL_SPECS)
   - Swap (overnight rollover interest) at daily close
   - No price limits, no restrictions on direction
   - PnL in quote currency (converted via exit price for cross pairs)
@@ -33,24 +33,57 @@ _SPREAD_PIPS: dict[str, float] = {
     # Exotics (wider spreads)
     "USD/TRY": 15.0, "USD/ZAR": 10.0, "USD/MXN": 8.0,
     "USD/SGD": 3.0, "USD/HKD": 3.0, "USD/CNH": 5.0,
+    # Metals, in that metal's own pips (see _METAL_SPECS). The XAU/USD figure is
+    # the median measured from Dukascopy tick data, 2017-2024 (~$0.32); the rest
+    # are typical retail quotes and should be overridden if you have better data.
+    "XAU/USD": 3.2, "XAG/USD": 2.5, "XPT/USD": 20.0, "XPD/USD": 30.0,
 }
 _DEFAULT_SPREAD_PIPS = 2.0
 
-# Standard lot size
+# Standard lot size (FX pairs)
 STANDARD_LOT = 100_000
+
+# ── Metals quote and size differently from FX pairs ──
+#
+# XAU/USD is not a 0.0001-pip, 100,000-unit instrument: one pip is $0.10 and one
+# standard lot is 100 ounces. Treating it as a generic FX pair understates the
+# spread by ~1000x and rounds any position under 1,000 oz down to zero.
+#
+# base -> (pip size in price terms, units per standard lot)
+_METAL_SPECS: dict[str, tuple[float, float]] = {
+    "XAU": (0.10, 100.0),      # gold: 1 lot = 100 troy oz
+    "XAG": (0.01, 5_000.0),    # silver: 1 lot = 5,000 troy oz
+    "XPT": (0.10, 100.0),      # platinum
+    "XPD": (0.10, 100.0),      # palladium
+}
+
+
+def _metal_base(symbol: str) -> str | None:
+    """Return the metal code ('XAU', ...) if this is a metal pair, else None."""
+    base = (symbol.split("/")[0] if "/" in symbol else symbol[:3]).upper()
+    return base if base in _METAL_SPECS else None
 
 
 def _pip_value(symbol: str) -> float:
     """Size of 1 pip for the pair.
 
     Args:
-        symbol: Forex pair (e.g. 'EUR/USD', 'USD/JPY').
+        symbol: Forex pair (e.g. 'EUR/USD', 'USD/JPY', 'XAU/USD').
 
     Returns:
-        1 pip in price terms (0.0001 or 0.01 for JPY pairs).
+        1 pip in price terms (0.0001, 0.01 for JPY pairs, or the metal's pip).
     """
+    metal = _metal_base(symbol)
+    if metal is not None:
+        return _METAL_SPECS[metal][0]
     quote = symbol.split("/")[1] if "/" in symbol else symbol[3:6]
     return 0.01 if quote.upper() == "JPY" else 0.0001
+
+
+def _lot_units(symbol: str, default: float = STANDARD_LOT) -> float:
+    """Units in one standard lot: 100,000 for FX, 100 oz for gold, etc."""
+    metal = _metal_base(symbol)
+    return _METAL_SPECS[metal][1] if metal is not None else default
 
 
 class ForexEngine(BaseEngine):
@@ -78,12 +111,17 @@ class ForexEngine(BaseEngine):
         return True
 
     def round_size(self, raw_size: float, price: float) -> float:
-        """Round to micro-lot granularity (0.01 lots = 1000 units).
+        """Round to micro-lot granularity (0.01 lots).
 
-        Position size is in currency units (not lots) for PnL compatibility.
-        Round to nearest 1000 units (micro lot).
+        Position size is in units of the base asset (not lots) for PnL
+        compatibility. A micro lot is 1/100th of a standard lot, which is 1,000
+        units for FX and 1 troy ounce for gold — rounding gold to the FX
+        granularity would silently discard every position under 1,000 oz.
         """
-        return max(int(raw_size / 1000) * 1000, 0)
+        micro = _lot_units(_normalize_symbol(self._active_symbol), self.lot_size) / 100.0
+        if micro <= 0:
+            return max(raw_size, 0.0)
+        return max(int(raw_size / micro) * micro, 0.0)
 
     def calc_commission(self, size: float, price: float, _direction: int, is_open: bool) -> float:
         """Forex: spread is the cost, embedded in slippage. No explicit commission.
@@ -127,7 +165,7 @@ class ForexEngine(BaseEngine):
             return
         swap = calc_forex_swap(
             symbol, timestamp, self.positions,
-            self.lot_size, self._last_swap_dates,
+            _lot_units(_normalize_symbol(symbol), self.lot_size), self._last_swap_dates,
         )
         self.capital += swap
 

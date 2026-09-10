@@ -118,7 +118,13 @@ class DataLoader:
     """Tushare-backed OHLCV loader."""
 
     name = "tushare"
-    markets = {"a_share", "hk_equity", "futures", "fund"}
+    # ``futures`` is deliberately absent (HKUDS/Vibe-Trading#1395). Serving it
+    # needs ``pro.fut_daily``, which sits behind a points tier nothing here
+    # implements; until then a futures ts_code reached the ``else`` branch of
+    # ``_fetch_daily_frame`` and was priced off ``daily()``, the A-share
+    # equity endpoint. Declaring a market whose only path is another market's
+    # endpoint is worse than not declaring it.
+    markets = {"a_share", "hk_equity", "fund"}
     # Tushare daily() documents vol in board lots (HKUDS/Vibe-Trading#1062).
     # hk_equity (hk_daily) stays undeclared until empirically verified.
     volume_units = {"a_share": "lots"}

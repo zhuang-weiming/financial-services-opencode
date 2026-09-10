@@ -1,4 +1,4 @@
-"""Built-in Binance (spot) connector profiles.
+"""Built-in Binance connector profiles.
 
 Read-only paper (testnet) and live profiles plus order-placing paper and live
 profiles. Paper and live use different key pairs and different hosts, so they
@@ -29,13 +29,17 @@ BINANCE_PROFILES: tuple[TradingProfile, ...] = (
     TradingProfile(
         id="binance-live-sdk-readonly",
         connector="binance",
-        label="Binance Spot Live · ccxt Read-Only",
+        label="Binance Live · ccxt Read-Only",
         environment="live",
         transport="broker_sdk",
         capabilities=READ_CAPABILITIES,
         readonly=True,
         config={"profile": "live-readonly"},
-        notes="Reads a Binance spot live account only (api.binance.com). Order placement is not exposed in this profile.",
+        notes=(
+            "Reads a Binance spot live account (api.binance.com). Account and "
+            "position reads may explicitly select USD-M Shadow Account mode "
+            "(fapi.binance.com); that mode exposes no order or market-data surface."
+        ),
     ),
     TradingProfile(
         id="binance-paper-trade",

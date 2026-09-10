@@ -63,6 +63,16 @@ def _parse_env_bool(v: Any) -> Any:
 EnvBool = Annotated[bool, BeforeValidator(_parse_env_bool)]
 
 
+def _parse_responses_api_bool(v: Any) -> Any:
+    """Enable Responses transport only for the documented literal ``true``."""
+    if isinstance(v, str):
+        return v.strip() == "true"
+    return v
+
+
+ResponsesApiBool = Annotated[bool, BeforeValidator(_parse_responses_api_bool)]
+
+
 # ---------------------------------------------------------------------------
 # Base class
 # ---------------------------------------------------------------------------
@@ -129,10 +139,18 @@ class LLMConfig(_EnvBase):
     langchain_provider: str = Field(alias="LANGCHAIN_PROVIDER", default="openai")
     langchain_model_name: str = Field(alias="LANGCHAIN_MODEL_NAME", default="")
     langchain_temperature: float = Field(alias="LANGCHAIN_TEMPERATURE", default=0.0)
+    # The native Anthropic credential. Read through bare ``os.getenv`` in
+    # ``llm.py``, which left it out of this schema — so ``provider doctor`` and
+    # preflight could not tell a missing key from a working one and the failure
+    # surfaced as an opaque 401 at the first call instead (#1223).
+    anthropic_api_key: str = Field(alias="ANTHROPIC_API_KEY", default="")
     anthropic_max_tokens: int | None = Field(alias="ANTHROPIC_MAX_TOKENS", default=None, gt=0)
     timeout_seconds: int = Field(alias="TIMEOUT_SECONDS", default=120)
     max_retries: int = Field(alias="MAX_RETRIES", default=2)
     langchain_reasoning_effort: str = Field(alias="LANGCHAIN_REASONING_EFFORT", default="")
+    langchain_use_responses_api: ResponsesApiBool | None = Field(
+        alias="LANGCHAIN_USE_RESPONSES_API", default=None
+    )
     vibe_trading_deepseek_adapter: str = Field(alias="VIBE_TRADING_DEEPSEEK_ADAPTER", default="auto")
     moonshot_user_agent: str = Field(alias="MOONSHOT_USER_AGENT", default="")
     openai_codex_base_url: str = Field(
@@ -142,6 +160,9 @@ class LLMConfig(_EnvBase):
     openai_model: str = Field(alias="OPENAI_MODEL", default="")
     vibe_trading_disable_http_proxy: EnvBool = Field(
         alias="VIBE_TRADING_DISABLE_HTTP_PROXY", default=False,
+    )
+    vibe_trading_anthropic_prompt_cache: EnvBool = Field(
+        alias="VIBE_TRADING_ANTHROPIC_PROMPT_CACHE", default=True,
     )
 
 
@@ -188,6 +209,9 @@ class DataConfig(_EnvBase):
     aliyun_iqs_api_key: str = Field(alias="ALIYUN_IQS_API_KEY", default="")
     qveris_api_key: str = Field(alias="QVERIS_API_KEY", default="")
     qveris_base_url: str = Field(alias="QVERIS_BASE_URL", default="")
+    tickerall_api_key: str = Field(alias="TICKERALL_API_KEY", default="")
+    tickerall_account_id: str = Field(alias="TICKERALL_ACCOUNT_ID", default="")
+    tickerall_base_url: str = Field(alias="TICKERALL_BASE_URL", default="")
     rsshub_base_url: str = Field(alias="RSSHUB_BASE_URL", default="")
     dashscope_api_key: str = Field(alias="DASHSCOPE_API_KEY", default="")
     longbridge_app_key: str = Field(alias="LONGBRIDGE_APP_KEY", default="")
@@ -195,6 +219,24 @@ class DataConfig(_EnvBase):
     longbridge_access_token: str = Field(alias="LONGBRIDGE_ACCESS_TOKEN", default="")
     etoro_api_key: str = Field(alias="ETORO_API_KEY", default="")
     etoro_user_key: str = Field(alias="ETORO_USER_KEY", default="")
+    # Per-market source-order overrides (Settings page "source priority").
+    # Value: comma-separated permutation of the market's default chain, e.g.
+    # MARKET_DATA_ORDER_A_SHARE=tushare,tencent,mootdx,... Applied by
+    # backtest.loaders.registry.refresh_source_order_overrides() (which reads
+    # os.getenv directly); declared here for visibility/validation parity.
+    market_data_order_a_share: str = Field(alias="MARKET_DATA_ORDER_A_SHARE", default="")
+    market_data_order_us_equity: str = Field(alias="MARKET_DATA_ORDER_US_EQUITY", default="")
+    market_data_order_hk_equity: str = Field(alias="MARKET_DATA_ORDER_HK_EQUITY", default="")
+    market_data_order_india_equity: str = Field(alias="MARKET_DATA_ORDER_INDIA_EQUITY", default="")
+    market_data_order_kr_equity: str = Field(alias="MARKET_DATA_ORDER_KR_EQUITY", default="")
+    market_data_order_ca_equity: str = Field(alias="MARKET_DATA_ORDER_CA_EQUITY", default="")
+    market_data_order_vietnam_equity: str = Field(alias="MARKET_DATA_ORDER_VIETNAM_EQUITY", default="")
+    market_data_order_crypto: str = Field(alias="MARKET_DATA_ORDER_CRYPTO", default="")
+    market_data_order_futures: str = Field(alias="MARKET_DATA_ORDER_FUTURES", default="")
+    market_data_order_fund: str = Field(alias="MARKET_DATA_ORDER_FUND", default="")
+    market_data_order_macro: str = Field(alias="MARKET_DATA_ORDER_MACRO", default="")
+    market_data_order_forex: str = Field(alias="MARKET_DATA_ORDER_FOREX", default="")
+    market_data_order_index: str = Field(alias="MARKET_DATA_ORDER_INDEX", default="")
 
 
 # ---------------------------------------------------------------------------
@@ -312,7 +354,30 @@ class SwarmConfig(_EnvBase):
     swarm_timeout: int = Field(alias="SWARM_TIMEOUT", default=1800)
     swarm_heartbeat_interval_s: float = Field(alias="SWARM_HEARTBEAT_INTERVAL_S", default=3.0)
     swarm_stream_retry_delay_s: float = Field(alias="SWARM_STREAM_RETRY_DELAY_S", default=1.0)
+    swarm_stream_retry_max_delay_s: float = Field(
+        alias="SWARM_STREAM_RETRY_MAX_DELAY_S", default=30.0, ge=0
+    )
+    swarm_worker_retry_base_delay_s: float = Field(
+        alias="SWARM_WORKER_RETRY_BASE_DELAY_S", default=1.0, ge=0
+    )
+    swarm_worker_retry_max_delay_s: float = Field(
+        alias="SWARM_WORKER_RETRY_MAX_DELAY_S", default=30.0, ge=0
+    )
     swarm_grounding_max_symbols: int = Field(alias="SWARM_GROUNDING_MAX_SYMBOLS", default=8)
+
+    @model_validator(mode="after")
+    def _validate_retry_delays(self) -> SwarmConfig:
+        if self.swarm_worker_retry_max_delay_s < self.swarm_worker_retry_base_delay_s:
+            raise ValueError(
+                "SWARM_WORKER_RETRY_MAX_DELAY_S must be greater than or equal to "
+                "SWARM_WORKER_RETRY_BASE_DELAY_S"
+            )
+        if self.swarm_stream_retry_max_delay_s < self.swarm_stream_retry_delay_s:
+            raise ValueError(
+                "SWARM_STREAM_RETRY_MAX_DELAY_S must be greater than or equal to "
+                "SWARM_STREAM_RETRY_DELAY_S"
+            )
+        return self
 
 
 # ---------------------------------------------------------------------------
@@ -335,8 +400,17 @@ class AgentTuningConfig(_EnvBase):
         alias="VT_REASONING_DELTA_MIN_INTERVAL_S", default=1.0,
     )
     vt_stream_retry_delay_s: float = Field(alias="VT_STREAM_RETRY_DELAY_S", default=1.0)
+    vt_stream_retry_max_delay_s: float = Field(
+        alias="VT_STREAM_RETRY_MAX_DELAY_S", default=30.0, ge=0
+    )
     vibe_trading_tool_timeout_seconds: float = Field(
         alias="VIBE_TRADING_TOOL_TIMEOUT_SECONDS", default=1800.0,
+    )
+    vibe_trading_llm_timeout_seconds: float = Field(
+        alias="VIBE_TRADING_LLM_TIMEOUT_SECONDS", default=300.0,
+    )
+    vibe_trading_run_stall_timeout_seconds: float = Field(
+        alias="VIBE_TRADING_RUN_STALL_TIMEOUT_SECONDS", default=1800.0,
     )
     vibe_trading_goal_max_continuations: int = Field(
         alias="VIBE_TRADING_GOAL_MAX_CONTINUATIONS", default=3,
@@ -350,6 +424,9 @@ class AgentTuningConfig(_EnvBase):
     )
     vibe_trading_enable_scheduler: EnvBool = Field(
         alias="VIBE_TRADING_ENABLE_SCHEDULER", default=False,
+    )
+    vibe_contextual_identity_constraints: EnvBool = Field(
+        alias="VIBE_CONTEXTUAL_IDENTITY_CONSTRAINTS", default=True,
     )
     vibe_trading_scheduler_max_consecutive_failures: int = Field(
         alias="VIBE_TRADING_SCHEDULER_MAX_CONSECUTIVE_FAILURES", default=3,
@@ -376,6 +453,15 @@ class AgentTuningConfig(_EnvBase):
         alias="VIBE_LIVE_AUTHORIZE_TIMEOUT_SECONDS", default=300,
     )
 
+    @model_validator(mode="after")
+    def _validate_stream_retry_delays(self) -> AgentTuningConfig:
+        if self.vt_stream_retry_max_delay_s < self.vt_stream_retry_delay_s:
+            raise ValueError(
+                "VT_STREAM_RETRY_MAX_DELAY_S must be greater than or equal to "
+                "VT_STREAM_RETRY_DELAY_S"
+            )
+        return self
+
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -400,6 +486,9 @@ class PathConfig(_EnvBase):
     vibe_goal_session_id: str = Field(alias="VIBE_GOAL_SESSION_ID", default="")
     vibe_trading_strategy_store_db_path: str = Field(
         alias="VIBE_TRADING_STRATEGY_STORE_DB_PATH", default="",
+    )
+    vibe_trading_strategy_discovery_db_path: str = Field(
+        alias="VIBE_TRADING_STRATEGY_DISCOVERY_DB_PATH", default="",
     )
 
 

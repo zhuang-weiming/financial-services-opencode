@@ -61,7 +61,7 @@ def compute(panel: dict) -> pd.DataFrame:
     close = panel["close"]
     volume = panel["volume"]
     adv20 = ts_mean(volume, 20)
-    returns = close.pct_change()
+    returns = close.pct_change(fill_method=None)
     # Helper aliases (local closures keep the file standalone & purity-safe).
     rolling_sum = _rolling_sum
     out = (-1.0 * rank(delta(close, 7) * (1.0 - rank(decay_linear(safe_div(volume, adv20), 9))))) * (1.0 + rank(rolling_sum(returns, 250)))

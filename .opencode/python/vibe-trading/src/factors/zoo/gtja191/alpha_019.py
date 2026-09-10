@@ -54,4 +54,7 @@ def compute(panel: dict) -> pd.DataFrame:
     out = pd.DataFrame(np.where(dn, safe_div(diff, pc).to_numpy(),
                                 np.where(up, safe_div(diff, c).to_numpy(), 0.0)),
                        index=c.index, columns=c.columns)
-    return out
+    # NaN comparisons are False, not NaN, so a missing close or prior
+    # close (warmup, or a halt) reads exactly like a real tie and gets
+    # the fabricated 0.0 above instead of NaN.
+    return out.where(c.notna() & pc.notna())

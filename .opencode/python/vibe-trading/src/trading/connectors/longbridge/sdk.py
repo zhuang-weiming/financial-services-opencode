@@ -341,6 +341,26 @@ def get_positions(config: LongbridgeConfig | None = None) -> dict[str, Any]:
     return {"status": "ok", "profile": cfg.profile, "paper_guard": "config_declared", "positions": rows}
 
 
+def get_account_and_positions(config: LongbridgeConfig | None = None) -> dict[str, Any]:
+    """Fetch account balances and positions through one native trade context."""
+    cfg = config or build_config()
+    trade = _trade_context(cfg)
+    balances = [_balance_to_dict(item) for item in _as_iter(_call(trade, "account_balance"))]
+    positions = [
+        _position_to_dict(item)
+        for item in _iter_positions(_call(trade, "stock_positions"))
+    ]
+    common = {
+        "status": "ok",
+        "profile": cfg.profile,
+        "paper_guard": "config_declared",
+    }
+    return {
+        "account": {**common, "balances": balances},
+        "positions": {**common, "positions": positions},
+    }
+
+
 #: Longbridge OrderStatus values that mean the order is no longer live (bare
 #: member names). Used to filter ``today_orders`` (which returns ALL of today's
 #: orders) down to the genuinely-open ones, so ``open_orders`` matches the other
@@ -404,6 +424,17 @@ def get_quote(symbol: str, *, config: LongbridgeConfig | None = None, **_: Any) 
     if ask is not None:
         payload["ask"] = ask
     return {"status": "ok", "symbol": clean, "quote": payload}
+
+
+def get_quotes(symbols: list[str], *, config: LongbridgeConfig | None = None) -> dict[str, Any]:
+    """Fetch last-price snapshots for several symbols using one SDK context."""
+    cfg = config or build_config()
+    clean = list(dict.fromkeys(symbol.strip().upper() for symbol in symbols if symbol.strip()))
+    if not clean:
+        return {"status": "ok", "quotes": []}
+    quote_ctx = _quote_context(cfg)
+    quotes = _call(quote_ctx, "quote", clean)
+    return {"status": "ok", "quotes": [_quote_to_dict(item) for item in _as_iter(quotes)]}
 
 
 def get_historical_bars(

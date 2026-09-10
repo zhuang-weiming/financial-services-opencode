@@ -71,7 +71,7 @@ def _delay(df: pd.DataFrame, n: int) -> pd.DataFrame:
 def compute(panel: dict) -> pd.DataFrame:
     """Compute the alpha on the OHLCV+ panel and return a wide DataFrame."""
     close = panel["close"]
-    returns = close.pct_change()
+    returns = close.pct_change(fill_method=None)
     # Helper aliases (local closures keep the file standalone & purity-safe).
     rolling_sum = _rolling_sum
     rolling_prod = _rolling_prod

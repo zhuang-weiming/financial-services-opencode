@@ -43,7 +43,11 @@ _DEFAULT_DB_PATH = Path.home() / ".vibe-trading" / "strategy_store.db"
 # the migration itself is idempotent via a column-existence check so it is
 # safe to run unconditionally on every open regardless of the stamped
 # version (covers DBs that were hand-edited or partially migrated).
-_SCHEMA_VERSION_GOVERNANCE = 2
+# Schema version 3 adds ``derived_from`` on ``artifacts``.
+_SCHEMA_VERSION_ADAPTATION = 3
+_ADAPTATION_COLUMNS: dict[str, str] = {
+    "derived_from": "TEXT",
+}
 
 # column_name -> DDL type/default fragment used by ALTER TABLE ADD COLUMN.
 _GOVERNANCE_COLUMNS: dict[str, str] = {
@@ -173,6 +177,7 @@ class SqliteStrategyStore:
                     signal_engine_path TEXT,
                     run_dir         TEXT,
                     hypothesis_id   TEXT,
+                    derived_from    TEXT,
                     status          TEXT NOT NULL DEFAULT 'created'
                                     CHECK(status IN (
                                         'created','benching','active',
@@ -239,24 +244,23 @@ class SqliteStrategyStore:
             )
             if self._conn.execute("PRAGMA user_version").fetchone()[0] < 1:
                 self._conn.execute("PRAGMA user_version=1")
-            self._migrate_governance_columns()
-            if self._conn.execute("PRAGMA user_version").fetchone()[0] < _SCHEMA_VERSION_GOVERNANCE:
-                self._conn.execute(f"PRAGMA user_version={_SCHEMA_VERSION_GOVERNANCE}")
+            self._migrate_artifact_columns()
+            version = self._conn.execute("PRAGMA user_version").fetchone()[0]
+            if version < _SCHEMA_VERSION_ADAPTATION:
+                self._conn.execute(f"PRAGMA user_version={_SCHEMA_VERSION_ADAPTATION}")
             self._conn.commit()
 
-    def _migrate_governance_columns(self) -> None:
-        """Add model-governance columns to ``artifacts`` if missing.
+    def _migrate_artifact_columns(self) -> None:
+        """Add optional ``artifacts`` columns if missing.
 
-        Idempotent: checks ``PRAGMA table_info`` for each column before
-        issuing ``ALTER TABLE ADD COLUMN``, so it is safe to call on every
-        connection open — including against a pre-governance database that
-        predates this migration (the primary backward-compatibility path)
-        and against re-running this exact method twice in the same process.
+        Idempotent: checks ``PRAGMA table_info`` before each
+        ``ALTER TABLE ADD COLUMN``.
         """
         existing_columns = {
             row["name"] for row in self._conn.execute("PRAGMA table_info(artifacts)")
         }
-        for column, ddl in _GOVERNANCE_COLUMNS.items():
+        extra = {**_GOVERNANCE_COLUMNS, **_ADAPTATION_COLUMNS}
+        for column, ddl in extra.items():
             if column not in existing_columns:
                 self._conn.execute(f"ALTER TABLE artifacts ADD COLUMN {column} {ddl}")
 
@@ -297,6 +301,7 @@ class SqliteStrategyStore:
             signal_engine_path=row["signal_engine_path"],
             run_dir=row["run_dir"],
             hypothesis_id=row["hypothesis_id"],
+            derived_from=row["derived_from"],
             status=ArtifactStatus(row["status"]),
             created_at=row["created_at"],
             updated_at=row["updated_at"],
@@ -386,13 +391,13 @@ class SqliteStrategyStore:
                         id, type, name, source_paper, source_url, formula_latex,
                         theme, columns_required, decay_horizon, signal_definition,
                         entry_rules, exit_rules, position_sizing, universe,
-                        signal_engine_path, run_dir, hypothesis_id, status,
+                        signal_engine_path, run_dir, hypothesis_id, derived_from, status,
                         created_at, updated_at, disabled_at, disabled_reason,
                         developer, owner, validator, approver, model_version,
                         artifact_version, model_tier, intended_use, limitations,
                         validation_status, validation_date
                     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
-                              ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                              ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                     """,
                     (
                         artifact_id,
@@ -412,6 +417,7 @@ class SqliteStrategyStore:
                         artifact.signal_engine_path,
                         artifact.run_dir,
                         artifact.hypothesis_id,
+                        artifact.derived_from,
                         artifact.status.value,
                         created_at,
                         now,
@@ -475,7 +481,7 @@ class SqliteStrategyStore:
             where = "WHERE " + " AND ".join(clauses)
 
         rows = self._conn.execute(
-            f"SELECT * FROM artifacts {where} ORDER BY created_at DESC LIMIT ?",
+            f"SELECT * FROM artifacts {where} ORDER BY created_at DESC, rowid DESC LIMIT ?",
             [*params, limit],
         ).fetchall()
         return [self._row_to_artifact(row) for row in rows]
@@ -548,7 +554,7 @@ class SqliteStrategyStore:
                     decay_horizon = ?, signal_definition = ?,
                     entry_rules = ?, exit_rules = ?, position_sizing = ?,
                     universe = ?, signal_engine_path = ?, run_dir = ?,
-                    hypothesis_id = ?, status = ?, updated_at = ?,
+                    hypothesis_id = ?, derived_from = ?, status = ?, updated_at = ?,
                     disabled_at = ?, disabled_reason = ?,
                     developer = ?, owner = ?, validator = ?, approver = ?,
                     model_version = ?, artifact_version = ?, model_tier = ?,
@@ -573,6 +579,7 @@ class SqliteStrategyStore:
                     artifact.signal_engine_path,
                     artifact.run_dir,
                     artifact.hypothesis_id,
+                    artifact.derived_from,
                     artifact.status.value,
                     now,
                     artifact.disabled_at,
@@ -645,7 +652,7 @@ class SqliteStrategyStore:
             """
             SELECT * FROM bench_history
             WHERE artifact_id = ?
-            ORDER BY created_at DESC
+            ORDER BY created_at DESC, id DESC
             LIMIT ?
             """,
             (artifact_id, limit),
@@ -693,7 +700,7 @@ class SqliteStrategyStore:
             """
             SELECT * FROM decay_snapshots
             WHERE artifact_id = ?
-            ORDER BY created_at DESC
+            ORDER BY created_at DESC, id DESC
             LIMIT ?
             """,
             (artifact_id, limit),

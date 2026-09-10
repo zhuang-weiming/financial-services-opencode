@@ -125,7 +125,7 @@ for p in papers:
 
 ## See also
 
-- `sec-edgar` (skill) — for SEC filings, not academic papers
+- `vibe-trading-sec-edgar` (skill) — for SEC filings, not academic papers
 - Web search (DDG) — for non-arxiv papers / NBER / SSRN
 
 ---

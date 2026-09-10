@@ -84,7 +84,7 @@ V21.0 报告的 DSR = 1.000，但我想自己重新跑一遍，
 
 Please:
 1) 加载 skill: skill("alpha-engine-v21")
-2) 用 statistical_tests.py 调用 vibe_trading_quanta.backtest.validation.deflated_sharpe_ratio()
+2) 用 statistical_tests.py 调用 src.quantlib.multipletesting.deflated_sharpe_ratio()
 3) 用 v21_authoritative_results.json 的月度收益序列作为输入
 4) 扫描 n_configs ∈ {1, 5, 10, 50, 100, 500, 1000}
 5) 报告每个 n_configs 对应的：

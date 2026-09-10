@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import logging
+from datetime import datetime, timedelta
 from typing import Any
 
 from backtest.loaders._http import (
@@ -64,7 +65,10 @@ class ResearchReportsTool(BaseTool):
         "each broker's per-year EPS and PE forecasts from Eastmoney, plus the "
         "market consensus (mean) EPS forecast per forward fiscal year from THS "
         "(同花顺). Markets: China A-shares only (.SH / .SZ / .BJ). "
-        'Example: {"code": "600519.SH", "limit": 10}.'
+        "Reports are filtered to the [beginTime, endTime] window (both optional, "
+        "defaulting to the trailing two years). "
+        'Example: {"code": "600519.SH", "limit": 10, '
+        '"beginTime": "20240101", "endTime": "20261231"}.'
     )
     parameters = {
         "type": "object",
@@ -84,6 +88,22 @@ class ResearchReportsTool(BaseTool):
                 ),
                 "default": _DEFAULT_LIMIT,
             },
+            "beginTime": {
+                "type": "string",
+                "description": (
+                    "Earliest report publish date (inclusive) to include, as "
+                    "'YYYYMMDD' (e.g. '20240101'). Optional; defaults to the "
+                    "beginning of the trailing two-year window. Must not be "
+                    "later than 'endTime'."
+                ),
+            },
+            "endTime": {
+                "type": "string",
+                "description": (
+                    "Latest report publish date (inclusive) to include, as "
+                    "'YYYYMMDD' (e.g. '20261231'). Optional; defaults to today."
+                ),
+            },
         },
         "required": ["code"],
     }
@@ -92,8 +112,10 @@ class ResearchReportsTool(BaseTool):
         """Resolve the symbol, fetch reports + consensus, return a JSON envelope.
 
         Args:
-            **kwargs: ``code`` (required A-share symbol) and optional ``limit``
-                (report count cap).
+            **kwargs: ``code`` (required A-share symbol); optional ``limit``
+                (report count cap); optional ``beginTime`` / ``endTime`` as
+                'YYYYMMDD' strings bounding the report publish-date window
+                (defaults to the trailing two years).
 
         Returns:
             A JSON string envelope. On success:
@@ -115,12 +137,37 @@ class ResearchReportsTool(BaseTool):
             return _error(f"could not resolve A-share symbol '{code}'")
 
         limit = _clamp_limit(kwargs.get("limit", _DEFAULT_LIMIT))
+        now = datetime.now()
+        default_end = now
+        default_begin = now - timedelta(days=730)
+        begin_time = _parse_date_param(kwargs.get("beginTime"), default_begin)
+        end_time = _parse_date_param(kwargs.get("endTime"), default_end)
+        if begin_time is None or end_time is None:
+            return _error(
+                "'beginTime'/'endTime' must be valid 'YYYYMMDD' strings"
+                + " (e.g. '20240101') when provided"
+            )
+        # A reversed window is answered by Eastmoney with HTTP 200 and zero hits,
+        # which this tool would then report as "no research coverage" — a false
+        # statement about the company rather than about the request.
+        if begin_time > end_time:
+            return _error(
+                f"'beginTime' ({begin_time:%Y%m%d}) must not be later than 'endTime' "
+                f"({end_time:%Y%m%d}); a reversed window returns zero reports and "
+                "would be indistinguishable from genuinely missing coverage"
+            )
 
         try:
+            # Eastmoney's reportapi expects the bare numeric ``code`` together
+            # with a mandatory [beginTime, endTime] window in %Y%m%d form;
+            # omitting the window yields HTTP 400 ("Required String parameter
+            # 'beginTime' is not present"). Default window is the last two years.
             payload = get_json(
                 _REPORT_LIST_URL,
                 params={
                     "code": _bare_code(code),
+                    "beginTime": begin_time.strftime("%Y%m%d"),
+                    "endTime": end_time.strftime("%Y%m%d"),
                     "qType": "0",
                     "pageSize": str(limit),
                     "pageNo": "1",
@@ -155,6 +202,27 @@ class ResearchReportsTool(BaseTool):
 def _bare_code(code: str) -> str:
     """Return the numeric stock code without its exchange suffix."""
     return code.rpartition(".")[0]
+
+
+def _parse_date_param(value: Any, default: datetime) -> datetime | None:
+    """Parse an optional 'YYYYMMDD' date param, falling back to ``default``.
+
+    Args:
+        value: A ``None`` (use ``default``) or a 'YYYYMMDD' string.
+        default: The ``datetime`` to return when ``value`` is ``None``.
+
+    Returns:
+        A ``datetime`` for the given value, ``default`` when ``value`` is
+        ``None``, or ``None`` when a provided value is not a valid 'YYYYMMDD'.
+    """
+    if value is None:
+        return default
+    if not isinstance(value, str):
+        return None
+    try:
+        return datetime.strptime(value.strip(), "%Y%m%d")
+    except ValueError:
+        return None
 
 
 def _clamp_limit(value: Any) -> int:

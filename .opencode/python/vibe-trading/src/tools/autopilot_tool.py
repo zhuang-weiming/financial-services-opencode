@@ -627,11 +627,16 @@ class LinkAutopilotBacktestTool(BaseTool):
                 metrics = {}
                 warning = "run_card.json had no 'metrics' object; linked with empty metrics"
 
+            validation = card.get("validation") if isinstance(card, dict) else None
+            if not isinstance(validation, dict):
+                validation = None
+
             try:
                 hypothesis = HypothesisRegistry().link_backtest(
                     hypothesis_id,
                     backtest_run_dir=str(run_path),
                     metrics=metrics,
+                    validation=validation,
                     notes=str(kwargs.get("notes", "")),
                 )
             except KeyError:
@@ -658,6 +663,8 @@ class LinkAutopilotBacktestTool(BaseTool):
                     "then record_evidence / add_goal_evidence to close the loop."
                 ),
             }
+            if validation is not None:
+                payload["validation"] = validation
             if warning:
                 payload["warning"] = warning
             return _ok(payload)

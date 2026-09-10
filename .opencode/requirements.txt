@@ -14,16 +14,21 @@ fastapi==0.136.1
 uvicorn==0.47.0
 mcp==1.27.1
 pydantic-settings==2.14.1
-# vibe-trading-quanta dependencies
+# vibe-trading-ai dependencies (vendored quant engine + agent tree)
 scipy==1.15.2
 scikit-learn==1.7.1
 statsmodels==0.14.4
 python-dotenv==1.1.0
 duckdb==1.2.1
 pyarrow==20.0.0
-# Optional: uncomment for specific loaders
-# tushare>=1.4
-# yfinance>=0.2
-# akshare>=1.16
-# ccxt>=4.4
-# finnhub-python>=2.4
+# Data-loader backends (free, no API key; installed so the agent runs with zero delay)
+tushare>=1.4          # A-share premium (TUSHARE_TOKEN optional)
+yfinance>=0.2         # US/HK/CA/IN/KR/VN/UK equities
+akshare>=1.16         # A-share / futures / macro
+mootdx>=0.11          # A-share TDX TCP (never IP-banned)
+baostock>=0.9         # A-share free daily/min
+pykrx>=1.2            # Korea (KRX) daily bars
+# Optional (token-gated / heavier): uncomment only if needed
+# ccxt>=4.4           # crypto 100+ exchanges (fallback to OKX)
+# finnhub-python>=2.4 # premium US (FINNHUB_API_KEY)
+

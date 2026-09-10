@@ -297,6 +297,28 @@ class MemoryLifecycle:
         # Rebuild index after removal
         self._memory._rebuild_index()
 
+        # An archived/deleted entry no longer appears in _scan_entries(), so
+        # a stale FTS row or semantic link left behind here is unreachable by
+        # id lookup but still ranks in search results, silently displacing a
+        # real match that PersistentMemory.remove()/remove_entry() would not.
+        from src.config.accessor import get_env_config
+
+        if get_env_config().memory.fts_index_enabled:
+            try:
+                from src.memory.search_index import get_shared_index
+
+                get_shared_index().remove_entry(entry.id)
+            except Exception:
+                logger.debug("FTS5 remove_entry failed for %s", entry.title, exc_info=True)
+
+        if get_env_config().memory.links_enabled:
+            try:
+                from src.memory.semantic_links import SemanticLinker
+
+                SemanticLinker(self.memory_dir).remove_relations(entry.path)
+            except Exception:
+                logger.debug("Failed to remove relations for %s", entry.path, exc_info=True)
+
     def _append_gc_log(self, actions: list[dict], dry_run: bool) -> None:
         """Append GC decisions to gc.log."""
         log_path = self.memory_dir / "gc.log"
@@ -376,6 +398,26 @@ class MemoryLifecycle:
                 logger.warning(
                     "_write_compressed(%s) failed: %s", entry.title, exc
                 )
+                return
+
+        # The FTS row still holds the pre-compression body: without this,
+        # search ranking/snippets stay computed against text the entry no
+        # longer has, the same upsert PersistentMemory.add() does on write.
+        from src.config.accessor import get_env_config
+
+        if get_env_config().memory.fts_index_enabled:
+            try:
+                from src.memory.search_index import get_shared_index
+
+                get_shared_index().index_entry(
+                    entry_id=entry.id,
+                    title=entry.title,
+                    description=entry.description,
+                    keywords=" ".join(entry.keywords),
+                    body=compressed_body,
+                )
+            except Exception:
+                logger.debug("FTS5 index_entry failed for %s", entry.title, exc_info=True)
 
     def _update_frontmatter_field(self, path: Path, field: str, value: str) -> None:
         """Update a single frontmatter field in a memory file.

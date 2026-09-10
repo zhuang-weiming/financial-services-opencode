@@ -48,7 +48,11 @@ __all__ = [
     "historical_var",
     "parametric_var",
     "historical_cvar",
+    "drawdown_series",
     "max_drawdown_analysis",
+    "drawdown_distribution_analysis",
+    "ulcer_index",
+    "pain_index",
     "monte_carlo_gbm",
     "analyze_mc_results",
     "fit_gpd_tail",
@@ -245,6 +249,193 @@ def historical_cvar(
     values = np.sort(_clean_returns(returns))
     tail = values[: _tail_index(values.size, confidence) + 1]
     return float(-tail.mean() * np.sqrt(horizon))
+
+
+def drawdown_series(equity: pd.Series | np.ndarray | Sequence[float]) -> pd.Series:
+    """Compute continuous percentage drawdown from running peak as a positive loss fraction.
+
+    Args:
+        equity: Net-value / equity series, strictly positive.
+
+    Returns:
+        A pandas Series of drawdown fractions in ``[0.0, 1.0)`` where 0.0 means
+        at peak and 0.25 means 25% below the running peak.
+
+    Raises:
+        ValueError: If ``equity`` is not 1-D, has no finite observations, or contains values <= 0.
+    """
+    if not isinstance(equity, pd.Series):
+        array = np.asarray(equity, dtype=float)
+        if array.ndim > 1:
+            raise ValueError(f"equity must be 1-D, got shape {array.shape}")
+        series = pd.Series(array)
+    else:
+        series = equity.copy()
+
+    series = series.astype(float)
+    series = series[np.isfinite(series.to_numpy())]
+    if series.empty:
+        raise ValueError("equity contains no finite observation")
+    values = series.to_numpy()
+    if (values <= 0.0).any():
+        raise ValueError("equity must be strictly positive to express drawdown as a fraction")
+
+    running_peak = np.maximum.accumulate(values)
+    dd = -(values / running_peak - 1.0)  # non-negative loss fraction
+    return pd.Series(dd, index=series.index, name="drawdown")
+
+
+def ulcer_index(equity: pd.Series | np.ndarray | Sequence[float]) -> float:
+    """Calculate Peter Martin's Ulcer Index measuring downside drawdown volatility.
+
+    Ulcer Index is the root-mean-square percentage drawdown:
+        UI = sqrt( (1/N) * sum( (DD_t)^2 ) )
+
+    Args:
+        equity: Net-value / equity series, strictly positive.
+
+    Returns:
+        Ulcer Index as a positive decimal fraction.
+
+    Raises:
+        ValueError: If ``equity`` is not 1-D, has no finite observations, or contains values <= 0.
+    """
+    dd = drawdown_series(equity).to_numpy()
+    return float(np.sqrt(np.mean(dd**2)))
+
+
+def pain_index(equity: pd.Series | np.ndarray | Sequence[float]) -> float:
+    """Calculate the Pain Index measuring mean absolute drawdown depth and duration.
+
+    Pain Index is the average drawdown over the entire investment history:
+        PI = (1/N) * sum( DD_t )
+
+    Args:
+        equity: Net-value / equity series, strictly positive.
+
+    Returns:
+        Pain Index as a positive decimal fraction.
+
+    Raises:
+        ValueError: If ``equity`` is not 1-D, has no finite observations, or contains values <= 0.
+    """
+    dd = drawdown_series(equity).to_numpy()
+    return float(np.mean(dd))
+
+
+def drawdown_distribution_analysis(
+    equity: pd.Series | np.ndarray | Sequence[float],
+) -> dict:
+    """Decompose an equity curve into discrete drawdown episodes and aggregate risk metrics.
+
+    Args:
+        equity: Net-value / equity series, strictly positive.
+
+    Returns:
+        dict with keys:
+            * ``max_drawdown`` (float): Worst peak-to-trough decline (positive fraction).
+            * ``max_drawdown_duration`` (int): Longest peak-to-recovery duration (observations).
+            * ``avg_drawdown_depth`` (float): Mean depth across all drawdown episodes.
+            * ``avg_drawdown_duration`` (float): Mean duration across all completed episodes.
+            * ``ulcer_index`` (float): Root-mean-square drawdown.
+            * ``pain_index`` (float): Mean drawdown over the entire series.
+            * ``episode_count`` (int): Total number of discrete drawdown episodes.
+            * ``episodes`` (list[dict]): Details for each episode (peak, trough, recovery, depth, duration, recovered).
+
+    Raises:
+        ValueError: If ``equity`` is not 1-D, has no finite observations, or contains values <= 0.
+    """
+    if not isinstance(equity, pd.Series):
+        array = np.asarray(equity, dtype=float)
+        if array.ndim > 1:
+            raise ValueError(f"equity must be 1-D, got shape {array.shape}")
+        series = pd.Series(array)
+    else:
+        series = equity.copy()
+
+    series = series.astype(float)
+    series = series[np.isfinite(series.to_numpy())]
+    if series.empty:
+        raise ValueError("equity contains no finite observation")
+    values = series.to_numpy()
+    if (values <= 0.0).any():
+        raise ValueError("equity must be strictly positive to express drawdown as a fraction")
+
+    n = len(values)
+    running_peak = np.maximum.accumulate(values)
+    dd = -(values / running_peak - 1.0)
+    ui = float(np.sqrt(np.mean(dd**2)))
+    pi = float(np.mean(dd))
+
+    episodes: list[dict] = []
+    in_drawdown = False
+    curr_peak_idx = 0
+    curr_trough_idx = 0
+    curr_max_depth = 0.0
+    index = series.index
+
+    for i in range(n):
+        if values[i] >= values[curr_peak_idx]:
+            if in_drawdown:
+                # Recovery reached
+                duration = i - curr_peak_idx
+                episodes.append(
+                    {
+                        "peak_index": index[curr_peak_idx],
+                        "trough_index": index[curr_trough_idx],
+                        "recovery_index": index[i],
+                        "max_depth": float(curr_max_depth),
+                        "duration": duration,
+                        "recovered": True,
+                    }
+                )
+                in_drawdown = False
+            curr_peak_idx = i
+            curr_trough_idx = i
+            curr_max_depth = 0.0
+        else:
+            in_drawdown = True
+            depth = dd[i]
+            if depth > curr_max_depth:
+                curr_max_depth = depth
+                curr_trough_idx = i
+
+    if in_drawdown:
+        # Ongoing unrecovered drawdown at the end of the series
+        duration = (n - 1) - curr_peak_idx
+        episodes.append(
+            {
+                "peak_index": index[curr_peak_idx],
+                "trough_index": index[curr_trough_idx],
+                "recovery_index": None,
+                "max_depth": float(curr_max_depth),
+                "duration": duration,
+                "recovered": False,
+            }
+        )
+
+    if episodes:
+        max_dd = float(max(e["max_depth"] for e in episodes))
+        max_dur = int(max(e["duration"] for e in episodes))
+        avg_depth = float(np.mean([e["max_depth"] for e in episodes]))
+        completed_durations = [e["duration"] for e in episodes if e["recovered"]]
+        avg_dur = float(np.mean(completed_durations)) if completed_durations else 0.0
+    else:
+        max_dd = 0.0
+        max_dur = 0
+        avg_depth = 0.0
+        avg_dur = 0.0
+
+    return {
+        "max_drawdown": max_dd,
+        "max_drawdown_duration": max_dur,
+        "avg_drawdown_depth": avg_depth,
+        "avg_drawdown_duration": avg_dur,
+        "ulcer_index": ui,
+        "pain_index": pi,
+        "episode_count": len(episodes),
+        "episodes": episodes,
+    }
 
 
 def max_drawdown_analysis(equity: pd.Series | np.ndarray | Sequence[float]) -> dict:

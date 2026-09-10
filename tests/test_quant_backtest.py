@@ -70,14 +70,14 @@ def test_no_live_trade_patterns() -> TestResult:
     python_files = [
         f for f in python_files
         if "venv" not in str(f) and "__pycache__" not in str(f)
-        and ".opencode/python/vibe-trading-quanta" in str(f)  # focus on framework
+        and ".opencode/python/vibe-trading-ai" in str(f)  # focus on framework
     ]
     
     hits = []
     try:
         for pattern in LIVE_TRADE_PATTERNS:
             result = subprocess.run(
-                ["rg", "-n", pattern, str(OPENCODE_DIR / "python" / "vibe-trading-quanta")],
+                ["rg", "-n", pattern, str(OPENCODE_DIR / "python" / "vibe-trading-ai")],
                 capture_output=True, text=True, timeout=30,
             )
             if result.stdout:

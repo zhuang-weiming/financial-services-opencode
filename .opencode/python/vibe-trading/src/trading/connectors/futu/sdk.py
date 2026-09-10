@@ -27,9 +27,9 @@ DataFrame which we convert with ``to_dict("records")`` before field mapping.
 from __future__ import annotations
 
 import json
-import os
 import socket
 from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Mapping
@@ -234,8 +234,16 @@ def check_status(config: FutuConfig | None = None) -> dict[str, Any]:
         A health report dict.
     """
     cfg = config or load_config()
+    # ``connection_state``/``error_code``/``last_checked_at`` are the envelope
+    # /live/status reads through a closed vocabulary (live_routes.py
+    # _CONNECTION_STATES / _ERROR_CODES). Omitting them is not a cosmetic gap:
+    # the Web UI treats anything other than "connected"/"ready" as unavailable,
+    # so a working OpenD connection rendered as down. Same shape as longbridge.
     report: dict[str, Any] = {
         "status": "ok",
+        "connection_state": "connected",
+        "error_code": None,
+        "error": None,
         "config": _public_config(cfg),
         "sdk": {"package": "futu-api", "installed": futu_available()},
         "paper_guard": "trd_env_acc_list",
@@ -245,30 +253,42 @@ def check_status(config: FutuConfig | None = None) -> dict[str, Any]:
     gateway_open = tcp_port_open(cfg.host, cfg.port)
     report["gateway"] = {"host": cfg.host, "port": cfg.port, "open": gateway_open}
     if not gateway_open:
-        report["status"] = "error"
-        report["error"] = (
+        return _status_error(
+            report,
+            "network_unreachable",
             f"No Futu OpenD gateway is listening at {cfg.host}:{cfg.port}. "
-            "Start OpenD, log in, and confirm the API port."
+            "Start OpenD, log in, and confirm the API port.",
         )
-        return report
 
     if not report["sdk"]["installed"]:
-        report["status"] = "error"
-        report["error"] = "Optional dependency missing: install with `pip install futu-api`."
-        return report
+        return _status_error(
+            report,
+            "sdk_missing",
+            "Optional dependency missing: install with `pip install futu-api`.",
+        )
 
     try:
         snapshot = get_account_snapshot(cfg)
     except Exception as exc:  # noqa: BLE001 - health endpoint reports cleanly
-        report["status"] = "error"
-        report["error"] = str(exc)
-        return report
+        return _status_error(report, "broker_error", str(exc))
 
     report["account"] = {
         "profile": cfg.profile,
         "trd_env": cfg.trd_env_name,
         "acc_id": snapshot.get("acc_id"),
     }
+    report["last_checked_at"] = datetime.now(timezone.utc).isoformat()
+    return report
+
+
+def _status_error(report: dict[str, Any], code: str, message: str) -> dict[str, Any]:
+    """Stamp a failed health report with the closed-vocabulary diagnostics."""
+    report.update(
+        status="error",
+        connection_state="error",
+        error_code=code,
+        error=message,
+    )
     return report
 
 
@@ -279,7 +299,16 @@ def get_account_snapshot(config: FutuConfig | None = None) -> dict[str, Any]:
     try:
         acc_id = _resolve_acc_id(cfg, trade_ctx)
         trd_env = _trd_env_enum(cfg)
-        rows = _records(_unwrap(trade_ctx.accinfo_query(trd_env=trd_env, acc_id=acc_id)))
+        result = trade_ctx.accinfo_query(trd_env=trd_env, acc_id=acc_id)
+        ret = result[0] if isinstance(result, (list, tuple)) and len(result) >= 2 else None
+        futu = _require_futu()
+        if ret is not None and ret != getattr(futu, "RET_OK", 0):
+            return {
+                "status": "error",
+                "error": f"futu accinfo_query failed: ret={ret} data={result[1]}",
+                "assets": [],
+            }
+        rows = _records(_unwrap(result))
         return {
             "status": "ok",
             "profile": cfg.profile,
@@ -298,7 +327,19 @@ def get_positions(config: FutuConfig | None = None) -> dict[str, Any]:
     try:
         acc_id = _resolve_acc_id(cfg, trade_ctx)
         trd_env = _trd_env_enum(cfg)
-        rows = _records(_unwrap(trade_ctx.position_list_query(trd_env=trd_env, acc_id=acc_id)))
+        result = trade_ctx.position_list_query(trd_env=trd_env, acc_id=acc_id)
+        ret = result[0] if isinstance(result, (list, tuple)) and len(result) >= 2 else None
+        futu = _require_futu()
+        if ret is not None and ret != getattr(futu, "RET_OK", 0):
+            # The mandate gate fails closed only on an explicit error, so a
+            # rejected query must not flatten into an empty position list
+            # (#1207 Phase 0).
+            return {
+                "status": "error",
+                "error": f"futu position_list_query failed: ret={ret} data={result[1]}",
+                "positions": [],
+            }
+        rows = _records(_unwrap(result))
         return {
             "status": "ok",
             "profile": cfg.profile,
@@ -374,7 +415,12 @@ def get_historical_bars(
     limit: int = 90,
     **_: Any,
 ) -> dict[str, Any]:
-    """Fetch historical K-line bars for ``symbol`` (e.g. ``US.AAPL``)."""
+    """Fetch historical K-line bars for ``symbol`` (e.g. ``US.AAPL``).
+
+    Bars are forward-adjusted (Futu ``AuType.QFQ``, the SDK default, passed
+    explicitly so a futu-side default change cannot silently switch the
+    caliber). The response declares the caliber in ``adjustment``.
+    """
     cfg = config or load_config()
     futu = _require_futu()
     ktype_name = _KLTYPE_MAP.get(period.strip(), "K_DAY")
@@ -382,17 +428,319 @@ def get_historical_bars(
     quote_ctx = _quote_ctx(cfg)
     try:
         code = symbol.strip().upper()
-        rows = _records(_unwrap(quote_ctx.request_history_kline(code, ktype=ktype, max_count=int(limit))))
+        autype = getattr(getattr(futu, "AuType", None), "QFQ", None)
+        request: dict[str, Any] = {"ktype": ktype, "max_count": int(limit)}
+        if autype is not None:
+            request["autype"] = autype
+        rows = _records(_unwrap(quote_ctx.request_history_kline(code, **request)))
         return {
             "status": "ok",
             "symbol": code,
             "period": period,
+            "adjustment": "qfq",
             "bars": [_bar_to_dict(row) for row in rows],
         }
     finally:
         _close(quote_ctx)
 
 
+# ---------------------------------------------------------------------------
+# Extended read-only data: rehab, capital flow, history deals, earnings
+# calendar, account cash flow, and financial statements. All read-only, no
+# order placement. These unlock fundamental analysis, attribution, and
+# shadow-account workflows that the original five endpoints do not cover.
+# ---------------------------------------------------------------------------
+
+
+def get_rehab(
+    symbol: str, *, config: FutuConfig | None = None, **_: Any
+) -> dict[str, Any]:
+    """Fetch dividend / split / rights-issue adjustment factors for ``symbol``.
+
+    Args:
+        symbol: Futu instrument code, e.g. ``HK.00700`` / ``US.AAPL``.
+        config: Effective connector config; loaded from disk when omitted.
+
+    Returns:
+        Dict containing ``status`` and ``ex_dividend_events`` — a list of
+        adjustment-factor rows (ex-date, cash dividend, share ratio, forward
+        and backward adjustment factors A/B). Pass these into a backtest engine
+        to compute forward-adjusted close prices and avoid dividend-driven gaps.
+    """
+    cfg = config or load_config()
+    quote_ctx = _quote_ctx(cfg)
+    try:
+        code = symbol.strip().upper()
+        rows = _records(_unwrap(quote_ctx.get_rehab(code)))
+        return {
+            "status": "ok",
+            "symbol": code,
+            "ex_dividend_events": rows,
+        }
+    finally:
+        _close(quote_ctx)
+
+
+def get_capital_flow(
+    symbol: str,
+    *,
+    config: FutuConfig | None = None,
+    period_type: str = "INTRADAY",
+    **_: Any,
+) -> dict[str, Any]:
+    """Fetch historical capital flow for ``symbol``.
+
+    Args:
+        symbol: Futu instrument code, e.g. ``HK.00700``.
+        period_type: ``INTRADAY`` / ``DAY`` / ``WEEK`` / ``MONTH``.
+        config: Effective connector config; loaded from disk when omitted.
+
+    Returns:
+        Dict containing ``status``, ``symbol``, ``period_type``, and
+        ``flows`` (a list of intraday/daily main-flow rows with super/big/mid/small
+        inflow buckets). Use the ``super_in_flow`` + ``big_in_flow`` columns to
+        gauge institutional activity.
+    """
+    cfg = config or load_config()
+    quote_ctx = _quote_ctx(cfg)
+    try:
+        code = symbol.strip().upper()
+        rows = _records(
+            _unwrap(quote_ctx.get_capital_flow(code, period_type=period_type))
+        )
+        return {
+            "status": "ok",
+            "symbol": code,
+            "period_type": period_type,
+            "flows": rows,
+        }
+    finally:
+        _close(quote_ctx)
+
+
+def get_capital_distribution(
+    symbol: str, *, config: FutuConfig | None = None, **_: Any
+) -> dict[str, Any]:
+    """Fetch today's live capital distribution snapshot for ``symbol``.
+
+    Returns the latest in-flow vs out-flow split across super/big/mid/small
+    buckets — useful for live "are institutions accumulating right now?" checks.
+    """
+    cfg = config or load_config()
+    quote_ctx = _quote_ctx(cfg)
+    try:
+        code = symbol.strip().upper()
+        rows = _records(_unwrap(quote_ctx.get_capital_distribution(code)))
+        return {
+            "status": "ok",
+            "symbol": code,
+            "distribution": rows,
+        }
+    finally:
+        _close(quote_ctx)
+
+
+def get_history_deals(
+    start: str,
+    end: str,
+    *,
+    config: FutuConfig | None = None,
+    code: str = "",
+    **_: Any,
+) -> dict[str, Any]:
+    """Fetch historical FILL records (executed deals) for shadow-account analysis.
+
+    Unlike ``history_order_list_query`` (which returns intent), this returns only
+    orders that ACTUALLY filled, with fill price, qty, counter broker, fee, and
+    settlement date. Required for true cost-basis reconstruction.
+
+    Args:
+        start: Start date string ``YYYY-MM-DD`` (Futu caps single-query window at
+            360 days).
+        end: End date string ``YYYY-MM-DD`` (inclusive). Pass empty string for
+            "today".
+        code: Optional Futu instrument code filter, e.g. ``HK.00700``. Empty
+            string returns fills across all symbols.
+        config: Effective connector config; loaded from disk when omitted.
+
+    Returns:
+        Dict containing ``status``, ``start``, ``end``, ``code``, and ``deals``
+        — a list of fill records with deal_id, order_id, code, qty, price,
+        trd_side, create_time, counter_broker_name.
+    """
+    cfg = config or load_config()
+    trade_ctx = _trade_ctx(cfg)
+    try:
+        acc_id = _resolve_acc_id(cfg, trade_ctx)
+        trd_env = _trd_env_enum(cfg)
+        kwargs: dict[str, Any] = dict(trd_env=trd_env, acc_id=acc_id)
+        if code:
+            kwargs["code"] = code.strip().upper()
+        else:
+            kwargs["code"] = ""
+        rows = _records(
+            _unwrap(trade_ctx.history_deal_list_query(start=start, end=end, **kwargs))
+        )
+        return {
+            "status": "ok",
+            "profile": cfg.profile,
+            "trd_env": cfg.trd_env_name,
+            "acc_id": acc_id,
+            "start": start,
+            "end": end,
+            "deals": [_deal_to_dict(row) for row in rows],
+        }
+    finally:
+        _close(trade_ctx)
+
+
+def get_acc_cash_flow(
+    clearing_date: str,
+    *,
+    config: FutuConfig | None = None,
+    **_: Any,
+) -> dict[str, Any]:
+    """Fetch account cash-flow movements for a given clearing date ``YYYY-MM-DD``.
+
+    Useful for capital management review: deposit, withdrawal, FX conversion,
+    buy/sell settlement, margin interest, dividends received, fees, etc.
+    """
+    cfg = config or load_config()
+    trade_ctx = _trade_ctx(cfg)
+    try:
+        acc_id = _resolve_acc_id(cfg, trade_ctx)
+        trd_env = _trd_env_enum(cfg)
+        rows = _records(
+            _unwrap(
+                trade_ctx.get_acc_cash_flow(
+                    clearing_date=clearing_date, trd_env=trd_env, acc_id=acc_id
+                )
+            )
+        )
+        return {
+            "status": "ok",
+            "profile": cfg.profile,
+            "trd_env": cfg.trd_env_name,
+            "acc_id": acc_id,
+            "clearing_date": clearing_date,
+            "cash_flows": rows,
+        }
+    finally:
+        _close(trade_ctx)
+
+
+def get_financials(
+    symbol: str,
+    *,
+    config: FutuConfig | None = None,
+    statement_type: str = "INCOME",
+    num: int = 20,
+    **_: Any,
+) -> dict[str, Any]:
+    """Fetch financial statements (income / balance / cash flow / key ratios) for ``symbol``.
+
+    Args:
+        symbol: Futu instrument code, e.g. ``HK.00700`` / ``US.AAPL``.
+        statement_type: ``INCOME`` / ``BALANCE`` / ``CASH_FLOW``. Maps to
+            Futu's integer statement_type codes (1/2/3). Default ``INCOME``.
+        num: Maximum number of statements to return.
+        config: Effective connector config; loaded from disk when omitted.
+
+    Returns:
+        Dict containing ``status``, ``symbol``, ``statement_type``, and
+        ``structure_list`` + ``report_list`` — flat row dictionaries keyed by
+        field name (e.g. ``"营业总收入"``) for O(1) lookups, plus a list of raw
+        report dicts for full inspection.
+    """
+    cfg = config or load_config()
+    quote_ctx = _quote_ctx(cfg)
+    try:
+        code = symbol.strip().upper()
+        # statement_type token → integer code (Futu SDK uses int enums).
+        st_int_map = {"INCOME": 1, "BALANCE": 2, "CASH_FLOW": 3, "KEY_RATIO": 4}
+        st_value = st_int_map.get(statement_type.upper(), 1)
+        ret_tuple = quote_ctx.get_financials_statements(
+            code=code,
+            statement_type=st_value,
+            num=num,
+        )
+        # SDK returns (ret_code, dict) where dict carries next_key / structure_list /
+        # report_list_*
+        ok_code = ret_tuple[0]
+        payload = (
+            ret_tuple[1]
+            if len(ret_tuple) > 1 and isinstance(ret_tuple[1], dict)
+            else {}
+        )
+        structure_list = payload.get("structure_list", [])
+        # Pull all reports across pages? For v1 we return the first page only;
+        # caller can re-invoke with next_key for more.
+        report_lists = [
+            payload.get("report_list", []),
+            payload.get("report_list_annual", []),
+            payload.get("report_list_quarter", []),
+        ]
+        merged_reports: list[Any] = []
+        for rl in report_lists:
+            if rl:
+                merged_reports.extend(rl)
+        futu = _require_futu()
+        return {
+            "status": "ok" if ok_code == getattr(futu, "RET_OK", 0) else "error",
+            "symbol": code,
+            "statement_type": statement_type.upper(),
+            "next_key": payload.get("next_key"),
+            "structure_list": structure_list,
+            "report_list": merged_reports,
+        }
+    finally:
+        _close(quote_ctx)
+
+
+def get_earnings_calendar(
+    *,
+    config: FutuConfig | None = None,
+    market: str = "US",
+    begin_date: str = "",
+    end_date: str = "",
+    **_: Any,
+) -> dict[str, Any]:
+    """Fetch upcoming earnings-release dates and EPS / revenue consensus.
+
+    Args:
+        market: ``US`` / ``HK``.
+        begin_date: Start ``YYYY-MM-DD``. Defaults to today.
+        end_date: End ``YYYY-MM-DD``. Defaults to begin_date + 30 days.
+        config: Effective connector config; loaded from disk when omitted.
+
+    Returns:
+        Dict with ``status``, ``market``, ``begin_date``, ``end_date``, and
+        ``events`` — list of upcoming earnings with code, name, earnings_date,
+        eps_predict, eps_actual, revenue_predict, revenue_actual, iv, iv_rank.
+    """
+    cfg = config or load_config()
+    quote_ctx = _quote_ctx(cfg)
+    try:
+        futu = _require_futu()
+        market_attr = "US" if market.upper() == "US" else "HK"
+        m = getattr(futu.Market, market_attr)
+        ret_tuple = quote_ctx.get_earnings_calendar(
+            market=m,
+            begin_date=begin_date or None,
+            end_date=end_date or None,
+        )
+        ok_value = getattr(_require_futu(), "RET_OK", 0)
+        ok = ret_tuple[0]
+        events = ret_tuple[1] if len(ret_tuple) > 1 else []
+        return {
+            "status": "ok" if ok == ok_value else "error",
+            "market": market.upper(),
+            "begin_date": begin_date,
+            "end_date": end_date,
+            "events": events if events is not None else [],
+        }
+    finally:
+        _close(quote_ctx)
 # ---------------------------------------------------------------------------
 # Order placement (paper SIMULATE + live REAL, fail-closed)
 # ---------------------------------------------------------------------------
@@ -854,6 +1202,7 @@ def _account_to_dict(row: Mapping[str, Any]) -> dict[str, Any]:
         "market_val": _first(row, ("market_val",)),
         "available_funds": _first(row, ("available_funds",)),
         "securities_assets": _first(row, ("securities_assets",)),
+        "currency": str(_first(row, ("currency",), "") or "").upper(),
     }
 
 
@@ -867,6 +1216,8 @@ def _position_to_dict(row: Mapping[str, Any]) -> dict[str, Any]:
         "pl_ratio": _first(row, ("pl_ratio",)),
         "pl_val": _first(row, ("pl_val",)),
         "position_side": str(_first(row, ("position_side",), "")),
+        "market": str(_first(row, ("position_market",), "") or "").upper(),
+        "currency": str(_first(row, ("currency",), "") or "").upper(),
     }
 
 

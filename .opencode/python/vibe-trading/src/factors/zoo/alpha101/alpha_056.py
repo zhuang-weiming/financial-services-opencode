@@ -66,7 +66,7 @@ def compute(panel: dict) -> pd.DataFrame:
     close = panel["close"]
 
 
-    returns = close.pct_change()
+    returns = close.pct_change(fill_method=None)
     # Helper aliases (local closures keep the file standalone & purity-safe).
     rolling_sum = _rolling_sum
     make_one = _make_one

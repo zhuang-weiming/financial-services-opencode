@@ -95,10 +95,10 @@ description: 加载用户的个人交易系统 - 累积的法则、失效案例�
 | `sell-ladder` | **卖出判定的工具入口**。任何"是否止盈/减持/卖出/动能是否结束"问题 → 先加载 `sell-ladder` skill → 跑 `sell_ladder.py` → 把阶段判定对齐到 7.SELL_LADDER.md + 7.1.POSITION_SIZING.md §5.5。工具在 personal-system/sell-ladder/，协议层在 .opencode/skills/sell-ladder/SKILL.md |
 | `alpha-engine-v21` | 跑回测，写到 backtests/BT-XXX/，更新 5.BACKTEST_INDEX.md |
 | `stock-deep-dive` | 个股分析时必须先读 personal-system，检查是否与现有法则冲突 |
-| `vibe-thesis-tracker` | 单股论追踪 → 写入 theses/<code>_<name>.md |
-| `trade-journal` | 实际交易结果 → 用于验证/推翻 1.LAWS.md |
-| `backtest-diagnose` | 回测异常 → 可能产生 FAILED-XXX 条目 |
-| `factor-research` | 因子检验 → 如显著可转为 HYP-XXX |
+| `thesis-tracker` | 单股论追踪 → 写入 theses/<code>_<name>.md |
+| `vibe-trading-trade-journal` | 实际交易结果 → 用于验证/推翻 1.LAWS.md |
+| `vibe-trading-backtest-diagnose` | 回测异常 → 可能产生 FAILED-XXX 条目 |
+| `vibe-trading-factor-research` | 因子检验 → 如显著可转为 HYP-XXX |
 
 ### sell-ladder 工具定位（2026-08-10 起）
 

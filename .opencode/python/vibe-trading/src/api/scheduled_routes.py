@@ -10,13 +10,16 @@ import re
 import sys as _sys
 import time
 import uuid
-from typing import Any, Awaitable, Callable, Dict, List, Optional
+from typing import TYPE_CHECKING, Any, Awaitable, Callable, Dict, List, Optional
 
 from fastapi import Depends, FastAPI, HTTPException, Query, status
 from pydantic import BaseModel, Field
 from starlette.responses import Response
 
 from src.config.accessor import get_env_config
+
+if TYPE_CHECKING:
+    from src.scheduled_research.models import ScheduledResearchJob
 
 logger = logging.getLogger(__name__)
 
@@ -57,12 +60,16 @@ def _get_scheduled_research_store():
     return _scheduled_research_store
 
 
-async def _dispatch_scheduled_research_job(job) -> None:
+async def _dispatch_scheduled_research_job(job) -> Optional[str]:
     """Enqueue one scheduled research job through the session runtime.
 
     ``send_message`` queues the agent attempt and returns once accepted; it
     does not wait for that agent run to reach a terminal status. The executor's
     ``COMPLETED`` state for this dispatch path means "successfully enqueued."
+
+    Returns:
+        The session id the attempt was enqueued into, which is what lets the
+        delivery outbox find the briefing once the run actually finishes.
     """
     host = _sys.modules.get("api_server") or _sys.modules.get("agent.api_server")
     svc = host._get_session_service()
@@ -79,6 +86,62 @@ async def _dispatch_scheduled_research_job(job) -> None:
         session.session_id,
     )
     await svc.send_message(session.session_id, job.prompt)
+    return session.session_id
+
+
+def _read_scheduled_briefing(session_id: str) -> Optional[tuple[str, str]]:
+    """Return ``(terminal status, briefing text)`` once a run has finished.
+
+    The assistant reply carries the attempt's terminal status in its metadata,
+    and it is the same text the user sees in the session — delivering anything
+    else would mean the channel and the app disagree about what the run said.
+
+    Args:
+        session_id: Session the scheduled run was dispatched into.
+
+    Returns:
+        The status and text, or ``None`` while the run is still in flight.
+    """
+    host = _sys.modules.get("api_server") or _sys.modules.get("agent.api_server")
+    svc = host._get_session_service() if host else None
+    if not svc:
+        return None
+    for message in reversed(svc.get_messages(session_id, limit=50)):
+        if message.role != "assistant":
+            continue
+        status = (message.metadata or {}).get("status")
+        if isinstance(status, str) and status:
+            return status, message.content or ""
+    return None
+
+
+async def _send_scheduled_briefing(channel: str, target: Optional[str], text: str):
+    """Deliver one briefing through the configured IM channel.
+
+    Args:
+        channel: Channel id as configured in the channel runtime.
+        target: Address within that channel, or ``None`` for its default.
+        text: The briefing to deliver.
+
+    Raises:
+        RuntimeError: If the channel runtime is unavailable or has no such
+            channel, so the outbox records a retryable failure rather than
+            reporting a delivery that never happened.
+    """
+    from src.channels.bus.events import OutboundMessage
+
+    host = _sys.modules.get("api_server") or _sys.modules.get("agent.api_server")
+    manager = getattr(host, "_channel_manager", None) if host else None
+    if manager is None:
+        raise RuntimeError("channel runtime is not running")
+    adapter = manager.get_channel(channel)
+    if adapter is None:
+        raise RuntimeError(f"channel {channel!r} is not configured")
+    if not target:
+        raise RuntimeError(f"channel {channel!r} has no delivery target configured")
+    return await adapter.send_with_receipt(
+        OutboundMessage(channel=channel, chat_id=target, content=text)
+    )
 
 
 def _get_scheduled_research_executor():
@@ -91,6 +154,8 @@ def _get_scheduled_research_executor():
             _get_scheduled_research_store(),
             _dispatch_scheduled_research_job,
             enabled=_scheduled_research_scheduler_enabled(),
+            briefing_reader=_read_scheduled_briefing,
+            channel_sender=_send_scheduled_briefing,
         )
     return _scheduled_research_executor
 
@@ -128,6 +193,7 @@ class CreateScheduledRunRequest(BaseModel):
     prompt: str = Field(
         ..., min_length=1, description="Research prompt or backtest description"
     )
+    title: Optional[str] = Field(None, description="Human-readable monitor title")
     schedule: str = Field(
         ..., min_length=1, description="Interval-ms or 5-field cron expression"
     )
@@ -144,6 +210,24 @@ class CreateScheduledRunRequest(BaseModel):
             "(e.g. 'Pacific/Auckland'); null = UTC, the pre-existing "
             "semantics. Ignored by interval schedules."
         ),
+    )
+    delivery_channel: Optional[str] = Field(
+        None,
+        description=(
+            "Channel id a finished briefing is pushed to. Delivery is opt-in "
+            "per job: omit this and results stay in the app, which is the "
+            "behaviour every existing job keeps."
+        ),
+    )
+    delivery_target: Optional[str] = Field(
+        None,
+        description="Address within that channel (chat / group / user id).",
+    )
+    delivery_target_ref: Optional[str] = Field(
+        None, description="Opaque operator-configured target ref; preferred over raw target ids"
+    )
+    end_at: Optional[int] = Field(
+        None, description="Epoch-ms boundary after which no further run is dispatched"
     )
 
 
@@ -204,6 +288,9 @@ class CreateRunFromPlaybookRequest(BaseModel):
     next_run_at: Optional[int] = Field(
         None, description="Explicit first-fire epoch-ms, bypassing the default rule"
     )
+    title: Optional[str] = None
+    end_at: Optional[int] = None
+    delivery_target_ref: Optional[str] = None
 
 
 class ScheduledRunResponse(BaseModel):
@@ -211,6 +298,10 @@ class ScheduledRunResponse(BaseModel):
 
     id: str
     prompt: str
+    title: str = ""
+    source_type: str = "prompt"
+    playbook_slug: Optional[str] = None
+    end_at: Optional[int] = None
     schedule: str
     next_run_at: int
     status: str
@@ -221,6 +312,43 @@ class ScheduledRunResponse(BaseModel):
     failure_kind: Optional[str] = None
     config: Dict[str, Any] = Field(default_factory=dict)
     timezone: Optional[str] = None
+    delivery_channel: Optional[str] = None
+    delivery_target: Optional[str] = None
+    delivery_target_ref: Optional[str] = None
+    delivery_target_label: Optional[str] = None
+    delivery_status: str = "none"
+    delivery_error: Optional[str] = None
+    delivery_updated_at: Optional[int] = None
+    delivery_attempts: int = 0
+    delivery_provider_message_id: Optional[str] = None
+    last_verdict: Optional[Dict[str, Any]] = None
+
+
+def _job_to_response(job: ScheduledResearchJob) -> "ScheduledRunResponse":
+    """Flatten a job for the wire, delivery record included.
+
+    ``to_dict`` nests the outbox row; the API keeps it flat because the list
+    view reads it per row and a nested object would make every consumer reach
+    through a key that means nothing to them.
+
+    Args:
+        job: The stored job.
+
+    Returns:
+        The response model for that job.
+    """
+    payload = job.to_dict()
+    delivery = payload.pop("delivery", {}) or {}
+    last_verdict = payload.pop("last_verdict", None)
+    return ScheduledRunResponse(
+        **payload,
+        last_verdict=last_verdict,
+        delivery_status=delivery.get("status", "none"),
+        delivery_error=delivery.get("error"),
+        delivery_updated_at=delivery.get("updated_at"),
+        delivery_attempts=delivery.get("attempts", 0),
+        delivery_provider_message_id=delivery.get("provider_message_id"),
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -321,8 +449,31 @@ def register_scheduled_routes(
                 except ValueError as exc:
                     raise HTTPException(status_code=422, detail=str(exc)) from exc
 
+        if request.end_at is not None:
+            if request.end_at <= now_ms:
+                raise HTTPException(status_code=422, detail="end_at must be in the future")
+            if next_run_at > request.end_at:
+                raise HTTPException(
+                    status_code=422, detail="the first scheduled run occurs after end_at"
+                )
+
+        delivery_channel = request.delivery_channel
+        delivery_target = request.delivery_target
+        delivery_target_label = None
+        if request.delivery_target_ref:
+            from src.channels.targets import resolve_delivery_target
+
+            try:
+                resolved_target = resolve_delivery_target(request.delivery_target_ref)
+            except ValueError as exc:
+                raise HTTPException(status_code=422, detail=str(exc)) from exc
+            delivery_channel = resolved_target.channel
+            delivery_target = resolved_target.target
+            delivery_target_label = resolved_target.label
+
         job = ScheduledResearchJob(
             id=request.id or str(uuid.uuid4()),
+            title=request.title or "",
             prompt=request.prompt,
             schedule=request.schedule,
             next_run_at=next_run_at,
@@ -330,9 +481,14 @@ def register_scheduled_routes(
             created_at=now_ms,
             config=request.config,
             timezone=request.timezone,
+            end_at=request.end_at,
+            delivery_channel=delivery_channel,
+            delivery_target=delivery_target,
+            delivery_target_ref=request.delivery_target_ref,
+            delivery_target_label=delivery_target_label,
         )
         _get_scheduled_research_store().upsert(job)
-        return ScheduledRunResponse(**job.to_dict())
+        return _job_to_response(job)
 
     @app.get(
         "/scheduled-runs",
@@ -347,7 +503,45 @@ def register_scheduled_routes(
         jobs = _get_scheduled_research_store().list_jobs(
             status=status_filter, limit=limit
         )
-        return [ScheduledRunResponse(**j.to_dict()) for j in jobs]
+        return [_job_to_response(j) for j in jobs]
+
+    @app.get(
+        "/scheduled-runs/status",
+        dependencies=[Depends(require_auth)],
+    )
+    async def get_scheduled_research_status() -> Dict[str, Any]:
+        from src.channels.targets import list_delivery_targets
+        from src.scheduled_research.service import scheduler_status
+
+        payload = scheduler_status()
+        payload["delivery_targets"] = [
+            target.public_dict() for target in list_delivery_targets()
+        ]
+        return payload
+
+    @app.post(
+        "/scheduled-runs/proposals/{proposal_id}/commit",
+        dependencies=[Depends(require_auth)],
+    )
+    async def commit_scheduled_research_proposal(proposal_id: str) -> Dict[str, Any]:
+        from src.scheduled_research.proposals import ProposalError, commit_proposal
+
+        try:
+            return commit_proposal(proposal_id)
+        except ProposalError as exc:
+            raise HTTPException(status_code=409, detail=str(exc)) from exc
+
+    @app.post(
+        "/scheduled-runs/proposals/{proposal_id}/discard",
+        dependencies=[Depends(require_auth)],
+    )
+    async def discard_scheduled_research_proposal(proposal_id: str) -> Dict[str, Any]:
+        from src.scheduled_research.proposals import ProposalError, discard_proposal
+
+        try:
+            return discard_proposal(proposal_id)
+        except ProposalError as exc:
+            raise HTTPException(status_code=404, detail=str(exc)) from exc
 
     @app.delete(
         "/scheduled-runs/{job_id}",
@@ -477,5 +671,42 @@ def register_scheduled_routes(
             # schedule / timezone / cron-window failures, all ValueError.
             raise HTTPException(status_code=422, detail=str(exc)) from exc
 
+        now_ms = int(time.time() * 1000)
+        if request.end_at is not None:
+            if request.end_at <= now_ms or job.next_run_at > request.end_at:
+                raise HTTPException(
+                    status_code=422,
+                    detail="end_at must be in the future and after the first run",
+                )
+            job.end_at = request.end_at
+        job.title = request.title or playbook.name
+        job.source_type = "playbook"
+        job.playbook_slug = playbook.slug
+        if request.delivery_target_ref:
+            from src.channels.targets import resolve_delivery_target
+
+            try:
+                target = resolve_delivery_target(request.delivery_target_ref)
+            except ValueError as exc:
+                raise HTTPException(status_code=422, detail=str(exc)) from exc
+            job.delivery_channel = target.channel
+            job.delivery_target = target.target
+            job.delivery_target_ref = target.ref
+            job.delivery_target_label = target.label
+
         _get_scheduled_research_store().upsert(job)
-        return ScheduledRunResponse(**job.to_dict())
+        return _job_to_response(job)
+
+    # Registered after the static /playbooks routes so "playbooks" is never
+    # consumed as a dynamic job id by Starlette's first-match routing.
+    @app.get(
+        "/scheduled-runs/{job_id}",
+        response_model=ScheduledRunResponse,
+        dependencies=[Depends(require_auth)],
+    )
+    async def get_scheduled_run(job_id: str) -> ScheduledRunResponse:
+        _host_validate_path_param(job_id, "job_id")
+        job = _get_scheduled_research_store().get(job_id)
+        if job is None:
+            raise HTTPException(status_code=404, detail=f"scheduled run {job_id} not found")
+        return _job_to_response(job)

@@ -21,17 +21,13 @@ from typing import Any, Dict, Iterable, List, Literal, Optional
 import pandas as pd
 from pydantic import BaseModel, ConfigDict, Field, model_validator, field_validator
 
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
-
 from backtest.loaders.registry import (
     FALLBACK_CHAINS,
     LOADER_REGISTRY,
     VALID_SOURCES,
     get_loader_cls_with_fallback,
+    mixed_caliber_warning,
+    price_caliber,
     resolve_loader,
 )
 from backtest.loaders.base import NoAvailableSourceError, validate_ohlc
@@ -45,6 +41,7 @@ from backtest.engines._market_hooks import (  # noqa: F401  (re-exported)
     _detect_submarket,
     _is_china_futures,
 )
+from backtest.rebalance_mask import RebalanceMask, validate_rebalance_mask
 
 logger = logging.getLogger(__name__)
 
@@ -63,6 +60,9 @@ class DataFetchResult:
     source: str
     loader: Any
     effective_sources: List[str]
+    # Mixed-caliber warning for the served basket (#1301), None when every
+    # served symbol shares one comparable caliber (or none is measurable).
+    caliber_warning: str | None = None
 
 
 class BacktestConfigSchema(BaseModel):
@@ -77,12 +77,30 @@ class BacktestConfigSchema(BaseModel):
     interval: str = "1D"
     engine: str = "daily"
     position_adjustment: Literal["hold", "rebalance"] = "hold"
+    rebalance_mask: RebalanceMask = None
+    # Under "rebalance", a resize executes only once the held weight has
+    # drifted further than this fraction of its target -- the tolerance band
+    # practitioners describe as "rebalance when weights move more than X".
+    # 0.0 is the historical behaviour and stays the default: without a band the
+    # resize test is decided by the slippage width alone, which re-pins a
+    # position on a one-basis-point move. A CHANGED target breaches any sane
+    # band on its own, so target changes always execute whatever this is set to.
+    rebalance_tolerance: float = Field(default=0.0, ge=0.0, allow_inf_nan=False)
     # Returns divide by initial_cash, so a non-positive value yields inf/NaN
     # metrics (total_return, annual_return, ...). Reject it at the config
     # boundary instead of letting the run produce non-finite results.
     initial_cash: float = Field(default=1_000_000, gt=0, allow_inf_nan=False)
     fundamental_fields: Optional[Dict[str, List[str]]] = None
     event_feeds: Optional[List[Dict[str, Any]]] = None
+    # An indicator with a long lookback needs bars from before the period the
+    # user asked about. Declaring the boundary keeps those bars out of the
+    # performance: either as a bar count, or as the date evaluation starts.
+    # Only the shapes are checked here -- whether the boundary leaves anything
+    # to evaluate depends on the loaded calendar, so the one rule that decides
+    # it lives in `engines.base.evaluation_start_index`, which every engine and
+    # every direct-API caller passes through.
+    warmup_bars: Optional[int] = Field(default=None, ge=0)
+    evaluation_start_date: Optional[str] = None
 
     @field_validator("codes")
     @classmethod
@@ -101,6 +119,24 @@ class BacktestConfigSchema(BaseModel):
         except Exception:
             raise ValueError(f"invalid date format: {v!r} (expected YYYY-MM-DD)")
         return v
+
+    @field_validator("evaluation_start_date")
+    @classmethod
+    def valid_evaluation_start(cls, v: Optional[str]) -> Optional[str]:
+        if v is None:
+            return v
+        try:
+            pd.Timestamp(v)
+        except Exception:
+            raise ValueError(
+                f"invalid evaluation_start_date: {v!r} (expected YYYY-MM-DD)"
+            ) from None
+        return v
+
+    @field_validator("rebalance_mask")
+    @classmethod
+    def valid_rebalance_mask(cls, v: RebalanceMask) -> RebalanceMask:
+        return validate_rebalance_mask(v)
 
     @field_validator("interval")
     @classmethod
@@ -155,6 +191,10 @@ class BacktestConfigSchema(BaseModel):
 
     @model_validator(mode="after")
     def start_before_end(self) -> "BacktestConfigSchema":
+        if self.rebalance_mask is not None and self.position_adjustment != "rebalance":
+            raise ValueError(
+                "rebalance_mask requires position_adjustment='rebalance'"
+            )
         if pd.Timestamp(self.start_date) > pd.Timestamp(self.end_date):
             raise ValueError(
                 f"start_date ({self.start_date}) must be <= end_date ({self.end_date})"
@@ -800,11 +840,14 @@ _MARKET_TO_SOURCE = {
     "india_equity": "yahoo",
     "kr_equity": "pykrx",
     "ca_equity": "yahoo",
+    "uk_equity": "yahoo",
+    "vietnam_equity": "yahoo",
     "crypto": "okx",
     "futures": "tushare",
     "fund": "tushare",
     "macro": "akshare",
     "forex": "akshare",
+    "index": "yahoo",
 }
 
 
@@ -1146,6 +1189,19 @@ def main(run_dir: Path) -> None:
             file is read so an arbitrary filesystem location cannot be used
             to source ``code/signal_engine.py``.
     """
+    # Loading `.env` belongs to the process that RUNS a backtest, not to
+    # importing this module. At import time it ran during pytest collection --
+    # before the per-test os.environ snapshot exists -- so a developer's own
+    # LANGCHAIN_MODEL_NAME leaked into every later test and could not be undone
+    # by any fixture, which is how seven redaction tests failed locally while
+    # CI (with no .env checked out) stayed green.
+    try:
+        from dotenv import load_dotenv
+
+        load_dotenv()
+    except ImportError:
+        pass
+
     # Guard the CLI entry point with the same root whitelist the MCP
     # ``backtest`` tool already uses (src/tools/backtest_tool.py:23). Without
     # this, ``python -m backtest.runner /tmp/attacker_path`` would happily
@@ -1211,6 +1267,8 @@ def main(run_dir: Path) -> None:
     loader = fetch_result.loader
     config["codes"] = codes
     config["_run_card_effective_sources"] = fetch_result.effective_sources
+    if fetch_result.caliber_warning:
+        config["_run_card_caliber_warning"] = fetch_result.caliber_warning
     interval = config.get("interval", "1D")
     if not data_map:
         print(json.dumps({"error": "No data fetched"}))
@@ -1294,12 +1352,25 @@ def _create_market_engine(source: str, config: dict, codes: List[str]):
         from backtest.engines.korea_equity import KoreaEquityEngine
         return KoreaEquityEngine(config)
 
+    # Vietnam equity routing — same reason as India and Korea: its effective
+    # source (``yahoo``) has no Wave-1 branch and would fall through to the
+    # default.
+    if "vietnam_equity" in markets:
+        from backtest.engines.vietnam_equity import VietnamEquityEngine
+        return VietnamEquityEngine(config)
+    # Index symbols (^SPX, ^FTSE, ...) — priced like a US/global-listed
+    # instrument (GlobalEquityEngine, US rules) and never the China/crypto
+    # default the source-based fallback would pick.
+    if "index" in markets:
+        from backtest.engines.global_equity import GlobalEquityEngine
+        return GlobalEquityEngine(config, market=_detect_submarket(codes))
+
     # Original routing (Wave 1)
     if source in ("okx", "ccxt"):
         from backtest.engines.crypto import CryptoEngine
         return CryptoEngine(config)
     elif source in ("tushare", "akshare"):
-        if markets & {"us_equity", "hk_equity", "ca_equity"}:
+        if markets & {"us_equity", "hk_equity", "ca_equity", "uk_equity"}:
             from backtest.engines.global_equity import GlobalEquityEngine
             market = _detect_submarket(codes)
             return GlobalEquityEngine(config, market=market)
@@ -1321,7 +1392,7 @@ def _create_market_engine(source: str, config: dict, codes: List[str]):
         # Sources without a dedicated branch (local, stooq, ...): follow the
         # instrument market rather than the loader name, so e.g. a local
         # AAPL.US dataset gets US-equity execution rules instead of crypto.
-        if markets & {"us_equity", "hk_equity", "ca_equity"}:
+        if markets & {"us_equity", "hk_equity", "ca_equity", "uk_equity"}:
             from backtest.engines.global_equity import GlobalEquityEngine
             market = _detect_submarket(codes)
             return GlobalEquityEngine(config, market=market)
@@ -1367,6 +1438,7 @@ def _fetch_auto(codes: List[str], config: dict, interval: str = "1D") -> dict:
     market_groups = _group_codes_by_market(codes)
     merged = {}
     served_by: set[str] = set()
+    caliber_stamps: dict[str, tuple[str, str]] = {}
     start_date = config.get("start_date", "")
     end_date = config.get("end_date", "")
 
@@ -1395,6 +1467,8 @@ def _fetch_auto(codes: List[str], config: dict, interval: str = "1D") -> dict:
         )
         if market_result:
             served_by.add(src_name)
+            for code in market_result:
+                caliber_stamps[code] = (src_name, price_caliber(src_name, market))
         missing = [code for code in market_codes if code not in market_result]
 
         # Retry only missing symbols so a partial primary response does not
@@ -1415,7 +1489,10 @@ def _fetch_auto(codes: List[str], config: dict, interval: str = "1D") -> dict:
             if mapped:
                 market_result.update(mapped)
                 missing = [code for code in missing if code not in mapped]
-                served_by.add(str(getattr(fb_loader, "name", fb_name) or fb_name))
+                fb_served_by = str(getattr(fb_loader, "name", fb_name) or fb_name)
+                served_by.add(fb_served_by)
+                for code in mapped:
+                    caliber_stamps[code] = (fb_served_by, price_caliber(fb_served_by, market))
                 logger.info(
                     "Runtime fallback: %s -> %s for %s", src_name, fb_name, market
                 )
@@ -1427,6 +1504,7 @@ def _fetch_auto(codes: List[str], config: dict, interval: str = "1D") -> dict:
         merged.update(market_result)
 
     config["_actual_sources"] = sorted(served_by)
+    config["_caliber_stamps"] = caliber_stamps
     return merged
 
 
@@ -1447,12 +1525,14 @@ def fetch_data_map(config: dict) -> DataFetchResult:
     codes = list(config.get("codes") or [])
     interval = str(config.get("interval") or "1D")
 
+    caliber_stamps: dict[str, tuple[str, str]] = {}
     if source == "auto":
         data_map = _fetch_auto(codes, config, interval)
         loader: Any = _AutoLoader(data_map)
         # Prefer the loaders that actually served rows; the symbol-pattern guess
         # is only a fallback for a stubbed/patched fetcher that recorded nothing.
         recorded = config.pop("_actual_sources", None)
+        caliber_stamps = config.pop("_caliber_stamps", None) or {}
         used_sources: list[str] = [
             str(name) for name in recorded or [] if str(name).strip()
         ] or sorted(_group_codes_by_source(codes))
@@ -1479,6 +1559,11 @@ def fetch_data_map(config: dict) -> DataFetchResult:
             fields=config.get("extra_fields") or None,
             interval=interval,
         )
+        for code in data_map:
+            caliber_stamps[code] = (
+                served_by,
+                price_caliber(served_by, _detect_market(code)),
+            )
         used_sources = [served_by] if data_map else []
         missing = [code for code in codes if code not in data_map]
         if missing:
@@ -1519,6 +1604,11 @@ def fetch_data_map(config: dict) -> DataFetchResult:
                         getattr(fallback_loader, "name", fallback_source)
                         or fallback_source
                     )
+                    for code in mapped:
+                        caliber_stamps[code] = (
+                            fb_served_by,
+                            price_caliber(fb_served_by, _detect_market(code)),
+                        )
                     if not used_sources:
                         source = fb_served_by
                         loader = fallback_loader
@@ -1533,12 +1623,19 @@ def fetch_data_map(config: dict) -> DataFetchResult:
             )
 
     data_map = _sanitize_data_map(data_map)
+    caliber_stamps = {
+        code: stamp for code, stamp in caliber_stamps.items() if code in data_map
+    }
+    caliber_warning = mixed_caliber_warning(caliber_stamps)
+    if caliber_warning:
+        logger.warning("%s", caliber_warning)
     return DataFetchResult(
         data_map=data_map,
         codes=codes,
         source=source,
         loader=loader,
         effective_sources=used_sources,
+        caliber_warning=caliber_warning,
     )
 
 

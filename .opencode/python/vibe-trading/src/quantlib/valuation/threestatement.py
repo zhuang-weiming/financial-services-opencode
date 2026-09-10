@@ -434,15 +434,44 @@ def check_balance_sheet(balance_sheet: BalanceSheet, tolerance: float = BALANCE_
 
     Raises:
         BalanceSheetError: If ``assets != liabilities + equity`` beyond
-            ``tolerance``. The exception carries the exact residual.
+            ``tolerance``, or if any of ``assets``, ``liabilities`` or
+            ``equity`` is not a finite number. The exception carries the
+            exact residual.
     """
     assets = balance_sheet.total_assets
     liabilities = balance_sheet.total_liabilities
     equity = balance_sheet.total_equity
     residual = assets - liabilities - equity
     scale = max(abs(assets), 1.0)
-    if abs(residual) > tolerance * scale:
+    if not math.isfinite(residual) or abs(residual) > tolerance * scale:
         raise BalanceSheetError(balance_sheet.period, assets, liabilities, equity, tolerance)
+
+
+def _require_finite(value: float, name: str, model: str) -> float:
+    """Check a value is a finite number, refusing NaN and infinity.
+
+    Args:
+        value: The candidate value.
+        name: Field name for the error message.
+        model: Model name for the error message.
+
+    Returns:
+        ``value`` as a float.
+
+    Raises:
+        ValuationError: If the value is not a finite number. A non-finite
+            driver or opening figure would otherwise flow into the projection
+            and surface as a misleading "did not converge" error.
+    """
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError) as exc:
+        raise ValuationError(f"{model}: {name} must be a number, got {value!r}") from exc
+    if not math.isfinite(numeric):
+        raise ValuationError(
+            f"{model}: {name} must be a finite number, got {numeric!r}"
+        )
+    return numeric
 
 
 def _resolve_period_count(drivers: Mapping[str, Sequence[float]]) -> int:
@@ -665,7 +694,8 @@ def project_three_statement(
         MissingInputError: If ``opening`` or ``drivers`` is missing a required
             field.
         ValuationError: If the driver sequences disagree in length, are empty,
-            or if ``circularity_tolerance`` / ``balance_tolerance`` /
+            if any opening or driver value is not a finite number, or if
+            ``circularity_tolerance`` / ``balance_tolerance`` /
             ``max_circularity_iterations`` are not usable.
         BalanceSheetError: If the opening balance sheet, or any projected
             period's balance sheet, does not balance.
@@ -681,6 +711,12 @@ def project_three_statement(
             f"{MODEL_NAME}: max_circularity_iterations must be >= 1, got "
             f"{max_circularity_iterations!r}"
         )
+
+    for field in OPENING_REQUIRED_FIELDS:
+        _require_finite(opening[field], f"opening {field}", MODEL_NAME)
+    for field in DRIVER_REQUIRED_FIELDS:
+        for index, raw in enumerate(drivers[field]):
+            _require_finite(raw, f"drivers {field}[{index}]", MODEL_NAME)
 
     periods = _resolve_period_count(drivers)
 

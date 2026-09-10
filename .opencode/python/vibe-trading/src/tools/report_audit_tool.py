@@ -272,7 +272,9 @@ def render_verdict(results: list[dict[str, Any]], report_name: str = "") -> dict
 
     A point whose ``reported_value`` is missing, ``None``, or non-finite is
     unverifiable, so it fails with an explicit ``reason`` instead of being
-    treated as a reported zero. A genuine reported ``0`` stays valid.
+    treated as a reported zero. A genuine reported ``0`` stays valid. A
+    supplied but non-finite ``fetched_value`` fails the point the same way
+    (unverifiable evidence), while an absent one is skipped as "not verified".
 
     Args:
         results: List of verification objects — ``{id, label, reported_value,
@@ -281,7 +283,10 @@ def render_verdict(results: list[dict[str, Any]], report_name: str = "") -> dict
         report_name: Optional report name for display.
 
     Returns:
-        Verdict dict: ``verdict`` is ``PASS`` (zero failures) or ``FAIL``.
+        Verdict dict: ``verdict`` is ``PASS`` (zero failures, at least one
+        verified point) or ``FAIL``. A call in which nothing was verified
+        fails closed — a report certified with zero evidence is the failure
+        mode this gate exists to prevent.
     """
     fail_items: list[dict[str, Any]] = []
     warn_items: list[dict[str, Any]] = []
@@ -289,9 +294,33 @@ def render_verdict(results: list[dict[str, Any]], report_name: str = "") -> dict
     total = 0
 
     for item in results:
-        fetched = item.get("fetched_value")
+        raw_fetched = item.get("fetched_value")
+        if raw_fetched is None:
+            continue  # not verified — skip, do not count (pinned design)
+        # Coerce through _finite_number so a non-numeric fetched value (a
+        # string, NaN, …) is treated as unusable evidence, not a crash.
+        fetched = _finite_number(raw_fetched)
         if fetched is None:
-            continue  # not verified — skip, do not count
+            # Supplied but unusable is NOT "not verified" (which is silently
+            # skipped): fail the point. Otherwise a junk fetch could be used
+            # to drop a hard-to-verify number from the audit entirely.
+            total += 1
+            label = item.get("label", "?")
+            fail_items.append({
+                "id": item.get("id"), "label": label,
+                "reported": _finite_number(item.get("reported_value")),
+                "unit": item.get("unit", ""),
+                "fetched": None, "source": item.get("fetched_source", "?"),
+                "fetched2": None, "source2": item.get("fetched_source2", ""),
+                "diff1_pct": None, "diff2_pct": None,
+                "reason": (
+                    f"fetched value is not a finite number ({raw_fetched!r}) "
+                    "— cannot verify"
+                ),
+                "raw_text": item.get("raw_text", ""),
+                "line_number": item.get("line_number", 0),
+            })
+            continue
         total += 1
         label = item.get("label", "?")
         unit = item.get("unit", "")
@@ -306,7 +335,7 @@ def render_verdict(results: list[dict[str, Any]], report_name: str = "") -> dict
             fail_items.append({
                 "id": item.get("id"), "label": label,
                 "reported": None, "unit": unit,
-                "fetched": _finite_number(fetched), "source": source,
+                "fetched": fetched, "source": source,
                 "fetched2": _finite_number(item.get("fetched_value2")),
                 "source2": item.get("fetched_source2", ""),
                 "diff1_pct": None, "diff2_pct": None,
@@ -320,10 +349,11 @@ def render_verdict(results: list[dict[str, Any]], report_name: str = "") -> dict
             })
             continue
 
-        fetched = float(fetched)
         diff1 = _pct_diff(reported, fetched)
 
-        fetched2 = item.get("fetched_value2")
+        # A non-finite second source is ignored (single-source semantics)
+        # instead of crashing the verdict; a garbage source verifies nothing.
+        fetched2 = _finite_number(item.get("fetched_value2"))
         source2 = item.get("fetched_source2", "")
         pass1 = diff1 <= _TOLERANCE
 
@@ -344,7 +374,7 @@ def render_verdict(results: list[dict[str, Any]], report_name: str = "") -> dict
         else:
             # Two sources: PASS only if both agree within tolerance; FAIL if
             # both miss; otherwise WARN (a caliber / GAAP mismatch, not a fail).
-            f2 = float(fetched2)
+            f2 = fetched2  # already coerced finite above
             diff2 = _pct_diff(reported, f2)
             pass2 = diff2 <= _TOLERANCE
             if pass1 and pass2:
@@ -367,6 +397,18 @@ def render_verdict(results: list[dict[str, Any]], report_name: str = "") -> dict
                     "diff1_pct": _pct_diff_for_json(diff1),
                     "diff2_pct": _pct_diff_for_json(diff2),
                 })
+
+    if total == 0:
+        # Fail closed: zero verified points means the audit gathered no
+        # evidence at all. Certifying that as PASS would let an unaudited
+        # report — or an agent that fetched nothing — through the gate.
+        fail_items.append({
+            "id": None, "label": "audit", "reported": None, "unit": "",
+            "fetched": None, "source": "", "fetched2": None, "source2": "",
+            "diff1_pct": None, "diff2_pct": None,
+            "reason": "no data points were verified — every result lacked a fetched_value",
+            "raw_text": "", "line_number": 0,
+        })
 
     fail_count = len(fail_items)
     verdict = "PASS" if fail_count == 0 else "FAIL"

@@ -58,7 +58,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
-from scipy.stats import norm, t as student_t
+from scipy.stats import norm, rankdata, t as student_t
 
 __all__ = [
     "DEFAULT_ESTIMATION_GAP",
@@ -173,6 +173,11 @@ class EventStudyResult:
         shared_event_dates: Event dates carried by more than one event. Non-empty
             means the events overlap in calendar time, the independence every
             statistic here assumes is violated, and the p-values are optimistic.
+        corrado_rank_z: Corrado non-parametric rank test z-statistic.
+        corrado_rank_p_value: Two-sided p-value of ``corrado_rank_z``.
+        cowan_sign_z: Cowan generalized sign test z-statistic.
+        cowan_sign_p_value: Two-sided p-value of ``cowan_sign_z``.
+        positive_car_fraction: Fraction of events with positive cumulative abnormal return.
     """
 
     event_window: tuple[int, int]
@@ -188,6 +193,11 @@ class EventStudyResult:
     bmp_z: float
     bmp_p_value: float
     shared_event_dates: tuple[object, ...]
+    corrado_rank_z: float
+    corrado_rank_p_value: float
+    cowan_sign_z: float
+    cowan_sign_p_value: float
+    positive_car_fraction: float
 
 
 def estimate_market_model(
@@ -411,15 +421,26 @@ def event_study(
         car_se = float(np.sqrt(np.sum(daily_se**2)))
         standardised = car / car_se if car_se > 0 else float("nan")
 
+        asset_est_arr = asset_estimation.to_numpy(dtype=float)
+        market_est_arr = market_estimation.to_numpy(dtype=float)
+        keep_est = np.isfinite(asset_est_arr) & np.isfinite(market_est_arr)
+        est_residuals = asset_est_arr[keep_est] - (
+            fit.alpha + fit.beta * market_est_arr[keep_est]
+        )
+
         outcomes.append(
-            EventOutcome(
-                symbol=symbol,
-                event_date=index[position],
-                abnormal_returns=pd.Series(abnormal, index=relative_days, name=symbol),
-                car=car,
-                car_std_error=car_se,
-                standardised_car=standardised,
-                fit=fit,
+            (
+                EventOutcome(
+                    symbol=symbol,
+                    event_date=index[position],
+                    abnormal_returns=pd.Series(abnormal, index=relative_days, name=symbol),
+                    car=car,
+                    car_std_error=car_se,
+                    standardised_car=standardised,
+                    fit=fit,
+                ),
+                est_residuals,
+                abnormal,
             )
         )
 
@@ -430,11 +451,12 @@ def event_study(
         )
 
     n_events = len(outcomes)
-    ar_matrix = np.vstack([o.abnormal_returns.to_numpy() for o in outcomes])
+    event_outcomes = [o[0] for o in outcomes]
+    ar_matrix = np.vstack([o.abnormal_returns.to_numpy() for o in event_outcomes])
     aar = pd.Series(ar_matrix.mean(axis=0), index=relative_days, name="aar")
     caar = pd.Series(np.cumsum(aar.to_numpy()), index=relative_days, name="caar")
 
-    cars = np.array([o.car for o in outcomes])
+    cars = np.array([o.car for o in event_outcomes])
     if n_events > 1:
         car_sd = float(cars.std(ddof=1))
         t_stat = float(cars.mean() / (car_sd / np.sqrt(n_events))) if car_sd > 0 else float("nan")
@@ -442,7 +464,7 @@ def event_study(
     else:
         t_stat, t_p = float("nan"), float("nan")
 
-    standardised = np.array([o.standardised_car for o in outcomes])
+    standardised = np.array([o.standardised_car for o in event_outcomes])
     finite_scar = standardised[np.isfinite(standardised)]
 
     # Patell: the standardised CARs are unit-variance under the null, up to the
@@ -453,7 +475,7 @@ def event_study(
                 (o.fit.observations - 2) / (o.fit.observations - 4)
                 if o.fit.observations > 4
                 else np.nan
-                for o in outcomes
+                for o in event_outcomes
                 if np.isfinite(o.standardised_car)
             ]
         )
@@ -476,14 +498,66 @@ def event_study(
         bmp_z = float("nan")
     bmp_p = float(2 * norm.sf(abs(bmp_z))) if np.isfinite(bmp_z) else float("nan")
 
+    # Cowan Generalized Sign Test: compares the proportion of positive CARs
+    # against the baseline proportion of positive abnormal returns in the estimation window.
+    est_pos_fractions = [
+        float(np.mean(est_res > 0)) for _, est_res, _ in outcomes if len(est_res) > 0
+    ]
+    base_p = float(np.mean(est_pos_fractions)) if est_pos_fractions else 0.5
+    pos_cars_count = int(np.sum(cars > 0))
+    pos_car_frac = float(pos_cars_count / n_events) if n_events > 0 else 0.0
+
+    if n_events > 1 and 0.0 < base_p < 1.0:
+        denom = np.sqrt(n_events * base_p * (1.0 - base_p))
+        cowan_z = float((pos_cars_count - n_events * base_p) / denom)
+        cowan_p = float(2 * norm.sf(abs(cowan_z)))
+    else:
+        cowan_z, cowan_p = float("nan"), float("nan")
+
+    # Corrado Rank Test: non-parametric rank test across combined estimation + event period
+    L2 = end - start + 1
+    rank_dev_est_list = []
+    rank_dev_evt_list = []
+    for _, est_res, evt_abn in outcomes:
+        combined = np.concatenate([est_res, evt_abn])
+        ranks = rankdata(combined)
+        M = len(combined)
+        mean_rank = (M + 1.0) / 2.0
+        ranks_est = ranks[: len(est_res)] - mean_rank
+        ranks_evt = ranks[len(est_res) :] - mean_rank
+        rank_dev_est_list.append(ranks_est)
+        rank_dev_evt_list.append(ranks_evt)
+
+    if (
+        n_events > 1
+        and rank_dev_est_list
+        and len(rank_dev_est_list[0]) > 0
+        and all(len(r) == len(rank_dev_est_list[0]) for r in rank_dev_est_list)
+    ):
+        est_rank_matrix = np.vstack(rank_dev_est_list)  # (n_events, T_est)
+        mean_est_ranks = est_rank_matrix.mean(axis=0)  # mean rank dev per estimation day
+        s_k = float(np.sqrt(np.mean(mean_est_ranks**2)))
+
+        evt_rank_matrix = np.vstack(rank_dev_evt_list)  # (n_events, L2)
+        mean_evt_ranks = evt_rank_matrix.mean(axis=0)  # mean rank dev per event day
+        cum_evt_rank_dev = float(np.sum(mean_evt_ranks))
+
+        if s_k > 0:
+            corrado_z = float(cum_evt_rank_dev / (np.sqrt(L2) * s_k))
+            corrado_p = float(2 * norm.sf(abs(corrado_z)))
+        else:
+            corrado_z, corrado_p = float("nan"), float("nan")
+    else:
+        corrado_z, corrado_p = float("nan"), float("nan")
+
     seen: dict[object, int] = {}
-    for outcome in outcomes:
+    for outcome in event_outcomes:
         seen[outcome.event_date] = seen.get(outcome.event_date, 0) + 1
     shared = tuple(sorted((d for d, c in seen.items() if c > 1), key=str))
 
     return EventStudyResult(
         event_window=(start, end),
-        events=tuple(outcomes),
+        events=tuple(event_outcomes),
         dropped=tuple(dropped),
         aar=aar,
         caar=caar,
@@ -494,5 +568,11 @@ def event_study(
         patell_p_value=patell_p,
         bmp_z=bmp_z,
         bmp_p_value=bmp_p,
+        corrado_rank_z=corrado_z,
+        corrado_rank_p_value=corrado_p,
+        cowan_sign_z=cowan_z,
+        cowan_sign_p_value=cowan_p,
+        positive_car_fraction=pos_car_frac,
         shared_event_dates=shared,
     )
+

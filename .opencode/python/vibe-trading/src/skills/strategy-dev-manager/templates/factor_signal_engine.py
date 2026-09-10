@@ -47,7 +47,7 @@ class SignalEngine:
             # TODO: Replace with actual factor formula from paper
             # Example: 12-month momentum (Jegadeesh & Titman 1993)
             factor_values[symbol] = (
-                df["close"].pct_change(self.lookback)
+                df["close"].pct_change(self.lookback, fill_method=None)
             )
 
         # Step 2: Cross-sectional ranking

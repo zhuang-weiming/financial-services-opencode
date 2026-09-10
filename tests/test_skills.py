@@ -27,7 +27,7 @@ COMPLEX_SKILLS = {
     "pitch-deck", "datapack-builder", "ic-memo", "initiating-coverage",
     "thesis-tracker", "investment-proposal", "value-creation-plan",
     "client-report", "client-review", "financial-plan",
-    "competitive-analysis", "comps-analysis", "vibe-thesis-tracker",
+    "competitive-analysis", "comps-analysis",
 }
 
 
@@ -188,9 +188,81 @@ def run_skill_tests_for(name: str) -> List[TestResult]:
     ]
 
 
+# ---------------------------------------------------------------------------
+# Routing coverage — every routable skill must appear in router/agent files
+# ---------------------------------------------------------------------------
+
+def test_skill_routing_coverage() -> TestResult:
+    """Assert 0 routable-but-unregistered skills (see gen_skill_manifest.py)."""
+    import re
+    from tests import SKILLS_DIR
+    # Tool/meta skills exempt from routing; _shared is an internal resource dir
+    TOOL_SKILLS = {
+        "docx", "pdf", "xlsx", "pptx", "clean-data-xls", "ppt-template-creator",
+        "skill-creator", "customize-opencode", "xlsx-author", "pptx-author",
+        "vibe-trading-doc-reader", "vibe-trading-web-reader",
+    }
+    INTERNAL = {"_shared"}
+    repo = SKILLS_DIR.parent.parent
+    targets = []
+    for pat in [".opencode/instructions/*.md", ".opencode/agents/**/*.md",
+                "opencode.json", "README.md"]:
+        targets += list(repo.glob(pat))
+    text = ""
+    for t in targets:
+        try:
+            text += t.read_text(errors="ignore")
+        except Exception:
+            pass
+
+    skills = [d.name for d in SKILLS_DIR.iterdir() if d.is_dir()]
+    actionable = []
+    for name in skills:
+        if name in TOOL_SKILLS or name in INTERNAL:
+            continue
+        if not (SKILLS_DIR / name / "SKILL.md").exists():
+            continue
+        if not re.search(r"(?<![a-z0-9-])" + re.escape(name) + r"(?![a-z0-9-])", text):
+            actionable.append(name)
+
+    if actionable:
+        return TestResult(
+            name="routing_coverage",
+            status="FAIL",
+            message=f"{len(actionable)} routable skill(s) not registered: "
+                    + ", ".join(actionable[:8]) + ("..." if len(actionable) > 8 else ""),
+        )
+    return TestResult(
+        name="routing_coverage",
+        status="PASS",
+        message=f"all {len(skills)} skills routable (0 unregistered)",
+    )
+
+
+def test_skill_manifest_fresh() -> TestResult:
+    """Assert skill-manifest.md exists and covers all skills."""
+    import re
+    from tests import SKILLS_DIR
+    manifest = SKILLS_DIR.parent / "instructions" / "skill-manifest.md"
+    if not manifest.exists():
+        return TestResult(name="skill_manifest", status="FAIL", message="skill-manifest.md missing")
+    txt = manifest.read_text(errors="ignore")
+    n_skills = len([d for d in SKILLS_DIR.iterdir() if d.is_dir()])
+    m = re.search(r"共 \*\*(\d+)\*\* 个 skill", txt)
+    if not m:
+        return TestResult(name="skill_manifest", status="WARN", message="count line not found in manifest")
+    n_doc = int(m.group(1))
+    if n_doc != n_skills:
+        return TestResult(name="skill_manifest", status="FAIL",
+                          message=f"manifest stale: {n_doc} documented vs {n_skills} on disk")
+    return TestResult(name="skill_manifest", status="PASS", message=f"{n_doc} skills documented")
+
+
 def run_all_skills() -> TestSuite:
     """Run per-skill tests for all 146 skills."""
     suite = TestSuite(name="Per-Skill Business Tests")
+    suite.add(test_skill_routing_coverage())
+    suite.add(test_skill_manifest_fresh())
     for name in list_skills():
         for result in run_skill_tests_for(name):
             suite.add(result)

@@ -18,17 +18,20 @@ import copy
 import json
 import logging
 import queue
+import re
+import shutil
 import sys
 import threading
 import time as _time
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional
+from typing import Any, Callable, Dict, List, Mapping, Optional
 
 from src.agent.context import ContextBuilder
 from src.agent.grounding import GroundingLedger
 from src.agent.memory import WorkspaceMemory
 from src.agent.progress import HeartbeatTimer, ProgressEvent, _set_emitter
+from src.agent.tool_progress import RECOVERY_MESSAGE, ToolProgress
 from src.agent.tools import ToolRegistry
 from src.agent.trace import TraceWriter
 from src.core.state import RunStateStore
@@ -47,7 +50,8 @@ from src.providers.content_filter import (
 from src.config.accessor import get_env_config
 from src.config.paths import get_runs_dir, get_sessions_dir
 from src.tools.background_tools import get_background_manager
-from src.config.limits import TOOL_RESULT_LIMIT, truncate_tool_result
+from src.config.limits import truncate_tool_result
+from src.tools.path_utils import safe_run_dir
 from src.tools.redaction import redact_payload, redact_tool_result
 
 RUNS_DIR = get_runs_dir()
@@ -60,8 +64,18 @@ COLLAPSE_TEXT_MIN = 2400
 COLLAPSE_HEAD = 900
 COLLAPSE_TAIL = 500
 
+# The stub ``_fix_tool_pairs`` inserts for a call whose result a layer-3 fold
+# consumed. The other "data is gone" placeholder is layer 1's cleared marker,
+# which is not a constant — it embeds the original payload length, so it is
+# built by ``_cleared_text`` and matched by ``_is_cleared``.
+_STUB_RESULT_CONTENT = "[Result from earlier context — see summary above]"
+
 TAIL_TOKEN_BUDGET = 20_000
 SUMMARY_CHUNK_CHARS = 80_000
+
+# An LLM may return a transient empty completion (no text, no tool calls);
+# retry once with a nudge before failing the run on a second consecutive one.
+MAX_CONSECUTIVE_EMPTY_RESPONSE_SKIPS = 1
 
 
 def _override(name: str):
@@ -104,6 +118,37 @@ def _stream_retry_delay_s() -> float:
     return get_env_config().agent_tuning.vt_stream_retry_delay_s
 
 
+def _stream_retry_max_delay_s() -> float:
+    ov = _override("STREAM_RETRY_MAX_DELAY_S")
+    if ov is not None:
+        return ov
+    from src.config.accessor import get_env_config
+    return get_env_config().agent_tuning.vt_stream_retry_max_delay_s
+
+
+def _stream_retry_backoff_s(streak: int) -> float:
+    """Return the capped exponential delay for the one-based failure streak.
+
+    Doubles per consecutive retryable stream failure (1.0s, 2.0s, 4.0s, ...)
+    so a sustained provider outage backs off instead of burning the retry
+    budget at a constant cadence. The exponent is clamped at 62 (mirroring
+    ``src/swarm/runtime.py``'s worker-level backoff) and the result is capped
+    at ``_stream_retry_max_delay_s()``.
+
+    Args:
+        streak: Number of consecutive retryable stream failures including the
+            current one; values below 1 are treated as 1.
+
+    Returns:
+        Seconds to sleep before the stream retry, never negative.
+    """
+    ceiling = min(
+        _stream_retry_delay_s() * (2 ** min(max(streak, 1) - 1, 62)),
+        _stream_retry_max_delay_s(),
+    )
+    return max(ceiling, 0.0)
+
+
 def _tool_timeout_seconds() -> float:
     ov = _override("TOOL_TIMEOUT_SECONDS")
     if ov is not None:
@@ -112,12 +157,44 @@ def _tool_timeout_seconds() -> float:
     return get_env_config().agent_tuning.vibe_trading_tool_timeout_seconds
 
 
+def _llm_timeout_seconds() -> float:
+    """Return the per-call LLM timeout in seconds (0/negative disables).
+
+    A silent provider stall otherwise hangs the ReAct loop or the
+    auto-compact summary call indefinitely - no chunk arrives, so the
+    per-chunk cancel check never runs. Bounding the call lets the run fail
+    (or degrade compaction) instead of freezing mid-task.
+    """
+    ov = _override("LLM_TIMEOUT_SECONDS")
+    if ov is not None:
+        return ov
+    from src.config.accessor import get_env_config
+    return get_env_config().agent_tuning.vibe_trading_llm_timeout_seconds
+
+
 def _goal_max_continuations() -> int:
     ov = _override("GOAL_MAX_CONTINUATIONS")
     if ov is not None:
         return ov
     from src.config.accessor import get_env_config
     return get_env_config().agent_tuning.vibe_trading_goal_max_continuations
+
+
+def _stall_timeout_seconds() -> float:
+    """Return the run-stall watchdog timeout in seconds (0/negative disables).
+
+    A run that makes no forward progress (no LLM completion, no tool result)
+    for this long is treated as a zombie and failed explicitly with a clear
+    reason instead of staying "running" forever with no state.json
+    (recurring 2026-08 zombie runs). Heartbeats do NOT count as progress: a
+    hung tool keeps emitting heartbeats, which is exactly the case the
+    watchdog must catch.
+    """
+    ov = _override("STALL_TIMEOUT_SECONDS")
+    if ov is not None:
+        return ov
+    from src.config.accessor import get_env_config
+    return get_env_config().agent_tuning.vibe_trading_run_stall_timeout_seconds
 
 logger = logging.getLogger(__name__)
 
@@ -147,11 +224,21 @@ def _normalize_llm_usage(usage: Any) -> dict[str, int] | None:
         total_tokens = input_tokens + output_tokens
     if not (input_tokens or output_tokens or total_tokens):
         return None
-    return {
+    normalized: dict[str, int] = {
         "input_tokens": input_tokens,
         "output_tokens": output_tokens,
         "total_tokens": total_tokens,
     }
+    details = usage.get("input_token_details")
+    if isinstance(details, dict):
+        if details.get("cache_read") is not None:
+            normalized["cache_read_tokens"] = _coerce_usage_int(details["cache_read"])
+        creation_keys = ("cache_creation", "ephemeral_5m_input_tokens", "ephemeral_1h_input_tokens")
+        if any(details.get(key) is not None for key in creation_keys):
+            normalized["cache_creation_tokens"] = sum(
+                _coerce_usage_int(details.get(key)) for key in creation_keys
+            )
+    return normalized
 
 
 def _new_llm_usage_summary(llm: Any) -> dict[str, Any]:
@@ -189,6 +276,9 @@ def _record_llm_usage(
     totals["output_tokens"] = int(totals.get("output_tokens") or 0) + normalized["output_tokens"]
     totals["total_tokens"] = int(totals.get("total_tokens") or 0) + normalized["total_tokens"]
     totals["calls"] = int(totals.get("calls") or 0) + 1
+    for key in ("cache_read_tokens", "cache_creation_tokens"):
+        if key in normalized:
+            totals[key] = int(totals.get(key) or 0) + normalized[key]
     summary.setdefault("per_iteration", []).append({"iter": iteration, **normalized})
     summary["updated_at"] = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
@@ -302,19 +392,134 @@ def _summary_chunks(msgs: list, limit: int = SUMMARY_CHUNK_CHARS) -> list[str]:
     return chunks or ["[]"]
 
 
-def _microcompact(messages: list) -> None:
+def _verification_ledger(messages: list) -> str:
+    """Extract terse deterministic-verification records from a message list.
+
+    Walks the conversation for successful financial_rigor tool results
+    (the deterministic calculator/verifier) and renders each as a short
+    "already verified" line. Re-attached to the compressed context after
+    auto-compact so the model does not re-run identical expressions it can
+    no longer see (2026-08-20 INTC run re-ran the same calcs 5-9x each
+    after compaction cleared the outputs).
+
+    Args:
+        messages: Message list to scan (tool results only).
+
+    Returns:
+        Newline-joined ledger lines, or an empty string when nothing found.
+    """
+    lines: list[str] = []
+    for msg in messages:
+        if msg.get("role") != "tool":
+            continue
+        content = msg.get("content", "")
+        if not isinstance(content, str):
+            continue
+        try:
+            payload = json.loads(content)
+        except Exception:  # noqa: BLE001 - non-JSON results are skipped
+            continue
+        if not isinstance(payload, dict) or payload.get("status") != "ok":
+            continue
+        command = payload.get("command")
+        if command == "calc" and payload.get("result_exact") is not None:
+            expr = payload.get("expr", "?")
+            result_exact = payload.get("result_exact")
+            lines.append(f"calc {expr} = {result_exact}")
+        elif command == "verify_market_cap" and payload.get("verdict") is not None:
+            verdict = payload.get("verdict")
+            deviation_pct = payload.get("deviation_pct")
+            lines.append(f"market_cap verdict={verdict} dev={deviation_pct}%")
+        elif command == "verify_valuation" and payload.get("metrics"):
+            metrics = payload["metrics"]
+            if isinstance(metrics, dict) and metrics:
+                summary = ", ".join(f"{k}={v}" for k, v in list(metrics.items())[:8])
+                lines.append(f"valuation {summary}")
+        elif command == "cross_validate" and payload.get("all_consistent") is not None:
+            field_name = payload.get("field", "?")
+            all_consistent = payload.get("all_consistent")
+            lines.append(f"cross_validate field={field_name} consistent={all_consistent}")
+        elif command == "benford" and payload.get("reliable") is not None:
+            reliable = payload.get("reliable")
+            conformity = payload.get("conformity", "?")
+            lines.append(f"benford reliable={reliable} conformity={conformity}")
+    # Deduplicate while preserving order; cap the ledger size.
+    seen: set[str] = set()
+    unique: list[str] = []
+    for line in lines:
+        if line not in seen:
+            seen.add(line)
+            unique.append(line)
+        if len(unique) >= 60:
+            break
+    return "\n".join(unique)
+
+# Marker written over a tool result whose payload layer 1 removed. Matched by
+# PREFIX because the text carries the original length, so no two cleared
+# results are the same string; never compare a content to it with ``==``.
+_CLEARED_PREFIX = "[CLEARED FROM CONTEXT:"
+
+
+def _cleared_text(original_len: int) -> str:
+    """Build the self-describing placeholder that replaces a pruned result."""
+    return (
+        f"{_CLEARED_PREFIX} this tool call SUCCEEDED and returned "
+        f"{original_len} characters, which were removed to free context "
+        "space. This is NOT a tool failure and NOT an empty result. If you "
+        "need these values, call the tool again with the same arguments.]"
+    )
+
+
+def _is_cleared(content: Any) -> bool:
+    """True when ``content`` is a layer-1 cleared-result marker."""
+    return isinstance(content, str) and content.startswith(_CLEARED_PREFIX)
+
+
+def _microcompact(messages: list) -> list:
     """Layer 1: silently prune old tool results, keeping the most recent N intact.
 
     Args:
         messages: Message list (mutated in place).
+
+    Returns:
+        Names of tools whose every result just became unreadable (legacy
+        helper contract). The loop reconciles its dedup ledger separately by
+        exact successful call identity, not by these tool names.
     """
     tool_msgs = [m for m in messages if m.get("role") == "tool"]
     if len(tool_msgs) <= KEEP_RECENT:
-        return
+        return []
+    newly_cleared = []
     for msg in tool_msgs[:-KEEP_RECENT]:
         content = msg.get("content", "")
-        if isinstance(content, str) and len(content) > 100:
-            msg["content"] = "[cleared]"
+        # Skip a result already cleared: the marker is itself >100 chars, so
+        # re-clearing it would rewrite the recorded original size with the
+        # MARKER's length ("returned 287 characters") and re-report the tool
+        # as newly unreadable on every later pass.
+        if isinstance(content, str) and len(content) > 100 and not _is_cleared(content):
+            # A bare "[cleared]" is indistinguishable from a tool that
+            # returned nothing, so the model reports "no data was retrieved"
+            # for data it did receive and this layer then deleted. Say which
+            # it is, and say the result is recoverable.
+            msg["content"] = _cleared_text(len(content))
+            if msg.get("name"):
+                newly_cleared.append(msg["name"])
+    # Identified by prefix, not equality: the marker carries the original
+    # length, so every cleared result is a different string.
+    surviving = {m.get("name") for m in tool_msgs if not _is_cleared(m.get("content"))}
+    return sorted(set(newly_cleared) - surviving)
+
+
+def _result_data_gone(content: Any) -> bool:
+    """True when a tool result's real data is gone from context.
+
+    Two sources, and they must both be recognised: layer 1 overwrites an old
+    result with the ``_CLEARED_PREFIX`` marker, and ``_fix_tool_pairs``
+    inserts ``_STUB_RESULT_CONTENT`` for a call whose result a layer-3 fold
+    consumed. The marker is matched by prefix, never equality — it embeds the
+    original payload length, so no two cleared results are the same string.
+    """
+    return _is_cleared(content) or content == _STUB_RESULT_CONTENT
 
 
 def _context_collapse(messages: list) -> None:
@@ -332,12 +537,78 @@ def _context_collapse(messages: list) -> None:
         content = msg.get("content")
         if not isinstance(content, str) or len(content) <= COLLAPSE_TEXT_MIN:
             continue
-        if content == "[cleared]":
+        if _result_data_gone(content):
             continue
         head = content[:COLLAPSE_HEAD]
         tail = content[-COLLAPSE_TAIL:]
         trimmed = len(content) - COLLAPSE_HEAD - COLLAPSE_TAIL
         msg["content"] = f"{head}\n\n...[{trimmed} chars collapsed]...\n\n{tail}"
+
+    # Zero-cost relief for oversized tool-call payloads whose paired result
+    # was already compacted away (``[cleared]``): the arguments blob is now
+    # useless to the model (the data it requested is gone), so fold it to a
+    # valid JSON stub. The call id/name survive, so tool pairing and the
+    # model's "I called tool X" memory are intact, and the provider still
+    # receives well-formed ``arguments``. Nothing re-reads historical
+    # arguments for re-dispatch, so this is safe.
+    cleared_ids = {
+        m.get("tool_call_id")
+        for m in messages
+        if m.get("role") == "tool" and _result_data_gone(m.get("content"))
+    }
+    for msg in messages[1:-COLLAPSE_PRESERVE_RECENT]:
+        for tc in msg.get("tool_calls") or []:
+            fn = tc.get("function")
+            if not isinstance(fn, dict):
+                continue
+            args = fn.get("arguments")
+            if (
+                isinstance(args, str)
+                and len(args) > COLLAPSE_TEXT_MIN
+                and tc.get("id") in cleared_ids
+            ):
+                fn["arguments"] = "{}"
+
+
+def _msg_estimate_chars(msg: dict) -> int:
+    """Rough character size of a message for token budgeting.
+
+    Sizes ``content`` plus every tool-call ``arguments`` payload. Assistant
+    tool-call messages carry their payload in ``tool_calls[].function.
+    arguments`` with empty ``content``; sizing them by content alone made the
+    layer-3 tail budget count a 100 KB arguments blob as ~10 tokens.
+    """
+    size = len(str(msg.get("content", "")))
+    for tc in msg.get("tool_calls") or []:
+        fn = tc.get("function")
+        if isinstance(fn, dict) and fn.get("arguments") is not None:
+            # Sized via ``str`` (matches ``estimate_tokens``' full-serialization
+            # gate) so dict/object arguments count instead of being ignored.
+            size += len(str(fn["arguments"]))
+    return size
+
+
+def _tail_cut_index(body: list, budget: int = TAIL_TOKEN_BUDGET) -> int:
+    """First index of the preserved ``body`` tail that fits ``budget`` tokens.
+
+    Walks back from the end accumulating each message's estimated tokens and
+    returns the earliest index that fits, never splitting a tool_call /
+    tool_result pair. Sized with ``_msg_estimate_chars`` so oversized tool-call
+    arguments push their message into the folded head instead of being counted
+    as a handful of tokens in the preserved tail.
+    """
+    accumulated = 0
+    cut_idx = len(body)
+    for i in range(len(body) - 1, -1, -1):
+        msg_tokens = (_msg_estimate_chars(body[i]) // 4) + 10
+        if accumulated + msg_tokens > budget:
+            cut_idx = i + 1
+            break
+        accumulated += msg_tokens
+        cut_idx = i
+    while 0 < cut_idx < len(body) and body[cut_idx].get("role") == "tool":
+        cut_idx += 1
+    return cut_idx
 
 
 def _fix_tool_pairs(messages: list) -> None:
@@ -388,7 +659,7 @@ def _fix_tool_pairs(messages: list) -> None:
                     "role": "tool",
                     "tool_call_id": tc_id,
                     "name": tc.get("function", {}).get("name", "unknown"),
-                    "content": "[Result from earlier context — see summary above]",
+                    "content": _STUB_RESULT_CONTENT,
                 }
                 inserts.append((idx + 1, stub))
                 result_ids.add(tc_id)
@@ -552,6 +823,76 @@ def _is_tool_success(result: str) -> bool:
     return True
 
 
+# Provider tool-call markup that a model can emit as plain text on the
+# forced-text final iteration, where tool definitions are withheld. Releasing
+# it verbatim hands the user mojibake instead of an answer. Both DSML bar
+# spellings are covered: ASCII double bars and fullwidth double bars.
+_FORCED_TEXT_TOOL_CALL_RE = re.compile(
+    r"<\s*/?\s*(?:invoke|parameter|tool_calls|dsml)\b",
+    re.IGNORECASE,
+)
+_DSML_BAR_TOOL_CALL_RE = re.compile(
+    r"<\s*[|\u2502\uFF5C]{2}\s*(?:dsml|tool_calls|invoke)\b",
+    re.IGNORECASE,
+)
+
+
+def _looks_like_tool_call_syntax(content: str) -> bool:
+    """Return whether final text still contains provider tool-call DSL.
+
+    When tool calling is unavailable, a model may nonetheless answer with its
+    native tool-call markup as prose - ``<DSML>tool_calls>``, ``<invoke
+    name=...>``, or the fullwidth-vbar mojibake of the same. Such content is
+    not an answer and must not be released to the user as one.
+    """
+    if not content:
+        return False
+    return bool(
+        _FORCED_TEXT_TOOL_CALL_RE.search(content)
+        or _DSML_BAR_TOOL_CALL_RE.search(content)
+    )
+
+
+# Task target-file detection: a user message usually names the file to
+# create or update ("update C:\\...\\plan.md"). If a run approaches its
+# iteration cap without having written that file, the loop must remind the
+# model instead of ending "answered but incomplete".
+# Windows absolute paths may contain spaces (e.g. C:\Users\Emad Karimi\...),
+# so the drive-letter branch allows spaces and stops non-greedily at the first
+# ".md"; the POSIX and bare-name branches stay space-free word matches.
+_TARGET_PATH_RE = re.compile(
+    r"[A-Za-z]:\\[^<>|?*\x22\x27\r\n]+?\.md\b"
+    r"|/[\w./\\-]+\.md\b"
+    r"|\b[\w./\\-]+\.md\b"
+)
+_TARGET_ACTION_RE = re.compile(
+    r"update|create|write|add|make|edit|generate|overwrite|append"
+    r"|更新|创建|写|添加|修改|生成|建立|编制",
+    re.IGNORECASE,
+)
+
+
+def _named_target_paths(text: str) -> list[Path]:
+    """Return the .md file paths named in a user message (deduped).
+
+    Both absolute Windows paths and bare or relative filenames are matched.
+    """
+    seen: set[str] = set()
+    paths: list[Path] = []
+    for match in _TARGET_PATH_RE.finditer(text or ""):
+        raw = match.group(0).strip().strip("\x22\x27")
+        try:
+            p = Path(raw)
+        except (ValueError, OSError):
+            continue
+        if p.suffix != ".md":
+            continue
+        key = str(p).casefold()
+        if key in seen:
+            continue
+        seen.add(key)
+        paths.append(p)
+    return paths
 def _normalize_tool_run_dir(args: dict[str, Any], memory_run_dir: str | None) -> dict[str, Any]:
     """Normalize ``run_dir`` in tool args to an absolute path when possible.
 
@@ -575,6 +916,116 @@ def _normalize_tool_run_dir(args: dict[str, Any], memory_run_dir: str | None) ->
     if not candidate.is_absolute():
         normalized["run_dir"] = str((Path(memory_run_dir) / candidate).resolve())
     return normalized
+
+
+#: Names the backtest an archived run currently describes, and the files that
+#: archive placed there, so the next one can replace exactly its own output.
+_ARCHIVE_MANIFEST = ".archived_backtest.json"
+
+
+def _previously_archived(target: Path) -> set[str]:
+    """Return the run-relative files the previous archive copied into ``target``.
+
+    The caller deletes what this returns, and the names are read back off disk,
+    so each one is confined to ``target`` here — a manifest carrying ``..`` must
+    not become a way to delete a file elsewhere. An unreadable or malformed
+    manifest yields an empty set: the worst case is the pre-#1094 merge for one
+    turn, which beats refusing to archive a backtest the user is waiting for.
+    """
+    try:
+        payload = json.loads((target / _ARCHIVE_MANIFEST).read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return set()
+    files = payload.get("files") if isinstance(payload, dict) else None
+    if not isinstance(files, list):
+        return set()
+    root = target.resolve()
+    return {
+        str(name)
+        for name in files
+        if isinstance(name, str)
+        and (root / name).resolve().is_relative_to(root)
+        and (root / name).resolve() != root
+    }
+
+
+def _archive_backtest_result(result: str, active_run_dir: str | None) -> bool:
+    """Copy a successful detached backtest into the active, reportable run.
+
+    The model may choose another allowed run directory while iterating.  The
+    CLI and web API, however, identify the turn by ``active_run_dir``.  Keep
+    that public identity stable by copying only deterministic backtest output
+    into the active run as soon as the backtest tool succeeds.
+
+    Both paths are re-validated here.  ``backtest`` already refuses a run_dir
+    outside the allowed roots, so today the source cannot be arbitrary — but
+    that invariant lives in another module and this function reads its path back
+    out of a *tool result* rather than from the validated arguments.  Checking
+    locally keeps a copy loop from depending on a guarantee made elsewhere.
+
+    The copy REPLACES the previous archive rather than merging with it (#1094).
+    An agent may backtest more than once in a turn, and the copy is a plain
+    merge, so a file only the earlier backtest produced used to survive
+    alongside the later one's output — one artifacts directory describing two
+    different runs, which ``/runs/{id}`` then lists as artifacts of the current
+    one.  Only files a previous archive placed here are removed, recorded in
+    :data:`_ARCHIVE_MANIFEST`; anything the active run wrote itself (notably
+    ``code/signal_engine.py``, written before ``backtest`` is called) is
+    untouched, which is why the manifest exists instead of a blanket wipe.
+    """
+    if not active_run_dir:
+        return False
+    try:
+        payload = json.loads(result)
+    except (json.JSONDecodeError, TypeError):
+        return False
+    if not isinstance(payload, dict):
+        return False
+
+    source_value = payload.get("run_dir")
+    if not source_value:
+        return False
+    try:
+        source = safe_run_dir(str(source_value))
+        target = safe_run_dir(str(active_run_dir))
+    except ValueError:
+        logger.warning("Refusing to archive backtest output from outside the allowed run roots")
+        return False
+    if source == target or not (source / "artifacts" / "metrics.csv").is_file():
+        return False
+
+    target.mkdir(parents=True, exist_ok=True)
+    previously_archived = _previously_archived(target)
+    archived: list[str] = []
+    for directory in ("artifacts", "code", "logs"):
+        source_dir = source / directory
+        if source_dir.is_dir():
+            shutil.copytree(source_dir, target / directory, dirs_exist_ok=True)
+            archived += [
+                path.relative_to(source).as_posix()
+                for path in source_dir.rglob("*")
+                if path.is_file()
+            ]
+    for stale in previously_archived - set(archived):
+        (target / stale).unlink(missing_ok=True)
+    (target / _ARCHIVE_MANIFEST).write_text(
+        json.dumps({"source_run": source.name, "files": sorted(archived)}, indent=2),
+        encoding="utf-8",
+    )
+    for filename in (
+        "config.json",
+        "design_spec.json",
+        "planner_output.json",
+        "rag_metadata.json",
+        "review_report.json",
+        "run_card.json",
+        "run_card.md",
+        "llm_usage.json",
+    ):
+        source_file = source / filename
+        if source_file.is_file():
+            shutil.copy2(source_file, target / filename)
+    return (target / "artifacts" / "metrics.csv").is_file()
 
 
 class AgentLoop:
@@ -625,13 +1076,41 @@ class AgentLoop:
         self.memory = memory or WorkspaceMemory()
         self._event_callback = event_callback
         self.max_iterations = max_iterations
-        self._called_ok: set[str] = set()
+        # Dedup identity is (tool name, canonical arguments) -- NOT the name
+        # alone. Keying on the name blocked every legitimate second call to a
+        # paginated or parameterised tool: get_financial_statements(
+        # statement='income') then (statement='balance') is one name but two
+        # different requests, and the second was answered with a synthetic
+        # 'already completed successfully' skip. The model then correctly
+        # reported that the balance sheet 'returned no readable content' -- a
+        # true statement about a fabricated tool result.
+        # Keys come from _identical_call_key, the same canonicaliser the
+        # deterministic cache uses, so the block path and the cache path can
+        # never disagree about what 'the same call' means.
+        self._called_ok: set[tuple[str, str]] = set()
+        # Capture successful identities before context collapse can stub args.
+        # Skipped/error call IDs never enter this ledger.
+        self._successful_call_keys: dict[str, tuple[str, str]] = {}
         self._cancel_event = threading.Event()
         self._previous_summary: str = ""
         self._persistent_memory = persistent_memory
         self._run_iteration: int = 0
         self._has_run = False
         self._grounding: GroundingLedger | None = None
+        self._released_fallback = False
+        self._released_fallback_reason: str | None = None
+        self._written_files: set[str] = set()
+        self._stall_reason: str | None = None
+        self._last_activity_wall: float = 0.0
+        self._run_done = threading.Event()
+        # Identical deterministic tool calls (e.g. financial_rigor calc with
+        # the same expression) are served from this cache instead of being
+        # re-executed. Regression: after auto-compact cleared earlier tool
+        # results, the model re-ran the same financial_rigor expressions
+        # 5-9x each (2026-08-20 INTC run) because it could no longer see its
+        # own verification records.
+        self._called_identical: dict[tuple[str, str], str] = {}
+        self._tool_progress = ToolProgress()
 
     def cancel(self) -> None:
         """Cancel the current loop.
@@ -718,7 +1197,17 @@ class AgentLoop:
         else:
             self._has_run = True
         self._called_ok = set()
+        self._successful_call_keys = {}
         self._previous_summary = ""
+        self._released_fallback = False
+        self._released_fallback_reason = None
+        self._written_files = set()
+        self._stall_reason = None
+        self._last_activity_wall = _time.time()
+        self._run_done = threading.Event()
+        self._called_identical = {}
+        self._tool_progress = ToolProgress()
+        run_started_wall = _time.time()
 
         state_store = RunStateStore()
         RUNS_DIR.mkdir(parents=True, exist_ok=True)
@@ -734,6 +1223,9 @@ class AgentLoop:
             run_dir=run_dir,
             user_message=user_message,
             history=history,
+            contextual_identity_constraints=(
+                get_env_config().agent_tuning.vibe_contextual_identity_constraints
+            ),
         )
 
         context = ContextBuilder(self.registry, self.memory,
@@ -774,16 +1266,33 @@ class AgentLoop:
 
         iteration = 0
         final_content = ""
+        no_progress_reason: str | None = None
         content_filter_count = 0
         consecutive_content_filter_count = 0
         content_filter_circuit_breaker = False
         empty_model_response_iter: int | None = None
+        consecutive_empty_responses = 0
         llm_usage_summary = _new_llm_usage_summary(self.llm)
         last_response_model: str | None = None
         goal_continuations = 0
         goal_last_progress: tuple[int, int] | None = None
         wrap_up_at = max(1, int(self.max_iterations * 0.8))
 
+        # Zombie-run watchdog: fail a run that makes no forward progress
+        # (no LLM completion, no tool result) for the stall timeout instead
+        # of leaving it "running" forever with no state.json. Heartbeats do
+        # not count as progress - a hung tool keeps emitting them.
+        stall_timeout = _stall_timeout_seconds()
+        if stall_timeout > 0:
+            watchdog = threading.Thread(
+                target=self._stall_watchdog,
+                args=(trace, run_dir, state_store, stall_timeout),
+                name="run-stall-watchdog",
+                daemon=True,
+            )
+            watchdog.start()
+
+        stream_failure_streak = 0
         try:
             while iteration < self.max_iterations:
                 if self._cancel_event.is_set():
@@ -811,7 +1320,7 @@ class AgentLoop:
                 # tool history available for the model to reference instead of
                 # having every result past the most recent few cleared.
                 if tokens > int(_token_threshold() * 0.5):
-                    _microcompact(messages)
+                    self._microcompact_and_unblock(messages, trace, iteration)
                     tokens = estimate_tokens(messages)
 
                 # Layer 2: context collapse (fold long text, zero API cost)
@@ -834,15 +1343,45 @@ class AgentLoop:
                 # context as the most recent user message.
                 if iteration == wrap_up_at and 1 < iteration < self.max_iterations:
                     remaining = self.max_iterations - iteration
-                    messages.append({
-                        "role": "user",
-                        "content": (
-                            f"[SYSTEM] You have {remaining} iterations remaining out of "
-                            f"{self.max_iterations}. Please wrap up your work. "
-                            "Stop calling tools and provide your final answer as plain text. "
-                            "If you have partial results, summarize what you have so far."
-                        ),
-                    })
+                    wrap_content = (
+                        f"[SYSTEM] You have {remaining} iterations remaining out of "
+                        f"{self.max_iterations}. Wrap up your work now: finish any "
+                        "outstanding file writes or data updates that are part of your "
+                        "task FIRST, while tools are still available for a few more "
+                        "iterations. Do not start new analysis or re-verify data you "
+                        "already hold. Then provide your final answer as plain text; "
+                        "if your task was to update a file, state that it is done and where."
+                    )
+                    pending_directive = self._pending_write_directive(
+                        user_message, run_started_wall
+                    )
+                    if pending_directive:
+                        wrap_content += "\n\n" + pending_directive
+                        trace.write(
+                            {
+                                "type": "pending_write_directive",
+                                "iter": current_iter,
+                            }
+                        )
+                    messages.append({"role": "user", "content": wrap_content})
+
+                # Safety net: on the second-to-last iteration tools are still
+                # available, but the final iteration is text-only and cannot
+                # call tools. If the task names a target file that has not been
+                # written, force the write now so the run does not end
+                # "answered but incomplete".
+                if iteration == self.max_iterations - 1:
+                    pending_directive = self._pending_write_directive(
+                        user_message, run_started_wall
+                    )
+                    if pending_directive:
+                        trace.write(
+                            {
+                                "type": "pending_write_directive",
+                                "iter": current_iter,
+                            }
+                        )
+                        messages.append({"role": "system", "content": pending_directive})
 
                 # Streaming output + collect thinking text
                 thinking_chunks: List[str] = []
@@ -891,12 +1430,17 @@ class AgentLoop:
                 if is_last_iteration:
                     trace.write({"type": "forced_text_only", "iter": current_iter})
 
+                _llm_timeout_s = _llm_timeout_seconds()
+                llm_timeout = _llm_timeout_s if _llm_timeout_s > 0 else None
+
                 try:
                     response = self.llm.stream_chat(
                         messages,
                         tools=tool_defs,
                         on_text_chunk=_on_text_chunk,
                         on_reasoning_chunk=_on_reasoning_chunk,
+                        timeout=llm_timeout,
+                        idle_timeout_s=llm_timeout,
                         should_cancel=self._cancel_event.is_set,
                     )
                 except ProviderStreamError as exc:
@@ -904,12 +1448,23 @@ class AgentLoop:
                     # reset, relay hiccup) — mirrors the swarm worker policy.
                     # Deterministic 4xx errors fail immediately. Deltas from
                     # the failed attempt are dropped so the trace does not
-                    # contain duplicated thinking text.
+                    # contain duplicated thinking text. The delay escalates
+                    # across consecutive retryable failures, honoring the
+                    # provider's Retry-After header (bounded by the configured
+                    # cap) when present. A successful retry does not reset the
+                    # streak — only a clean first-attempt success does.
                     if not exc.retryable:
                         raise
+                    stream_failure_streak += 1
+                    retry_delay_s = (
+                        min(exc.retry_after_s, _stream_retry_max_delay_s())
+                        if exc.retry_after_s is not None
+                        else _stream_retry_backoff_s(stream_failure_streak)
+                    )
                     logger.warning(
-                        "Provider stream failed (iter %s), retrying once: %s",
+                        "Provider stream failed (iter %s), retrying once in %.2fs: %s",
                         current_iter,
+                        retry_delay_s,
                         exc,
                     )
                     self._emit(
@@ -919,24 +1474,39 @@ class AgentLoop:
                             "reason": "provider_stream_retry",
                             "provider": exc.provider,
                             "model": exc.model,
+                            "retry_delay_s": retry_delay_s,
                         },
                     )
                     thinking_chunks.clear()
                     reasoning_chars = 0
                     last_reasoning_emit = None
-                    _time.sleep(_stream_retry_delay_s())
+                    # Wait on the cancel event, not time.sleep: the delay now
+                    # escalates to the configured cap (30s by default) and a
+                    # provider Retry-After can ask for that much on the first
+                    # failure. A blocking sleep would make Stop take that long
+                    # to be observed; the event returns the moment it is set.
+                    self._cancel_event.wait(retry_delay_s)
+                    if self._cancel_event.is_set():
+                        break
                     response = self.llm.stream_chat(
                         messages,
                         tools=tool_defs,
                         on_text_chunk=_on_text_chunk,
                         on_reasoning_chunk=_on_reasoning_chunk,
+                        timeout=llm_timeout,
+                        idle_timeout_s=llm_timeout,
                         should_cancel=self._cancel_event.is_set,
                     )
+                else:
+                    stream_failure_streak = 0
 
                 # Cancelled mid-stream: discard this turn's partial response and
                 # end the run now, without executing any of its tool calls.
                 if self._cancel_event.is_set():
                     break
+
+                # An LLM response arrived - real progress for the stall watchdog.
+                self._last_activity_wall = _time.time()
 
                 usage = getattr(response, "usage_metadata", None)
                 if getattr(response, "response_model", None):
@@ -1013,8 +1583,8 @@ class AgentLoop:
                         break
                     trace.write({"type": "content_filter_skipped", "iter": current_iter})
                     messages.append({
-                        "role": "system",
-                        "content": CONTENT_FILTER_SKIP_MESSAGE,
+                        "role": "user",
+                        "content": f"<system>{CONTENT_FILTER_SKIP_MESSAGE}</system>",
                     })
                     continue
 
@@ -1033,7 +1603,72 @@ class AgentLoop:
                                 "model": getattr(self.llm, "model_name", None) or get_env_config().llm.langchain_model_name,
                             }
                         )
-                        break
+                        # A transient empty completion (no text, no tool calls)
+                        # must not kill a run that has already done its work:
+                        # nudge once and retry, failing only on a second
+                        # consecutive empty response.
+                        if consecutive_empty_responses >= MAX_CONSECUTIVE_EMPTY_RESPONSE_SKIPS:
+                            break
+                        consecutive_empty_responses += 1
+                        messages.append(
+                            {
+                                "role": "system",
+                                "content": (
+                                    "[SYSTEM] Your previous response was empty (no text, no tool "
+                                    "calls). Respond again with either your next tool call or "
+                                    "your final plain-text answer."
+                                ),
+                            }
+                        )
+                        continue
+                    # A real response resets the consecutive-empty counter.
+                    consecutive_empty_responses = 0
+                    # A model can answer the forced-text final iteration with its
+                    # native tool-call DSL as prose (see _looks_like_tool_call_syntax).
+                    # That is not an answer: retry once with a plain-text instruction,
+                    # and if no budget remains release a deterministic fallback instead
+                    # of leaking the raw markup to the user.
+                    if _looks_like_tool_call_syntax(final_content):
+                        trace.write(
+                            {
+                                "type": "tool_call_syntax_in_answer",
+                                "iter": current_iter,
+                            }
+                        )
+                        messages.append(
+                            {"role": "assistant", "content": final_content}
+                        )
+                        messages.append(
+                            {
+                                "role": "system",
+                                "content": (
+                                    "[SYSTEM] Your previous response was not released: it contained "
+                                    "tool-call syntax even though tool calling is unavailable now. "
+                                    "Provide the final answer as plain prose only, with no XML/DSML tags."
+                                ),
+                            }
+                        )
+                        final_content = ""
+                        if iteration < self.max_iterations:
+                            continue
+                        # No budget left: never leak the raw markup. The
+                        # grounding safe-fallback talks about instrument identity,
+                        # which is wrong for non-market tasks, so use a neutral
+                        # message here instead.
+                        final_content = (
+                            "My final response could not be delivered: it contained "
+                            "tool-call syntax instead of a plain-text answer. "
+                            "Please ask me to continue."
+                        )
+                        self._released_fallback = True
+                        self._released_fallback_reason = (
+                            "final answer withheld: it contained tool-call syntax on "
+                            "the forced-text iteration"
+                        )
+                        self._emit(
+                            "text_delta",
+                            {"delta": final_content, "iter": current_iter},
+                        )
                     if self._grounding is not None:
                         validation = self._grounding.validate_final_answer(final_content)
                         if not validation.valid:
@@ -1056,19 +1691,45 @@ class AgentLoop:
                             messages.append(
                                 {"role": "assistant", "content": final_content}
                             )
+                            recovery = self._grounding.recovery_action(validation)
+                            if recovery is not None and iteration < self.max_iterations:
+                                self._grounding.record_recovery(recovery)
+                                trace.write(
+                                    {
+                                        "type": "grounding_recovery",
+                                        "iter": current_iter,
+                                        "action": recovery,
+                                    }
+                                )
+                                react_trace.append(
+                                    {"type": "grounding_recovery", "action": recovery}
+                                )
+                                messages.append(
+                                    {
+                                        "role": "user",
+                                        "content": f"<system>{self._grounding.recovery_prompt(recovery, validation)}</system>",
+                                    }
+                                )
+                                final_content = ""
+                                continue
                             messages.append(
                                 {
-                                    "role": "system",
-                                    "content": self._grounding.correction_prompt(validation),
+                                    "role": "user",
+                                    "content": f"<system>{self._grounding.correction_prompt(validation)}</system>",
                                 }
                             )
                             final_content = ""
+                            # One extra revision when real iteration budget remains;
+                            # each revision costs one iteration, so without budget the
+                            # run must stop revising and release the safe fallback.
+                            revision_cap = 4 if self.max_iterations - iteration >= 3 else 3
                             if (
                                 iteration < self.max_iterations
-                                and self._grounding.validation_count < 3
+                                and self._grounding.validation_count < revision_cap
                             ):
                                 continue
                             final_content = self._grounding.safe_fallback()
+                            self._released_fallback = True
                             self._emit(
                                 "text_delta",
                                 {"delta": final_content, "iter": current_iter},
@@ -1176,6 +1837,31 @@ class AgentLoop:
                     response.tool_calls, context, messages, trace, react_trace, current_iter,
                 )
 
+                if (
+                    not self._cancel_event.is_set()
+                    and self._tool_progress.finish_iteration()
+                ):
+                    no_progress_reason = "no_progress: " + RECOVERY_MESSAGE
+                    final_content = RECOVERY_MESSAGE
+                    trace.write(
+                        {
+                            "type": "no_progress",
+                            "iter": current_iter,
+                            "iterations_without_progress": self._tool_progress.stalled_iterations,
+                        }
+                    )
+                    trace.write_text_entry(
+                        {"type": "answer", "iter": current_iter},
+                        field="content",
+                        value=final_content,
+                        offload_kind=f"answer-{current_iter}",
+                    )
+                    react_trace.append({"type": "answer", "content": final_content})
+                    self._emit(
+                        "text_delta", {"delta": final_content, "iter": current_iter}
+                    )
+                    break
+
                 # Layer 3: compress after all tools have executed
                 if compact_requested:
                     logger.info("Manual compact triggered by model")
@@ -1191,6 +1877,7 @@ class AgentLoop:
             trace.write({"type": "end", "iter": self._run_iteration, "status": "error", "reason": str(exc), "iterations": iteration})
             trace.close()
             state_store.mark_failure(run_dir, str(exc))
+            self._run_done.set()
             return {
                 "status": "failed",
                 "error_code": error_code,
@@ -1207,10 +1894,19 @@ class AgentLoop:
         # returned dict so SessionService can surface a meaningful UI
         # message instead of "Execution failed: unknown" (issue #114).
         final_reason: str | None = None
-        if self._cancel_event.is_set():
+        if self._stall_reason is not None:
+            # The stall watchdog already wrote the failed state; keep this
+            # run's terminal status honest instead of overwriting it.
+            final_reason = self._stall_reason
+            final_status = "failed"
+        elif self._cancel_event.is_set():
             final_reason = "cancelled by user"
             state_store.mark_cancelled(run_dir, final_reason)
             final_status = "cancelled"
+        elif no_progress_reason is not None:
+            final_reason = no_progress_reason
+            state_store.mark_failure(run_dir, final_reason)
+            final_status = "failed"
         elif content_filter_circuit_breaker:
             final_reason = (
                 f"content_filter_circuit_breaker: "
@@ -1222,6 +1918,22 @@ class AgentLoop:
         elif (run_dir / "artifacts" / "metrics.csv").exists() or final_content:
             state_store.mark_success(run_dir)
             final_status = "success"
+            if self._released_fallback:
+                final_reason = self._released_fallback_reason or (
+                    "final answer degraded to the deterministic fallback after "
+                    f"{self._grounding.validation_count if self._grounding else 0} "
+                    "rejected drafts could not be corrected within the iteration budget"
+                )
+            elif not self._released_fallback:
+                pending_directive = self._pending_write_directive(
+                    user_message, run_started_wall
+                )
+                if pending_directive:
+                    final_reason = (
+                        "run ended without writing the task target file(s): "
+                        + pending_directive
+                    )
+                    self._released_fallback = True
         elif empty_model_response_iter is not None:
             provider = self._llm_runtime.provider
             model = self._llm_runtime.configured_model or "(unset)"
@@ -1245,6 +1957,8 @@ class AgentLoop:
             "status": final_status,
             "iterations": iteration,
         }
+        if self._released_fallback:
+            end_event["degraded"] = True
         if final_reason is not None:
             end_event["reason"] = final_reason
         trace.write(end_event)
@@ -1259,6 +1973,8 @@ class AgentLoop:
             "iterations": iteration,
             "max_iterations": self.max_iterations,
         }
+        if self._released_fallback:
+            result["degraded"] = True
         configured_model = self._llm_runtime.configured_model
         result.update(
             {
@@ -1272,6 +1988,8 @@ class AgentLoop:
         if final_reason is not None:
             result["reason"] = final_reason
 
+        self._run_done.set()
+
         cf_warnings = compute_content_filter_warnings(
             content_filter_count, max(1, iteration),
         )
@@ -1279,6 +1997,75 @@ class AgentLoop:
             result["content_filter_warnings"] = cf_warnings
 
         return result
+
+    def _stall_watchdog(
+        self,
+        trace: TraceWriter,
+        run_dir: Path,
+        state_store: Any,
+        stall_timeout: float,
+    ) -> None:
+        """Fail the run when no forward progress happens for the stall timeout.
+
+        A run can hang inside a tool or provider call without ever raising:
+        the bash subprocess stuck in ``communicate()`` (2026-08-20 INTC run,
+        19:20:55 -> never returned) is the canonical case. Such a run stays
+        "running" forever with no state.json - a zombie. This daemon thread
+        watches wall-clock progress (LLM completions and tool results only,
+        NOT heartbeats) and, once the stall timeout passes, writes a failed
+        end event and state, and sets the cancel event so the loop exits at
+        its next boundary.
+
+        Args:
+            trace: Trace writer for this run.
+            run_dir: Run directory for state.json.
+            state_store: RunStateStore.
+            stall_timeout: Stall threshold in seconds.
+        """
+        # Capture the done-event locally: a reused AgentLoop replaces
+        # self._run_done when the next run starts, and this thread must
+        # not keep watching with the old run timeout.
+        run_done = self._run_done
+        warned = False
+        while not run_done.is_set():
+            wait_s = min(30.0, max(5.0, stall_timeout / 4))
+            if run_done.wait(timeout=wait_s):
+                return
+            idle = _time.time() - self._last_activity_wall
+            if idle < stall_timeout:
+                warned = False
+                continue
+            if not warned:
+                warned = True
+                self._emit(
+                    "stall_warning",
+                    {"idle_s": round(idle, 1), "timeout_s": stall_timeout},
+                )
+                continue
+            reason = (
+                "run stalled: no LLM completion or tool result for "
+                + str(int(idle)) + "s (stall watchdog)"
+            )
+            self._stall_reason = reason
+            try:
+                trace.write(
+                    {
+                        "type": "end",
+                        "iter": self._run_iteration,
+                        "status": "failed",
+                        "reason": reason,
+                        "stalled": True,
+                    }
+                )
+            except Exception:  # noqa: BLE001 - best-effort
+                pass
+            try:
+                state_store.mark_failure(run_dir, reason)
+            except Exception:  # noqa: BLE001 - best-effort
+                pass
+            self._emit("stalled", {"reason": reason})
+            self._cancel_event.set()
+            return
 
     # -- Tool execution with read/write batching --------------------------------
 
@@ -1333,7 +2120,35 @@ class AgentLoop:
 
             tool_def = self.registry.get(tc.name)
             is_repeatable = tool_def.repeatable if tool_def else False
-            if tc.name in self._called_ok and not is_repeatable:
+            # A None key means the arguments could not be canonicalised. The
+            # deterministic cache treats that as 'never cache'; the blocking
+            # gate must likewise treat it as 'never block', otherwise every
+            # un-serialisable call would collapse into a single identity and
+            # the second one would be skipped without ever running.
+            dedup_key = self._identical_call_key(tc.name, tc.arguments)
+            if dedup_key is not None and self._tool_progress.is_blocked(dedup_key):
+                failed_result = json.dumps(
+                    {
+                        "status": "error",
+                        "skipped": True,
+                        "reason": "This exact call already failed repeatedly in this run. Change strategy or ask the user for help.",
+                    }
+                )
+                self._record_blocked_tool_call(
+                    tc,
+                    failed_result,
+                    context,
+                    messages,
+                    trace,
+                    react_trace,
+                    iteration,
+                )
+                continue
+            if (
+                dedup_key is not None
+                and dedup_key in self._called_ok
+                and not is_repeatable
+            ):
                 logger.warning(f"Blocked duplicate call: {tc.name} (already succeeded)")
                 skip_msg = json.dumps({"skipped": True, "reason": f"{tc.name} already completed successfully. Use the previous result."})
                 messages.append(context.format_tool_result(tc.id, tc.name, skip_msg))
@@ -1358,6 +2173,39 @@ class AgentLoop:
                                 self._grounding.identity_summary(),
                             ),
                         )
+                    )
+                    continue
+
+            # Deterministic tools (e.g. financial_rigor calc) return the same
+            # result for the same args. Checked AFTER authorization above so a
+            # cached repeat can never bypass the identity gate. After auto-compact cleared earlier
+            # tool outputs, the model used to re-run identical expressions
+            # 5-9x each (2026-08-20 INTC run) to re-verify numbers it could
+            # no longer see. Serve an identical prior call from cache instead.
+            if tool_def is not None and getattr(tool_def, "deterministic", False):
+                cache_key = self._identical_call_key(tc.name, tc.arguments)
+                if cache_key is not None and cache_key in self._called_identical:
+                    cached = self._called_identical[cache_key]
+                    messages.append(context.format_tool_result(tc.id, tc.name, cached))
+                    self._successful_call_keys[tc.id] = cache_key
+                    self._called_ok.add(cache_key)
+                    trace.write({
+                        "type": "tool_result_cached",
+                        "iter": iteration,
+                        "tool": tc.name,
+                        "call_id": tc.id,
+                    })
+                    react_trace.append({"type": "tool_result_cached", "tool": tc.name})
+                    self._emit(
+                        "tool_result",
+                        {
+                            "tool": tc.name,
+                            "status": "ok",
+                            "elapsed_ms": 0,
+                            "preview": cached[:200],
+                            "call_id": tc.id,
+                            "cached": True,
+                        },
                     )
                     continue
 
@@ -1422,7 +2270,7 @@ class AgentLoop:
         react_trace: list,
         iteration: int,
     ) -> None:
-        """Record an identity-gated call without invoking its implementation.
+        """Record a blocked call without invoking its implementation.
 
         Args:
             tc: Provider tool-call object.
@@ -1790,6 +2638,146 @@ class AgentLoop:
             return False
         return bool(tool_def and getattr(tool_def, "is_readonly", False))
 
+    def _record_written_target(self, arguments: Mapping[str, Any]) -> None:
+        """Remember a file written by write_file/edit_file for completion checks."""
+        raw = arguments.get("path") or arguments.get("file_path")
+        if not raw:
+            return
+        p = Path(str(raw))
+        if not p.is_absolute() and self.memory.run_dir:
+            p = Path(self.memory.run_dir) / p
+        try:
+            self._written_files.add(str(p.resolve()).casefold())
+        except (OSError, ValueError):
+            self._written_files.add(str(p).casefold())
+
+    def _pending_write_directive(
+        self, user_message: str, run_started_wall: float
+    ) -> str:
+        """Return a directive naming task target files not yet written this run.
+
+        Empty when the message names no .md targets, carries no create/update
+        intent, or every named target has been written (directly via
+        write_file/edit_file, or by any process whose mtime is newer than the
+        run start - which covers the bash workaround).
+        """
+        if not _TARGET_ACTION_RE.search(user_message or ""):
+            return ""
+        targets = _named_target_paths(user_message)
+        if not targets:
+            return ""
+        pending: list[str] = []
+        # A bare target ("create X.md at the same folder") carries no directory;
+        # resolve it against the folders of the absolute targets named in the
+        # same message, or the run would never see the file the model wrote to
+        # the intended folder and would report a false "not written".
+        base_dirs = [p.parent for p in targets if p.parent != Path(".")]
+        any_written = False
+        for p in targets:
+            candidates = [p]
+            if not p.is_absolute() and p.parent == Path("."):
+                candidates += [d / p.name for d in base_dirs]
+            written = False
+            for cand in candidates:
+                try:
+                    key = str(cand.resolve()).casefold()
+                except (OSError, ValueError):
+                    key = str(cand).casefold()
+                if key in self._written_files:
+                    written = True
+                    break
+                if not written:
+                    try:
+                        if cand.exists() and cand.stat().st_mtime >= run_started_wall:
+                            written = True
+                            break
+                    except OSError:
+                        pass
+            if written:
+                any_written = True
+            else:
+                pending.append(str(p))
+        # If any named target was written this run, the create/update task is
+        # addressed; reference files named alongside (e.g. "refer to A, create B")
+        # are never "written" and must not trigger the directive.
+        if any_written or not pending:
+            return ""
+        return (
+            "[SYSTEM] The following task target file(s) have NOT been written "
+            "yet in this run: " + ", ".join(pending) + ". Write them NOW using "
+            "write_file/edit_file (or bash for file operations). If your task "
+            "was to create or update a file, a plain-text answer without the "
+            "file write is a failure."
+        )
+
+    def _microcompact_and_unblock(self, messages: list, trace: TraceWriter, iteration: int) -> list[str]:
+        """Run layer-1 microcompact and re-open lost readonly call identities.
+
+        A readable result for another argument variant, or a synthetic skip,
+        cannot satisfy "use the previous result". Keep an exact call gated if
+        any successful copy survives; never re-open mutating tools just because
+        their results were compacted away.
+
+        Args:
+            messages: Message list, mutated in place by the compaction.
+            trace: Run trace; a ``microcompact_cleared`` event is written
+                whenever the ledger is re-opened, because this layer used to
+                act silently and left no evidence for diagnosis.
+            iteration: Current ReAct iteration, recorded on the trace event.
+
+        Returns:
+            The tool names re-opened, for callers and tests to assert on.
+        """
+        readable_before = self._readable_success_keys(messages)
+        _microcompact(messages)
+        unreadable_tools = self._unblock_lost_readonly_results(messages, readable_before)
+        if unreadable_tools:
+            trace.write({
+                "type": "microcompact_cleared",
+                "iter": iteration,
+                "tools": unreadable_tools,
+            })
+        return unreadable_tools
+
+    def _readable_success_keys(self, messages: list) -> set[tuple[str, str]]:
+        """Identify surviving successful results, not synthetic skip/stub calls."""
+        return {
+            self._successful_call_keys[msg["tool_call_id"]]
+            for msg in messages
+            if msg.get("role") == "tool"
+            and msg.get("tool_call_id") in self._successful_call_keys
+            and not _result_data_gone(msg.get("content"))
+        }
+
+    def _unblock_lost_readonly_results(
+        self, messages: list, readable_before: set[tuple[str, str]]
+    ) -> list[str]:
+        """Recover only lost exact queries; context loss cannot replay writes."""
+        lost = readable_before - self._readable_success_keys(messages)
+        reopened = {
+            key for key in lost & self._called_ok if self._is_tool_readonly(key[0])
+        }
+        self._called_ok.difference_update(reopened)
+        return sorted({key[0] for key in reopened})
+
+    def _identical_call_key(self, tool_name: str, arguments: Mapping[str, Any]) -> tuple[str, str] | None:
+        """Build a stable key identifying a deterministic tool invocation.
+
+        Args:
+            tool_name: Tool name.
+            arguments: Tool arguments.
+
+        Returns:
+            Tuple of (tool_name, canonical JSON of the args) usable as a
+            dict key, or None when the args cannot be serialized.
+        """
+        try:
+            normalized = _normalize_tool_run_dir(dict(arguments or {}), self.memory.run_dir)
+            canonical = json.dumps(normalized, sort_keys=True, ensure_ascii=False, default=str)
+        except Exception:  # noqa: BLE001 - un-serializable args are never cached
+            return None
+        return (tool_name, canonical)
+
     def _finalize_tool_result(
         self,
         tc: Any,
@@ -1819,9 +2807,30 @@ class AgentLoop:
         if update_memory:
             self._update_memory(tc.name)
 
+        # A tool completed - real progress for the stall watchdog.
+        self._last_activity_wall = _time.time()
+
         success = _is_tool_success(result)
+        if update_memory:
+            self._tool_progress.record(
+                tc.name,
+                self._identical_call_key(tc.name, tc.arguments),
+                result,
+                success=success,
+                is_readonly=self._is_tool_readonly(tc.name),
+            )
         if success:
-            self._called_ok.add(tc.name)
+            recorded_key = self._identical_call_key(tc.name, tc.arguments)
+            if recorded_key is not None:
+                self._called_ok.add(recorded_key)
+                self._successful_call_keys[tc.id] = recorded_key
+            if tc.name == "backtest":
+                try:
+                    _archive_backtest_result(result, self.memory.run_dir)
+                except OSError as exc:
+                    logger.warning("Could not archive backtest output into active run: %s", exc)
+            if tc.name in {"write_file", "edit_file"}:
+                self._record_written_target(tc.arguments)
 
         if self._grounding is not None:
             self._grounding.ingest_tool_result(
@@ -1840,6 +2849,19 @@ class AgentLoop:
                         "identity": self._grounding.identity_summary(),
                     }
                 )
+
+        # Cache successful deterministic results so an identical later call is
+        # served without re-execution (regression: repeated financial_rigor
+        # calcs after compaction, 2026-08-20 INTC run).
+        if success:
+            try:
+                tool_def = self.registry.get(tc.name)
+            except Exception:  # noqa: BLE001
+                tool_def = None
+            if tool_def is not None and getattr(tool_def, "deterministic", False):
+                cache_key = self._identical_call_key(tc.name, tc.arguments)
+                if cache_key is not None:
+                    self._called_identical[cache_key] = result
 
         status = "ok" if success else "error"
         truncated = truncate_tool_result(result)
@@ -1902,24 +2924,13 @@ class AgentLoop:
             for msg in messages:
                 f.write(json.dumps(msg, default=str, ensure_ascii=False) + "\n")
 
+        readable_before = self._readable_success_keys(messages)
         system_msg = messages[0]
         body = messages[1:]
 
-        # Token-budget tail: walk backward to find how many recent messages to preserve
-        accumulated = 0
-        cut_idx = len(body)
-        for i in range(len(body) - 1, -1, -1):
-            content = body[i].get("content", "")
-            msg_tokens = (len(str(content)) // 4) + 10
-            if accumulated + msg_tokens > TAIL_TOKEN_BUDGET:
-                cut_idx = i + 1
-                break
-            accumulated += msg_tokens
-            cut_idx = i
-
-        # Don't split in the middle of a tool_call/tool_result pair
-        while 0 < cut_idx < len(body) and body[cut_idx].get("role") == "tool":
-            cut_idx += 1
+        # Token-budget tail: size messages with their tool-call arguments so
+        # oversized tool calls are folded instead of hiding in the tail.
+        cut_idx = _tail_cut_index(body)
 
         head = body[:cut_idx]
         tail = body[cut_idx:]
@@ -1943,6 +2954,8 @@ class AgentLoop:
         chunks = _summary_chunks(head)
         logger.info("Auto compact: folding %d summary chunks", len(chunks))
         summary = self._previous_summary or ""
+        degraded_compact = False
+        _compact_timeout = _llm_timeout_seconds()
         for conv_text in chunks:
             # Structured template while there is still nothing to update — that
             # covers a fresh session's first chunk and the corner case where
@@ -1956,10 +2969,68 @@ class AgentLoop:
                     focus_section=focus_section,
                 )
 
-            summary_resp = self.llm.chat([{"role": "user", "content": prompt}])
+            # A silent provider stall on the summary call used to freeze the
+            # whole run (no chunk arrives, so nothing aborts it). The provider
+            # httpx timeout only bounds time-between-bytes, not total time, and
+            # LangChain does not honor a per-call config "timeout", so a slow
+            # but alive server can run for many minutes. Enforce a hard
+            # wall-clock deadline via a daemon thread; on expiry fall back to
+            # hard truncation so the loop continues.
+            _compact_result: list = []
+            _compact_error: list = []
+
+            def _run_compact_summary() -> None:
+                try:
+                    resp = self.llm.chat(
+                        [{"role": "user", "content": prompt}],
+                        timeout=_compact_timeout if _compact_timeout > 0 else None,
+                    )
+                    _compact_result.append(resp)
+                except BaseException as exc:  # noqa: BLE001 - compaction must not crash the run
+                    _compact_error.append(exc)
+
+            if _compact_timeout > 0:
+                worker = threading.Thread(
+                    target=_run_compact_summary,
+                    name="compact-summary",
+                    daemon=True,
+                )
+                worker.start()
+                worker.join(timeout=_compact_timeout)
+                if worker.is_alive():
+                    logger.warning(
+                        "Auto compact summary call exceeded %.1fs; degrading compaction",
+                        _compact_timeout,
+                    )
+                    degraded_compact = True
+                    break
+                if _compact_error:
+                    logger.warning(
+                        "Auto compact LLM call failed (%s); degrading compaction",
+                        _compact_error[0],
+                    )
+                    degraded_compact = True
+                    break
+                summary_resp = _compact_result[0]
+            else:
+                summary_resp = self.llm.chat([{"role": "user", "content": prompt}])
             if summary_resp.content:
                 summary = summary_resp.content
+        if degraded_compact and not summary:
+            summary = (
+                "[compaction degraded: LLM summarization timed out or failed; "
+                "earlier tool results were truncated. "
+                f"Full transcript: {transcript_path}]"
+            )
         self._previous_summary = summary
+
+        # Preserve deterministic verification records across the compaction.
+        # The LLM summary does not reliably retain exact calc results, so the
+        # model used to re-run the same financial_rigor expressions after a
+        # compact to "re-verify" numbers it could no longer see (2026-08-20
+        # INTC run: identical calcs re-ran 5-9x each). Re-attach a terse
+        # ledger of already-verified values so the model does not re-run them.
+        verification_ledger = _verification_ledger(head)
 
         tokens_before = estimate_tokens(messages)
         trace.write_text_entry(
@@ -1979,6 +3050,12 @@ class AgentLoop:
         # Reconstruct: system + summary + acknowledge + preserved tail
         state_summary = self.memory.to_summary()
         compressed = f"[Conversation compressed — handoff summary. Transcript: {transcript_path}]\n\n{summary}"
+        if verification_ledger:
+            compressed += (
+                "\n\n[Verified tool results from the compressed turns - do NOT "
+                "re-run these tools, they are already verified]:\n"
+                + verification_ledger
+            )
         if state_summary and state_summary != "(empty state)":
             compressed += f"\n\nCurrent agent state:\n{state_summary}"
 
@@ -1989,6 +3066,7 @@ class AgentLoop:
 
         # Fix orphaned tool pairs in the reconstructed message list
         _fix_tool_pairs(messages)
+        self._unblock_lost_readonly_results(messages, readable_before)
 
     def _emit(self, event_type: str, data: Dict[str, Any]) -> None:
         """Fire an event via the callback."""
@@ -2010,8 +3088,10 @@ _LEGACY_LAZY = {
     "HEARTBEAT_INTERVAL_S": _heartbeat_interval_s,
     "REASONING_DELTA_MIN_INTERVAL_S": _reasoning_delta_min_interval_s,
     "STREAM_RETRY_DELAY_S": _stream_retry_delay_s,
+    "STREAM_RETRY_MAX_DELAY_S": _stream_retry_max_delay_s,
     "TOOL_TIMEOUT_SECONDS": _tool_timeout_seconds,
     "GOAL_MAX_CONTINUATIONS": _goal_max_continuations,
+    "STALL_TIMEOUT_SECONDS": _stall_timeout_seconds,
 }
 
 

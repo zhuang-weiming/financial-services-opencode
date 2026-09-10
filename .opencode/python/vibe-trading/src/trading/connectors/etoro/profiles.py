@@ -9,12 +9,15 @@ from __future__ import annotations
 
 from src.trading.types import READ_CAPABILITIES, TradingProfile
 
-ETORO_EXTENDED_CAPABILITIES = READ_CAPABILITIES + (
+ETORO_PAPER_TRADE_CAPABILITIES = READ_CAPABILITIES + (
     "orders.place",
     "orders.cancel",
     "positions.close",
     "orders.cancel_close",
     "positions.edit",
+)
+
+ETORO_EXTENDED_CAPABILITIES = ETORO_PAPER_TRADE_CAPABILITIES + (
     "copy.precheck",
     "copy.start",
     "copy.poll",
@@ -50,10 +53,13 @@ ETORO_PROFILES: tuple[TradingProfile, ...] = (
         label="eToro Demo · Public API Trade",
         environment="paper",
         transport="broker_sdk",
-        capabilities=ETORO_EXTENDED_CAPABILITIES,
+        capabilities=ETORO_PAPER_TRADE_CAPABILITIES,
         readonly=False,
         config={"profile": "paper"},
-        notes="Full demo trading and copy workflows via eToro Public API demo paths.",
+        notes=(
+            "Demo trading via eToro Public API demo paths. "
+            "Copy trading is not available on demo accounts — use etoro-live-trade."
+        ),
     ),
     TradingProfile(
         id="etoro-live-trade",

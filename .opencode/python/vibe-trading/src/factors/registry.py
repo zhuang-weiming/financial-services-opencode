@@ -352,6 +352,26 @@ class Registry:
         except Exception as exc:  # noqa: BLE001 — isolate compute failure
             raise RegistryError(f"{alpha_id}: compute() raised: {exc}") from exc
 
+        # Enforce NaN contract: any bar where a declared dependency is missing
+        # must produce NaN in the output, regardless of the alpha's internal logic.
+        # The mask's shape reference is the first declared dependency, not a
+        # hardcoded "close": 78 alphas declare columns_required without close,
+        # and the mask must still run for them. Pre-checks above guarantee every
+        # declared dependency is present in the panel.
+        deps = list(meta.get("columns_required", [])) + list(meta.get("extras_required", []))
+        if meta.get("requires_sector"):
+            deps.append("sector")
+        ref = next((panel[c] for c in deps if c in panel), None)
+        if ref is not None:
+            mask = pd.DataFrame(True, index=ref.index, columns=ref.columns)
+            for col in meta.get("columns_required", []):
+                mask = mask & panel[col].notna()
+            for col in meta.get("extras_required", []):
+                mask = mask & panel[col].notna()
+            if meta.get("requires_sector"):
+                mask = mask & panel["sector"].notna()
+            if isinstance(result, pd.DataFrame):
+                result = result.where(mask)
         return self._validate_output(alpha_id, result, panel)
 
     def _load_module(self, alpha: Alpha) -> ModuleType:

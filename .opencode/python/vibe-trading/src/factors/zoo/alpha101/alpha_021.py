@@ -101,4 +101,8 @@ def compute(panel: dict) -> pd.DataFrame:
     cond_c = (v_adv >= 1.0)
     one = make_one(close)
     out = where_ternary(cond_a, -1.0 * one, where_ternary(cond_b, one, where_ternary(cond_c, one, -1.0 * one)))
-    return out
+    # A NaN comparison is False, not NaN, so where_ternary's own
+    # np.isfinite safety net never fires here: every branch is a pure
+    # constant with no NaN dependency at all, so the whole chain stays
+    # finite through warmup instead of NaN.
+    return out.where(m8.notna() & s8.notna() & m2.notna() & v_adv.notna())

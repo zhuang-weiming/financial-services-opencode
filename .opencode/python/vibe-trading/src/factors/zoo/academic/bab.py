@@ -66,7 +66,7 @@ def compute(panel: dict[str, pd.DataFrame]) -> pd.DataFrame:
     operate per-column) see the same market series against each stock.
     """
     close = panel['close']
-    returns = close.pct_change()
+    returns = close.pct_change(fill_method=None)
 
     market_ret = returns.mean(axis=1, skipna=True)
     market_df = pd.DataFrame(

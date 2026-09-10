@@ -28,47 +28,169 @@ from src.tools.trade_journal_parsers import (
 
 logger = logging.getLogger(__name__)
 
+# (symbol, from_dt, to_dt) -> factor turning a from_dt price into to_dt's
+# caliber, or None when the symbol has no coverage. See pair_trades_fifo.
+CaliberAdjust = Any
+
+
+def build_frame_adjust(frames: dict[str, pd.DataFrame]):
+    """Build a :data:`CaliberAdjust` from OHLCV frames with adjusted closes.
+
+    The factor between two dates is ``close(to_dt) / close(from_dt)`` on the
+    frame's (adjusted) close, using the last bar on or before each date when
+    the exact date has no bar. Returns ``None`` for symbols or dates the
+    frames do not cover, which leaves that leg raw in the pairing. The frames
+    the shadow run writes are already split/dividend-adjusted on every loader
+    path, so this restates both legs of a roundtrip to one caliber (#15).
+    """
+
+    def _close_on_or_before(frame: pd.DataFrame, dt: pd.Timestamp) -> float | None:
+        if frame is None or frame.empty or "close" not in frame.columns:
+            return None
+        idx = frame.index
+        pos = idx.searchsorted(dt, side="right") - 1
+        if pos < 0:
+            return None
+        value = frame["close"].iloc[pos]
+        return float(value) if pd.notna(value) and float(value) > 0 else None
+
+    def adjust(symbol: str, from_dt, to_dt) -> float | None:
+        frame = frames.get(symbol)
+        if frame is None:
+            return None
+        start = _close_on_or_before(frame, pd.Timestamp(from_dt))
+        end = _close_on_or_before(frame, pd.Timestamp(to_dt))
+        if start is None or end is None:
+            return None
+        return end / start
+
+    return adjust
+
+
 _ALLOWED_EXT = {".csv", ".xlsx", ".xls"}
 
 
-def pair_trades_fifo(df: pd.DataFrame) -> list[dict[str, Any]]:
+def pair_trades_fifo(
+    df: pd.DataFrame,
+    adjust: "CaliberAdjust | None" = None,
+) -> list[dict[str, Any]]:
     """Pair buys and sells per symbol using FIFO to compute per-roundtrip PnL.
+
+    Long lots and short lots are both modelled: a sell that finds no open
+    long lot opens a short lot, and a buy first covers open shorts before
+    queueing as a long (#16). Short PnL is (entry - cover) x qty.
+
+    When ``adjust`` is given, each matched leg is restated to the sell (or
+    cover) date's price caliber before PnL, so a split or dividend between
+    the two dates no longer books as a fake loss or vanishes (#15). The
+    callback returns the factor that turns a price at the earlier date into
+    the later date's caliber, or ``None`` when no data covers the symbol,
+    which leaves that leg raw. Without ``adjust`` the pairing is byte-for-byte
+    the legacy raw behavior.
 
     Args:
         df: Standardized DataFrame (datetime-sorted).
+        adjust: Optional ``(symbol, from_dt, to_dt) -> factor | None``.
 
     Returns:
         List of dicts: symbol, buy_dt, sell_dt, qty, buy_price, sell_price,
         hold_days, pnl, pnl_pct. Unmatched positions are ignored.
     """
-    queues: dict[str, deque] = defaultdict(deque)
+    longs: dict[str, deque] = defaultdict(deque)
+    shorts: dict[str, deque] = defaultdict(deque)
     roundtrips: list[dict[str, Any]] = []
 
+    def _factor(symbol: str, from_dt: Any, to_dt: Any) -> float | None:
+        if adjust is None:
+            return None
+        try:
+            factor = adjust(symbol, from_dt, to_dt)
+        except Exception:  # an adjuster miss must not break pairing
+            return None
+        if factor is None or factor <= 0:
+            return None
+        return float(factor)
+
     for row in df.itertuples(index=False):
+        # Dividend cash rows and other non-trade events carry no position change.
+        if row.side not in ("buy", "sell"):
+            continue
         if row.side == "buy":
-            queues[row.symbol].append({
-                "dt": row.datetime,
-                "qty": row.quantity,
-                "price": row.price,
-                "fee": row.fee,
-            })
+            # Cover open shorts first, then queue any remainder as a long lot.
+            remaining = row.quantity
+            sq = shorts[row.symbol]
+            while remaining > 1e-9 and sq:
+                lot = sq[0]
+                cover_dt = pd.to_datetime(row.datetime)
+                entry_dt = pd.to_datetime(lot["dt"])
+                hold = (cover_dt - entry_dt).total_seconds() / 86400.0 if pd.notna(cover_dt) and pd.notna(entry_dt) else 0.0
+                # Restate the short lot into the cover date's caliber exactly as
+                # the long branch below does: the factor turns an entry-date
+                # price into the cover date's, so price is scaled BY it and the
+                # share count by its inverse. Dividing the price instead would
+                # book a 1:2 split as a large fake short profit.
+                factor = _factor(row.symbol, entry_dt, cover_dt) or 1.0
+                lot_qty_here = lot["qty"] / factor
+                entry_price = lot["price"] * factor
+                take = min(lot_qty_here, remaining)
+                gross = (entry_price - row.price) * take
+                # Fees were paid in original-caliber shares.
+                consumed = take * factor
+                entry_fee = lot["fee"] * (consumed / lot["qty"]) if lot["qty"] else 0.0
+                cover_fee = row.fee * (take / row.quantity) if row.quantity else 0.0
+                pnl = gross - entry_fee - cover_fee
+                cost = entry_price * take
+                pnl_pct = pnl / cost if cost else 0.0
+                roundtrips.append({
+                    "symbol": row.symbol,
+                    "buy_dt": lot["dt"],
+                    "sell_dt": row.datetime,
+                    "qty": take,
+                    "buy_price": lot["price"],
+                    "sell_price": row.price,
+                    "hold_days": round(hold, 2),
+                    "pnl": round(pnl, 2),
+                    "pnl_pct": round(pnl_pct, 4),
+                    "side": "short",
+                })
+                lot["fee"] -= entry_fee
+                lot["qty"] -= consumed
+                remaining -= take
+                if lot["qty"] <= 1e-9:
+                    sq.popleft()
+            if remaining > 1e-9:
+                longs[row.symbol].append({
+                    "dt": row.datetime,
+                    "qty": remaining,
+                    "price": row.price,
+                    "fee": row.fee,
+                })
             continue
 
-        # sell: match against oldest buys
+        # sell: match against oldest longs; anything left opens a short lot.
         remaining = row.quantity
-        q = queues[row.symbol]
+        q = longs[row.symbol]
         while remaining > 1e-9 and q:
             lot = q[0]
-            take = min(lot["qty"], remaining)
             sell_dt = pd.to_datetime(row.datetime)
             buy_dt = pd.to_datetime(lot["dt"])
+            factor = _factor(row.symbol, buy_dt, sell_dt)
+            # Restate the lot to the sell date's caliber: a 1:2 split turns a
+            # pre-split lot of 10@100 into 20@50, so the post-split sell
+            # matches the whole position instead of half plus a phantom
+            # short (#15).
+            factor = factor or 1.0
+            lot_qty_here = lot["qty"] / factor
+            lot_price_here = lot["price"] * factor
+            take = min(lot_qty_here, remaining)
             hold = (sell_dt - buy_dt).total_seconds() / 86400.0 if pd.notna(sell_dt) and pd.notna(buy_dt) else 0.0
-            gross = (row.price - lot["price"]) * take
-            # Proportional fee allocation
-            buy_fee = lot["fee"] * (take / lot["qty"]) if lot["qty"] else 0.0
+            gross = (row.price - lot_price_here) * take
+            # Proportional fee allocation (in original-caliber shares)
+            consumed = take * factor
+            buy_fee = lot["fee"] * (consumed / lot["qty"]) if lot["qty"] else 0.0
             sell_fee = row.fee * (take / row.quantity) if row.quantity else 0.0
             pnl = gross - buy_fee - sell_fee
-            cost = lot["price"] * take
+            cost = lot_price_here * take
             pnl_pct = pnl / cost if cost else 0.0
             roundtrips.append({
                 "symbol": row.symbol,
@@ -80,12 +202,20 @@ def pair_trades_fifo(df: pd.DataFrame) -> list[dict[str, Any]]:
                 "hold_days": round(hold, 2),
                 "pnl": round(pnl, 2),
                 "pnl_pct": round(pnl_pct, 4),
+                "side": "long",
             })
             lot["fee"] -= buy_fee
-            lot["qty"] -= take
+            lot["qty"] -= consumed
             remaining -= take
             if lot["qty"] <= 1e-9:
                 q.popleft()
+        if remaining > 1e-9:
+            shorts[row.symbol].append({
+                "dt": row.datetime,
+                "qty": remaining,
+                "price": row.price,
+                "fee": row.fee,
+            })
     return roundtrips
 
 
@@ -97,12 +227,16 @@ def _compute_profile(df: pd.DataFrame) -> dict[str, Any]:
     """Build the trading profile dict.
 
     Args:
-        df: Standardized DataFrame (datetime parsed, sorted).
+        df: Standardized DataFrame (datetime parsed, sorted). May carry
+            dividend cash rows; those are summed into ``total_dividends`` and
+            ``total_pnl`` but never counted as trades.
 
     Returns:
         Dict with avg_holding_days, trade_frequency_per_week, win_rate,
-        profit_loss_ratio, total_pnl, max_drawdown, top_symbols,
-        market_distribution, hourly_distribution, roundtrips_sample.
+        profit_loss_ratio, total_pnl, total_dividends,
+        dividend_rows_missing_cash, max_drawdown,
+        top_symbols, market_distribution, hourly_distribution,
+        roundtrips_sample.
     """
     if df.empty:
         return {"error": "empty trade journal"}
@@ -110,7 +244,18 @@ def _compute_profile(df: pd.DataFrame) -> dict[str, Any]:
     rts = pair_trades_fifo(df)
     rts_df = pd.DataFrame(rts)
 
-    total_trades = len(df)
+    trades_df = df[df["side"].isin(("buy", "sell"))]
+    dividend_amounts = df.loc[df["side"] == "dividend", "amount"]
+    total_dividends = round(float(dividend_amounts.sum()), 2)
+    # A dividend row that parsed with no cash is almost never a real zero
+    # payout — it means the export named its cash column something the parser
+    # did not recognise, and the payout would otherwise be booked as 0 with
+    # nothing to show for it. Surface the count so the caller can see that the
+    # journal was read but the money was not, instead of trusting a total that
+    # silently omits it.
+    dividend_rows_missing_cash = int((dividend_amounts == 0).sum())
+
+    total_trades = len(trades_df)
     span_days = max(1, (df["datetime"].max() - df["datetime"].min()).days)
     freq_per_week = round(total_trades / span_days * 7, 2)
 
@@ -122,17 +267,18 @@ def _compute_profile(df: pd.DataFrame) -> dict[str, Any]:
         win_rate = round(len(wins) / len(rts_df), 4)
         pnl_ratio = round(_safe_div(avg_win, abs(avg_loss)), 2) if avg_loss else float("inf") if avg_win else 0.0
         avg_hold = round(rts_df["hold_days"].mean(), 2)
-        total_pnl = round(rts_df["pnl"].sum(), 2)
+        total_pnl = round(rts_df["pnl"].sum() + total_dividends, 2)
         # Cumulative PnL → max drawdown
         cum = rts_df.sort_values("sell_dt")["pnl"].cumsum()
         running_max = cum.cummax()
         drawdown = (cum - running_max).min()
         max_drawdown = round(float(drawdown), 2) if pd.notna(drawdown) else 0.0
     else:
-        win_rate = pnl_ratio = avg_hold = total_pnl = max_drawdown = 0.0
+        win_rate = pnl_ratio = avg_hold = max_drawdown = 0.0
+        total_pnl = total_dividends
 
     top_symbols = (
-        df.groupby("symbol")
+        trades_df.groupby("symbol")
         .agg(trades=("symbol", "count"), total_amount=("amount", "sum"))
         .sort_values("total_amount", ascending=False)
         .head(10)
@@ -141,8 +287,8 @@ def _compute_profile(df: pd.DataFrame) -> dict[str, Any]:
         .to_dict(orient="records")
     )
 
-    market_dist = df["market"].value_counts().to_dict()
-    hourly_dist = df["datetime"].dt.hour.value_counts().sort_index().to_dict()
+    market_dist = trades_df["market"].value_counts().to_dict()
+    hourly_dist = trades_df["datetime"].dt.hour.value_counts().sort_index().to_dict()
     hourly_dist = {int(h): int(c) for h, c in hourly_dist.items()}
 
     sample = rts_df.head(5).copy()
@@ -161,6 +307,8 @@ def _compute_profile(df: pd.DataFrame) -> dict[str, Any]:
         "win_rate": win_rate,
         "profit_loss_ratio": pnl_ratio,
         "total_pnl": total_pnl,
+        "total_dividends": total_dividends,
+        "dividend_rows_missing_cash": dividend_rows_missing_cash,
         "max_drawdown": max_drawdown,
         "top_symbols": top_symbols,
         "market_distribution": market_dist,
@@ -341,7 +489,8 @@ def _compute_behavior(df: pd.DataFrame) -> dict[str, Any]:
     """Run all 4 behavior diagnostics.
 
     Args:
-        df: Standardized DataFrame (datetime-sorted).
+        df: Standardized DataFrame (datetime-sorted). Diagnostics run on the
+            buy/sell rows only; dividend cash rows are not trading behavior.
 
     Returns:
         Dict with disposition_effect / overtrading / chasing_momentum /
@@ -349,12 +498,13 @@ def _compute_behavior(df: pd.DataFrame) -> dict[str, Any]:
     """
     if df.empty:
         return {"error": "empty trade journal"}
+    trades_df = df[df["side"].isin(("buy", "sell"))]
     rts_df = pd.DataFrame(pair_trades_fifo(df))
     return {
         "disposition_effect": _disposition_effect(rts_df),
-        "overtrading": _overtrading(df, rts_df),
-        "chasing_momentum": _chasing_momentum(df),
-        "anchoring": _anchoring(df),
+        "overtrading": _overtrading(trades_df, rts_df),
+        "chasing_momentum": _chasing_momentum(trades_df),
+        "anchoring": _anchoring(trades_df),
     }
 
 

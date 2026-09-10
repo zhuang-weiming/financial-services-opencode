@@ -24,15 +24,16 @@ description: 标准化个股深度分析流程 - 强制走"多 skill 综合"路�
 ## 强制 7 维分析 (每次必走)
 
 ### 维度 1: 估值模型 (Valuation)
-- 加载 skill: `valuation-model` 或 subagent: `financial-analysis`
+- 加载 skill: `vibe-trading-valuation-model` 或 subagent: `financial-analysis`
 - 必输出: PE, PB, PS, EV/EBITDA, DCF 估算 (如有)
 - 必须标注假设 (增长率, 折现率, 终值)
 - 可以做"偏低/合理/偏高"的判断，但必须标注假设
 
 ### 维度 2: 技术分析 (Technical)
-- 加载 skill: `alpha-engine-v21` (V21 WT1/WT2)
-- 可选: `technical-basic`, `candlestick`, `elliott-wave`
-- 必输出: WT1, WT2, 当前百分位, 信号状态
+- **首选加载 skill: `trend-analysis-multi-algo`**（9 算法强制启动 — WaveTrend + 技术三维投票 + 蜡烛图 + 缠论 + 艾略特波浪 + 谐波 + SMC + 一目均衡表）
+- 底层单一算法 skill（按需）: `alpha-engine-v21` (V21 WT1/WT2), `vibe-trading-technical-basic`, `vibe-trading-candlestick`, `vibe-trading-elliott-wave`, `vibe-trading-chanlun`, `vibe-trading-harmonic`, `vibe-trading-ichimoku`, `vibe-trading-smc`
+- 必输出: WT1/WT2 + 当前百分位 + **9 算法信号矩阵** + 分歧分析 + 时间尺度分层
+- **禁止只跑单一算法就下技术结论**（历史教训：2026-09-10 光大证券初版只跑 WaveTrend，遗漏缠论顶分型/SMC BOS 熊/蜡烛图看空吞没）
 - 可以给出信号解读（如"WT1 高位，历史上动量延续"），需引用回测
 
 ### 维度 3: 资金流向 (Fund Flow)
@@ -41,7 +42,7 @@ description: 标准化个股深度分析流程 - 强制走"多 skill 综合"路�
 - 可以做"资金面偏正/负"的判断，标数据源
 
 ### 维度 4: 舆情 / 政策 / 新闻 (Sentiment)
-- 加载 skill: `sentiment-analysis` + web search
+- 加载 skill: `vibe-trading-sentiment-analysis` + web search
 - 必输出: 最近 30 天重要新闻分类 (业绩/政策/行业/公司)
 - 可以给出舆情整体判断，标注来源
 

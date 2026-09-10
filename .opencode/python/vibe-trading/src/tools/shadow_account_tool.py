@@ -280,11 +280,13 @@ class RenderShadowReportTool(BaseTool):
         except ValueError as exc:
             return _err(str(exc))
 
-        result = load_cached_result(profile.shadow_id)
+        today = date.today()
+        window_end = kwargs.get("window_end") or today.isoformat()
+        window_start = kwargs.get("window_start") or (today - timedelta(days=365)).isoformat()
+        result = load_cached_result(
+            profile, window_start=window_start, window_end=window_end,
+        )
         if result is None:
-            today = date.today()
-            window_end = kwargs.get("window_end") or today.isoformat()
-            window_start = kwargs.get("window_start") or (today - timedelta(days=365)).isoformat()
             try:
                 result = run_shadow_backtest(
                     profile,
@@ -302,7 +304,9 @@ class RenderShadowReportTool(BaseTool):
                         missed_signals_pnl=0.0, noise_trades_pnl=0.0, early_exit_pnl=0.0,
                         late_exit_pnl=0.0, overtrading_pnl=0.0, counterfactual_trades=(),
                     ),
-                    shadow_total_pnl=0.0, real_total_pnl=0.0, delta_pnl=0.0,
+                    shadow_total_pnl=None,
+                    real_total_pnl=0.0,
+                    delta_pnl=None,
                 )
 
         today_signals = (

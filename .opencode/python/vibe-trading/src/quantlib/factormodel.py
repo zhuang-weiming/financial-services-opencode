@@ -55,6 +55,7 @@ from dataclasses import dataclass
 
 import numpy as np
 import pandas as pd
+from scipy.stats import rankdata, skew, kurtosis, t as student_t
 
 __all__ = [
     "DEFAULT_WINSORISE",
@@ -62,6 +63,8 @@ __all__ = [
     "MIN_CROSS_SECTION",
     "STYLE_FACTOR_DEFINITIONS",
     "FactorReturnFit",
+    "FactorRiskDecomposition",
+    "FactorICResult",
     "StyleDrift",
     "standardise_exposures",
     "build_style_exposures",
@@ -69,6 +72,8 @@ __all__ = [
     "portfolio_style_exposure",
     "style_drift",
     "factor_return_attribution",
+    "factor_risk_decomposition",
+    "factor_ic_analysis",
 ]
 
 #: Fraction trimmed from each tail before standardising.
@@ -134,6 +139,35 @@ class FactorReturnFit:
     observations: int
 
 
+
+@dataclass(frozen=True)
+class FactorICResult:
+    """Summary of cross-sectional Information Coefficient (IC) time-series dynamics.
+
+    Attributes:
+        ic_mean: Mean Information Coefficient across observed cross-sections.
+        ic_std: Sample standard deviation (ddof=1) of the IC time series.
+        ic_ir: Information Ratio of the factor IC (mean / std).
+        ic_t_stat: t-statistic for H0: mean IC == 0.
+        ic_p_value: Two-sided p-value of ic_t_stat.
+        ic_skewness: Skewness of the daily IC distribution.
+        ic_kurtosis: Non-excess kurtosis (3.0 for normal) of the daily IC distribution.
+        positive_ic_fraction: Fraction of cross-sections with positive IC.
+        n_periods: Number of valid cross-sectional dates evaluated.
+        ic_series: Time series of cross-sectional IC values per date.
+    """
+
+    ic_mean: float
+    ic_std: float
+    ic_ir: float
+    ic_t_stat: float
+    ic_p_value: float
+    ic_skewness: float
+    ic_kurtosis: float
+    positive_ic_fraction: float
+    n_periods: int
+    ic_series: pd.Series
+
 @dataclass(frozen=True)
 class StyleDrift:
     """How much a portfolio's exposures moved over the observed history.
@@ -157,6 +191,51 @@ class StyleDrift:
     total_change: pd.Series
     max_abs_change: pd.Series
 
+
+
+@dataclass(frozen=True)
+class FactorRiskDecomposition:
+    """Portfolio risk decomposition into factor and asset-specific components.
+
+    Attributes:
+        total_variance: Total portfolio variance.
+        total_volatility: Total portfolio volatility (standard deviation).
+        factor_variance: Portfolio variance explained by common factors.
+        factor_volatility: Portfolio volatility from common factors.
+        specific_variance: Portfolio variance from asset-specific (idiosyncratic) risk.
+        specific_volatility: Portfolio volatility from asset-specific risk.
+        factor_variance_fraction: Fraction of total variance explained by factors.
+        specific_variance_fraction: Fraction of total variance from idiosyncratic risk.
+        portfolio_exposures: Portfolio exposures across factors.
+        factor_marginal_contributions: Marginal contribution to risk (MCR) per factor.
+        factor_risk_contributions: Absolute risk contribution per factor (sums to factor risk).
+        factor_pcr: Percentage contribution to risk (PCR) per factor.
+        asset_marginal_contributions: Marginal contribution to risk (MCR) per asset.
+        asset_risk_contributions: Absolute risk contribution per asset (sums to total volatility).
+        asset_pcr: Percentage contribution to risk (PCR) per asset (sums to 1.0 when total_volatility > 0, otherwise zero).
+        specific_risk_contributions: Specific risk contribution per asset.
+        specific_pcr: Percentage contribution from specific risk per asset.
+        unmatched_weight: Portfolio weight in assets lacking factor exposure data.
+    """
+
+    total_variance: float
+    total_volatility: float
+    factor_variance: float
+    factor_volatility: float
+    specific_variance: float
+    specific_volatility: float
+    factor_variance_fraction: float
+    specific_variance_fraction: float
+    portfolio_exposures: pd.Series
+    factor_marginal_contributions: pd.Series
+    factor_risk_contributions: pd.Series
+    factor_pcr: pd.Series
+    asset_marginal_contributions: pd.Series
+    asset_risk_contributions: pd.Series
+    asset_pcr: pd.Series
+    specific_risk_contributions: pd.Series
+    specific_pcr: pd.Series
+    unmatched_weight: float = 0.0
 
 def standardise_exposures(
     values: pd.Series,
@@ -513,3 +592,261 @@ def factor_return_attribution(
     contributions["specific"] = portfolio_return - explained
     contributions["total"] = portfolio_return
     return contributions
+
+
+def factor_risk_decomposition(
+    portfolio_weights: pd.Series | Mapping[str, float],
+    exposures: pd.DataFrame,
+    factor_cov: pd.DataFrame,
+    specific_variances: pd.Series | Mapping[str, float] | None = None,
+) -> FactorRiskDecomposition:
+    """Decompose portfolio risk into systematic factor and idiosyncratic components.
+
+    Implements the Euler homogeneous risk decomposition for multi-factor models
+    (Barra/Axioma standard framework):
+
+        Total Variance = w^T X Sigma_F X^T w + w^T D w
+
+    where:
+      * ``w`` is the portfolio weight vector (N x 1)
+      * ``X`` is the asset factor exposure matrix (N x K)
+      * ``Sigma_F`` is the factor covariance matrix (K x K)
+      * ``D`` is the diagonal matrix of specific variances (N x N)
+
+    Args:
+        portfolio_weights: Asset weights in the portfolio.
+        exposures: Asset factor exposures (rows = assets, columns = factors).
+        factor_cov: Covariance matrix of factor returns (K x K).
+        specific_variances: Asset-specific (idiosyncratic) return variances.
+            Defaults to zero if omitted.
+
+    Returns:
+        :class:`FactorRiskDecomposition` containing total/factor/specific
+        variances, volatilities, marginal contributions to risk (MCR), and
+        percentage contributions to risk (PCR) per factor and per asset.
+
+    Raises:
+        ValueError: If weights or matrices are empty, contain non-finite values,
+            or share no common assets or factors.
+    """
+    w_series = pd.Series(portfolio_weights, dtype=float)
+    if w_series.empty:
+        raise ValueError("portfolio_weights cannot be empty")
+    if not np.isfinite(w_series.values).all():
+        raise ValueError("portfolio_weights contains non-finite values")
+
+    if not isinstance(exposures, pd.DataFrame) or exposures.empty:
+        raise ValueError("exposures must be a non-empty DataFrame")
+    if not np.isfinite(exposures.values).all():
+        raise ValueError("exposures contains non-finite values")
+
+    if not isinstance(factor_cov, pd.DataFrame) or factor_cov.empty:
+        raise ValueError("factor_cov must be a non-empty DataFrame")
+    if not np.isfinite(factor_cov.values).all():
+        raise ValueError("factor_cov contains non-finite values")
+
+    # Align assets
+    assets = w_series.index.intersection(exposures.index)
+    if assets.empty:
+        raise ValueError(
+            f"No matching assets between weights ({sorted(w_series.index)}) and exposures ({sorted(exposures.index)})"
+        )
+
+    unmatched_weight = float(w_series.drop(index=assets, errors="ignore").abs().sum())
+    w = w_series.loc[assets]
+    X = exposures.loc[assets]
+
+    # Align factors
+    factors = X.columns.intersection(factor_cov.index).intersection(factor_cov.columns)
+    if factors.empty:
+        raise ValueError(
+            f"No matching factors between exposures ({sorted(X.columns)}) and factor_cov ({sorted(factor_cov.index)})"
+        )
+
+    X = X[factors]
+    F = factor_cov.loc[factors, factors]
+    F_mat = F.to_numpy(dtype=float)
+    if not np.allclose(F_mat, F_mat.T, atol=1e-8):
+        raise ValueError("factor_cov matrix must be symmetric")
+    eigvals = np.linalg.eigvalsh(F_mat)
+    if np.min(eigvals) < -1e-8:
+        raise ValueError("factor_cov matrix must be positive semi-definite")
+
+    # Align specific variances
+    if specific_variances is not None:
+        spec_var_s = pd.Series(specific_variances, dtype=float)
+        if not np.isfinite(spec_var_s.values).all():
+            raise ValueError("specific_variances contains non-finite values")
+        d = spec_var_s.reindex(assets, fill_value=0.0).clip(lower=0.0)
+    else:
+        d = pd.Series(0.0, index=assets, dtype=float)
+
+    # Portfolio factor exposure: x_p = X^T w (K x 1)
+    x_p = X.T.dot(w)
+
+    # Factor variance: x_p^T F x_p
+    F_x_p = F.dot(x_p)
+    factor_var = float(np.maximum(0.0, x_p.dot(F_x_p)))
+    factor_vol = float(np.sqrt(factor_var))
+
+    # Specific variance: sum(w_i^2 * d_i)
+    spec_var = float(np.maximum(0.0, (w**2 * d).sum()))
+    spec_vol = float(np.sqrt(spec_var))
+
+    total_var = float(np.maximum(0.0, factor_var + spec_var))
+    total_vol = float(np.sqrt(total_var))
+
+    var_denom = total_var if total_var > 0 else 1.0
+    factor_var_frac = factor_var / var_denom if total_var > 0 else 0.0
+    spec_var_frac = spec_var / var_denom if total_var > 0 else 0.0
+
+    if total_vol > 0:
+        # Factor MCR = (F x_p) / total_vol
+        factor_mcr = F_x_p / total_vol
+        factor_rc = x_p * factor_mcr
+        factor_pcr = factor_rc / total_vol
+
+        # Specific risk contribution per asset = (w_i^2 * d_i) / total_vol
+        spec_rc = (w**2 * d) / total_vol
+        spec_pcr = spec_rc / total_vol
+
+        # Asset MCR = (X (F x_p) + d * w) / total_vol
+        asset_mcr = (X.dot(F_x_p) + d * w) / total_vol
+        asset_rc = w * asset_mcr
+        asset_pcr = asset_rc / total_vol
+    else:
+        factor_mcr = pd.Series(0.0, index=factors, dtype=float)
+        factor_rc = pd.Series(0.0, index=factors, dtype=float)
+        factor_pcr = pd.Series(0.0, index=factors, dtype=float)
+        spec_rc = pd.Series(0.0, index=assets, dtype=float)
+        spec_pcr = pd.Series(0.0, index=assets, dtype=float)
+        asset_mcr = pd.Series(0.0, index=assets, dtype=float)
+        asset_rc = pd.Series(0.0, index=assets, dtype=float)
+        asset_pcr = pd.Series(0.0, index=assets, dtype=float)
+
+    return FactorRiskDecomposition(
+        total_variance=total_var,
+        total_volatility=total_vol,
+        factor_variance=factor_var,
+        factor_volatility=factor_vol,
+        specific_variance=spec_var,
+        specific_volatility=spec_vol,
+        factor_variance_fraction=factor_var_frac,
+        specific_variance_fraction=spec_var_frac,
+        portfolio_exposures=x_p,
+        factor_marginal_contributions=factor_mcr,
+        factor_risk_contributions=factor_rc,
+        factor_pcr=factor_pcr,
+        asset_marginal_contributions=asset_mcr,
+        asset_risk_contributions=asset_rc,
+        asset_pcr=asset_pcr,
+        specific_risk_contributions=spec_rc,
+        specific_pcr=spec_pcr,
+        unmatched_weight=unmatched_weight,
+    )
+
+
+def factor_ic_analysis(
+    factor_panel: pd.DataFrame,
+    forward_returns: pd.DataFrame,
+    method: str = "spearman",
+    min_cross_section: int = MIN_CROSS_SECTION,
+) -> FactorICResult:
+    """Evaluate cross-sectional Information Coefficient (IC) time-series dynamics.
+
+    Measures the predictive power and persistence of a factor by calculating
+    daily/periodic cross-sectional correlations between factor scores and subsequent
+    forward returns (Grinold-Kahn fundamental law framework).
+
+    Args:
+        factor_panel: DataFrame of factor scores (index = dates, columns = assets).
+        forward_returns: DataFrame of forward returns (same shape and alignment; should be pre-shifted by caller).
+        method: Correlation method, ``'spearman'`` (Rank IC) or ``'pearson'`` (Linear IC).
+        min_cross_section: Minimum number of valid assets on a date to compute IC.
+
+    Returns:
+        :class:`FactorICResult` containing mean IC, IC IR, t-statistic, p-value,
+        higher moments, and full IC time series.
+
+    Raises:
+        ValueError: If inputs are empty, share no common dates or assets, or method is unknown.
+    """
+    if method not in ("spearman", "pearson"):
+        raise ValueError(f"method must be 'spearman' or 'pearson', got {method!r}")
+
+    if factor_panel.empty or forward_returns.empty:
+        raise ValueError("factor_panel and forward_returns must be non-empty")
+
+    # Align dates and assets
+    common_dates = factor_panel.index.intersection(forward_returns.index)
+    common_assets = factor_panel.columns.intersection(forward_returns.columns)
+
+    if common_dates.empty or common_assets.empty:
+        raise ValueError("No common dates and assets between factor_panel and forward_returns")
+
+    f_sub = factor_panel.loc[common_dates, common_assets]
+    r_sub = forward_returns.loc[common_dates, common_assets]
+
+    ic_records: dict[object, float] = {}
+
+    for date in common_dates:
+        f_row = f_sub.loc[date].dropna()
+        r_row = r_sub.loc[date].dropna()
+        shared = f_row.index.intersection(r_row.index)
+        if len(shared) < min_cross_section:
+            continue
+
+        f_vals = f_row.loc[shared].to_numpy(dtype=float)
+        r_vals = r_row.loc[shared].to_numpy(dtype=float)
+
+        if method == "spearman":
+            f_vals = rankdata(f_vals)
+            r_vals = rankdata(r_vals)
+
+        f_std = np.std(f_vals, ddof=1)
+        r_std = np.std(r_vals, ddof=1)
+
+        if f_std > 0 and r_std > 0:
+            corr = float(np.corrcoef(f_vals, r_vals)[0, 1])
+            if np.isfinite(corr):
+                ic_records[date] = corr
+
+    if not ic_records:
+        raise ValueError(
+            f"No cross-section had at least {min_cross_section} valid asset pairs to compute IC"
+        )
+
+    ic_series = pd.Series(ic_records, dtype=float, name="ic").sort_index()
+    n = len(ic_series)
+    mean_ic = float(ic_series.mean())
+
+    if n > 1:
+        std_ic = float(ic_series.std(ddof=1))
+        ic_ir = mean_ic / std_ic if std_ic > 0 else float("nan")
+        t_stat = ic_ir * np.sqrt(n) if std_ic > 0 else float("nan")
+        p_val = float(2 * student_t.sf(abs(t_stat), df=n - 1)) if np.isfinite(t_stat) else float("nan")
+        sk = float(skew(ic_series.to_numpy(), bias=False)) if n > 2 else 0.0
+        # Non-excess kurtosis (normal == 3.0)
+        kurt = float(kurtosis(ic_series.to_numpy(), fisher=False, bias=False)) if n > 3 else 3.0
+    else:
+        std_ic = float("nan")
+        ic_ir = float("nan")
+        t_stat = float("nan")
+        p_val = float("nan")
+        sk = 0.0
+        kurt = 3.0
+
+    pos_frac = float((ic_series > 0).mean()) if n > 0 else 0.0
+
+    return FactorICResult(
+        ic_mean=mean_ic,
+        ic_std=std_ic,
+        ic_ir=ic_ir,
+        ic_t_stat=t_stat,
+        ic_p_value=p_val,
+        ic_skewness=sk,
+        ic_kurtosis=kurt,
+        positive_ic_fraction=pos_frac,
+        n_periods=n,
+        ic_series=ic_series,
+    )

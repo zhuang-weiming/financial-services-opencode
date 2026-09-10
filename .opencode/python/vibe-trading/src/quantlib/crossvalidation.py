@@ -52,6 +52,7 @@ __all__ = [
     "Split",
     "combinatorial_purged_splits",
     "detect_boundary_leakage",
+    "group_purged_kfold_splits",
     "purged_kfold_splits",
     "purged_walk_forward_splits",
 ]
@@ -177,27 +178,32 @@ def _apply_purge_and_embargo(
     n = label_ends.size
     starts = np.arange(n)
     test_positions = np.flatnonzero(test_mask)
-    first_test, last_test = int(test_positions[0]), int(test_positions[-1])
-
-    # The test set's own footprint runs from its first observation to the last
-    # index any of its labels reaches -- not merely to its last row.
-    test_span_end = int(max(last_test, label_ends[test_positions].max()))
+    if test_positions.size == 0:
+        return (starts, 0, 0)
 
     candidate = ~test_mask
-    # Closed intervals on both ends: [start_i, end_i] and [first_test, test_span_end]
-    # overlap when start_i <= test_span_end and end_i >= first_test.
-    overlaps = (starts <= test_span_end) & (label_ends >= first_test)
-    purged_mask = candidate & overlaps
-    candidate_after_purge = candidate & ~overlaps
+    breaks = np.where(np.diff(test_positions) > 1)[0]
+    segment_starts = np.insert(test_positions[breaks + 1], 0, test_positions[0])
+    segment_ends = np.append(test_positions[breaks], test_positions[-1])
 
-    if embargo_size > 0:
-        embargo_end = min(test_span_end + embargo_size, n - 1)
-        in_embargo = (starts > test_span_end) & (starts <= embargo_end)
-    else:
-        in_embargo = np.zeros(n, dtype=bool)
+    purged_mask = np.zeros(n, dtype=bool)
+    embargo_mask = np.zeros(n, dtype=bool)
 
-    embargo_mask = candidate_after_purge & in_embargo
-    train_mask = candidate_after_purge & ~in_embargo
+    for seg_start, seg_end in zip(segment_starts, segment_ends):
+        seg_positions = np.arange(seg_start, seg_end + 1)
+        seg_span_end = int(max(seg_end, label_ends[seg_positions].max()))
+
+        overlaps = (starts <= seg_span_end) & (label_ends >= seg_start)
+        purged_mask |= (candidate & overlaps)
+
+        if embargo_size > 0:
+            emb_end = min(seg_span_end + embargo_size, n - 1)
+            in_emb = (starts > seg_span_end) & (starts <= emb_end)
+            embargo_mask |= (candidate & in_emb)
+
+    candidate_after_purge = candidate & ~purged_mask
+    embargo_mask = candidate_after_purge & embargo_mask
+    train_mask = candidate_after_purge & ~embargo_mask
 
     return (
         np.flatnonzero(train_mask),
@@ -260,12 +266,102 @@ def purged_kfold_splits(
         train, purged, embargoed = _apply_purge_and_embargo(
             label_ends, test_mask, embargo_size
         )
+        if train.size == 0:
+            raise ValueError(f"Purge and embargo removed all training samples for fold {fold}")
         yield Split(
             train=train,
             test=np.arange(start, stop),
             purged=purged,
             embargoed=embargoed,
             test_bounds=(start, stop - 1),
+        )
+
+
+def group_purged_kfold_splits(
+    groups: Sequence[object] | pd.Series | np.ndarray,
+    n_folds: int = 5,
+    embargo_fraction: float = DEFAULT_EMBARGO_FRACTION,
+) -> Iterator[Split]:
+    """Purged and embargoed K-fold cross-validation for panel and multi-asset datasets.
+
+    Groups all observations sharing a time group identifier (e.g. date or bar timestamp)
+    so that simultaneous observations across different assets are never split across
+    train and test partitions.
+
+    Args:
+        groups: Group identifiers (e.g. dates or bar index) for each sample row in order.
+        n_folds: Number of folds, at least :data:`MIN_FOLDS`.
+        embargo_fraction: Fraction of unique ordered groups embargoed after each test block.
+
+    Yields:
+        One :class:`Split` per fold, with ``train`` and ``test`` containing row indices.
+
+    Raises:
+        ValueError: If ``n_folds`` is invalid, fewer unique groups than folds exist,
+            or ``embargo_fraction`` is out of bounds.
+    """
+    if n_folds < MIN_FOLDS:
+        raise ValueError(f"n_folds must be at least {MIN_FOLDS}, got {n_folds}")
+    if not 0.0 <= embargo_fraction < 1.0:
+        raise ValueError(f"embargo_fraction must be in [0, 1), got {embargo_fraction}")
+
+    grp_array = np.asarray(groups)
+    n_samples = len(grp_array)
+    if n_samples == 0:
+        raise ValueError("groups array cannot be empty")
+
+    # Find unique groups preserving chronological order of appearance
+    unique_groups, first_indices = np.unique(grp_array, return_index=True)
+    # Sort by appearance order
+    order = np.argsort(first_indices)
+    unique_groups = unique_groups[order]
+    n_groups = len(unique_groups)
+
+    if n_groups < n_folds:
+        raise ValueError(f"{n_groups} unique groups cannot make {n_folds} folds")
+
+    # Map each group to its member row indices
+    group_to_rows: dict[object, np.ndarray] = {}
+    for idx, g in enumerate(grp_array):
+        group_to_rows.setdefault(g, []).append(idx)
+    for g in group_to_rows:
+        group_to_rows[g] = np.array(group_to_rows[g], dtype=int)
+
+    embargo_groups = int(round(n_groups * embargo_fraction))
+    boundaries = np.linspace(0, n_groups, n_folds + 1).astype(int)
+
+    for fold in range(n_folds):
+        start_g, stop_g = int(boundaries[fold]), int(boundaries[fold + 1])
+        if stop_g <= start_g:
+            continue
+
+        test_groups = set(unique_groups[start_g:stop_g])
+        embargo_end_g = min(n_groups, stop_g + embargo_groups)
+        embargo_groups_set = set(unique_groups[stop_g:embargo_end_g])
+
+        test_rows_list = [group_to_rows[g] for g in unique_groups[start_g:stop_g]]
+        test_rows = np.concatenate(test_rows_list) if test_rows_list else np.array([], dtype=int)
+        if test_rows.size == 0:
+            continue
+        train_rows_list = []
+        for g in unique_groups:
+            if g not in test_groups and g not in embargo_groups_set:
+                train_rows_list.append(group_to_rows[g])
+
+        train_rows = np.concatenate(train_rows_list) if train_rows_list else np.array([], dtype=int)
+        if train_rows.size == 0:
+            raise ValueError(f"Purge and embargo removed all training samples for fold {fold}")
+        train_rows.sort()
+        test_rows.sort()
+
+        embargoed_count = sum(len(group_to_rows[g]) for g in embargo_groups_set)
+
+        yield Split(
+            train=train_rows,
+            test=test_rows,
+            purged=0,
+            embargoed=embargoed_count,
+            test_bounds=(int(test_rows.min()), int(test_rows.max())),
         )
 
 
@@ -402,6 +498,8 @@ def combinatorial_purged_splits(
         train, purged, embargoed = _apply_purge_and_embargo(
             label_ends, test_mask, embargo_size
         )
+        if train.size == 0:
+            raise ValueError("Purge and embargo removed all training samples for fold")
         yield Split(
             train=train,
             test=np.sort(test),
@@ -446,22 +544,36 @@ def detect_boundary_leakage(
         overlapping = np.array([], dtype=int)
     else:
         label_ends = _as_label_spans(label_end_times, n_samples)
-        first_test = int(split.test.min())
-        test_span_end = int(max(split.test.max(), label_ends[split.test].max()))
+        test_positions = np.sort(split.test)
+        breaks = np.where(np.diff(test_positions) > 1)[0]
+        segment_starts = np.insert(test_positions[breaks + 1], 0, test_positions[0])
+        segment_ends = np.append(test_positions[breaks], test_positions[-1])
+
         train_starts = split.train
         train_ends = label_ends[split.train]
-        mask = (train_starts <= test_span_end) & (train_ends >= first_test)
-        overlapping = train_starts[mask]
+        overlapping_mask = np.zeros(len(train_starts), dtype=bool)
+        for seg_start, seg_end in zip(segment_starts, segment_ends):
+            seg_positions = np.arange(seg_start, seg_end + 1)
+            seg_span_end = int(max(seg_end, label_ends[seg_positions].max()))
+            overlapping_mask |= (train_starts <= seg_span_end) & (train_ends >= seg_start)
+        overlapping = train_starts[overlapping_mask]
 
     if embargo_size > 0:
         if label_end_times is None:
-            span_end = int(split.test.max())
+            label_ends = np.arange(n_samples or (int(split.test.max()) + 1))
         else:
             label_ends = _as_label_spans(label_end_times, n_samples)
-            span_end = int(max(split.test.max(), label_ends[split.test].max()))
-        violations = split.train[
-            (split.train > span_end) & (split.train <= span_end + embargo_size)
-        ]
+        test_positions = np.sort(split.test)
+        breaks = np.where(np.diff(test_positions) > 1)[0]
+        segment_starts = np.insert(test_positions[breaks + 1], 0, test_positions[0])
+        segment_ends = np.append(test_positions[breaks], test_positions[-1])
+
+        violations_mask = np.zeros(len(split.train), dtype=bool)
+        for seg_start, seg_end in zip(segment_starts, segment_ends):
+            seg_positions = np.arange(seg_start, seg_end + 1)
+            seg_span_end = int(max(seg_end, label_ends[seg_positions].max()))
+            violations_mask |= (split.train > seg_span_end) & (split.train <= seg_span_end + embargo_size)
+        violations = split.train[violations_mask]
     else:
         violations = np.array([], dtype=int)
 

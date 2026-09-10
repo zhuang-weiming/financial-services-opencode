@@ -8,7 +8,7 @@ category: data-source
 
 `llmquant-data` is a **local stdio MCP** (`@llmquant/data-mcp` npm package) that exposes **25 tools across 8 data domains** behind a single credentialed API. It sits as a **Tier-1 institutional data source** in the project's data-priority stack — co-equal with Morningstar and FactSet for US-equity/ETF/SEC/macro research.
 
-It is **not** a substitute for `vibe-trading-quanta` (A-share, futures, minute bars) or `sec-edgar` (deep free EDGAR). It complements them by giving sub-second, citation-ready answers for the questions that otherwise need scraping.
+It is **not** a substitute for `vibe-trading-ai` (A-share, futures, minute bars) or `vibe-trading-sec-edgar` (deep free EDGAR). It complements them by giving sub-second, citation-ready answers for the questions that otherwise need scraping.
 
 ## When to load this skill
 
@@ -37,8 +37,8 @@ Load `llmquant-data` (master) any time you are about to invoke one of the `llmqu
 | "Fed cut probability in Sept 2026" | `llmquant-polymarket` | Implied probability time series |
 | "Definition of risk parity" | `llmquant-research` (wiki) | zh-leaning concept wiki |
 | "Latest Sharpe ratio paper" | `llmquant-research` (papers) | arxiv with section-level read |
-| A-share / HK / futures data | `vibe-trading-quanta` loaders | **llmquant-data is US-focused** |
-| Deep historical EDGAR XBRL series | `sec-edgar` skill | Free, no credit cost |
+| A-share / HK / futures data | `vibe-trading-ai` loaders | **llmquant-data is US-focused** |
+| Deep historical EDGAR XBRL series | `vibe-trading-sec-edgar` skill | Free, no credit cost |
 
 ## Setup & Auth
 
@@ -123,7 +123,7 @@ Every response also includes `as_of_date` (or `time` for snapshots) and `source`
 |---|---|---:|---|
 | Unknown ticker (`INVALID-XX`) | Tool result with error string | 0 | Surface error, try alternate symbol |
 | Bad param shape (`ticker must be in BASE-QUOTE format`) | MCP protocol error `-32602` | 0 | Fix the param shape and retry |
-| Out-of-coverage ticker | `coverage_status: unsupported`, may return empty data | varies | Fall back to `vibe-trading-quanta` |
+| Out-of-coverage ticker | `coverage_status: unsupported`, may return empty data | varies | Fall back to `vibe-trading-ai` |
 | Empty filter result (no matches) | `{ data: null | [] , count: 0 }` | varies | Refine the filter |
 | Stale data warning | `stale: true` plus `coverage_notice` | varies | Cite `as_of_date`, do not claim freshness |
 
@@ -195,7 +195,7 @@ Per `.opencode/instructions/data-priority.md`, the hierarchy is:
 
 **Tier 1 (institutional MCP)**: Morningstar → FactSet → **llmquant-data** → DDG
 
-**Tier 2 (vibe-trading-quanta loaders)**: Tushare, AKShare, MooTDX, EastMoney, Yahoo, OKX/CCXT, EDGAR, Futu, Alpha Vantage, Tiingo, Finnhub, FMP, QVeris
+**Tier 2 (vibe-trading-ai loaders)**: Tushare, AKShare, MooTDX, EastMoney, Yahoo, OKX/CCXT, EDGAR, Futu, Alpha Vantage, Tiingo, Finnhub, FMP, QVeris
 
 **Tier 3 (alpha zoo)**: qlib158 / alpha101 / gtja191 / academic / fundamental
 
@@ -205,7 +205,7 @@ Per `.opencode/instructions/data-priority.md`, the hierarchy is:
 - **Coverage flags**: honest `coverage_status` + `as_of_date`
 - **Credit budget**: predictable per-call cost, surfaceable in reports
 
-For non-US markets, minute-level crypto, A-share WIF data, and quant backtests, keep using `vibe-trading-quanta` — `llmquant-data` does not replace it.
+For non-US markets, minute-level crypto, A-share WIF data, and quant backtests, keep using `vibe-trading-ai` — `llmquant-data` does not replace it.
 
 ## Reference
 

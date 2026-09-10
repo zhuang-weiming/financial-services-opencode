@@ -87,6 +87,12 @@ Markdown, in this order:
    average, and any dated news naming it.
 4. `## On today's calendar` — scheduled releases and events, with local times.
 5. `## Data gaps` — always present; write `none` when nothing was missing.
+6. `## Verdict` — the machine-readable tail, and the only section
+   nothing may follow. One line per symbol tracked this run:
+   `- SYMBOL: STATE - one short reason`, with STATE one of `HOT`, `MIXED`, `QUIET`.
+   When nothing moved, write the heading with no lines under it; that
+   is a real answer, not an absence. This section reports state, not
+   advice: the Boundaries above still apply.
 
 Keep the whole brief under roughly 700 words.
 

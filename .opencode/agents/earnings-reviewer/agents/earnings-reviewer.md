@@ -42,3 +42,5 @@ Given a ticker and reporting period, you deliver three artifacts:
 ## Skills this agent uses
 
 `earnings-analysis` · `model-update` · `audit-xls` · `morning-note` · `earnings-preview`
+
+**PEAD / 财报后漂移**：`ai-hedge-fund-earnings-drift`（EPS BEAT/MISS 后的事件驱动模型；含 45 天回溯过滤 + 来源优先级规则）

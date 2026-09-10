@@ -91,6 +91,7 @@ independently importable.
 
 from __future__ import annotations
 
+import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from types import MappingProxyType
@@ -251,7 +252,8 @@ def calendarise_metric(
         The aligned :class:`CalendarisedMetric`.
 
     Raises:
-        ValuationError: If `policy` is not one of `CALENDARISATION_POLICIES`.
+        ValuationError: If `policy` is not one of `CALENDARISATION_POLICIES`,
+            or if any supplied period value is not a finite number.
         MissingInputError: If `periods` lacks a field this policy needs.
     """
     if policy not in CALENDARISATION_POLICIES:
@@ -260,6 +262,17 @@ def calendarise_metric(
             f"one of {CALENDARISATION_POLICIES}"
         )
     model = f"comps.calendarise_metric[{company_name}.{metric_name}:{policy}]"
+
+    for name, val in (
+        ("last_full_fiscal_year", periods.last_full_fiscal_year),
+        ("current_year_to_date", periods.current_year_to_date),
+        ("prior_year_to_date", periods.prior_year_to_date),
+        ("next_full_fiscal_year", periods.next_full_fiscal_year),
+    ):
+        if val is not None and not math.isfinite(val):
+            raise ValuationError(
+                f"{model}: {name} must be a finite number, got {val!r}"
+            )
 
     if policy == "ltm":
         require_inputs(
@@ -371,6 +384,14 @@ def _bridge_delta(
         `(delta, omitted_components)`.
     """
     omitted: list[str] = []
+    if not math.isfinite(total_debt):
+        raise ValuationError(
+            f"comps: total_debt must be a finite number, got {total_debt!r}"
+        )
+    if not math.isfinite(cash_and_equivalents):
+        raise ValuationError(
+            f"comps: cash_and_equivalents must be a finite number, got {cash_and_equivalents!r}"
+        )
     total = total_debt - cash_and_equivalents
     for name, value in (
         ("minority_interest", minority_interest),
@@ -380,6 +401,10 @@ def _bridge_delta(
         if value is None:
             omitted.append(name)
             continue
+        if not math.isfinite(value):
+            raise ValuationError(
+                f"comps: {name} must be a finite number, got {value!r}"
+            )
         sign = -1.0 if name == "investments_in_associates" else 1.0
         total += sign * value
     return total, tuple(omitted)
@@ -454,6 +479,8 @@ def enterprise_value(
     Raises:
         MissingInputError: If `market_cap`, `total_debt` or
             `cash_and_equivalents` is absent.
+        ValuationError: If `market_cap` or any supplied bridge line is not a
+            finite number.
     """
     require_inputs(
         {
@@ -467,6 +494,10 @@ def enterprise_value(
     delta, omitted = _bridge_delta(
         total_debt, cash_and_equivalents, minority_interest, preferred_stock, investments_in_associates
     )
+    if not math.isfinite(market_cap):
+        raise ValuationError(
+            f"comps.enterprise_value: market_cap must be a finite number, got {market_cap!r}"
+        )
     ev = float(market_cap) + delta
     return EVBridgeResult(
         direction="equity_to_ev",
@@ -518,6 +549,8 @@ def equity_value_from_enterprise_value(
     Raises:
         MissingInputError: If `enterprise_value`, `total_debt` or
             `cash_and_equivalents` is absent.
+        ValuationError: If `enterprise_value` or any supplied bridge line is
+            not a finite number.
     """
     require_inputs(
         {
@@ -531,6 +564,11 @@ def equity_value_from_enterprise_value(
     delta, omitted = _bridge_delta(
         total_debt, cash_and_equivalents, minority_interest, preferred_stock, investments_in_associates
     )
+    if not math.isfinite(enterprise_value):
+        raise ValuationError(
+            f"comps.equity_value_from_enterprise_value: enterprise_value must be a "
+            f"finite number, got {enterprise_value!r}"
+        )
     equity = float(enterprise_value) - delta
     return EVBridgeResult(
         direction="ev_to_equity",
@@ -680,7 +718,8 @@ class ExcludedMultiple:
         multiple_name: Which multiple (one of `MULTIPLE_NAMES`).
         denominator_value: The denominator at the time of exclusion.
         numerator_value: The numerator at the time of exclusion.
-        reason: ``"non_positive_denominator"`` or ``"non_positive_numerator"``.
+        reason: ``"non_positive_denominator"``, ``"non_positive_numerator"``,
+            ``"non_finite_denominator"`` or ``"non_finite_numerator"``.
     """
 
     peer_name: str
@@ -716,9 +755,25 @@ def _compute_multiple(
         multiple_name: For the exclusion record.
 
     Returns:
-        ``(value, None)`` when both sides are positive, else
+        ``(value, None)`` when both sides are positive finite numbers, else
         ``(None, ExcludedMultiple(...))`` naming the side that failed.
     """
+    if not math.isfinite(denominator):
+        return None, ExcludedMultiple(
+            peer_name=peer_name,
+            multiple_name=multiple_name,
+            denominator_value=denominator,
+            numerator_value=numerator,
+            reason="non_finite_denominator",
+        )
+    if not math.isfinite(numerator):
+        return None, ExcludedMultiple(
+            peer_name=peer_name,
+            multiple_name=multiple_name,
+            denominator_value=denominator,
+            numerator_value=numerator,
+            reason="non_finite_numerator",
+        )
     if denominator <= 0.0:
         return None, ExcludedMultiple(
             peer_name=peer_name,

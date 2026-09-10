@@ -89,4 +89,9 @@ def compute(panel: dict) -> pd.DataFrame:
     d7 = delta(close, 7)
     expr = (-1.0 * ts_rank(d7.abs(), 60)) * np.sign(d7)
     out = where_ternary(adv20 < volume, expr, -1.0 * make_one(close))
-    return out
+    # A NaN comparison is False, not NaN, so where_ternary's own
+    # np.isfinite safety net never fires here: the else branch is a
+    # constant with no NaN dependency, so it stays finite well before
+    # adv20's 20-day lookback is available, fabricating a signal during
+    # the declared warmup instead of NaN.
+    return out.where(adv20.notna())

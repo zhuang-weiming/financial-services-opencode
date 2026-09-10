@@ -251,6 +251,7 @@ def write_live_action(
     event_callback: EventCallback | None = None,
     trace_writer: _TraceWriterLike | None = None,
     chain: bool = True,
+    require_durable: bool = False,
 ) -> dict[str, Any]:
     """Fan a redacted live-action record out to up to three sinks (SPEC §5).
 
@@ -290,6 +291,7 @@ def write_live_action(
             exact historical record shape and ledger file. Raises
             :class:`src.governance.ledger.LedgerCorruptionError` if that
             chain ledger's existing history is already broken.
+        require_durable: Raise when the classic ledger fsync fails.
 
     Returns:
         The redacted record dict — identical to what was written to every sink —
@@ -312,6 +314,8 @@ def write_live_action(
             os.fsync(handle.fileno())
         except OSError as exc:
             _warn_fsync_failure(exc, path)
+            if require_durable:
+                raise
 
     if chain:
         from src.governance.ledger import append_record

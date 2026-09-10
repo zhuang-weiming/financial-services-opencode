@@ -33,7 +33,7 @@ sys.path.insert(0, str(SHARED.parent / "harmonic" / "examples"))
 sys.path.insert(0, str(SHARED.parent / "technical-basic" / "examples"))
 sys.path.insert(0, str(SHARED.parent / "chanlun" / "examples"))
 sys.path.insert(0, str(SHARED.parent / "smc" / "examples"))
-sys.path.insert(0, str(SHARED.parent / "gann" / "examples"))
+sys.path.insert(0, str(SHARED.parent / "vibe-trading-gann" / "examples"))
 
 from data_loader import load_ohlcv, infer_market
 

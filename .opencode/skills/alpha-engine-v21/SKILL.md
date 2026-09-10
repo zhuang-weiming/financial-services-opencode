@@ -173,9 +173,9 @@ alpha-engine-v21/
 
 ### Engine dependencies
 
-* `pandas`, `numpy`, `scipy`, `h5py` (already in `vibe-trading-quanta` requirements)
+* `pandas`, `numpy`, `scipy`, `h5py` (already in `vibe-trading-ai` requirements)
 * `matplotlib` — optional, only for `--plot` in wave_trend.py
-* `vibe_trading_quanta.backtest.validation.deflated_sharpe_ratio` — the DSR
+* `src.quantlib.multipletesting.deflated_sharpe_ratio` — the DSR
   function (added upstream as part of this skill's integration)
 
 ---
@@ -208,7 +208,7 @@ listing all candidates is raised.
 | `p_bonferroni` | `min(p_iid × n_configs, 1)` | conservative multiple-test correction |
 | `bootstrap_ci_95` | block bootstrap, block=12, seed=42 | 10 000 resamples |
 | `bootstrap_p_positive` | P(SR_annual > 0) under bootstrap | |
-| `dsr` | López de Prado (2018) Eqs 12.7-12.8 | **delegated to `vibe_trading_quanta.backtest.validation.deflated_sharpe_ratio`** |
+| `dsr` | López de Prado (2018) Eqs 12.7-12.8 | **delegated to `src.quantlib.multipletesting.deflated_sharpe_ratio`** |
 
 ---
 
@@ -219,7 +219,7 @@ listing all candidates is raised.
 | `transaction_cost` default | `false` (research simplification) | **`true` (production honest)** |
 | Path resolution | Hardcoded absolute path | Env var → config → bundled default |
 | Scoring variants | v8 / v30 / v31 / v32 (V19 baseline included) | **Only `score_v21`** (V21 strategy) |
-| DSR computation | Inline in `honest_statistical_tests` | Delegated to `vibe_trading_quanta.backtest.validation.deflated_sharpe_ratio` |
+| DSR computation | Inline in `honest_statistical_tests` | Delegated to `src.quantlib.multipletesting.deflated_sharpe_ratio` |
 | Language | Chinese docstrings + comments | **English docstrings** (bilingual SKILL.md / README.md / release notes) |
 | Single-stock WT | Not available | **`wave_trend.py`** — compute or H5 lookup |
 

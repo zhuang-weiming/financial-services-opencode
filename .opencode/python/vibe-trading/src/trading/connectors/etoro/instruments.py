@@ -3,8 +3,11 @@
 eToro Public API conventions (see eToro builders docs):
 - Exact ticker lookup: ``GET /market-data/search?internalSymbolFull=BTC``
 - Fuzzy discovery: ``GET /market-data/search?search=<query>&limit=<n>``
+- Asset-class browse: ``GET /market-data/instruments?instrumentTypeIds=<n>``
+- Type catalog: ``GET /market-data/instrument-types``
 - Search responses use ``items[]`` with ``instrumentId`` (lowercase ``d``).
 - Metadata enrichment: ``GET /market-data/instruments?instrumentIds=...``
+- Quotes (all profiles): ``GET /market-data/instruments/rates?instrumentIds=...``
 """
 
 from __future__ import annotations
@@ -12,7 +15,15 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from src.trading.connectors.etoro.client import EtoroAPIError, EtoroConfig, make_client
+from src.trading.connectors.etoro.client import (
+    EtoroAPIError,
+    EtoroConfig,
+    MARKET_DATA_INSTRUMENTS_PATH,
+    MARKET_DATA_INSTRUMENT_TYPES_PATH,
+    MARKET_DATA_RATES_PATH,
+    MARKET_DATA_SEARCH_PATH,
+    make_client,
+)
 
 # Common aliases → eToro ``internalSymbolFull`` tickers.
 _SYMBOL_ALIASES: dict[str, str] = {
@@ -29,6 +40,15 @@ _INVALID_INSTRUMENT_IDS = frozenset({-100000})
 
 _TICKER_RE = re.compile(r"^[A-Za-z0-9./_-]{1,24}$")
 
+# Cross-vocabulary aliases for labels that differ from API type names.
+_SUPPLEMENTAL_TYPE_ALIASES: dict[str, int] = {
+    "fx": 1,
+    "equity": 5,
+    "equities": 5,
+}
+
+_type_catalog_cache: tuple[dict[int, str], dict[str, int]] | None = None
+
 
 def _base_payload(cfg: EtoroConfig) -> dict[str, Any]:
     return {
@@ -38,21 +58,126 @@ def _base_payload(cfg: EtoroConfig) -> dict[str, Any]:
     }
 
 
+def reset_instrument_type_cache() -> None:
+    """Clear the cached instrument-type catalog (for unit tests)."""
+    global _type_catalog_cache
+    _type_catalog_cache = None
+
+
+def get_instrument_types(config: EtoroConfig | None = None) -> dict[str, Any]:
+    """Return the live ``instrumentTypeID`` catalog from market-data."""
+    from src.trading.connectors.etoro.client import load_config
+
+    cfg = config or load_config()
+    id_to_label, _ = _load_instrument_type_catalog(cfg)
+    rows = [
+        {
+            "instrument_type_id": type_id,
+            "label": label,
+            "name": label.replace("_", " "),
+        }
+        for type_id, label in sorted(id_to_label.items())
+    ]
+    return {"status": "ok", **_base_payload(cfg), "instrument_types": rows}
+
+
+def _load_instrument_type_catalog(cfg: EtoroConfig) -> tuple[dict[int, str], dict[str, int]]:
+    global _type_catalog_cache
+    if _type_catalog_cache is not None:
+        return _type_catalog_cache
+
+    payload = make_client(cfg).request(
+        "GET",
+        MARKET_DATA_INSTRUMENT_TYPES_PATH,
+        allow_retry=True,
+    )
+    rows = _extract_instrument_type_rows(payload)
+    id_to_label: dict[int, str] = {}
+    aliases: dict[str, int] = {}
+    for item in rows:
+        if not isinstance(item, dict):
+            continue
+        type_id = _instrument_type_id(item)
+        if type_id is None:
+            continue
+        description = str(item.get("instrumentTypeDescription") or item.get("description") or "").strip()
+        label = _slugify_type_label(description) or str(type_id)
+        id_to_label[type_id] = label
+        for token in _alias_tokens_for_type(description, label):
+            aliases.setdefault(token, type_id)
+
+    for token, type_id in _SUPPLEMENTAL_TYPE_ALIASES.items():
+        if type_id in id_to_label:
+            aliases.setdefault(token, type_id)
+
+    if not id_to_label:
+        raise EtoroAPIError("instrument type catalog returned no rows")
+
+    _type_catalog_cache = (id_to_label, aliases)
+    return _type_catalog_cache
+
+
+def _slugify_type_label(description: str) -> str:
+    spaced = re.sub(r"([a-z])([A-Z])", r"\1_\2", str(description or "").strip())
+    return re.sub(r"[^a-z0-9]+", "_", spaced.lower()).strip("_")
+
+
+def _alias_tokens_for_type(description: str, slug: str) -> set[str]:
+    tokens: set[str] = set()
+    if slug:
+        tokens.add(slug)
+        tokens.add(slug.replace("_", ""))
+        if slug.endswith("s") and len(slug) > 1:
+            tokens.add(slug[:-1])
+        else:
+            tokens.add(f"{slug}s")
+        if slug.endswith("y") and len(slug) > 1:
+            tokens.add(f"{slug[:-1]}ies")
+    clean = str(description or "").strip()
+    if clean:
+        tokens.add(clean.lower())
+        tokens.add(clean.lower().replace(" ", "_"))
+        for word in re.findall(r"[A-Za-z]+", re.sub(r"([a-z])([A-Z])", r"\1 \2", clean)):
+            if len(word) > 1:
+                tokens.add(word.lower())
+    return {token for token in tokens if token}
+
+
+def _extract_instrument_type_rows(payload: Any) -> list[Any]:
+    if isinstance(payload, list):
+        return payload
+    if isinstance(payload, dict):
+        for key in ("instrumentTypes", "items", "data", "types"):
+            value = payload.get(key)
+            if isinstance(value, list):
+                return value
+    return []
+
+
 def search_instruments(
     query: str,
     config: EtoroConfig | None = None,
     *,
     limit: int = 10,
     mode: str = "auto",
+    instrument_type_id: int | None = None,
+    include_rates: bool = False,
 ) -> dict[str, Any]:
-    """Search eToro instruments by ticker or free-text query.
+    """Search eToro instruments by ticker, free-text query, or asset class.
 
     Args:
-        query: Symbol (``BTC``, ``AAPL``) or discovery text (``bitcoin``, sector name).
+        query: Symbol (``BTC``, ``AAPL``), discovery text, or asset-class label
+            (``crypto``, ``stocks``, ``forex``).
         config: Optional connector config.
         limit: Max results (capped at 50).
         mode: ``auto`` (ticker → exact lookup then fuzzy), ``symbol`` (exact only),
-            or ``discover`` (fuzzy ``search`` param only).
+            ``discover`` (fuzzy ``search`` param only), or ``type`` (browse by
+            ``instrument_type_id`` / asset-class alias).
+        instrument_type_id: Optional eToro ``instrumentTypeID`` filter (e.g. ``10``
+            for crypto). When set, uses ``GET /market-data/instruments`` with
+            ``instrumentTypeIds``.
+        include_rates: When browsing by type, attach bid/ask/last from the flat
+            ``/market-data/instruments/rates`` endpoint (works on all profiles).
     """
     from src.trading.connectors.etoro.client import load_config
 
@@ -63,8 +188,24 @@ def search_instruments(
 
     clean_limit = max(1, min(int(limit), 50))
     clean_mode = str(mode or "auto").strip().lower()
-    if clean_mode not in ("auto", "symbol", "discover"):
-        raise EtoroAPIError("mode must be 'auto', 'symbol', or 'discover'")
+    if clean_mode not in ("auto", "symbol", "discover", "type"):
+        raise EtoroAPIError("mode must be 'auto', 'symbol', 'discover', or 'type'")
+
+    if clean_mode == "type" or instrument_type_id is not None:
+        resolved_type_id = instrument_type_id
+        if resolved_type_id is None:
+            resolved_type_id = _instrument_type_id_from_query(token, cfg)
+        if resolved_type_id is None:
+            raise EtoroAPIError(
+                "instrument_type_id is required for type browse "
+                "(e.g. 10 for crypto) or use an asset-class query like 'crypto'"
+            )
+        return list_instruments_by_type(
+            resolved_type_id,
+            cfg,
+            limit=clean_limit,
+            include_rates=include_rates,
+        )
 
     rows: list[dict[str, Any]] = []
     lookup_mode = clean_mode
@@ -74,6 +215,14 @@ def search_instruments(
     if lookup_mode == "symbol":
         rows = _search_by_symbol(cfg, token, limit=clean_limit)
         if not rows and clean_mode == "auto":
+            type_id = _instrument_type_id_from_query(token, cfg)
+            if type_id is not None:
+                return list_instruments_by_type(
+                    type_id,
+                    cfg,
+                    limit=clean_limit,
+                    include_rates=include_rates,
+                )
             rows = _search_by_text(cfg, token, limit=clean_limit)
     else:
         rows = _search_by_text(cfg, token, limit=clean_limit)
@@ -95,6 +244,51 @@ def search_instruments(
         "query": token,
         "mode": lookup_mode,
         "instruments": normalized[:clean_limit],
+    }
+
+
+def list_instruments_by_type(
+    instrument_type_id: int,
+    config: EtoroConfig | None = None,
+    *,
+    limit: int = 10,
+    include_rates: bool = False,
+) -> dict[str, Any]:
+    """List tradable instruments for an eToro ``instrumentTypeID`` (e.g. ``10`` = crypto)."""
+    from src.trading.connectors.etoro.client import load_config
+
+    cfg = config or load_config()
+    type_id = int(instrument_type_id)
+    id_to_label, _ = _load_instrument_type_catalog(cfg)
+    if type_id not in id_to_label:
+        raise EtoroAPIError(f"unsupported instrument_type_id {type_id}")
+
+    clean_limit = max(1, min(int(limit), 50))
+    payload = make_client(cfg).request(
+        "GET",
+        MARKET_DATA_INSTRUMENTS_PATH,
+        params={"instrumentTypeIds": type_id},
+        allow_retry=True,
+    )
+    items = _extract_metadata_items(payload)
+    filtered = [
+        item
+        for item in items
+        if isinstance(item, dict) and _instrument_type_id(item) == type_id
+    ]
+    normalized = [_normalize_metadata_row(item) for item in filtered]
+    normalized = [row for row in normalized if row.get("instrument_id") is not None]
+    instruments = normalized[:clean_limit]
+    if include_rates:
+        _attach_rates(cfg, instruments)
+
+    return {
+        "status": "ok",
+        **_base_payload(cfg),
+        "instrument_type_id": type_id,
+        "instrument_type": id_to_label[type_id],
+        "mode": "type",
+        "instruments": instruments,
     }
 
 
@@ -153,7 +347,7 @@ def get_instrument_metadata(
 
     payload = make_client(cfg).request(
         "GET",
-        "/api/v1/market-data/instruments",
+        MARKET_DATA_INSTRUMENTS_PATH,
         params={"instrumentIds": ",".join(str(i) for i in ids)},
         allow_retry=True,
     )
@@ -185,7 +379,7 @@ def _lookup_variants(token: str, canonical: str) -> list[str]:
 def _search_by_symbol(cfg: EtoroConfig, symbol: str, *, limit: int) -> list[dict[str, Any]]:
     payload = make_client(cfg).request(
         "GET",
-        "/api/v1/market-data/search",
+        MARKET_DATA_SEARCH_PATH,
         params={"internalSymbolFull": symbol},
         allow_retry=True,
     )
@@ -196,12 +390,98 @@ def _search_by_symbol(cfg: EtoroConfig, symbol: str, *, limit: int) -> list[dict
 def _search_by_text(cfg: EtoroConfig, query: str, *, limit: int) -> list[dict[str, Any]]:
     payload = make_client(cfg).request(
         "GET",
-        "/api/v1/market-data/search",
+        MARKET_DATA_SEARCH_PATH,
         params={"search": query, "limit": limit},
         allow_retry=True,
     )
     items = _extract_items(payload)
     return [item for item in items if isinstance(item, dict)]
+
+
+def _instrument_type_id(item: dict[str, Any]) -> int | None:
+    for key in ("instrumentTypeID", "instrumentTypeId", "instrument_type_id"):
+        value = item.get(key)
+        if value is None:
+            continue
+        try:
+            return int(value)
+        except (TypeError, ValueError):
+            continue
+    return None
+
+
+def _instrument_type_id_from_query(query: str, cfg: EtoroConfig) -> int | None:
+    token = str(query or "").strip().lower().replace("-", "_")
+    if not token:
+        return None
+    supplemental = _SUPPLEMENTAL_TYPE_ALIASES.get(token)
+    if supplemental is not None:
+        return supplemental
+    id_to_label, aliases = _load_instrument_type_catalog(cfg)
+    if token.isdigit():
+        type_id = int(token)
+        return type_id if type_id in id_to_label else None
+    return aliases.get(token)
+
+
+def _attach_rates(cfg: EtoroConfig, instruments: list[dict[str, Any]]) -> None:
+    ids: list[int] = []
+    for row in instruments:
+        instrument_id = row.get("instrument_id")
+        if instrument_id is None:
+            continue
+        try:
+            ids.append(int(instrument_id))
+        except (TypeError, ValueError):
+            continue
+    if not ids:
+        return
+    payload = make_client(cfg).request(
+        "GET",
+        MARKET_DATA_RATES_PATH,
+        params={"instrumentIds": ",".join(str(i) for i in ids)},
+        allow_retry=True,
+    )
+    rates = _rates_by_instrument_id(payload)
+    for row in instruments:
+        instrument_id = row.get("instrument_id")
+        if instrument_id is None:
+            continue
+        try:
+            quote = rates.get(int(instrument_id))
+        except (TypeError, ValueError):
+            quote = None
+        if quote:
+            row["quote"] = quote
+
+
+def _rates_by_instrument_id(payload: Any) -> dict[int, dict[str, Any]]:
+    items: list[Any] = []
+    if isinstance(payload, list):
+        items = payload
+    elif isinstance(payload, dict):
+        for key in ("rates", "items", "data"):
+            value = payload.get(key)
+            if isinstance(value, list):
+                items = value
+                break
+    result: dict[int, dict[str, Any]] = {}
+    for item in items:
+        if not isinstance(item, dict):
+            continue
+        instrument_id = item.get("instrumentID") or item.get("instrumentId")
+        if instrument_id is None:
+            continue
+        try:
+            key = int(instrument_id)
+        except (TypeError, ValueError):
+            continue
+        result[key] = {
+            "bid": item.get("bid") or item.get("bidRate"),
+            "ask": item.get("ask") or item.get("askRate"),
+            "last": item.get("lastExecution") or item.get("last") or item.get("rate"),
+        }
+    return result
 
 
 def _instrument_id(item: dict[str, Any]) -> int | None:
@@ -278,7 +558,7 @@ def _normalize_metadata_row(item: dict[str, Any]) -> dict[str, Any]:
         "instrument_id": instrument_id,
         "symbol": _symbol_full(item) or item.get("symbolFull"),
         "display_name": _display_name(item) or item.get("instrumentDisplayName"),
-        "instrument_type_id": item.get("instrumentTypeID") or item.get("instrumentTypeId"),
+        "instrument_type_id": _instrument_type_id(item),
         "exchange_id": item.get("exchangeID") or item.get("exchangeId"),
         "raw": item,
     }

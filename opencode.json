@@ -31,6 +31,14 @@
         "duckduckgo-mcp-server"
       ],
       "enabled": true
+    },
+    "vibe-trading": {
+      "type": "local",
+      "command": [
+        "vibe-trading-mcp"
+      ],
+      "enabled": true,
+      "_comment": "Vibe-Trading v0.1.15 MCP server — 74 tools. Install via 'pip install vibe-trading-ai'. See .opencode/skills/vibe-trading-alpha-zoo and .opencode/skills/vibe-trading-data-routing for the vendored Python engine."
     }
   },
   "agent": {

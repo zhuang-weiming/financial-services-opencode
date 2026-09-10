@@ -184,6 +184,8 @@ class ChannelRuntime:
                 return
 
             session_id = self._session_for(msg)
+            if await self._handle_scheduled_confirmation(msg, session_id):
+                return
             result = await self.session_service.send_message(
                 session_id,
                 msg.content,
@@ -191,11 +193,33 @@ class ChannelRuntime:
             )
             attempt_id = result.get("attempt_id") if isinstance(result, dict) else None
             reply = await self._wait_for_reply(session_id, attempt_id)
+            reply_content = reply.content
+            try:
+                from src.scheduled_research.proposals import latest_pending_for_session
+
+                proposal = latest_pending_for_session(session_id)
+            except Exception:  # noqa: BLE001 - confirmation UI must not hide the reply
+                proposal = None
+            if proposal is not None:
+                job = proposal.get("job") or {}
+                schedule = job.get("schedule") or {}
+                delivery = job.get("delivery") or {}
+                action = "create" if proposal.get("operation") == "create" else "cancel"
+                reply_content = (
+                    f"{reply_content}\n\n"
+                    f"[Scheduled research confirmation · {action}]\n"
+                    f"Task: {job.get('title') or job.get('id') or '?'}\n"
+                    f"Schedule: {schedule.get('expression') or '-'} · "
+                    f"{schedule.get('timezone') or 'UTC'}\n"
+                    f"Delivery: {delivery.get('target_label') or 'in-app only'}\n"
+                    'Reply exactly "confirm" (确认) to commit, or "cancel" (取消) '
+                    "to discard."
+                )
             await self.bus.publish_outbound(
                 OutboundMessage(
                     channel=msg.channel,
                     chat_id=msg.chat_id,
-                    content=reply.content,
+                    content=reply_content,
                     metadata={
                         "_channel_runtime": True,
                         "attempt_id": attempt_id,
@@ -243,6 +267,57 @@ class ChannelRuntime:
                     },
                 )
             )
+
+    async def _handle_scheduled_confirmation(
+        self, msg: InboundMessage, session_id: str
+    ) -> bool:
+        """Commit/discard exact IM confirmation replies outside the model.
+
+        Tokens are exact-match by design so the model can never confirm on the
+        user's behalf; both the English and the Chinese spelling are accepted
+        because the 16 IM adapters serve both audiences.
+        """
+        token = msg.content.strip().casefold()
+        is_commit = token in {"确认", "confirm"}
+        if not is_commit and token not in {"取消", "cancel"}:
+            return False
+        try:
+            from src.scheduled_research.proposals import (
+                commit_proposal,
+                discard_proposal,
+                latest_pending_for_session,
+            )
+
+            proposal = latest_pending_for_session(session_id)
+            if proposal is None:
+                return False
+            if is_commit:
+                result = commit_proposal(proposal["proposal_id"])
+                action = (
+                    "created" if proposal.get("operation") == "create" else "cancelled"
+                )
+                content = (
+                    f"✅ Scheduled research job {action}: "
+                    f"{result.get('committed_job_id') or '?'}"
+                )
+            else:
+                discard_proposal(proposal["proposal_id"])
+                content = "Discarded this scheduled research change."
+        except Exception as exc:  # noqa: BLE001 - keep proposal pending for retry
+            content = f"Scheduled research confirmation failed: {exc}"
+        await self.bus.publish_outbound(
+            OutboundMessage(
+                channel=msg.channel,
+                chat_id=msg.chat_id,
+                content=content,
+                metadata={
+                    "_channel_runtime": True,
+                    "scheduled_research_confirmation": True,
+                    "message_id": msg.metadata.get("message_id"),
+                },
+            )
+        )
+        return True
 
     def _session_for(self, msg: InboundMessage) -> str:
         key = msg.session_key

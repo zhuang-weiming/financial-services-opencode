@@ -7,6 +7,7 @@ over a configurable lookback window. Used by the /correlation API endpoint.
 from __future__ import annotations
 
 import logging
+import re
 from typing import Dict, Literal
 
 import pandas as pd
@@ -46,6 +47,23 @@ def infer_market(code: str) -> str:
         return "ca_equity"
     if code_upper.endswith(".US"):
         return "us_equity"
+    # Yahoo's continuous-front-month futures notation (``GC=F``, ``CL=F``,
+    # ``SI=F``, ``HG=F``, ``MGC=F``). Mirrors the same pattern in
+    # ``backtest.engines._market_hooks._MARKET_PATTERNS`` so this offline
+    # classifier stays consistent with the engine-side classifier.
+    if re.match(r"^[A-Z]{2,5}=F$", code_upper):
+        return "futures"
+    # Yahoo's forex notation (``XAUUSD=X``, ``EURUSD=X``).
+    if re.match(r"^[A-Z]{6}=X$", code_upper):
+        return "forex"
+    # Bare 6-character precious-metal / FX symbols. Whitelist-restricted to
+    # a small set of base codes (ISO 4217 metals + G10 currencies) so a
+    # length-only pattern never re-routes a legitimate 6-letter US ticker.
+    if re.match(
+        r"^(?:XAU|XAG|XPT|XPD|EUR|GBP|JPY|CHF|CAD|AUD|NZD|USD)[A-Z]{3}$",
+        code_upper,
+    ):
+        return "forex"
     if code_upper.isdigit():
         if len(code_upper) == 6:
             return "a_share"

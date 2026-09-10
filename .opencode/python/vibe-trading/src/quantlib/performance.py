@@ -147,6 +147,13 @@ _IRR_TOLERANCE = 1e-12
 #: Hard iteration cap for the bisection, so a pathological input cannot spin.
 _IRR_MAX_ITERATIONS = 400
 
+#: Magnitude returned in place of a diverging NPV term. At ``base`` just above
+#: zero and a horizon beyond ~51 years the discount factor underflows to 0.0 and
+#: the true term diverges to +/-inf. The bisection compares signs only, so a
+#: sign-preserving finite stand-in keeps the bracketing exact without letting
+#: :func:`math.fsum` overflow.
+_NPV_DIVERGED_MAGNITUDE = 1e300
+
 
 class UnsolvableRateError(ValueError):
     """Raised when a cash-flow stream admits no single internal rate of return."""
@@ -715,15 +722,44 @@ def _npv(rate: float, years: Sequence[float], amounts: Sequence[float]) -> float
     Returns:
         The discounted sum. A term whose discount factor overflows to beyond
         the float range contributes ``0.0``, which is its limit, rather than
-        raising and aborting the search.
+        raising and aborting the search. A term whose discount factor
+        *underflows* to ``0.0`` -- or stays subnormal long enough that the
+        term itself leaves the float range -- diverges to +/-inf in truth;
+        such terms are represented by a sign-preserving stand-in of magnitude
+        :data:`_NPV_DIVERGED_MAGNITUDE`, which dominates every finite term
+        exactly as the limit does while keeping ``fsum`` finite.
     """
     base = 1.0 + rate
     terms: list[float] = []
+    diverged: dict[float, float] = {}
     for exponent, amount in zip(years, amounts, strict=True):
         try:
-            terms.append(amount / (base**exponent))
+            factor = base**exponent
         except OverflowError:
             terms.append(0.0)
+            continue
+        if factor == 0.0:
+            # Underflow: the true term is infinite, so only its sign and its
+            # exponent rank matter. Group by exponent first, so several terms
+            # that share the largest exponent can still cancel before the sign
+            # of the limit is decided.
+            diverged[exponent] = diverged.get(exponent, 0.0) + amount
+            continue
+        term = amount / factor
+        if not math.isfinite(term):
+            # A subnormal factor (a horizon just short of the underflow point)
+            # can still push the term past the float range. It diverges in
+            # exactly the same sense and is grouped the same way; leaving it in
+            # ``terms`` would hand ``fsum`` an infinity and, with two opposite
+            # signs, raise ``-inf + inf in fsum``.
+            diverged[exponent] = diverged.get(exponent, 0.0) + amount
+            continue
+        terms.append(term)
+
+    for exponent in sorted(diverged, reverse=True):
+        grouped = diverged[exponent]
+        if grouped != 0.0:
+            return math.copysign(_NPV_DIVERGED_MAGNITUDE, grouped)
     return math.fsum(terms)
 
 

@@ -4,10 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vibe-trading-ai"
-version = "0.1.13"
-description = "Vendored Vibe-Trading agent tree (src.* / backtest.* / cli.* / skills.*) for financial-services-opencode skill algorithms"
+version = "0.1.15"
+description = "Vendored Vibe-Trading agent tree (src.* / backtest.* / cli.* / skills.*) for financial-services-opencode skill algorithms — synced to upstream v0.1.15 (data that says what it is)"
 requires-python = ">=3.11,<3.14"
 license = "MIT"
+
+[project.scripts]
+vibe-trading = "cli:main"
+vibe-trading-mcp = "mcp_server:main"
 
 [tool.setuptools]
 package-dir = {"" = "."}

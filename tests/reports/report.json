@@ -279,7 +279,7 @@
           }
         },
         {
-          "name": "vibe-trading-quanta importable",
+          "name": "vibe-trading-ai importable",
           "status": "PASS",
           "duration_ms": 0.0,
           "message": "v0.1.0",
@@ -11114,7 +11114,7 @@
           "name": "DQ-3: Data source hierarchy",
           "status": "PASS",
           "duration_ms": 0.047206878662109375,
-          "message": "Tier 1 (Morningstar/FactSet) > Tier 2 (vibe-trading-quanta) > Tier 3 (alpha zoo) properly defined",
+          "message": "Tier 1 (Morningstar/FactSet) > Tier 2 (vibe-trading-ai) > Tier 3 (alpha zoo) properly defined",
           "severity": "normal",
           "details": {}
         },

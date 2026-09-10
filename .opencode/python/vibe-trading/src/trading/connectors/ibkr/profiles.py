@@ -33,12 +33,12 @@ IBKR_PROFILES: tuple[TradingProfile, ...] = (
         label="IBKR Live · Official MCP Read-Only",
         environment="live",
         transport="remote_mcp",
-        capabilities=("mcp.read.discovery",),
+        capabilities=("account.read", "positions.read"),
         readonly=True,
         config={"server": "ibkr"},
         notes=(
-            "Requires IBKR official MCP OAuth approval. Generic account/position tools "
-            "stay disabled until IBKR publishes stable read tool names."
+            "Requires IBKR official MCP OAuth approval. Uses the verified "
+            "get_account_summary and get_account_positions read-only tools."
         ),
     ),
 )

@@ -32,6 +32,19 @@ PROFILE_DEFAULT_PORTS = {
     "live-readonly": 7496,
 }
 
+# TWS market-data tiers. Type 1 (live) requires a paid market-data subscription
+# for the instrument; without one TWS answers error 354 and never sends a tick.
+# Types 3/4 fall back to the free 15-minute delayed feed, so they are the safe
+# default for a research/backtest connector.
+MARKET_DATA_TYPES = {
+    1: "live",
+    2: "frozen",
+    3: "delayed",
+    4: "delayed-frozen",
+}
+
+DEFAULT_MARKET_DATA_TYPE = 3
+
 
 class IBKRDependencyError(RuntimeError):
     """Raised when the optional ``ib_async`` package is not installed."""
@@ -57,6 +70,9 @@ class IBKRLocalConfig:
         account: Optional account code to filter requests.
         timeout: Connection timeout in seconds.
         readonly: Always passed as true when the SDK supports it.
+        market_data_type: TWS market-data tier (1 live, 2 frozen, 3 delayed,
+            4 delayed-frozen). Defaults to delayed so quotes work without a
+            paid market-data subscription.
     """
 
     host: str = "127.0.0.1"
@@ -66,6 +82,7 @@ class IBKRLocalConfig:
     account: str | None = None
     timeout: float = 8.0
     readonly: bool = True
+    market_data_type: int = DEFAULT_MARKET_DATA_TYPE
 
     @classmethod
     def from_mapping(cls, data: Mapping[str, Any] | None = None) -> "IBKRLocalConfig":
@@ -90,6 +107,9 @@ class IBKRLocalConfig:
             account=_clean_optional_str(payload.get("account")),
             timeout=float(payload.get("timeout") or 8.0),
             readonly=bool(payload.get("readonly", True)),
+            market_data_type=_clean_market_data_type(
+                payload.get("market_data_type", payload.get("marketDataType"))
+            ),
         )
 
     def with_overrides(
@@ -100,9 +120,12 @@ class IBKRLocalConfig:
         client_id: int | None = None,
         profile: str | None = None,
         account: str | None = None,
+        market_data_type: int | None = None,
     ) -> "IBKRLocalConfig":
         """Return a copy with CLI/tool overrides applied."""
         payload = asdict(self)
+        if market_data_type is not None:
+            payload["market_data_type"] = market_data_type
         if profile is not None:
             payload["profile"] = profile
             if port is None:
@@ -326,7 +349,48 @@ def _tick_has_data(ticker: Any) -> bool:
     return False
 
 
-def _wait_for_tick(ib: Any, ticker: Any, *, timeout: float = 5.0, poll_interval: float = 0.1) -> None:
+def _apply_market_data_type(ib: Any, config: IBKRLocalConfig) -> str | None:
+    """Select the TWS market-data tier before requesting prices.
+
+    TWS defaults to live data (type 1). An account without a market-data
+    subscription for the instrument then gets error 354 and the ticker never
+    fills, so the caller silently receives null prices after the full poll
+    timeout. Setting type 3/4 falls back to the free delayed feed instead.
+
+    Applying the tier is best-effort — an SDK build without
+    ``reqMarketDataType`` must not fail an otherwise valid read — but the
+    failure is never silent. The caller reports the requested and the applied
+    tier separately: a quote served on TWS's own default tier is byte-identical
+    to one served on the tier we asked for, so labelling an unapplied request
+    as applied sends the user to debug a subscription that is not the problem.
+
+    Args:
+        ib: Connected ``ib_async`` client, or a stub in tests.
+        config: Connector config carrying the requested tier.
+
+    Returns:
+        ``None`` when the tier was applied, otherwise a short reason why not.
+    """
+    fn = getattr(ib, "reqMarketDataType", None)
+    if fn is None:
+        return "the connected ib_async build does not expose reqMarketDataType"
+    try:
+        fn(int(config.market_data_type))
+    except Exception as exc:  # noqa: BLE001 - never fail a read over a tier hint
+        return f"reqMarketDataType({config.market_data_type}) failed: {exc}"
+    return None
+
+
+def _unapplied_tier_warning(tier: str, reason: str) -> str:
+    """Build the warning shown when TWS served a read on an unlabelled tier."""
+    return (
+        f"The '{tier}' market-data tier was NOT applied ({reason}). TWS served this "
+        "request on whichever tier it already had selected, which defaults to live "
+        "— treat these prices as unlabelled."
+    )
+
+
+def _wait_for_tick(ib: Any, ticker: Any, *, timeout: float = 5.0, poll_interval: float = 0.1) -> bool:
     """Pump the ib_async event loop until the snapshot ticker fills.
 
     ``reqMktData(..., snapshot=True)`` returns immediately but the ticker
@@ -339,14 +403,18 @@ def _wait_for_tick(ib: Any, ticker: Any, *, timeout: float = 5.0, poll_interval:
     reliably processes all pending socket messages on each call, while
     ``waitOnUpdate`` can return True for unrelated messages, causing
     premature exit with NaN fields.
+
+    Returns:
+        True if real market data arrived before the deadline, False on timeout.
     """
     import time as _time
 
     deadline = _time.monotonic() + timeout
     while _time.monotonic() < deadline:
         if _tick_has_data(ticker):
-            return
+            return True
         _sleep(ib, poll_interval)
+    return _tick_has_data(ticker)
 
 
 def get_quote(
@@ -365,13 +433,17 @@ def get_quote(
         _assert_profile(cfg, accounts)
         contract = _make_contract(symbol, exchange=exchange, currency=currency, sec_type=sec_type)
         _qualify_contract(ib, contract)
+        tier_unapplied = _apply_market_data_type(ib, cfg)
         ticker = ib.reqMktData(contract, "", True, False)
-        _wait_for_tick(ib, ticker)
-        return {
-            "status": "ok",
+        received = _wait_for_tick(ib, ticker)
+        tier = MARKET_DATA_TYPES.get(cfg.market_data_type, str(cfg.market_data_type))
+        result = {
+            "status": "ok" if received else "no_data",
             "symbol": symbol.upper(),
             "exchange": exchange,
             "currency": currency,
+            "market_data_type_requested": tier,
+            "market_data_type_applied": None if tier_unapplied else tier,
             "quote": {
                 "bid": _obj_get(ticker, "bid"),
                 "ask": _obj_get(ticker, "ask"),
@@ -381,6 +453,23 @@ def get_quote(
                 "time": str(_obj_get(ticker, "time", "")),
             },
         }
+        if tier_unapplied:
+            result["warning"] = _unapplied_tier_warning(tier, tier_unapplied)
+        if not received:
+            result["error"] = (
+                f"No market data arrived for {symbol.upper()}. "
+                + (
+                    f"The '{tier}' tier was not applied, so TWS most likely used its "
+                    "live tier, which needs a market-data subscription for this "
+                    "instrument. "
+                    if tier_unapplied
+                    else f"The '{tier}' tier was applied, so a missing market-data "
+                    "subscription is an unlikely cause. "
+                )
+                + "Other causes: the market is closed (try market_data_type 2 or 4 "
+                "for frozen last-known prices), or the symbol/exchange pair is wrong."
+            )
+        return result
     finally:
         _pool.release()
 
@@ -405,6 +494,7 @@ def get_historical_bars(
         _assert_profile(cfg, accounts)
         contract = _make_contract(symbol, exchange=exchange, currency=currency, sec_type=sec_type)
         _qualify_contract(ib, contract)
+        tier_unapplied = _apply_market_data_type(ib, cfg)
         bars = ib.reqHistoricalData(
             contract,
             endDateTime="",
@@ -414,13 +504,19 @@ def get_historical_bars(
             useRTH=use_rth,
             formatDate=1,
         )
-        return {
+        tier = MARKET_DATA_TYPES.get(cfg.market_data_type, str(cfg.market_data_type))
+        result = {
             "status": "ok",
             "symbol": symbol.upper(),
             "duration": duration,
             "bar_size": bar_size,
+            "market_data_type_requested": tier,
+            "market_data_type_applied": None if tier_unapplied else tier,
             "bars": [_bar_to_dict(bar) for bar in bars],
         }
+        if tier_unapplied:
+            result["warning"] = _unapplied_tier_warning(tier, tier_unapplied)
+        return result
     finally:
         _pool.release()
 
@@ -598,6 +694,28 @@ def _obj_get(obj: Any, name: str, default: Any = None) -> Any:
     if isinstance(obj, Mapping):
         return obj.get(name, default)
     return getattr(obj, name, default)
+
+
+def _clean_market_data_type(value: Any) -> int:
+    """Normalize a market-data tier, accepting either the code or its name."""
+    if value is None or value == "":
+        return DEFAULT_MARKET_DATA_TYPE
+    if isinstance(value, str):
+        text = value.strip().lower()
+        for code, name in MARKET_DATA_TYPES.items():
+            if text == name:
+                return code
+        try:
+            value = int(text)
+        except ValueError as exc:
+            raise ValueError(
+                f"market_data_type must be one of {sorted(MARKET_DATA_TYPES)} "
+                f"or {sorted(MARKET_DATA_TYPES.values())}"
+            ) from exc
+    code = int(value)
+    if code not in MARKET_DATA_TYPES:
+        raise ValueError(f"market_data_type must be one of {sorted(MARKET_DATA_TYPES)}")
+    return code
 
 
 def _clean_optional_str(value: Any) -> str | None:

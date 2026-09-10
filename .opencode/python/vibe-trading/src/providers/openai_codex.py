@@ -131,11 +131,7 @@ def _lock_token_file(handle: Any) -> None:
         fcntl.flock(handle.fileno(), fcntl.LOCK_EX)
         return
     if msvcrt is not None:  # pragma: no cover - exercised with a platform mock.
-        handle.seek(0, os.SEEK_END)
-        if handle.tell() == 0:
-            handle.write(b"\0")
-            handle.flush()
-            os.fsync(handle.fileno())
+        # Lock byte 0 beyond EOF without writing a sentinel byte (see ledger.py).
         handle.seek(0)
         msvcrt.locking(handle.fileno(), msvcrt.LK_LOCK, 1)
         return
@@ -227,12 +223,15 @@ class CodexAIMessage:
     tool_calls: list[dict[str, Any]] = field(default_factory=list)
     additional_kwargs: dict[str, Any] = field(default_factory=dict)
     response_metadata: dict[str, Any] = field(default_factory=lambda: {"finish_reason": "stop"})
+    usage_metadata: dict[str, int] | None = None
 
     def __add__(self, other: "CodexAIMessage") -> "CodexAIMessage":
         finish_reason = other.response_metadata.get(
             "finish_reason",
             self.response_metadata.get("finish_reason", "stop"),
         )
+        response_metadata = {**self.response_metadata, **other.response_metadata}
+        response_metadata["finish_reason"] = finish_reason
         reasoning = self.additional_kwargs.get("reasoning_content", "") + other.additional_kwargs.get(
             "reasoning_content", ""
         )
@@ -240,7 +239,8 @@ class CodexAIMessage:
             content=(self.content or "") + (other.content or ""),
             tool_calls=[*self.tool_calls, *other.tool_calls],
             additional_kwargs={"reasoning_content": reasoning} if reasoning else {},
-            response_metadata={"finish_reason": finish_reason},
+            response_metadata=response_metadata,
+            usage_metadata=other.usage_metadata or self.usage_metadata,
         )
 
 
@@ -595,8 +595,25 @@ def _message_chunks_from_events(events: Iterable[dict[str, Any]]) -> Iterable[Co
                 )
                 yield CodexAIMessage(tool_calls=[tool.as_langchain_tool_call()])
         elif event_type == "response.completed":
-            status = (event.get("response") or {}).get("status")
-            yield CodexAIMessage(response_metadata={"finish_reason": _map_finish_reason(status)})
+            response = event.get("response") or {}
+            status = response.get("status")
+            response_metadata = {"finish_reason": _map_finish_reason(status)}
+            model = response.get("model")
+            if isinstance(model, str) and model.strip():
+                response_metadata["model_name"] = model.strip()
+            usage = response.get("usage")
+            usage_metadata = None
+            if isinstance(usage, dict):
+                values = {
+                    key: usage.get(key)
+                    for key in ("input_tokens", "output_tokens", "total_tokens")
+                }
+                if all(isinstance(value, int) and not isinstance(value, bool) for value in values.values()):
+                    usage_metadata = values
+            yield CodexAIMessage(
+                response_metadata=response_metadata,
+                usage_metadata=usage_metadata,
+            )
         elif event_type in {"error", "response.failed"}:
             detail = event.get("error") or event.get("message") or event
             raise RuntimeError(f"OpenAI Codex response failed: {str(detail)[:500]}")

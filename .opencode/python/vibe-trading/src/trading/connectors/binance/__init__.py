@@ -1,4 +1,4 @@
-"""Binance (spot) trading connector.
+"""Binance trading connector with opt-in read-only USD-M account evidence.
 
 Read-only account/market access in Layer A via the ``ccxt`` library's unified
 ``binance`` exchange client (REST). A ``broker_sdk`` transport. Order placement

@@ -95,4 +95,8 @@ def compute(panel: dict) -> pd.DataFrame:
     where_ternary = _where_ternary
     x = rank(rolling_sum(ts_corr(rank(volume), rank(vwap), 6), 2) / 2.0)
     out = where_ternary(x > 0.5, -1.0 * make_one(close), make_one(close))
-    return out
+    # A NaN comparison is False, not NaN, so where_ternary's own
+    # np.isfinite safety net never fires here: both branches are pure
+    # constants with no NaN dependency at all, so the chain stays finite
+    # through warmup instead of NaN.
+    return out.where(x.notna())

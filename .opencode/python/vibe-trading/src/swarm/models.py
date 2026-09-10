@@ -6,9 +6,118 @@ Enums use str+Enum to ensure JSON-serialization compatibility.
 
 from __future__ import annotations
 
+import re
 from enum import Enum
 
 from pydantic import BaseModel, Field
+
+from src.tools.redaction import redact_text
+
+
+_PUBLIC_METADATA_MAX_LENGTH = 128
+_REDACTED_METADATA = "[redacted]"
+_REASONING_EFFORTS = frozenset({"none", "low", "medium", "high", "max"})
+_PUBLIC_PROVIDERS = frozenset(
+    {
+        "anthropic",
+        "dashscope",
+        "deepseek",
+        "gemini",
+        "glm",
+        "groq",
+        "iflytek",
+        "kimi",
+        "kimi-coding",
+        "mimo",
+        "minimax",
+        "modelscope",
+        "moonshot",
+        "nvidia",
+        "nvidia-nim",
+        "ollama",
+        "openai",
+        "openai-codex",
+        "openai_codex",
+        "opencode-go",
+        "opencode-zen",
+        "openrouter",
+        "qwen",
+        "requesty",
+        "siliconflow-cn",
+        "siliconflow-global",
+        "spark",
+        "zai",
+        "zhipu",
+    }
+)
+_MODEL_ENDPOINT_PREFIX = re.compile(
+    r"^(?:/|localhost|(?:[0-9]{1,3}\.){3}[0-9]{1,3}|\[[0-9a-f:.]+\]|[^/:]+\.[a-z]{2,}|[^/:]+(?=:[0-9]+(?:/|$)))(?::[0-9]+)?(?:/|$)|^[^/]+/(?:api|v[0-9]+(?:alpha|beta)?[0-9]*)(?:/|$)",
+    re.IGNORECASE,
+)
+_PUBLIC_MODEL_IDENTIFIER = re.compile(
+    r"^(?:[A-Za-z0-9][A-Za-z0-9._:+-]*|[A-Za-z0-9][A-Za-z0-9._:+-]*/(?=[A-Za-z0-9._:+-]*[-.0-9])[A-Za-z0-9][A-Za-z0-9._:+-]*)$"
+)
+#: Credential-shaped tokens that carry no issuer prefix in free-text
+#: redaction but must never reach public metadata: underscore-style key
+#: families (Stripe/OpenAI/Hugging Face), Google/AWS key prefixes, and bare
+#: high-entropy tokens.
+_CREDENTIAL_TOKEN = re.compile(
+    r"^(?:sk|rk|pk|hf)[_-][A-Za-z0-9_-]{4,}$"
+    r"|^AIza[A-Za-z0-9_-]{16,}$"
+    r"|^ASIA[0-9A-Z]{16,}$"
+    r"|^[A-Za-z0-9_-]{40,}$"
+)
+
+
+def public_metadata_value(
+    value: str | None,
+    *,
+    allowed_values: frozenset[str] | None = None,
+) -> str | None:
+    """Return a bounded, credential-free value for public run metadata."""
+    if value is None:
+        return None
+    metadata = value.strip()
+    if not metadata:
+        return None
+    if len(metadata) > _PUBLIC_METADATA_MAX_LENGTH:
+        return _REDACTED_METADATA
+    if not metadata.isprintable() or "://" in metadata or metadata.startswith("//"):
+        return _REDACTED_METADATA
+    if allowed_values is not None and metadata not in allowed_values:
+        return _REDACTED_METADATA
+    if redact_text(metadata) != metadata:
+        return _REDACTED_METADATA
+    if _CREDENTIAL_TOKEN.fullmatch(metadata):
+        return _REDACTED_METADATA
+    return metadata
+
+
+def public_provider_metadata(value: str | None) -> str | None:
+    """Return an approved public provider label for run metadata."""
+    return public_metadata_value(
+        value.lower() if value is not None else None,
+        allowed_values=_PUBLIC_PROVIDERS,
+    )
+
+
+def public_model_metadata(value: str | None) -> str | None:
+    """Return a model identifier only when it cannot be mistaken for an endpoint."""
+    metadata = public_metadata_value(value)
+    if metadata is None or metadata == _REDACTED_METADATA:
+        return metadata
+    if "?" in metadata or "#" in metadata or "@" in metadata:
+        return _REDACTED_METADATA
+    if _MODEL_ENDPOINT_PREFIX.match(metadata) or not _PUBLIC_MODEL_IDENTIFIER.fullmatch(metadata):
+        return _REDACTED_METADATA
+    return metadata
+
+
+def public_reasoning_effort(value: str | None) -> str | None:
+    return public_metadata_value(
+        value.lower() if value is not None else None,
+        allowed_values=_REASONING_EFFORTS,
+    )
 
 
 class TaskStatus(str, Enum):
@@ -48,6 +157,10 @@ class WorkerStatus(str, Enum):
     fabricated/mock numbers, unparsed tool markup, or a data agent that
     made no tool call and wrote no report). It must never be folded into
     ``completed`` (see P01/P03).
+
+    ``cancelled`` mirrors ``TaskStatus.cancelled``: the worker stopped
+    because ``cancel_run()`` was signalled, not because it failed. It must
+    never be retried (see ``SwarmRuntime._run_worker_with_retries``).
     """
 
     completed = "completed"
@@ -55,6 +168,7 @@ class WorkerStatus(str, Enum):
     timeout = "timeout"
     token_limit = "token_limit"
     incomplete = "incomplete"
+    cancelled = "cancelled"
 
 
 class SwarmAgentSpec(BaseModel):
@@ -190,6 +304,8 @@ class SwarmRun(BaseModel):
     total_output_tokens: int = 0
     provider: str | None = None
     model: str | None = None
+    reasoning_effort: str | None = None
+    use_responses_api: bool | None = None
     grounding_data: dict[str, list[dict]] | None = None
 
 

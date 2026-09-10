@@ -22,7 +22,7 @@ Regime Shift Detector — 结构性断点检测脚本
   - 保险权益配置比例检测（慢变量，季度检测）
 
 数据来源:
-  - AKShare / baostock / EastMoney (通过 vibe-trading-quanta 自动路由)
+  - AKShare / baostock / EastMoney (通过 vibe-trading-ai 自动路由)
   - 依赖数据路由层（data-routing skill）做 fallback
 
 依赖:

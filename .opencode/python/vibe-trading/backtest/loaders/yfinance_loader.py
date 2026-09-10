@@ -1,4 +1,4 @@
-"""yfinance-backed loader for HK/US equity OHLCV data."""
+"""yfinance-backed loader for global equity and crypto OHLCV data."""
 
 from __future__ import annotations
 
@@ -9,15 +9,17 @@ from typing import Dict, List, Optional, Union
 import pandas as pd
 import yfinance as yf
 
-logger = logging.getLogger(__name__)
-
 from backtest.loaders.base import (
+    is_lse_symbol,
     loader_cache_get,
     loader_cache_put,
+    normalize_lse_quote_currency,
     validate_date_range,
     validate_ohlc,
 )
 from backtest.loaders.registry import register
+
+logger = logging.getLogger(__name__)
 
 _OHLCV_COLUMNS = ["open", "high", "low", "close", "volume"]
 _COLUMN_RENAMES = {
@@ -60,7 +62,9 @@ def _to_yfinance_symbol(code: str) -> str:
     """
     upper = code.strip().upper()
     if upper.endswith(".US"):
-        return upper[:-3]
+        # US class shares are hyphenated on Yahoo/yfinance (BRK-B): the dot
+        # form returns empty data (live-verified), so map BRK.B.US -> BRK-B.
+        return upper[:-3].replace(".", "-")
     if upper.endswith(".HK"):
         digits = upper[:-3]
         width = max(4, len(digits))
@@ -71,8 +75,8 @@ def _to_yfinance_symbol(code: str) -> str:
     if upper.endswith("-USDC"):
         return upper[:-5] + "-USD"
     # India NSE/BSE (RELIANCE.NS, 500325.BO), Korea KRX (005930.KS,
-    # 247540.KQ), and Canada TSX/TSXV (TD.TO, PNG.V): yfinance carries these
-    # suffixes as-is.
+    # 247540.KQ), Canada TSX/TSXV (TD.TO, PNG.V), and Vietnam HOSE (VIC.VN):
+    # yfinance carries these suffixes as-is.
     return upper
 
 
@@ -92,6 +96,22 @@ def _to_yfinance_interval(interval: str) -> str:
 def _to_yfinance_exclusive_end(end_date: str) -> str:
     """Convert the project-inclusive end date to yfinance's exclusive end."""
     return (pd.Timestamp(end_date).normalize() + pd.Timedelta(days=1)).strftime("%Y-%m-%d")
+
+
+def _declared_currency(symbol: str) -> Optional[str]:
+    """Return Yahoo's declared currency for ``symbol``, or ``None`` when absent.
+
+    ``yf.Ticker(...).history_metadata`` carries the exchange's declared quote
+    currency. Absence (or any probe failure) MUST NOT be treated as GBp. The
+    LSE loader contract rejects a missing or non-GBP currency rather than
+    allowing a USD line into static GBP accounting.
+    """
+    try:
+        meta = yf.Ticker(symbol).history_metadata
+    except Exception:  # noqa: BLE001 — a metadata probe failure is not data
+        return None
+    currency = meta.get("currency") if isinstance(meta, dict) else None
+    return currency if isinstance(currency, str) and currency else None
 
 
 def _download_history(
@@ -116,7 +136,9 @@ def _download_history(
         start=start_date,
         end=end_date,
         interval=interval,
-        auto_adjust=False,
+        # Adjusted OHLC like every other loader on the chain (qfq caliber);
+        # volume stays raw on both sides of the comparison.
+        auto_adjust=True,
         progress=False,
     )
 
@@ -232,12 +254,13 @@ class DataLoader:
 
     name = "yfinance"
     markets = {
-        "us_equity", "hk_equity", "india_equity", "kr_equity", "ca_equity", "crypto",
+        "us_equity", "hk_equity", "india_equity", "kr_equity", "ca_equity",
+        "vietnam_equity", "uk_equity", "crypto",
     }
     # yfinance volume is single shares for US/HK equities
     # (HKUDS/Vibe-Trading#1062; HK verified 2026-08-11, 00700.HK ratio 1.00
     # vs tencent/eastmoney). Crypto base-asset units stay undeclared.
-    volume_units = {"us_equity": "shares", "hk_equity": "shares"}
+    volume_units = {"us_equity": "shares", "hk_equity": "shares", "uk_equity": "shares"}
     requires_auth = False
 
     def is_available(self) -> bool:
@@ -326,6 +349,14 @@ class DataLoader:
                 if normalized.empty:
                     logger.warning("yfinance returned no usable data for %s", symbol)
                     continue
+
+                # The engine currently has one static GBP pool for uk_equity.
+                # Normalize declared GBp/p to GBP, pass declared GBP unchanged,
+                # and reject USD/other/unknown .L lines before they can enter
+                # that pool. The suffix identifies LSE, never the currency.
+                if is_lse_symbol(symbol):
+                    declared = _declared_currency(symbol)
+                    normalized = normalize_lse_quote_currency(normalized, declared)
 
                 loader_cache_put(
                     source=self.name,

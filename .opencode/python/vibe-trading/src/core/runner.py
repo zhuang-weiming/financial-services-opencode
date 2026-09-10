@@ -12,7 +12,7 @@ import tempfile
 import time
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Dict, Optional
 
 from rich.console import Console
 
@@ -82,32 +82,66 @@ def _rlimit_as_bytes() -> int:
     return mb * 1024 * 1024
 
 
-def _make_rlimit_preexec() -> Callable[[], None] | None:
-    """Build a POSIX ``preexec_fn`` that caps subprocess address space + fds.
+# Applied by the freshly-exec'd child, NOT by a ``preexec_fn``. ``preexec_fn``
+# runs Python bytecode between fork() and exec(); when the parent is
+# multi-threaded — which ``vibe-trading serve`` always is (uvicorn workers plus
+# the background agent loops) — that is undefined behaviour per POSIX and
+# CPython documents it as unsafe. On aarch64/glibc 2.34 it reliably SIGSEGVs the
+# child, so every backtest launched from the Web UI died before exec (#1355).
+# Running the same setrlimit calls after exec, in a single-threaded interpreter,
+# is safe on every platform and keeps the identical ceiling.
+#
+# argv contract: ``python -c BOOTSTRAP <as_bytes> <nofile> <entry> [args...]``.
+_SANDBOX_RLIMIT_BOOTSTRAP = """\
+import os, runpy, sys
+_as_bytes, _nofile = int(sys.argv[1]), int(sys.argv[2])
+sys.argv = sys.argv[3:]
+try:
+    import resource
+except ImportError:
+    resource = None
+if resource is not None:
+    for _res, _target in (
+        (resource.RLIMIT_AS, _as_bytes),
+        (resource.RLIMIT_NOFILE, _nofile),
+    ):
+        try:
+            _soft, _hard = resource.getrlimit(_res)
+            _new_hard = _target if _hard == resource.RLIM_INFINITY else min(_target, _hard)
+            resource.setrlimit(_res, (min(_target, _new_hard), _new_hard))
+        except (ValueError, OSError):
+            pass
+sys.path.insert(0, os.path.dirname(os.path.abspath(sys.argv[0])))
+runpy.run_path(sys.argv[0], run_name="__main__")
+"""
 
-    Returns None on Windows (no ``resource`` module). The closure runs in the
-    forked child after any UID drop; lowering rlimits is always permitted for an
-    unprivileged process, and each limit is applied best-effort so a hardened
-    parent limit already below the target is never raised.
+
+def _rlimit_bootstrap_argv() -> list[str] | None:
+    """Return the ``-c`` bootstrap argv prefix that caps address space + fds.
+
+    Returns None on Windows (no ``resource`` module), where the caller runs the
+    entry script directly and no ceiling is applied — unchanged from before.
+
+    The two limits are resolved in the parent and passed as literal argv values
+    so the env parsing keeps a single source of truth (``_rlimit_as_bytes``).
+    The bootstrap lowers limits best-effort: a hardened parent limit already
+    below the target is never raised, and it runs after any UID drop, where
+    lowering is always permitted for an unprivileged process. It then puts the
+    entry script's own directory on sys.path, which ``python script.py`` does
+    for free and ``python -c`` does not; the cwd entry ``-c`` leaves behind is
+    harmless because execute() already exports an explicit cwd on PYTHONPATH.
+
+    Returns:
+        ``["-c", <bootstrap>, <as_bytes>, <nofile>]`` on POSIX, else None.
     """
     if resource is None:
         return None
-
-    as_bytes = _rlimit_as_bytes()
-
-    def _apply_limits() -> None:  # pragma: no cover - runs in forked child
-        for res, target in (
-            (resource.RLIMIT_AS, as_bytes),
-            (resource.RLIMIT_NOFILE, _SANDBOX_RLIMIT_NOFILE),
-        ):
-            try:
-                _soft, hard = resource.getrlimit(res)
-                new_hard = target if hard == resource.RLIM_INFINITY else min(target, hard)
-                resource.setrlimit(res, (min(target, new_hard), new_hard))
-            except (ValueError, OSError):
-                pass
-
-    return _apply_limits
+    return [
+        "-c",
+        _SANDBOX_RLIMIT_BOOTSTRAP,
+        str(_rlimit_as_bytes()),
+        str(_SANDBOX_RLIMIT_NOFILE),
+    ]
 
 
 def _prepare_sandbox_home(real_home: Path | None) -> Path:
@@ -129,12 +163,27 @@ def _prepare_sandbox_home(real_home: Path | None) -> Path:
                 src = src_root / rel
                 if not src.exists():
                     continue
+                dst = dst_root / rel
                 try:
-                    (dst_root / rel).symlink_to(src, target_is_directory=src.is_dir())
+                    dst.symlink_to(src, target_is_directory=src.is_dir())
                 except OSError:
-                    # Best-effort: a loader that can't find its config just falls
-                    # back to a live fetch / disabled cache — never a hard break.
-                    pass
+                    # Symlinks need privileges on Windows, so they can fail even
+                    # when nothing is fundamentally wrong. Fall back to a copy:
+                    # the loader cache/config paths stay visible to the subprocess
+                    # (the whole point of the re-exposure) without privileges.
+                    # Copies are per-run snapshots that the existing sandbox
+                    # cleanup removes, so the opt-in cache stops persisting across
+                    # runs only on hosts that cannot create symlinks.
+                    try:
+                        if src.is_dir():
+                            shutil.copytree(src, dst, dirs_exist_ok=True)
+                        else:
+                            shutil.copy2(src, dst)
+                    except OSError:
+                        # Best-effort: a loader that can't find its config just
+                        # falls back to a live fetch / disabled cache — never a
+                        # hard break.
+                        pass
             try:
                 os.chmod(dst_root, 0o755)
             except OSError:
@@ -334,6 +383,13 @@ _ARTIFACTS_SPEC = {
         "metrics": {"schema": "metrics_csv", "path": "artifacts/metrics.csv"},
         "trades": {"schema": "trade_log", "path": "artifacts/trades.csv"},
         "positions": {"schema": "positions_csv", "path": "artifacts/positions.csv"},
+        # Optimiser requests, kept separate from the executed book above. Without
+        # this entry the file is written but never appears in the runner's
+        # artifact map, so nothing downstream can compare intent against fills.
+        "target_positions": {
+            "schema": "positions_csv",
+            "path": "artifacts/target_positions.csv",
+        },
         "run_card_json": {"schema": "json", "path": "run_card.json"},
         "run_card_md": {"schema": "markdown", "path": "run_card.md"},
     },
@@ -534,7 +590,10 @@ class Runner:
         python_cmd = self._pick_python_interpreter()
         console.print(f"[dim]Runner: using Python: {python_cmd}[/dim]")
 
-        cmd = [python_cmd, str(entry_script)]
+        # The rlimit ceiling is applied by the exec'd interpreter itself, never
+        # by a preexec_fn — see _SANDBOX_RLIMIT_BOOTSTRAP for why (#1355).
+        bootstrap = _rlimit_bootstrap_argv()
+        cmd = [python_cmd, *(bootstrap or []), str(entry_script)]
         if cli_args:
             cmd.extend(cli_args)
 
@@ -579,10 +638,6 @@ class Runner:
             encoding="utf-8",
             errors="ignore",
         )
-        preexec = _make_rlimit_preexec()
-        if preexec is not None:
-            run_kwargs["preexec_fn"] = preexec
-
         try:
             process = self._run_sandboxed(cmd, run_kwargs)
         finally:

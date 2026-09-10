@@ -1,4 +1,4 @@
-"""Integration tests for the Python `vibe-trading-quanta` package.
+"""Integration tests for the Python `vibe-trading-ai` package.
 
 Tests:
 - Package import (already in structural tests, repeated here for completeness)
@@ -24,7 +24,7 @@ def test_alpha_family_imports() -> TestResult:
 
     Uses the Registry which scans zoo directories via AST (no import needed),
     then verifies individual alphas can be lazy-imported."""
-    from vibe_trading_quanta.factors.registry import Registry
+    from src.factors.registry import Registry
     try:
         r = Registry()
     except Exception as e:
@@ -63,7 +63,7 @@ def test_alpha_family_imports() -> TestResult:
 
 def test_alpha_count() -> TestResult:
     """Should have ~461 alphas total across 5 families via Registry."""
-    from vibe_trading_quanta.factors.registry import Registry
+    from src.factors.registry import Registry
     r = Registry()
     total = len(r.list())
     if total >= 400:
@@ -83,7 +83,7 @@ def test_alpha_count() -> TestResult:
 
 def test_swarm_presets_valid_yaml() -> TestResult:
     """All 30 swarm presets should be valid YAML."""
-    preset_dir = PYTHON_PKG / "vibe_trading_quanta" / "swarm" / "presets"
+    preset_dir = PYTHON_PKG / "src" / "swarm" / "presets"
     if not preset_dir.exists():
         return TestResult(
             name="swarm presets valid YAML",
@@ -118,7 +118,7 @@ def test_swarm_presets_valid_yaml() -> TestResult:
 
 def test_swarm_presets_have_agents() -> TestResult:
     """Swarm presets should define agents."""
-    preset_dir = PYTHON_PKG / "vibe_trading_quanta" / "swarm" / "presets"
+    preset_dir = PYTHON_PKG / "src" / "swarm" / "presets"
     import yaml
     yaml_files = sorted(preset_dir.glob("*.yaml"))
     no_agents = []
@@ -150,11 +150,11 @@ def test_swarm_presets_have_agents() -> TestResult:
 def test_skill_scripts_importable() -> TestResult:
     """Critical skill scripts should be importable without syntax errors."""
     script_dirs = [
-        SKILLS_DIR / "alpha-zoo" / "scripts",
-        SKILLS_DIR / "backtest-diagnose" / "scripts",
-        SKILLS_DIR / "factor-research" / "scripts",
-        SKILLS_DIR / "data-routing" / "scripts",
-        SKILLS_DIR / "strategy-dev-manager" / "scripts",
+        SKILLS_DIR / "vibe-trading-alpha-zoo" / "scripts",
+        SKILLS_DIR / "vibe-trading-backtest-diagnose" / "scripts",
+        SKILLS_DIR / "vibe-trading-factor-research" / "scripts",
+        SKILLS_DIR / "vibe-trading-data-routing" / "scripts",
+        SKILLS_DIR / "vibe-trading-strategy-dev-manager" / "scripts",
     ]
     failed = []
     for d in script_dirs:
@@ -184,11 +184,11 @@ def test_skill_scripts_importable() -> TestResult:
 def test_critical_script_execution() -> TestResult:
     """Critical scripts should run with --help without crashing."""
     scripts_to_test = [
-        SKILLS_DIR / "alpha-zoo" / "scripts" / "alpha_bench.py",
-        SKILLS_DIR / "backtest-diagnose" / "scripts" / "backtest_runner.py",
-        SKILLS_DIR / "factor-research" / "scripts" / "factor_analysis.py",
-        SKILLS_DIR / "data-routing" / "scripts" / "market_router.py",
-        SKILLS_DIR / "strategy-dev-manager" / "scripts" / "strategy_lifecycle.py",
+        SKILLS_DIR / "vibe-trading-alpha-zoo" / "scripts" / "alpha_bench.py",
+        SKILLS_DIR / "vibe-trading-backtest-diagnose" / "scripts" / "backtest_runner.py",
+        SKILLS_DIR / "vibe-trading-factor-research" / "scripts" / "factor_analysis.py",
+        SKILLS_DIR / "vibe-trading-data-routing" / "scripts" / "market_router.py",
+        SKILLS_DIR / "vibe-trading-strategy-dev-manager" / "scripts" / "strategy_lifecycle.py",
     ]
     import subprocess
     failed = []

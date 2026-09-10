@@ -108,6 +108,7 @@ from __future__ import annotations
 
 import json
 import logging
+import math
 from datetime import datetime, timezone
 from typing import Any
 
@@ -234,7 +235,7 @@ def _error(message: str) -> str:
     Returns:
         A ``{"ok": false, "error": ...}`` JSON string.
     """
-    return json.dumps({"ok": False, "error": message}, ensure_ascii=False)
+    return json.dumps({"ok": False, "error": message}, ensure_ascii=False, allow_nan=False)
 
 
 def _get_json(url: str, *, host_key: str, params: dict[str, Any] | None = None) -> Any:
@@ -287,14 +288,17 @@ def _to_float(value: Any) -> float | None:
         value: Raw value from a payload.
 
     Returns:
-        The float, or ``None`` when the value is missing or non-numeric.
+        The float, or ``None`` when the value is missing, non-numeric, or
+        non-finite (``float()`` parses "nan"/"inf"/"Infinity" as valid
+        floats; those are not usable numeric data here).
     """
     if value is None or isinstance(value, bool):
         return None
     try:
-        return float(value)
+        result = float(value)
     except (ValueError, TypeError):
         return None
+    return result if math.isfinite(result) else None
 
 
 def _probability(value: Any) -> dict[str, float] | None:
@@ -1233,4 +1237,5 @@ class PredictionMarketTool(BaseTool):
                 "data": data,
             },
             ensure_ascii=False,
+            allow_nan=False,
         )

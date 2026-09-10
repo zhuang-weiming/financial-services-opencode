@@ -56,7 +56,7 @@ def compute(panel: dict) -> pd.DataFrame:
     close = panel["close"]
 
 
-    returns = close.pct_change()
+    returns = close.pct_change(fill_method=None)
     # Helper aliases (local closures keep the file standalone & purity-safe).
     out = rank((1.0 - rank(safe_div(ts_std(returns, 2), ts_std(returns, 5)))) + (1.0 - rank(delta(close, 1))))
     return out

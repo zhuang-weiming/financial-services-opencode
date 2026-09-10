@@ -80,8 +80,16 @@ def compute(panel: dict) -> pd.DataFrame:
     # Helper aliases (local closures keep the file standalone & purity-safe).
     where_ternary = _where_ternary
     d1 = delta(close, 1)
-    cond1 = ts_min(d1, 4) > 0
-    cond2 = ts_max(d1, 4) < 0
+    min4 = ts_min(d1, 4)
+    max4 = ts_max(d1, 4)
+    cond1 = min4 > 0
+    cond2 = max4 < 0
     inner = where_ternary(cond1, d1, where_ternary(cond2, d1, -1.0 * d1))
+    # A NaN comparison is False, not NaN, so where_ternary's own
+    # np.isfinite safety net never fires here: the innermost fallback
+    # only needs a 1-day delta and stays finite well before the 4-day
+    # lookback is available, fabricating a signal during warmup instead
+    # of NaN. rank() preserves NaN, so masking inner is enough.
+    inner = inner.where(min4.notna() & max4.notna())
     out = rank(inner)
     return out

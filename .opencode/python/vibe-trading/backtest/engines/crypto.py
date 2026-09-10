@@ -17,6 +17,8 @@ import pandas as pd
 
 from backtest.engines.base import BaseEngine
 from backtest.engines._market_hooks import (
+    _interval_span_hours,
+    _liquidation_mark,
     calc_crypto_funding_fee,
     check_crypto_liquidation,
 )
@@ -99,7 +101,7 @@ class CryptoEngine(BaseEngine):
         loader: Any,
         signal_engine: Any,
         run_dir: Path,
-        bars_per_year: int = 252,
+        bars_per_year: int | None = 252,
     ) -> dict[str, Any]:
         self._validate_strict_resolution(config)
         self._run_interval = str(config.get("interval", "1D"))
@@ -443,7 +445,7 @@ class CryptoEngine(BaseEngine):
         )
         self._risk_after_atomic_mutation(timestamp)
 
-    def _execute_bars(self, dates, data_map, close_df, target_pos, codes) -> None:
+    def _execute_bars(self, dates, data_map, close_df, target_pos, codes, close_val_df=None) -> None:
         if self.perpetual_strict:
             try:
                 close_df = pd.DataFrame(
@@ -451,7 +453,8 @@ class CryptoEngine(BaseEngine):
                 )
             except KeyError as exc:
                 raise ValueError(f"missing strict mark-close data: {exc}") from exc
-        super()._execute_bars(dates, data_map, close_df, target_pos, codes)
+            close_val_df = close_df.ffill()
+        super()._execute_bars(dates, data_map, close_df, target_pos, codes, close_val_df=close_val_df)
         if self.perpetual_strict and self.terminal_status == "active":
             self.terminal_status = "completed"
 
@@ -603,12 +606,14 @@ class CryptoEngine(BaseEngine):
         fee = calc_crypto_funding_fee(
             symbol, bar, timestamp, self.positions,
             self.funding_rate, self._funding_applied, self._funding_daily_done,
+            _interval_span_hours(self._run_interval),
         )
         self.capital -= fee
 
         if check_crypto_liquidation(symbol, bar, self.positions):
             pos = self.positions.get(symbol)
             if pos is not None:
-                mark_price = float(bar.get("close", pos.entry_price))
-                liq_price = self.apply_slippage(mark_price, -pos.direction)
+                # Fill at the same adverse mark the hook used for the check so
+                # a wick trigger never exits at a better price than the venue.
+                liq_price = self.apply_slippage(_liquidation_mark(bar, pos), -pos.direction)
                 self._close_position(symbol, liq_price, timestamp, "liquidation")

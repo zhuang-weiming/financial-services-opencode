@@ -434,7 +434,7 @@ def test_version_consistency() -> TestResult:
     
     # Check README version
     readme = REPO_ROOT / "README.md"
-    pyproject = OPENCODE_DIR / "python" / "vibe-trading-quanta" / "pyproject.toml"
+    pyproject = OPENCODE_DIR / "python" / "vibe-trading-ai" / "pyproject.toml"
     
     issues = []
     if readme.exists():

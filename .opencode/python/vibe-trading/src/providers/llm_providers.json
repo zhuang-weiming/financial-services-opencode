@@ -101,6 +101,15 @@
     "api_key_required": true
   },
   {
+    "name": "novita",
+    "label": "Novita AI",
+    "api_key_env": "NOVITA_API_KEY",
+    "base_url_env": "NOVITA_BASE_URL",
+    "default_model": "moonshotai/kimi-k3",
+    "default_base_url": "https://api.novita.ai/openai",
+    "api_key_required": true
+  },
+  {
     "name": "dashscope",
     "label": "DashScope / Qwen",
     "api_key_env": "DASHSCOPE_API_KEY",
@@ -211,5 +220,16 @@
     "default_model": "qwen2.5:32b",
     "default_base_url": "http://localhost:11434",
     "api_key_required": false
+  },
+  {
+    "name": "copilot",
+    "label": "GitHub Copilot SDK",
+    "api_key_env": "COPILOT_GITHUB_TOKEN",
+    "base_url_env": "COPILOT_BASE_URL",
+    "default_model": "claude-sonnet-5",
+    "default_base_url": "https://api.githubcopilot.com",
+    "api_key_required": false,
+    "auth_type": "gh_cli",
+    "login_command": "gh auth login"
   }
 ]

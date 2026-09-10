@@ -55,4 +55,10 @@ def compute(panel: dict) -> pd.DataFrame:
     ref = pd.DataFrame(np.where(up, np.minimum(l, pc), np.where(dn, np.maximum(h, pc), c)),
                        index=c.index, columns=c.columns)
     move = (c - ref).where(up | dn, 0.0)
+    # A NaN comparison is False, not NaN, so a missing close/prior-close
+    # (a halt, a gap) reads the same as a real "unchanged" tie and gets
+    # the 0.0 above instead of NaN. Mask those back to NaN so the rolling
+    # sum's own min_periods correctly turns NaN for every window still
+    # touching the gap, instead of silently summing a fabricated 0.0.
+    move = move.mask(c.isna() | pc.isna())
     return move.rolling(20, min_periods=20).sum()

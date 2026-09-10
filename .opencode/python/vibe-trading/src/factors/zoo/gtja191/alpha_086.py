@@ -54,4 +54,7 @@ def compute(panel: dict) -> pd.DataFrame:
     out = pd.DataFrame(np.where(0.25 < diff, -1.0,
                                 np.where(diff < 0, 1.0, last.to_numpy())),
                        index=c.index, columns=c.columns)
-    return out
+    # NaN comparisons are False, not NaN, so a gap that leaves diff
+    # undefined (warmup, or a halt inside the 10/20-day lookback) would
+    # otherwise fall through to the finite `last` branch instead of NaN.
+    return out.where(diff.notna())

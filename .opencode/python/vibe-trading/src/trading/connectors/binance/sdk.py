@@ -1,36 +1,39 @@
-"""Read-only Binance (spot) connector via the ``ccxt`` unified exchange client.
+"""Binance ccxt connector with host-separated spot profiles.
 
-Wraps ccxt's ``binance`` exchange for the five read operations the trading layer
-exposes (account / positions / orders / quote / history). No order-placement
-method is exposed here — writes are introduced in a later layer behind the paper
-guard and, for live, the mandate gate.
-
-Paper-vs-live is structural: ``profile == "paper"`` builds the client with
-``set_sandbox_mode(True)`` (host ``testnet.binance.vision``) using the testnet
-key pair; a live profile uses ``set_sandbox_mode(False)`` (host
-``api.binance.com``) with the live key pair. A testnet key cannot reach the live
-host, so the configured host — recorded as ``host`` / ``paper_guard`` in every
-payload — is the authoritative discriminator. There is no paper/live field in
-any response; the host is the guard.
-
-Note: the testnet host may migrate (``testnet.binance.vision`` historically vs
-``demo-api.binance.com``), so ``testnet_host`` is config-overridable.
-
-Note: Binance spot has NO positions — holdings are simply non-zero balances. So
-``get_positions`` derives position-shaped rows from the non-zero ``total``
-balances returned by ``fetch_balance``.
+The live read-only profile may opt into ``market_type="usdm"`` for strict
+Shadow Account evidence. USD-M permits only signed account and position reads
+against ``fapi.binance.com``; all order and market-data surfaces are rejected.
 """
 
 from __future__ import annotations
 
 import json
+import math
 from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Mapping
 from urllib.parse import urlparse
+from urllib.request import getproxies
 
 from src.config.paths import get_runtime_root
+from src.trading.connectors.binance.shaping import (
+    as_iter as _as_iter,
+    nonzero_balances as _nonzero_balances,
+    normalize_symbol,
+    obj_get as _obj_get,
+    ohlcv_to_dict as _ohlcv_to_dict,
+    order_to_dict as _order_to_dict,
+    to_float as _to_float,
+    trade_to_dict as _trade_to_dict,
+)
+from src.trading.connectors.binance.usdm import (
+    DEFAULT_OBSERVATION_ABSOLUTE_TOLERANCE,
+    UsdMObservationError,
+    assert_exchange_endpoints,
+    read_account_observation,
+)
 
 CONFIG_FILENAME = "binance.json"
 
@@ -43,10 +46,7 @@ PROFILE_ENVIRONMENTS = {
 
 DEFAULT_TESTNET_HOST = "https://testnet.binance.vision"
 LIVE_HOST = "https://api.binance.com"
-
-#: Common quote assets, longest-first, used to split a slashless symbol.
-_QUOTE_ASSETS = ("USDT", "USDC", "BUSD", "TUSD", "FDUSD", "BTC", "ETH", "BNB")
-
+USDM_LIVE_HOST = "https://fapi.binance.com"
 
 class BinanceDependencyError(RuntimeError):
     """Raised when the optional ``ccxt`` package is not installed."""
@@ -56,45 +56,16 @@ class BinanceConfigError(RuntimeError):
     """Raised when the connector configuration is missing or invalid."""
 
 
-def normalize_symbol(symbol: str) -> str:
-    """Normalize a symbol to ccxt unified ``BASE/QUOTE`` format.
-
-    Accepts ``BTC/USDT`` (passed through, uppercased), ``BTC-USDT`` (hyphen
-    rewritten to slash), or a slashless ``BTCUSDT`` (split before a known quote
-    asset). If the slashless form has no recognized quote suffix, the uppercased
-    input is returned unchanged.
-
-    Args:
-        symbol: The raw symbol string from a caller.
-
-    Returns:
-        A ccxt unified symbol such as ``BTC/USDT``.
-    """
-    clean = (symbol or "").strip().upper().replace("-", "/")
-    if "/" in clean:
-        return clean
-    for quote in _QUOTE_ASSETS:
-        if clean.endswith(quote) and len(clean) > len(quote):
-            return f"{clean[: -len(quote)]}/{quote}"
-    return clean
-
-
 @dataclass(frozen=True)
 class BinanceConfig:
-    """Binance (spot) connector connection settings.
-
-    Args:
-        api_key: Binance API key (testnet and live use different keys).
-        api_secret: Binance API secret.
-        profile: ``paper``, ``live-readonly`` or ``live``.
-        testnet_host: Testnet REST host (overridable; may migrate upstream).
-        timeout: Network timeout in seconds.
-        readonly: Always true for this layer; order methods are not exposed.
+    """Binance connector connection settings.
     """
 
     api_key: str = ""
     api_secret: str = ""
     profile: str = "paper"
+    market_type: str = "spot"
+    observation_absolute_tolerance: float = DEFAULT_OBSERVATION_ABSOLUTE_TOLERANCE
     testnet_host: str = DEFAULT_TESTNET_HOST
     timeout: float = 15.0
     readonly: bool = True
@@ -106,10 +77,34 @@ class BinanceConfig:
         profile = str(payload.get("profile") or "paper").strip().lower()
         if profile not in PROFILE_ENVIRONMENTS:
             raise BinanceConfigError("profile must be 'paper', 'live-readonly' or 'live'")
+        market_type = str(payload.get("market_type") or "spot").strip().lower()
+        if market_type not in {"spot", "usdm"}:
+            raise BinanceConfigError("market_type must be 'spot' or 'usdm'")
+        if market_type == "usdm" and profile != "live-readonly":
+            raise BinanceConfigError(
+                "market_type 'usdm' is available only through the live-readonly profile"
+            )
+        raw_tolerance = payload.get("observation_absolute_tolerance")
+        try:
+            tolerance = float(
+                raw_tolerance
+                if raw_tolerance is not None
+                else DEFAULT_OBSERVATION_ABSOLUTE_TOLERANCE
+            )
+        except (TypeError, ValueError) as exc:
+            raise BinanceConfigError(
+                "observation_absolute_tolerance must be non-negative and finite"
+            ) from exc
+        if not math.isfinite(tolerance) or tolerance < 0:
+            raise BinanceConfigError(
+                "observation_absolute_tolerance must be non-negative and finite"
+            )
         return cls(
             api_key=str(payload.get("api_key") or "").strip(),
             api_secret=str(payload.get("api_secret") or "").strip(),
             profile=profile,
+            market_type=market_type,
+            observation_absolute_tolerance=tolerance,
             testnet_host=str(payload.get("testnet_host") or DEFAULT_TESTNET_HOST).strip(),
             timeout=float(payload.get("timeout") or 15.0),
             readonly=bool(payload.get("readonly", True)),
@@ -121,6 +116,8 @@ class BinanceConfig:
         api_key: str | None = None,
         api_secret: str | None = None,
         profile: str | None = None,
+        market_type: str | None = None,
+        observation_absolute_tolerance: float | None = None,
         testnet_host: str | None = None,
     ) -> "BinanceConfig":
         """Return a copy with CLI/tool overrides applied."""
@@ -131,6 +128,10 @@ class BinanceConfig:
             payload["api_secret"] = api_secret
         if profile is not None:
             payload["profile"] = profile
+        if market_type is not None:
+            payload["market_type"] = market_type
+        if observation_absolute_tolerance is not None:
+            payload["observation_absolute_tolerance"] = observation_absolute_tolerance
         if testnet_host is not None:
             payload["testnet_host"] = testnet_host
         return BinanceConfig.from_mapping(payload)
@@ -148,10 +149,15 @@ class BinanceConfig:
     @property
     def host(self) -> str:
         """Return the REST host this profile connects to."""
+        if self.market_type == "usdm":
+            return USDM_LIVE_HOST
         return self.testnet_host if self.is_testnet else LIVE_HOST
 
 
-_OVERRIDE_KEYS = ("api_key", "api_secret", "profile", "testnet_host")
+_OVERRIDE_KEYS = (
+    "api_key", "api_secret", "profile", "market_type",
+    "observation_absolute_tolerance", "testnet_host",
+)
 
 
 def build_config(profile_config: Mapping[str, Any] | None = None, overrides: Mapping[str, Any] | None = None) -> "BinanceConfig":
@@ -161,12 +167,6 @@ def build_config(profile_config: Mapping[str, Any] | None = None, overrides: Map
     ``~/.vibe-trading/binance.json``; the selected connector profile supplies the
     ``profile`` intent; CLI/tool overrides win last.
 
-    Args:
-        profile_config: The connector profile's ``config`` dict.
-        overrides: Per-call overrides (only known config keys are applied).
-
-    Returns:
-        A normalized :class:`BinanceConfig`.
     """
     base = asdict(load_config())
     for key, value in dict(profile_config or {}).items():
@@ -256,16 +256,18 @@ def check_status(config: BinanceConfig | None = None) -> dict[str, Any]:
         report["error"] = str(exc)
         return report
 
-    report["account"] = {
+    account_summary = {
         "profile": cfg.profile,
         "is_testnet": cfg.is_testnet,
-        "balances": len(snapshot.get("balances", [])),
     }
+    count_field = "positions" if cfg.market_type == "usdm" else "balances"
+    account_summary[count_field] = len(snapshot.get(count_field, []))
+    report["account"] = account_summary
     return report
 
 
 def get_account_snapshot(config: BinanceConfig | None = None) -> dict[str, Any]:
-    """Fetch the spot account balance for the configured account.
+    """Fetch spot balances or a strict USD-M Shadow Account observation.
 
     Returns the non-zero balances (each with ``free`` / ``used`` / ``total``)
     from ccxt's unified ``fetch_balance``.
@@ -273,6 +275,8 @@ def get_account_snapshot(config: BinanceConfig | None = None) -> dict[str, Any]:
     cfg = config or load_config()
     _assert_host(cfg)
     ex = _exchange(cfg)
+    if cfg.market_type == "usdm":
+        return _get_usdm_observation(cfg, ex)
     balance = ex.fetch_balance()
     rows = _nonzero_balances(balance)
     return {
@@ -286,32 +290,67 @@ def get_account_snapshot(config: BinanceConfig | None = None) -> dict[str, Any]:
 
 
 def get_positions(config: BinanceConfig | None = None) -> dict[str, Any]:
-    """Fetch holdings shaped as positions for the configured account.
+    """Fetch spot holdings or strict USD-M position evidence.
 
-    Binance spot has no positions; holdings are the non-zero balances. Each row
-    is ``{symbol, quantity, free, used}`` where ``symbol`` is the asset code and
-    ``quantity`` is the total balance.
+    Binance spot has no positions; holdings are the non-zero balances. On live
+    accounts Binance may expose Simple Earn Flexible collateral in the spot
+    payload as synthetic ``LD<ASSET>`` balances. When the read-only Simple Earn
+    endpoint is available, replace those wrappers with their underlying asset
+    and authoritative ``totalAmount`` so portfolio valuation neither misses nor
+    double-counts flexible holdings.
     """
     cfg = config or load_config()
     _assert_host(cfg)
     ex = _exchange(cfg)
+    if cfg.market_type == "usdm":
+        return _get_usdm_observation(cfg, ex)
     balance = ex.fetch_balance()
+    spot_balances = _nonzero_balances(balance)
+    earn_rows: list[dict[str, Any]] = []
+    earn_wrappers: set[str] = set()
+    earn_note: str | None = None
+    if not cfg.is_testnet:
+        try:
+            payload = ex.sapi_get_simple_earn_flexible_position({"size": 100})
+            for item in payload.get("rows", []) if isinstance(payload, Mapping) else []:
+                asset = str(_obj_get(item, "asset", "")).strip().upper()
+                quantity = _to_float(_obj_get(item, "totalAmount"))
+                if not asset or not quantity:
+                    continue
+                earn_wrappers.add(f"LD{asset}")
+                earn_rows.append(
+                    {
+                        "symbol": asset,
+                        "quantity": quantity,
+                        "free": 0.0,
+                        "used": quantity,
+                        "source": "simple_earn_flexible",
+                    }
+                )
+        except Exception as exc:  # noqa: BLE001 - spot holdings still remain usable
+            earn_note = f"Simple Earn Flexible holdings unavailable: {type(exc).__name__}"
+
     rows = [
         {
             "symbol": _obj_get(row, "asset"),
             "quantity": _obj_get(row, "total"),
             "free": _obj_get(row, "free"),
             "used": _obj_get(row, "used"),
+            "source": "spot",
         }
-        for row in _nonzero_balances(balance)
-    ]
-    return {
+        for row in spot_balances
+        if str(_obj_get(row, "asset", "")).upper() not in earn_wrappers
+    ] + earn_rows
+    result = {
         "status": "ok",
         "profile": cfg.profile,
         "is_testnet": cfg.is_testnet,
         "paper_guard": "host_separated",
         "positions": rows,
     }
+    if earn_note:
+        result["note"] = earn_note
+    return result
 
 
 def get_open_orders(config: BinanceConfig | None = None, *, include_executions: bool = False) -> dict[str, Any]:
@@ -324,6 +363,7 @@ def get_open_orders(config: BinanceConfig | None = None, *, include_executions: 
     symbol, so it is also wrapped and degrades to an empty list with a note.
     """
     cfg = config or load_config()
+    _reject_unsupported_usdm_surface(cfg)
     _assert_host(cfg)
     ex = _exchange(cfg)
     symbol_required = _symbol_required_errors()
@@ -355,6 +395,7 @@ def get_open_orders(config: BinanceConfig | None = None, *, include_executions: 
 def get_quote(symbol: str, *, config: BinanceConfig | None = None, **_: Any) -> dict[str, Any]:
     """Fetch a latest ticker snapshot for ``symbol`` (ccxt unified format)."""
     cfg = config or load_config()
+    _reject_unsupported_usdm_surface(cfg)
     _assert_host(cfg)
     ex = _exchange(cfg)
     clean = normalize_symbol(symbol)
@@ -372,6 +413,65 @@ def get_quote(symbol: str, *, config: BinanceConfig | None = None, **_: Any) -> 
             "time": str(_obj_get(ticker, "timestamp", "")),
         },
     }
+
+
+def search_instruments(
+    query: str,
+    *,
+    config: BinanceConfig | None = None,
+    limit: int = 10,
+) -> dict[str, Any]:
+    """Resolve an exact spot pair against the selected Binance market catalog.
+
+    Binance's exchange-info catalog has symbols and assets, but no stable
+    human-readable asset names. The connector therefore resolves only explicit
+    pair spellings (``ETH-USDT``, ``ETH/USDT`` or ``ETHUSDT``) and never guesses
+    from prose such as ``Ethereum``.
+    """
+    cfg = config or load_config()
+    _reject_unsupported_usdm_surface(cfg)
+    _assert_host(cfg)
+
+    requested = normalize_symbol(query)
+    if "/" not in requested:
+        return {"status": "ok", "query": query, "instruments": []}
+
+    try:
+        bounded_limit = max(1, min(int(limit), 50))
+    except (TypeError, ValueError, OverflowError):
+        bounded_limit = 10
+
+    markets = _exchange(cfg).load_markets()
+    if not isinstance(markets, Mapping):
+        raise BinanceConfigError("Binance load_markets returned a non-mapping payload")
+
+    instruments: list[dict[str, Any]] = []
+    for key, raw_market in markets.items():
+        if not isinstance(raw_market, Mapping):
+            continue
+        native_symbol = normalize_symbol(str(raw_market.get("symbol") or key))
+        if native_symbol != requested:
+            continue
+        if raw_market.get("spot") is False or raw_market.get("active") is False:
+            continue
+        base, quote = native_symbol.split("/", 1)
+        instruments.append(
+            {
+                "symbol": f"{base}-{quote}",
+                "native_symbol": native_symbol,
+                "exchange_symbol": str(raw_market.get("id") or "").strip() or None,
+                "base": base,
+                "quote": quote,
+                "market": "crypto",
+                "type": "cryptocurrency",
+                "exchange": "BINANCE",
+                "active": raw_market.get("active"),
+            }
+        )
+        if len(instruments) >= bounded_limit:
+            break
+
+    return {"status": "ok", "query": query, "instruments": instruments}
 
 
 #: Project/canonical period token → ccxt unified timeframe (lowercase).
@@ -392,6 +492,7 @@ def get_historical_bars(
 ) -> dict[str, Any]:
     """Fetch historical OHLCV bars for ``symbol`` (ccxt unified format)."""
     cfg = config or load_config()
+    _reject_unsupported_usdm_surface(cfg)
     _assert_host(cfg)
     ex = _exchange(cfg)
     clean = normalize_symbol(symbol)
@@ -463,6 +564,12 @@ def place_order(
         str}`` (fail-closed; nothing is submitted on a validation error).
     """
     cfg = config or load_config()
+
+    if cfg.market_type == "usdm":
+        return {
+            "status": "error",
+            "error": "Binance USD-M Shadow Account is read-only",
+        }
 
     side_clean = str(side or "").strip().lower()
     if side_clean not in ("buy", "sell"):
@@ -567,6 +674,12 @@ def cancel_order(
     """
     cfg = config or load_config()
 
+    if cfg.market_type == "usdm":
+        return {
+            "status": "error",
+            "error": "Binance USD-M Shadow Account is read-only",
+        }
+
     order_id_clean = str(order_id or "").strip()
     if not order_id_clean:
         return {"status": "error", "error": "order_id is required to cancel an order."}
@@ -625,18 +738,67 @@ def _symbol_required_errors() -> tuple[type[BaseException], ...]:
     return classes or (ValueError,)
 
 
+def _utc_now() -> datetime:
+    return datetime.now(timezone.utc)
+
+
+def _reject_unsupported_usdm_surface(cfg: BinanceConfig) -> None:
+    if cfg.market_type == "usdm":
+        raise BinanceConfigError(
+            "Binance USD-M Shadow Account exposes account and position reads only"
+        )
+
+
+def _get_usdm_observation(cfg: BinanceConfig, exchange: Any) -> dict[str, Any]:
+    try:
+        return read_account_observation(
+            exchange,
+            source_profile="binance-live-sdk-readonly",
+            host=cfg.host,
+            now=_utc_now,
+            absolute_tolerance=cfg.observation_absolute_tolerance,
+        )
+    except UsdMObservationError as exc:
+        raise BinanceConfigError(str(exc)) from None
+
+
 def _exchange(cfg: BinanceConfig):
-    """Build a ccxt ``binance`` client bound to the configured environment."""
+    """Build a ccxt Binance client bound to the configured market/environment."""
     ccxt = _require_ccxt()
-    ex = ccxt.binance(
-        {
-            "apiKey": cfg.api_key,
-            "secret": cfg.api_secret,
-            "enableRateLimit": True,
-            "timeout": int(cfg.timeout * 1000),
-        }
-    )
+    client_config: dict[str, Any] = {
+        "apiKey": cfg.api_key,
+        "secret": cfg.api_secret,
+        "enableRateLimit": True,
+        "timeout": int(cfg.timeout * 1000),
+        # Signed Binance requests have a narrow timestamp window. Let ccxt
+        # measure the exchange clock before the first private request so a
+        # sleeping laptop or an imperfect system clock does not force users to
+        # reconnect or recreate an otherwise valid read-only API key.
+        "options": {
+            "adjustForTimeDifference": True,
+            "recvWindow": 10_000,
+        },
+    }
+    # ``requests``/ccxt does not consistently inherit the macOS System Proxy.
+    # urllib resolves both conventional proxy environment variables and the
+    # active macOS network proxy, so local desktop connectors follow the same
+    # route as the user's browser without persisting proxy details or secrets.
+    system_proxies = getproxies()
+    proxies = {
+        scheme: str(system_proxies[scheme]).strip()
+        for scheme in ("http", "https")
+        if str(system_proxies.get(scheme) or "").strip()
+    }
+    if proxies:
+        client_config["proxies"] = proxies
+    exchange_class = ccxt.binanceusdm if cfg.market_type == "usdm" else ccxt.binance
+    ex = exchange_class(client_config)
     ex.set_sandbox_mode(cfg.is_testnet)
+    if cfg.market_type == "usdm":
+        try:
+            assert_exchange_endpoints(ex)
+        except UsdMObservationError as exc:
+            raise BinanceConfigError(str(exc)) from None
     return ex
 
 
@@ -655,7 +817,8 @@ def _assert_host(cfg: BinanceConfig) -> None:
                 f"Configured profile is paper, but the resolved host '{host}' is not the testnet host '{expected}'."
             )
         return
-    expected = urlparse(LIVE_HOST).hostname or LIVE_HOST
+    expected_url = USDM_LIVE_HOST if cfg.market_type == "usdm" else LIVE_HOST
+    expected = urlparse(expected_url).hostname or expected_url
     if host != expected:
         raise BinanceConfigError(
             f"Configured profile is live, but the resolved host '{host}' is not the live host '{expected}'."
@@ -680,102 +843,3 @@ def _public_config(cfg: BinanceConfig) -> dict[str, Any]:
         data["api_key"] = data["api_key"][:4] + "***"
     data["host"] = cfg.host
     return data
-
-
-# ---------------------------------------------------------------------------
-# Defensive field extraction (ccxt returns dicts; stay defensive anyway)
-# ---------------------------------------------------------------------------
-
-
-def _as_iter(value: Any) -> list[Any]:
-    if value is None:
-        return []
-    if isinstance(value, (list, tuple)):
-        return list(value)
-    return [value]
-
-
-def _obj_get(obj: Any, name: str, default: Any = None) -> Any:
-    if obj is None:
-        return default
-    if isinstance(obj, Mapping):
-        return obj.get(name, default)
-    return getattr(obj, name, default)
-
-
-def _to_float(value: Any) -> float | None:
-    try:
-        return float(value)
-    except (TypeError, ValueError):
-        return None
-
-
-def _nonzero_balances(balance: Any) -> list[dict[str, Any]]:
-    """Extract non-zero per-asset balances from a ccxt ``fetch_balance`` result.
-
-    ccxt returns a dict keyed by asset (each ``{free, used, total}``) plus
-    aggregate ``total`` / ``free`` / ``used`` maps and metadata keys (``info``,
-    ``timestamp``, ``datetime``, ``free``, ``used``, ``total``). We iterate the
-    per-asset sub-dicts and keep those with a non-zero total.
-    """
-    rows: list[dict[str, Any]] = []
-    if not isinstance(balance, Mapping):
-        return rows
-    skip = {"info", "timestamp", "datetime", "free", "used", "total"}
-    for asset, detail in balance.items():
-        if asset in skip or not isinstance(detail, Mapping):
-            continue
-        total = _to_float(detail.get("total"))
-        if not total:
-            continue
-        rows.append(
-            {
-                "asset": asset,
-                "free": _to_float(detail.get("free")),
-                "used": _to_float(detail.get("used")),
-                "total": total,
-            }
-        )
-    return rows
-
-
-def _order_to_dict(item: Any) -> dict[str, Any]:
-    return {
-        "order_id": str(_obj_get(item, "id", "")),
-        "symbol": _obj_get(item, "symbol"),
-        "side": str(_obj_get(item, "side", "")),
-        "order_type": str(_obj_get(item, "type", "")),
-        "price": _obj_get(item, "price"),
-        "quantity": _obj_get(item, "amount"),
-        "filled": _obj_get(item, "filled"),
-        "remaining": _obj_get(item, "remaining"),
-        "status": str(_obj_get(item, "status", "")),
-        "time": str(_obj_get(item, "timestamp", "")),
-    }
-
-
-def _trade_to_dict(item: Any) -> dict[str, Any]:
-    return {
-        "trade_id": str(_obj_get(item, "id", "")),
-        "order_id": str(_obj_get(item, "order", "")),
-        "symbol": _obj_get(item, "symbol"),
-        "side": str(_obj_get(item, "side", "")),
-        "price": _obj_get(item, "price"),
-        "quantity": _obj_get(item, "amount"),
-        "cost": _obj_get(item, "cost"),
-        "time": str(_obj_get(item, "timestamp", "")),
-    }
-
-
-def _ohlcv_to_dict(item: Any) -> dict[str, Any]:
-    """Shape a ccxt OHLCV row (``[ts, o, h, l, c, v]``) into a named dict."""
-    row = list(item) if isinstance(item, (list, tuple)) else []
-    row += [None] * (6 - len(row))
-    return {
-        "time": str(row[0] if row[0] is not None else ""),
-        "open": row[1],
-        "high": row[2],
-        "low": row[3],
-        "close": row[4],
-        "volume": row[5],
-    }

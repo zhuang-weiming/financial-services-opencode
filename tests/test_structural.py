@@ -348,8 +348,6 @@ def test_skill_yaml_frontmatter() -> TestResult:
             issues.append(f"{name}: missing 'name'")
         if "description" not in frontmatter:
             issues.append(f"{name}: missing 'description'")
-        # name should match directory or be a renamed variant
-        # (Vibe-Trading's vibe-thesis-tracker uses internal name 'thesis-tracker')
 
     if issues:
         return TestResult(
@@ -367,18 +365,20 @@ def test_skill_yaml_frontmatter() -> TestResult:
 
 
 def test_python_package_imports() -> TestResult:
-    """vibe-trading-quanta package must be importable."""
+    """vibe-trading-ai package must be importable (top-level: src, backtest, cli)."""
     try:
-        import vibe_trading_quanta
-        from vibe_trading_quanta import backtest, loaders, factors, swarm
+        import src
+        import backtest
+        import cli
+        from src import factors, swarm
         return TestResult(
-            name="vibe-trading-quanta importable",
+            name="vibe-trading-ai importable",
             status="PASS",
-            message=f"v{getattr(vibe_trading_quanta, '__version__', 'unknown')}",
+            message="src / backtest / cli importable",
         )
     except ImportError as e:
         return TestResult(
-            name="vibe-trading-quanta importable",
+            name="vibe-trading-ai importable",
             status="FAIL",
             severity="critical",
             message=f"Import error: {e}",
@@ -386,19 +386,19 @@ def test_python_package_imports() -> TestResult:
 
 
 def test_python_package_structure() -> TestResult:
-    """vibe-trading-quanta should have all key subpackages."""
+    """vibe-trading-ai should have all key subpackages."""
     required = [
         "backtest/engines",
         "backtest/optimizers",
-        "loaders",
-        "factors/zoo/alpha101",
-        "factors/zoo/qlib158",
-        "factors/zoo/gtja191",
-        "factors/zoo/academic",
-        "factors/zoo/fundamental",
-        "swarm/presets",
+        "backtest/loaders",
+        "src/factors/zoo/alpha101",
+        "src/factors/zoo/qlib158",
+        "src/factors/zoo/gtja191",
+        "src/factors/zoo/academic",
+        "src/factors/zoo/fundamental",
+        "src/swarm/presets",
     ]
-    missing = [p for p in required if not (PYTHON_PKG / "vibe_trading_quanta" / p).exists()]
+    missing = [p for p in required if not (PYTHON_PKG / p).exists()]
     if missing:
         return TestResult(
             name="Python package structure complete",
@@ -415,7 +415,7 @@ def test_python_package_structure() -> TestResult:
 
 def test_swarm_presets_count() -> TestResult:
     """Should have 30 swarm preset YAML files."""
-    preset_dir = PYTHON_PKG / "vibe_trading_quanta" / "swarm" / "presets"
+    preset_dir = PYTHON_PKG / "src" / "swarm" / "presets"
     if not preset_dir.exists():
         return TestResult(
             name="30 swarm presets",

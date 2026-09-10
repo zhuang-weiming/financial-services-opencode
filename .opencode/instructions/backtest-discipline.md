@@ -9,7 +9,7 @@
 
 ## 设计理念
 
-本文件是**质控纪律**，不是**输出模板**。输出风格参照 Vibe-Trading 的 `report-generate`:
+本文件是**质控纪律**，不是**输出模板**。输出风格参照 Vibe-Trading 的 `vibe-trading-report-generate`:
 
 - 直接给结论（Bullish / Neutral / Avoid），后附支撑数据
 - 用明确语言（"看多/看空/中性"），不要模棱两可

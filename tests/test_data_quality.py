@@ -79,7 +79,7 @@ def test_factset_ticker_format():
     factset_patterns = ["[A-Z]{1,5}-US", "[A-Z]{1,5}-CA", "[A-Z]{1,5}-GB"]
     
     # Look in data-routing skill for FactSet format references
-    routing_skill = SKILLS_DIR / "data-routing" / "SKILL.md"
+    routing_skill = SKILLS_DIR / "vibe-trading-data-routing" / "SKILL.md"
     factset_mentioned = False
     
     if routing_skill.exists():
@@ -153,7 +153,7 @@ def test_data_source_hierarchy():
     return TestResult(
         name="DQ-3: Data source hierarchy",
         status="PASS",
-        message="Tier 1 (Morningstar/FactSet) > Tier 2 (vibe-trading-quanta) > Tier 3 (alpha zoo) properly defined",
+        message="Tier 1 (Morningstar/FactSet) > Tier 2 (vibe-trading-ai) > Tier 3 (alpha zoo) properly defined",
         duration_ms=(time.time()-start)*1000,
     )
 

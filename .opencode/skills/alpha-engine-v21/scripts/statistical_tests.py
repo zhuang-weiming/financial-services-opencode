@@ -1,7 +1,7 @@
 """statistical_tests.py — V21 statistical battery.
 
 Combines the Deflated Sharpe Ratio (delegated to
-``vibe_trading_quanta.backtest.validation.deflated_sharpe_ratio``) with V21's
+``src.quantlib.multipletesting.deflated_sharpe_ratio``) with V21's
 own monthly-frequency-specific tests: Z-test (IID), Z-test (Newey-West HAC),
 Bonferroni multiple-testing correction, and a 12-month-block bootstrap CI.
 
@@ -29,41 +29,20 @@ import pandas as pd
 
 
 def _resolve_dsr():
-    """Locate the canonical DSR function in vibe-trading-quanta.
+    """Locate the canonical DSR function in the vendored vibe-trading-ai tree.
 
-    The ``vibe_trading_quanta.backtest.validation`` module internally uses
-    ``from backtest.models import TradeRecord`` (absolute-style imports). Those
-    imports only resolve when the package's inner directory is on ``sys.path``,
-    not the outer one. So we try three strategies in order:
-
-      1. ``backtest.validation`` already importable → use it.
-      2. Inject the inner package dir onto ``sys.path`` and try again.
-      3. Fall back to ``vibe_trading_quanta.backtest.validation`` (works if the
-         caller has set up the editable install correctly).
+    v0.1.15 consolidated the Quant Library: the Deflated Sharpe Ratio now lives
+    in ``src.quantlib.multipletesting`` (was ``backtest.validation`` pre-0.1.15).
+    The v0.1.15 signature takes pre-computed statistics rather than a returns
+    series, so the caller below derives ``trial_sharpe_std`` the same way the
+    old ``backtest.validation`` implementation did.
     """
     try:
-        from backtest.validation import deflated_sharpe_ratio  # type: ignore
+        from src.quantlib.multipletesting import deflated_sharpe_ratio  # type: ignore
 
         return deflated_sharpe_ratio
     except ImportError:
-        pass
-
-    try:
-        import os
-        import vibe_trading_quanta as _pkg  # noqa: F401
-
-        pkg_root = os.path.dirname(os.path.abspath(_pkg.__file__))
-        if pkg_root not in __import__("sys").path:
-            __import__("sys").path.insert(0, pkg_root)
-        from backtest.validation import deflated_sharpe_ratio  # type: ignore
-
-        return deflated_sharpe_ratio
-    except ImportError:
-        pass
-
-    from vibe_trading_quanta.backtest.validation import deflated_sharpe_ratio  # type: ignore
-
-    return deflated_sharpe_ratio
+        return None
 
 
 def honest_statistical_tests(
@@ -134,15 +113,40 @@ def honest_statistical_tests(
     ci_lower = np.percentile(boot_srs, 2.5)
     ci_upper = np.percentile(boot_srs, 97.5)
 
-    deflated_sharpe_ratio = _resolve_dsr()
-    dsr_result = deflated_sharpe_ratio(
-        returns,
-        n_configs=n_configs,
-        rf_annual=rf_annual,
-        bars_per_year=12,
-    )
-    dsr_val = dsr_result.get("dsr", float("nan"))
-    if isinstance(dsr_val, float) and np.isnan(dsr_val):
+    dsr_fn = _resolve_dsr()
+    dsr_val = float("nan")
+    if dsr_fn is not None:
+        try:
+            # v0.1.15 signature (src.quantlib.multipletesting): pre-computed stats.
+            # Derive trial_sharpe_std the way the pre-0.1.15 implementation did:
+            #   var_sr_raw = 1 - skew*SR + (kurt-1)/4 * SR^2 ; V_SR = var_sr_raw/(n-1)
+            var_sr_raw = max(
+                1e-9,
+                1.0 - float(skew) * float(sr_annual)
+                + (float(kurt) - 1.0) / 4.0 * float(sr_annual) ** 2,
+            )
+            trial_sharpe_std = float(np.sqrt(var_sr_raw / (n - 1)))
+            dsr_result = dsr_fn(
+                observed_sharpe=float(sr_monthly),
+                n_trials=int(n_configs),
+                n_observations=int(n),
+                trial_sharpe_std=trial_sharpe_std,
+                skew=float(skew),
+                kurtosis=float(kurt),
+            )
+            dsr_val = float(getattr(dsr_result, "deflated_sharpe_ratio", float("nan")))
+        except TypeError:
+            # Legacy signature (pre-0.1.15 backtest.validation): returns series.
+            try:
+                dsr_result = dsr_fn(
+                    returns, n_configs=n_configs, rf_annual=rf_annual, bars_per_year=12
+                )
+                dsr_val = float(dsr_result.get("dsr", float("nan")))
+            except Exception:
+                dsr_val = float("nan")
+        except Exception:
+            dsr_val = float("nan")
+    if not np.isfinite(dsr_val):
         dsr_val = 0.0
 
     return {

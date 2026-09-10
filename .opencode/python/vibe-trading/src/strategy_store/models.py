@@ -101,6 +101,8 @@ class Artifact:
     signal_engine_path: str | None = None
     run_dir: str | None = None
     hypothesis_id: str | None = None
+    #: Parent artifact id when this record was adapted from another strategy.
+    derived_from: str | None = None
     # Lifecycle
     status: ArtifactStatus = ArtifactStatus.CREATED
     created_at: str = ""

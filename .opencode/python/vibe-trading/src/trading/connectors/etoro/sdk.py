@@ -10,6 +10,7 @@ from src.trading.connectors.etoro.client import (
     EtoroAPIError,
     EtoroConfig,
     EtoroConfigError,
+    MARKET_DATA_RATES_PATH,
     PAPER_GUARD,
     aggregate_portfolio_path,
     build_config,
@@ -31,6 +32,8 @@ from src.trading.connectors.etoro.copy_trading import (
 )
 from src.trading.connectors.etoro.instruments import (
     get_instrument_metadata,
+    get_instrument_types,
+    list_instruments_by_type,
     resolve_instrument_id,
     search_instruments,
 )
@@ -63,6 +66,8 @@ __all__ = [
     "copy_poll",
     "copy_close",
     "search_instruments",
+    "list_instruments_by_type",
+    "get_instrument_types",
     "get_instrument_metadata",
     "EtoroConfig",
     "EtoroConfigError",
@@ -214,11 +219,12 @@ def get_open_orders(config: EtoroConfig | None = None, *, include_executions: bo
 
 
 def get_quote(symbol: str, *, config: EtoroConfig | None = None, **_: Any) -> dict[str, Any]:
+    """Fetch a quote via the flat market-data rates route (all profiles)."""
     cfg = config or load_config()
     instrument_id = resolve_instrument_id(symbol, cfg)
     payload = _client(cfg).request(
         "GET",
-        "/api/v1/market-data/instruments/rates",
+        MARKET_DATA_RATES_PATH,
         params={"instrumentIds": instrument_id},
         allow_retry=True,
     )

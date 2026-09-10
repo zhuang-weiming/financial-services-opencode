@@ -1,10 +1,14 @@
+> ⚠️ **2026-09-10 更新**：多框架分析请优先使用 **`trend-analysis-multi-algo`** skill
+> (`python3 .opencode/skills/trend-analysis-multi-algo/scripts/trend_analysis.py --code <code> --market <sh|sz>`)。
+> 本目录的 `run_technical_analysis.py` 为 8 框架旧版，保留作兼容。
+
 # Technical Analysis Skills — Shared Resources
 
 本目录存放所有技术分析 skill 共用的资源，以及**任意股票通用的 8 框架分析入口**。
 
 | 文件 | 用途 |
 |:--|:--|
-| `run_technical_analysis.py` | **通用入口** — 任意 ticker → 8 框架一键分析 |
+| `run_technical_analysis.py` | **（旧版）通用入口** — 任意 ticker → 8 框架。**已被 `trend-analysis-multi-algo` 取代**（10 算法 + 信号矩阵 + 独立性质检）|
 | `data_loader.py` | **统一数据加载器** — US/A股/港股/Crypto/CSV |
 | `sample_data.py` | SPCX 55 日 OHLCV 示例数据 |
 | `fix_czsc.py` | **修复 czsc 库**（rs_czsc stub 导致的 ImportError） |

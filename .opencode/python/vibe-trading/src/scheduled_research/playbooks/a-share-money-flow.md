@@ -98,6 +98,12 @@ Markdown, in this order:
 6. `## Margin balances` — aggregate change and any notable per-stock change.
 7. `## Watch list cross-reference` — omit when no watch list was supplied.
 8. `## Data gaps` — always present; write `none` when nothing was missing.
+9. `## Verdict` — the machine-readable tail, and the only section
+   nothing may follow. One line per symbol tracked this run:
+   `- SYMBOL: STATE - one short reason`, with STATE one of `ACTIVE`, `QUIET`.
+   When nothing moved, write the heading with no lines under it; that
+   is a real answer, not an absence. This section reports state, not
+   advice: the Boundaries above still apply.
 
 ## Boundaries
 

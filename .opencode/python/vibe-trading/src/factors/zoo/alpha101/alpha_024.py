@@ -99,4 +99,9 @@ def compute(panel: dict) -> pd.DataFrame:
     left = -1.0 * (close - ts_min(close, 100))
     right = -1.0 * delta(close, 3)
     out = where_ternary(cond, left, right)
-    return out
+    # A NaN comparison is False, not NaN, so where_ternary's own
+    # np.isfinite safety net never fires here: the else branch only
+    # needs a 3-day delta and stays finite well before x's 200-day
+    # lookback is available, fabricating a signal during warmup instead
+    # of NaN.
+    return out.where(x.notna())

@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
-from typing import Any
+from typing import Any, Literal
 
 
 # Optional OutboundMessage.metadata key for structured, channel-agnostic UI
@@ -52,3 +52,18 @@ class OutboundMessage:
     media: list[str] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
     buttons: list[list[str]] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class DeliveryReceipt:
+    """Provider acknowledgement for an outbound channel message.
+
+    ``accepted`` means the adapter returned successfully but its provider did
+    not expose a durable message id. ``sent`` is reserved for an explicit
+    provider receipt so scheduled delivery never reports more certainty than
+    the adapter can prove.
+    """
+
+    status: Literal["accepted", "sent"]
+    provider_message_id: str | None = None
+    sent_at: int | None = None

@@ -57,7 +57,7 @@ def compute(panel: dict) -> pd.DataFrame:
     open_ = panel["open"]
     volume = panel["volume"]
 
-    returns = close.pct_change()
+    returns = close.pct_change(fill_method=None)
     # Helper aliases (local closures keep the file standalone & purity-safe).
     out = (-1.0 * rank(delta(returns, 3))) * ts_corr(open_, volume, 10)
     return out

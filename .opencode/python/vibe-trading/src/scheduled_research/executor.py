@@ -12,12 +12,15 @@ import asyncio
 import logging
 import time
 from datetime import date, datetime, timedelta, timezone, tzinfo
-from typing import Awaitable, Callable
+from typing import Awaitable, Callable, Optional
 from zoneinfo import ZoneInfo
 
 from src.config.accessor import get_env_config
+from src.channels.bus.events import DeliveryReceipt
 from src.scheduled_research.models import (
     CRON_BOUNDS,
+    DeliveryRecord,
+    DeliveryStatus,
     JobStatus,
     ScheduledResearchJob,
     parse_cron_field,
@@ -25,6 +28,13 @@ from src.scheduled_research.models import (
     validate_timezone,
 )
 from src.scheduled_research.store import ScheduledResearchJobStore
+from src.scheduled_research.verdict import (
+    VerdictRecord,
+    outcome_of,
+    parse_verdict_section,
+)
+
+from dataclasses import replace as _dc_replace
 from src.tools.redaction import redact_internal_paths, redact_text
 
 logger = logging.getLogger(__name__)
@@ -33,8 +43,20 @@ DEFAULT_TICK_INTERVAL_MS = 60 * 1000
 SCHEDULER_ENABLED_ENV = "VIBE_TRADING_ENABLE_SCHEDULER"
 _MAX_PERSISTED_ERROR_CHARS = 1000
 
+#: A send that has not returned within this long is assumed to belong to a
+#: process that is no longer running.
+DEFAULT_DELIVERY_LEASE_MS = 5 * 60 * 1000
+
 NowFn = Callable[[], int]
-DispatchCallback = Callable[[ScheduledResearchJob], Awaitable[None]]
+# A dispatcher may return the session id it enqueued into. Returning None keeps
+# the pre-delivery contract working unchanged.
+DispatchCallback = Callable[[ScheduledResearchJob], Awaitable[Optional[str]]]
+#: session_id -> (terminal status, briefing text), or None while in flight.
+BriefingReader = Callable[[str], Optional[tuple[str, str]]]
+#: (channel, target, text) -> delivered.
+ChannelSender = Callable[
+    [str, Optional[str], str], Awaitable[DeliveryReceipt | None]
+]
 
 _TRUE_VALUES = {"1", "true", "yes", "on"}
 # Search by day, not by minute, so an impossible date (e.g. Feb 31) fails fast
@@ -69,8 +91,22 @@ def is_due(job: ScheduledResearchJob, now_ms: int) -> bool:
     what failed), so excluding it here prevents a re-dispatch loop every tick.
     Already-running jobs are left alone during live polling. Executor startup
     recovers stale persisted ``RUNNING`` jobs separately.
+
+    A firing whose outbox row is still PENDING or SENDING is also left alone:
+    dispatch returns once the run is accepted, not once it is delivered, so a
+    schedule shorter than that gap would otherwise re-dispatch onto the same
+    row and overwrite it, orphaning the briefing a sweep still owes.
     """
-    if job.status in {JobStatus.CANCELLED, JobStatus.RUNNING, JobStatus.FAILED}:
+    if job.status in {
+        JobStatus.CANCELLED,
+        JobStatus.RUNNING,
+        JobStatus.FAILED,
+        JobStatus.EXPIRED,
+    }:
+        return False
+    if job.end_at is not None and now_ms > job.end_at:
+        return False
+    if job.delivery.status in {DeliveryStatus.PENDING, DeliveryStatus.SENDING}:
         return False
     return job.next_run_at <= now_ms
 
@@ -171,6 +207,9 @@ class ScheduledResearchExecutor:
         max_consecutive_failures: int | None = None,
         retry_base_delay_ms: int | None = None,
         retry_max_delay_ms: int | None = None,
+        briefing_reader: "BriefingReader | None" = None,
+        channel_sender: "ChannelSender | None" = None,
+        delivery_lease_ms: int = DEFAULT_DELIVERY_LEASE_MS,
     ) -> None:
         """Initialize the executor.
 
@@ -184,6 +223,14 @@ class ScheduledResearchExecutor:
                 becomes terminal. Defaults to environment configuration.
             retry_base_delay_ms: Base delay for exponential retry backoff.
             retry_max_delay_ms: Upper bound for exponential retry backoff.
+            briefing_reader: Callable returning ``(terminal_status, text)`` for
+                a session, or ``None`` while its run is still in flight. Both
+                collaborators are injected rather than imported so the outbox
+                can be driven in a test without a session runtime or a network.
+            channel_sender: Async callable delivering one briefing.
+            delivery_lease_ms: How long a claimed row stays claimed before a
+                later sweep may take it over. Too short duplicates a slow
+                send; too long strands a briefing behind a dead process.
 
         Raises:
             ValueError: If the retry policy is invalid.
@@ -193,6 +240,11 @@ class ScheduledResearchExecutor:
             tuning = get_env_config().agent_tuning
         self._store = store
         self._dispatch = dispatch
+        self._briefing_reader = briefing_reader
+        self._channel_sender = channel_sender
+        self._delivery_lease_ms = delivery_lease_ms
+        self._loop: asyncio.AbstractEventLoop | None = None
+        self._sweep_task: asyncio.Task | None = None
         self._tick_interval_ms = tick_interval_ms
         self._now_fn = now_fn
         self._enabled = enabled
@@ -271,6 +323,7 @@ class ScheduledResearchExecutor:
         """
         self.recover_stale_running()
         now = self._now_fn() if now_ms is None else now_ms
+        self._expire_elapsed_jobs(now)
         jobs = sorted(
             (job for job in self._store.load().values() if is_due(job, now)),
             key=lambda job: job.next_run_at,
@@ -284,6 +337,32 @@ class ScheduledResearchExecutor:
                 raise
             except Exception:
                 logger.error("scheduled research job %s failed its run cycle", job.id, exc_info=True)
+
+        # The sweep is what makes delivery correct; the event hook only makes
+        # it prompt. A briefing whose hook was lost to a restart, a crash
+        # between "run finished" and "message sent", or a transient send error
+        # is picked up here on the next tick.
+        await self.sweep_deliveries()
+
+    def _expire_elapsed_jobs(self, now_ms: int) -> int:
+        """Persist jobs whose configured end boundary has elapsed."""
+        jobs = self._store.load()
+        changed = 0
+        for job in jobs.values():
+            if job.end_at is None or now_ms <= job.end_at:
+                continue
+            if job.status in {
+                JobStatus.CANCELLED,
+                JobStatus.FAILED,
+                JobStatus.EXPIRED,
+                JobStatus.RUNNING,
+            }:
+                continue
+            job.status = JobStatus.EXPIRED
+            changed += 1
+        if changed:
+            self._store.save(jobs)
+        return changed
 
     def recover_stale_running(self) -> int:
         """Reset jobs left ``RUNNING`` by a previous executor process.
@@ -310,6 +389,10 @@ class ScheduledResearchExecutor:
         return recovered
 
     async def _run(self) -> None:
+        # Captured here rather than at construction: the executor is built
+        # before the server's loop exists, and request_sweep needs a loop that
+        # is actually running to schedule onto.
+        self._loop = asyncio.get_running_loop()
         while not self._stopping:
             try:
                 await self.tick(self._now_fn())
@@ -370,7 +453,28 @@ class ScheduledResearchExecutor:
 
         dispatch_error: Exception | None = None
         try:
-            await self._dispatch(job)
+            session_id = await self._dispatch(job)
+            if isinstance(session_id, str) and session_id:
+                if job.delivery_channel:
+                    # Arm the outbox in the same write that records the firing.
+                    # The row exists before anything can be sent, so a crash can
+                    # only ever lose the *speed* of delivery, never the fact that
+                    # one is owed.
+                    job.delivery = DeliveryRecord(
+                        status=DeliveryStatus.PENDING,
+                        session_id=session_id,
+                        key=f"{job.id}:{session_id}:{job.delivery_channel}",
+                        updated_at=now_ms,
+                    )
+                else:
+                    # No delivery owed, but the verdict sweep still needs the
+                    # link from this job to its run: the session id rides the
+                    # record with an explicit NONE so the outbox never picks it.
+                    job.delivery = DeliveryRecord(
+                        status=DeliveryStatus.NONE,
+                        session_id=session_id,
+                        updated_at=now_ms,
+                    )
         except asyncio.CancelledError:
             raise
         except Exception as exc:
@@ -393,7 +497,11 @@ class ScheduledResearchExecutor:
 
         job.next_run_at = scheduled_next_run
         if dispatch_error is None:
-            job.status = JobStatus.COMPLETED
+            job.status = (
+                JobStatus.EXPIRED
+                if job.end_at is not None and scheduled_next_run > job.end_at
+                else JobStatus.COMPLETED
+            )
             job.failure_kind = None
             job.last_error = None
         else:
@@ -405,6 +513,8 @@ class ScheduledResearchExecutor:
                 job.status = JobStatus.PENDING
                 retry_delay = self._retry_delay_ms(job.consecutive_failures)
                 job.next_run_at = max(scheduled_next_run, now_ms + retry_delay)
+                if job.end_at is not None and job.next_run_at > job.end_at:
+                    job.status = JobStatus.EXPIRED
                 logger.warning(
                     "scheduled research job %s will retry after failure %d/%d at %d",
                     job.id,
@@ -413,6 +523,242 @@ class ScheduledResearchExecutor:
                     job.next_run_at,
                 )
         self._persist_completion(job)
+
+    def _delivery_is_eligible(self, job: ScheduledResearchJob, now_ms: int) -> bool:
+        """Whether this row is a sweep's to take.
+
+        PENDING is owed. SENDING is claimed, and the claim is a lease rather
+        than a lock: a process that died inside the send call would otherwise
+        hold the row forever, so once the lease has expired the row is owed
+        again. The idempotency key remains the backstop for the window that
+        leaves.
+
+        Args:
+            job: The job whose outbox row is being considered.
+            now_ms: Reference time in epoch milliseconds.
+
+        Returns:
+            True when a sweep should attempt this row now.
+        """
+        status = job.delivery.status
+        if status is DeliveryStatus.PENDING:
+            return True
+        if status is not DeliveryStatus.SENDING:
+            return False
+        claimed_at = job.delivery.updated_at
+        return claimed_at is None or now_ms - claimed_at >= self._delivery_lease_ms
+
+    def request_sweep(self) -> None:
+        """Ask for a delivery sweep as soon as the loop is free.
+
+        Called from the session event listener, so it runs on whichever thread
+        published the event and must not block. Sweeps coalesce: one already in
+        flight covers anything that arrived while it was running, and the claim
+        makes an overlap harmless in any case. Without a running loop this is a
+        no-op — the periodic tick is what makes delivery correct, and this only
+        makes it prompt.
+        """
+        loop = self._loop
+        if loop is None or not loop.is_running():
+            return
+        if self._sweep_task is not None and not self._sweep_task.done():
+            return
+
+        def _schedule() -> None:
+            if self._sweep_task is not None and not self._sweep_task.done():
+                return
+            self._sweep_task = loop.create_task(self._sweep_quietly())
+
+        try:
+            loop.call_soon_threadsafe(_schedule)
+        except RuntimeError:
+            # The loop closed between the check and the call; the next tick
+            # picks the row up.
+            pass
+
+    async def _sweep_quietly(self) -> None:
+        """Run a sweep whose failure must not escape into the event path."""
+        try:
+            await self.sweep_deliveries()
+        except asyncio.CancelledError:
+            raise
+        except Exception:
+            logger.error("requested delivery sweep failed", exc_info=True)
+
+    async def sweep_deliveries(self) -> int:
+        """Deliver every briefing whose run has reached a terminal state.
+
+        Idempotent and restart-safe: the outbox row is the only source of
+        truth, a row already ``SENT`` is never re-sent, and a row whose run is
+        still in flight is left for a later sweep.
+
+        Returns:
+            The number of rows whose state changed.
+        """
+        if self._briefing_reader is None:
+            return 0
+
+        changed = 0
+        now = self._now_fn()
+        for job in list(self._store.load().values()):
+            if not job.delivery.session_id:
+                continue
+            if job.delivery.status is DeliveryStatus.NONE:
+                # No briefing is owed to a channel, but this sweep is the only
+                # terminal-observer a channel-less monitor has: read the run's
+                # end state here and persist its verdict once it lands.
+                changed += self._record_verdict_if_terminal(job, now)
+                continue
+            if not job.delivery_channel:
+                continue
+            if not self._delivery_is_eligible(job, now):
+                continue
+            if self._channel_sender is None:
+                continue
+            try:
+                outcome = self._briefing_reader(job.delivery.session_id)
+            except Exception as exc:
+                logger.error("briefing read failed for job %s", job.id, exc_info=True)
+                self._mark_delivery_failed(job, exc, retryable=True)
+                changed += 1
+                continue
+            if outcome is None:
+                continue  # still running; a later sweep will find it
+
+            status, text = outcome
+            if status != "completed":
+                # A failed or cancelled run has no briefing to deliver. Record
+                # why rather than leaving the row pending forever.
+                self._mark_delivery_failed(
+                    job, RuntimeError(f"run {status}"), retryable=False
+                )
+                changed += 1
+                continue
+
+            # Claim the row BEFORE the network call. A re-read alone would not
+            # help: while the first send is in flight the row still reads
+            # PENDING, so a concurrent sweep or the event hook would deliver
+            # the same briefing again.
+            current = self._store.get(job.id)
+            if current is None or current.delivery.key != job.delivery.key:
+                continue
+            if not self._delivery_is_eligible(current, now):
+                continue
+            current.delivery.status = DeliveryStatus.SENDING
+            current.delivery.updated_at = now
+            self._store.upsert(current, validate=False)
+
+            try:
+                receipt = await self._channel_sender(
+                    job.delivery_channel, job.delivery_target, text
+                )
+            except asyncio.CancelledError:
+                raise
+            except Exception as exc:
+                logger.error("briefing delivery failed for job %s", job.id, exc_info=True)
+                self._mark_delivery_failed(current, exc, retryable=True)
+                changed += 1
+                continue
+
+            if receipt is None:
+                # Compatibility for pre-receipt injected senders used by
+                # embedders and older tests. Production adapters always return
+                # an explicit receipt through BaseChannel.send_with_receipt.
+                current.delivery.status = DeliveryStatus.SENT
+                current.delivery.provider_message_id = None
+            elif receipt.status == "sent":
+                current.delivery.status = DeliveryStatus.SENT
+                current.delivery.provider_message_id = receipt.provider_message_id
+            else:
+                current.delivery.status = DeliveryStatus.ACCEPTED
+                current.delivery.provider_message_id = receipt.provider_message_id
+            current.delivery.error = None
+            current.delivery.updated_at = self._now_fn()
+            # The verdict rides the same write as the terminal delivery state,
+            # never a second pass over the job (#1140's clobbering lesson).
+            if (
+                current.last_verdict is None
+                or current.last_verdict.session_id != current.delivery.session_id
+            ):
+                self._record_verdict_on(current, current.delivery.session_id, text, now)
+            self._store.upsert(current, validate=False)
+            changed += 1
+        return changed
+
+    def _record_verdict_on(
+        self, job: ScheduledResearchJob, session_id: str, text: str, now_ms: int
+    ) -> None:
+        """Write the run's verdict record onto ``job``, shifting the prior one.
+
+        The previous record embeds one level only: a verdict chain any deeper
+        is noise for the list view.
+        """
+        parse, items = parse_verdict_section(text)
+        previous = job.last_verdict
+        if previous is not None:
+            previous = _dc_replace(previous, previous=None)
+        job.last_verdict = VerdictRecord(
+            session_id=session_id,
+            recorded_at=now_ms,
+            parse=parse,
+            outcome=outcome_of(items),
+            items=items,
+            previous=previous,
+        )
+
+    def _record_verdict_if_terminal(self, job: ScheduledResearchJob, now_ms: int) -> int:
+        """Persist the run's verdict once its session reaches a terminal state.
+
+        Channel-less jobs have no outbox, so this sweep is the only place their
+        terminal briefing is ever read. In-flight runs return ``None`` from the
+        briefing reader and are left for a later pass; failed or cancelled runs
+        produce no briefing, so the prior verdict simply stays visible as stale.
+
+        Returns:
+            1 when the job record changed, else 0.
+        """
+        session_id = job.delivery.session_id
+        if not session_id:
+            return 0
+        if job.last_verdict is not None and job.last_verdict.session_id == session_id:
+            return 0  # this firing is already recorded
+        try:
+            outcome = self._briefing_reader(session_id) if self._briefing_reader else None
+        except Exception:
+            logger.error("verdict read failed for job %s", job.id, exc_info=True)
+            return 0
+        if outcome is None:
+            return 0
+        status, text = outcome
+        if status != "completed":
+            return 0
+        self._record_verdict_on(job, session_id, text, now_ms)
+        self._store.upsert(job, validate=False)
+        return 1
+
+    def _mark_delivery_failed(
+        self, job: ScheduledResearchJob, exc: Exception, *, retryable: bool
+    ) -> None:
+        """Record a delivery failure without losing which firing it belonged to.
+
+        Args:
+            job: The job whose outbox row failed.
+            exc: The failure, persisted through the same redaction the dispatch
+                path uses.
+            retryable: Whether a later sweep could still succeed. A channel
+                outage is; a run that finished FAILED or CANCELLED is not,
+                because no briefing will ever exist for it.
+        """
+        job.delivery.error = _persisted_error(exc)
+        job.delivery.updated_at = self._now_fn()
+        if retryable:
+            job.delivery.attempts += 1
+            if job.delivery.attempts < self._max_consecutive_failures:
+                job.delivery.status = DeliveryStatus.PENDING
+                self._store.upsert(job, validate=False)
+                return
+        job.delivery.status = DeliveryStatus.FAILED
+        self._store.upsert(job, validate=False)
 
     def _retry_delay_ms(self, consecutive_failures: int) -> int:
         """Return bounded exponential backoff for a dispatch failure count."""

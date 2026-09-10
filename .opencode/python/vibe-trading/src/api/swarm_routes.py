@@ -221,10 +221,13 @@ def register_swarm_routes(
         return {"status": "cancelled"}
 
     @app.post("/swarm/runs/{run_id}/retry", dependencies=[Depends(require_auth)])
-    async def retry_swarm_run(run_id: str, http_request: Request):
+    async def retry_swarm_run(run_id: str, http_request: Request, resume: bool = Query(False)):
         """Retry a failed, stale, or cancelled swarm run.
 
         Creates a new run with the same preset and user_vars as the original.
+        ``resume=true`` replays: completed upstream tasks and their artifacts
+        are carried into the new run and only the failed/cancelled subgraph
+        re-executes.
         """
         _host_validate_path_param(run_id, "run_id")
         runtime = _get_swarm_runtime()
@@ -241,12 +244,21 @@ def register_swarm_routes(
             raise HTTPException(
                 status_code=409, detail="Cannot retry a running run. Cancel it first."
             )
+        if resume and reconciled.status not in (RunStatus.failed, RunStatus.cancelled):
+            raise HTTPException(
+                status_code=409,
+                detail=(
+                    f"Cannot resume a run in status '{reconciled.status.value}'; "
+                    "resume only applies to failed or cancelled runs."
+                ),
+            )
 
         try:
             new_run = runtime.start_run(
                 reconciled.preset_name,
                 reconciled.user_vars or {},
                 include_shell_tools=_host_shell_tools_enabled_for_request(http_request),
+                resume_from=reconciled if resume else None,
             )
             return {
                 "id": new_run.id,

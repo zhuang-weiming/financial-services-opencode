@@ -7,12 +7,14 @@ from __future__ import annotations
 
 import asyncio
 import concurrent.futures
+import logging
 import threading
 import time
 from datetime import datetime
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, Optional
 
+from src.session.checkpoint import ResponseCheckpoint
 from src.session.events import EventBus
 from src.session.models import (
     Attempt,
@@ -29,6 +31,7 @@ if TYPE_CHECKING:
 
 # Dedicated thread pool limited to four concurrent agents to avoid exhausting the default executor.
 _AGENT_EXECUTOR = concurrent.futures.ThreadPoolExecutor(max_workers=4, thread_name_prefix="agent")
+logger = logging.getLogger(__name__)
 
 
 #: Terminal attempt status -> SSE event name. Cancellation is its own event so
@@ -86,9 +89,92 @@ class SessionService:
         # only cancellation route: a hung discovery would otherwise hold the
         # claim forever and lock the session behind 409.
         self._active_tasks: Dict[str, "asyncio.Task"] = {}
+        # Only task cancellation requested through cancel_current is a user
+        # cancellation. Event-loop shutdown also raises CancelledError, but
+        # that attempt must remain recoverable on the next process start.
+        self._user_cancel_requests: set[str] = set()
         self._inflight: set[str] = set()
         self._inflight_lock = threading.Lock()
         self._search_index = get_shared_index()
+        self._recover_interrupted_attempts()
+
+    def _recover_interrupted_attempts(self) -> None:
+        """Finalize attempts that could not outlive the previous process.
+
+        A newly constructed service has no live AgentLoop instances. Any
+        attempt still marked pending or running therefore belongs to the
+        previous process. Convert it to an explicit terminal state and expose
+        the most recent durable response snapshot in conversation history.
+        """
+        recoverable = {AttemptStatus.PENDING, AttemptStatus.RUNNING}
+        for attempt in self.store.list_attempts():
+            if attempt.status not in recoverable:
+                continue
+            partial = self.store.get_partial_response(
+                attempt.session_id, attempt.attempt_id
+            )
+            has_partial = bool(partial)
+            existing_reply = self.store.get_message_for_attempt(
+                attempt.session_id, attempt.attempt_id
+            )
+            if existing_reply is None:
+                reply = Message(
+                    session_id=attempt.session_id,
+                    role="assistant",
+                    content=self._format_interrupted_message(partial),
+                    linked_attempt_id=attempt.attempt_id,
+                    metadata={
+                        "status": AttemptStatus.INTERRUPTED.value,
+                        "partial": has_partial,
+                        "recovery_reason": "service_restart",
+                    },
+                )
+                self.store.append_message(reply)
+                self._search_index.index_message(
+                    attempt.session_id, "assistant", reply.content
+                )
+                attempt.mark_interrupted("service restarted before attempt completed")
+            else:
+                # The append-only reply is committed before attempt.json. If a
+                # process exits between those writes, finish the second half
+                # from the reply's terminal metadata instead of mislabelling a
+                # complete response as interrupted.
+                reply_status = existing_reply.metadata.get("status")
+                if reply_status == AttemptStatus.COMPLETED.value:
+                    attempt.mark_completed(summary=existing_reply.content)
+                elif reply_status == AttemptStatus.CANCELLED.value:
+                    attempt.mark_cancelled(reason="cancelled by user")
+                elif reply_status == AttemptStatus.FAILED.value:
+                    attempt.mark_failed(error="execution failed")
+                else:
+                    attempt.mark_interrupted(
+                        "service restarted before attempt completed"
+                    )
+            self.store.update_attempt(attempt)
+            self.store.delete_partial_response(attempt.session_id, attempt.attempt_id)
+
+    @staticmethod
+    def _format_interrupted_message(partial: Optional[str]) -> str:
+        """Build the transcript message for a recovered attempt.
+
+        Args:
+            partial: Durable assistant text captured before restart.
+
+        Returns:
+            User-facing interruption notice, including partial text when any.
+        """
+        if partial:
+            return (
+                "Vibe Trading restarted before this response finished. "
+                "The partial response recovered below may be incomplete:\n\n"
+                f"{partial}\n\n"
+                "Review it before sending a follow-up or retrying the request."
+            )
+        return (
+            "Vibe Trading restarted before this response finished, so no "
+            "complete assistant response was saved. Review any completed tool "
+            "actions before retrying the request."
+        )
 
     def _reserve_session(self, session_id: str) -> None:
         """Claim a session for one in-flight run.
@@ -241,6 +327,7 @@ class SessionService:
         # itself so the claim is released instead of stranding the session.
         task = self._active_tasks.get(session_id)
         if task is not None and not task.done():
+            self._user_cancel_requests.add(session_id)
             task.cancel()
             return True
         return False
@@ -256,8 +343,19 @@ class SessionService:
         started_at = time.perf_counter()
         try:
             attempt.mark_running()
+            # Wall-clock start (epoch seconds) is the one timing fact clients
+            # cannot reconstruct on their own: a client that (re)connects
+            # mid-attempt resumes its elapsed timer from it, and history
+            # hydration derives the finished attempt's duration from it rather
+            # than from the first tool call. It lives on the persisted attempt
+            # so it survives the event ring buffer that first announced it.
+            wall_started_at = attempt.started_at or time.time()
             self.store.update_attempt(attempt)
-            self.event_bus.emit(session.session_id, "attempt.started", {"attempt_id": attempt.attempt_id})
+            self.event_bus.emit(
+                session.session_id,
+                "attempt.started",
+                {"attempt_id": attempt.attempt_id, "started_at": wall_started_at},
+            )
             messages = self.store.get_messages(session.session_id)
             result = await self._run_with_agent(
                 attempt,
@@ -281,7 +379,6 @@ class SessionService:
                 # the attempt, so the reply metadata below was always empty.
                 attempt.metrics = result["metrics"]
 
-            self.store.update_attempt(attempt)
             reply_metadata = {}
             if attempt.run_dir:
                 reply_metadata["run_id"] = Path(attempt.run_dir).name
@@ -289,6 +386,7 @@ class SessionService:
             if attempt.metrics:
                 reply_metadata["metrics"] = attempt.metrics
             reply_metadata["elapsed_ms"] = max(0, round((time.perf_counter() - started_at) * 1000))
+            reply_metadata["started_at"] = wall_started_at
             runtime_keys = (
                 "provider",
                 "configured_model",
@@ -313,34 +411,51 @@ class SessionService:
                 ),
             )
             self.store.append_message(reply)
+            # The append-only transcript is the user-visible source of truth.
+            # Commit it before attempt.json so startup recovery can finish a
+            # process interrupted between the two writes.
+            self.store.update_attempt(attempt)
+            self.store.delete_partial_response(session.session_id, attempt.attempt_id)
             self._search_index.index_message(session.session_id, "assistant", reply.content)
             self.event_bus.emit(
                 session.session_id,
                 _TERMINAL_EVENTS.get(attempt.status.value, "attempt.failed"),
                 {"attempt_id": attempt.attempt_id, "status": attempt.status.value,
                  "summary": attempt.summary, "error": attempt.error, "run_dir": attempt.run_dir,
+                 "started_at": wall_started_at, "ended_at": time.time(),
                  **{key: reply_metadata[key] for key in ("elapsed_ms", *runtime_keys) if key in reply_metadata}},
             )
 
         except asyncio.CancelledError:
-            # cancel_current() cancels this task when the run has not reached
-            # its AgentLoop yet. CancelledError is a BaseException, so it would
-            # slip past the handler below and leave the attempt stuck RUNNING.
-            attempt.mark_cancelled(reason="cancelled by user")
-            self.store.update_attempt(attempt)
-            self.event_bus.emit(
-                session.session_id,
-                "attempt.cancelled",
-                {"attempt_id": attempt.attempt_id, "status": attempt.status.value},
-            )
+            if session.session_id in self._user_cancel_requests:
+                # cancel_current() cancels this task when the run has not
+                # reached its AgentLoop yet. Keep that explicit user action
+                # distinct from event-loop cancellation during server shutdown.
+                attempt.mark_cancelled(reason="cancelled by user")
+                self.store.update_attempt(attempt)
+                self.store.delete_partial_response(
+                    session.session_id, attempt.attempt_id
+                )
+                self.event_bus.emit(
+                    session.session_id,
+                    "attempt.cancelled",
+                    {"attempt_id": attempt.attempt_id, "status": attempt.status.value},
+                )
+            else:
+                logger.info(
+                    "Leaving attempt %s recoverable after service task cancellation",
+                    attempt.attempt_id,
+                )
             raise
         except Exception as exc:
             attempt.mark_failed(error=str(exc))
             self.store.update_attempt(attempt)
+            self.store.delete_partial_response(session.session_id, attempt.attempt_id)
             self.event_bus.emit(session.session_id, "attempt.failed", {"attempt_id": attempt.attempt_id, "error": str(exc)})
         finally:
             # The only release path for the claim taken in send_message.
             self._active_tasks.pop(session.session_id, None)
+            self._user_cancel_requests.discard(session.session_id)
             self._release_session(session.session_id)
 
     async def _run_with_agent(
@@ -378,12 +493,23 @@ class SessionService:
         attempt_id = attempt.attempt_id
         loop = asyncio.get_running_loop()
         tool_trail: list[Dict[str, Any]] = []
+        checkpoint = ResponseCheckpoint(self.store, attempt)
 
         safe_overrides = sanitize_session_overrides(session_config) if session_config else session_config
         agent_config = load_runtime_agent_config(overrides=safe_overrides)
 
         def event_callback(event_type: str, data: Dict[str, Any]) -> None:
             """Forward AgentLoop events to the SSE event bus."""
+            try:
+                checkpoint.handle_event(event_type, data)
+            except OSError as exc:
+                # A checkpoint failure must not hide the live response or stop
+                # the agent. The terminal attempt write still gets a chance.
+                logger.warning(
+                    "Could not checkpoint response for attempt %s: %s",
+                    attempt_id,
+                    exc,
+                )
             if event_type in {"tool_call", "tool_result"}:
                 self._record_tool_trail_event(tool_trail, event_type, data)
             data["attempt_id"] = attempt_id
@@ -428,6 +554,14 @@ class SessionService:
             )
         finally:
             self._active_loops.pop(session_id, None)
+            try:
+                checkpoint.flush()
+            except OSError as exc:
+                logger.warning(
+                    "Could not flush response checkpoint for attempt %s: %s",
+                    attempt_id,
+                    exc,
+                )
 
         result["tool_trail"] = tool_trail
 

@@ -25,9 +25,11 @@ import hashlib
 import json
 import os
 from dataclasses import asdict, dataclass
+from decimal import Decimal
 from pathlib import Path
 from types import ModuleType
 from typing import Any, Mapping
+from urllib.parse import urlencode
 
 from src.config.paths import get_runtime_root
 from src.trading import tap_forward
@@ -364,6 +366,33 @@ def get_open_orders(config: AlpacaConfig | None = None, *, include_executions: b
     return result
 
 
+def get_order_by_client_order_id(
+    config: AlpacaConfig | None = None, *, client_order_id: str
+) -> dict[str, Any]:
+    """Read one order by the caller-owned exact Alpaca client order ID."""
+    cfg = config or load_config()
+    client_id = str(client_order_id or "").strip()
+    if not (1 <= len(client_id) <= 48):
+        return {"status": "error", "error": "client_order_id must contain 1-48 characters"}
+    try:
+        if tap_forward.tap_enabled():
+            query = urlencode({"client_order_id": client_id})
+            order = _read_via_tap(f"{cfg.host}/v2/orders:by_client_order_id?{query}")
+        else:
+            order = _trading_client(cfg).get_order_by_client_id(client_id)
+    except Exception as exc:  # noqa: BLE001 - read failure is insufficient evidence
+        return {"status": "error", "error": str(exc)}
+    item = _order_to_dict(order)
+    return {"status": "ok", "profile": cfg.profile, "is_paper": cfg.is_paper, "order": {
+        "broker_order_id": item["order_id"], "client_order_id": item["client_order_id"],
+        "symbol": item["symbol"], "side": item["side"], "order_type": item["order_type"],
+        "time_in_force": item["time_in_force"], "quantity": item["quantity"],
+        "notional": item["notional"], "limit_price": item["limit_price"],
+        "filled_qty": item["filled_qty"], "order_status": item["status"],
+        "submitted_at": item["submitted_at"],
+    }}
+
+
 def get_quote(symbol: str, *, config: AlpacaConfig | None = None, **_: Any) -> dict[str, Any]:
     """Fetch a latest quote snapshot for ``symbol``."""
     cfg = config or load_config()
@@ -436,6 +465,7 @@ def place_order(
     order_type: str = "market",
     limit_price: float | None = None,
     time_in_force: str = "day",
+    client_order_id: str | None = None,
 ) -> dict[str, Any]:
     """Submit an order to the configured Alpaca account.
 
@@ -454,6 +484,7 @@ def place_order(
         order_type: ``market`` or ``limit``.
         limit_price: Required when ``order_type`` is ``limit``.
         time_in_force: ``day`` or ``gtc``.
+        client_order_id: Optional caller-owned exact order identity.
 
     Returns:
         On success ``{"status": "ok", "order_id", "symbol", "side", "profile",
@@ -479,6 +510,10 @@ def place_order(
     tif_token = str(time_in_force or "").strip().lower()
     if tif_token not in ("day", "gtc"):
         return {"status": "error", "error": "time_in_force must be 'day' or 'gtc'"}
+
+    client_id = str(client_order_id).strip() if client_order_id is not None else None
+    if client_id is not None and not (1 <= len(client_id) <= 48):
+        return {"status": "error", "error": "client_order_id must contain 1-48 characters"}
 
     has_qty = quantity is not None
     has_notional = notional is not None
@@ -524,6 +559,7 @@ def place_order(
             order_type=type_token,
             limit_price=limit_value,
             time_in_force=tif_token,
+            client_order_id=client_id,
         )
 
     try:
@@ -537,6 +573,7 @@ def place_order(
         order_side = OrderSide.BUY if side_token == "buy" else OrderSide.SELL
         tif = TimeInForce.DAY if tif_token == "day" else TimeInForce.GTC
         amount = {"qty": qty_value} if has_qty else {"notional": notional_value}
+        identity = {"client_order_id": client_id} if client_id is not None else {}
 
         if type_token == "limit":
             req = LimitOrderRequest(
@@ -545,6 +582,7 @@ def place_order(
                 time_in_force=tif,
                 limit_price=limit_value,
                 **amount,
+                **identity,
             )
         else:
             req = MarketOrderRequest(
@@ -552,6 +590,7 @@ def place_order(
                 side=order_side,
                 time_in_force=tif,
                 **amount,
+                **identity,
             )
 
         order = client.submit_order(order_data=req)
@@ -563,6 +602,7 @@ def place_order(
     return {
         "status": "ok",
         "order_id": str(_obj_get(order, "id", "")),
+        "client_order_id": str(_obj_get(order, "client_order_id", "")),
         "symbol": clean_symbol,
         "side": side_token,
         "profile": cfg.profile,
@@ -587,6 +627,7 @@ def _submit_via_tap(
     order_type: str,
     limit_price: float | None,
     time_in_force: str,
+    client_order_id: str | None,
 ) -> dict[str, Any]:
     """Place the order through the TAP proxy instead of the Alpaca SDK.
 
@@ -617,12 +658,14 @@ def _submit_via_tap(
     # forwarded the order but the agent saw a timeout) is deduplicated by Alpaca
     # — a duplicate id is rejected, never double-placed. Trade-off: two
     # intentionally-identical orders collide; vary any field for a real duplicate.
-    order["client_order_id"] = "tap-" + hashlib.sha256(
-        "|".join(
-            str(x)
-            for x in (cfg.profile, symbol, side, quantity, notional, order_type, limit_price, time_in_force)
-        ).encode()
-    ).hexdigest()[:24]
+    order["client_order_id"] = client_order_id or (
+        "tap-" + hashlib.sha256(
+            "|".join(
+                str(x)
+                for x in (cfg.profile, symbol, side, quantity, notional, order_type, limit_price, time_in_force)
+            ).encode()
+        ).hexdigest()[:24]
+    )
 
     cred_headers = _tap_cred_headers()
     target = f"{cfg.host}/v2/orders"
@@ -650,6 +693,7 @@ def _submit_via_tap(
     return {
         "status": "ok",
         "order_id": str(payload.get("id", "")),
+        "client_order_id": str(payload.get("client_order_id", "")),
         "symbol": symbol,
         "side": side,
         "profile": cfg.profile,
@@ -847,10 +891,24 @@ def _obj_get(obj: Any, name: str, default: Any = None) -> Any:
 
 
 def _position_to_dict(item: Any) -> dict[str, Any]:
+    # alpaca-py's Position.side is a (str, Enum) member whose str() is
+    # "PositionSide.SHORT", not "short" — read .value so the direct-SDK path
+    # emits the same lowercase token the TAP JSON path does.
+    side_raw = _obj_get(item, "side", "")
+    side = str(getattr(side_raw, "value", side_raw)).strip().lower()
+    quantity = _obj_get(item, "qty")
+    exact_quantity = Decimal(str(quantity)) if quantity is not None else None
+    if side == "short" and quantity is not None:
+        # Alpaca reports qty as an absolute magnitude and carries direction in
+        # side. The mandate gate (like the tiger connector) reads quantity as
+        # signed, so an unsigned short would book as positive exposure.
+        quantity = -float(quantity)
+        exact_quantity = -abs(exact_quantity)
     return {
         "symbol": _obj_get(item, "symbol"),
-        "side": str(_obj_get(item, "side", "")),
-        "quantity": _obj_get(item, "qty"),
+        "side": side,
+        "quantity": quantity,
+        "exact_quantity": format(exact_quantity, "f") if exact_quantity is not None else None,
         "average_cost": _obj_get(item, "avg_entry_price"),
         "market_value": _obj_get(item, "market_value"),
         "current_price": _obj_get(item, "current_price"),
@@ -862,17 +920,23 @@ def _position_to_dict(item: Any) -> dict[str, Any]:
 def _order_to_dict(item: Any) -> dict[str, Any]:
     return {
         "order_id": str(_obj_get(item, "id", "")),
+        "client_order_id": str(_obj_get(item, "client_order_id", "")),
         "symbol": _obj_get(item, "symbol"),
-        "side": str(_obj_get(item, "side", "")),
-        "order_type": str(_obj_get(item, "order_type", "") or _obj_get(item, "type", "")),
+        "side": _enum_token(_obj_get(item, "side", "")),
+        "order_type": _enum_token(_obj_get(item, "order_type", "") or _obj_get(item, "type", "")),
+        "time_in_force": _enum_token(_obj_get(item, "time_in_force", "")),
         "quantity": _obj_get(item, "qty"),
         "notional": _obj_get(item, "notional"),
         "filled_qty": _obj_get(item, "filled_qty"),
         "filled_avg_price": _obj_get(item, "filled_avg_price"),
         "limit_price": _obj_get(item, "limit_price"),
-        "status": str(_obj_get(item, "status", "")),
+        "status": _enum_token(_obj_get(item, "status", "")),
         "submitted_at": str(_obj_get(item, "submitted_at", "")),
     }
+
+
+def _enum_token(value: Any) -> str:
+    return str(getattr(value, "value", value)).strip().lower()
 
 
 def _bar_to_dict(item: Any) -> dict[str, Any]:

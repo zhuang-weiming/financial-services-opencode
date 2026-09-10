@@ -7,10 +7,12 @@ data aggregator covering Chinese and global markets.  No API token required.
 from __future__ import annotations
 
 import logging
+import re
 from typing import Dict, List, Optional
 
 import pandas as pd
 
+from backtest.engines._market_hooks import _detect_market, _is_china_futures
 from backtest.loaders._symbol_utils import _is_etf_listed
 from backtest.loaders.base import cached_loader_fetch, validate_date_range
 from backtest.loaders.registry import register
@@ -50,6 +52,18 @@ def _is_us(code: str) -> bool:
 
 def _is_crypto(code: str) -> bool:
     return "-USDT" in code.upper() or "/USDT" in code.upper()
+
+
+#: Sina takes the bare contract code. Passing the exchange suffix through does
+#: not return an empty frame — ``futures_zh_daily_sina("RB2601.SHFE")`` raises
+#: ``ValueError: Length mismatch`` from inside akshare, so the suffix has to be
+#: stripped here rather than discovered as a fetch failure.
+def _sina_contract(code: str) -> str:
+    """Return the bare uppercase contract code Sina's endpoints expect."""
+    return code.split(".")[0].upper()
+
+
+_CN_FUTURES_MAIN_RE = re.compile(r"^[A-Z]{1,2}0$")
 
 
 
@@ -157,6 +171,18 @@ class DataLoader:
         if _is_forex(code):
             _require_daily_interval(interval, "forex")
             return self._fetch_forex(ak, code, start_date, end_date)
+        if _is_china_futures(code):
+            _require_daily_interval(interval, "futures")
+            return self._fetch_china_futures(ak, code, start_date, end_date)
+        if _detect_market(code) == "futures":
+            # A futures contract Sina does not carry (CL2412.NYMEX, ESZ4).
+            # Returning None hands the symbol to the next link in the chain;
+            # letting it reach the A-share default below priced a USD-quoted
+            # global contract off ``stock_zh_a_hist`` without erroring (#1395).
+            logger.warning(
+                "akshare serves Chinese futures only; %s has no akshare source", code
+            )
+            return None
         # Default: try A-share
         return self._fetch_a_share(ak, code, start_date, end_date, interval)
 
@@ -260,6 +286,63 @@ class DataLoader:
         if df is None or df.empty:
             return None
         return self._normalize(df, date_col="日期")
+
+    def _fetch_china_futures(
+        self, ak, code: str, start_date: str, end_date: str,
+    ) -> Optional[pd.DataFrame]:
+        """Fetch a Chinese futures contract from Sina's token-free endpoints.
+
+        Two contract forms arrive here, and they use different endpoints with
+        different payload shapes:
+
+        * Dated (``RB2601``, ``IF2512.CFFEX``) -> ``futures_zh_daily_sina``,
+          which takes *no* date range and serves the contract's whole life, so
+          the requested window is applied here. Columns are already English.
+        * Main continuous (``RB0``) -> ``futures_main_sina``, which does take a
+          range and answers in Chinese column names carrying a ``价`` suffix
+          (``开盘价``), distinct from the ``开盘`` spelling ``_normalize``
+          knows from the equity endpoints.
+
+        Args:
+            ak: The imported ``akshare`` module.
+            code: Contract code, with or without an exchange suffix.
+            start_date: YYYY-MM-DD, inclusive.
+            end_date: YYYY-MM-DD, inclusive.
+
+        Returns:
+            OHLCV frame indexed by trade date, or None when Sina carries no
+            series for the contract.
+        """
+        symbol = _sina_contract(code)
+        try:
+            if _CN_FUTURES_MAIN_RE.match(symbol):
+                raw = ak.futures_main_sina(
+                    symbol=symbol,
+                    start_date=start_date.replace("-", ""),
+                    end_date=end_date.replace("-", ""),
+                )
+                if raw is None or raw.empty:
+                    return None
+                raw = raw.rename(columns={
+                    "开盘价": "开盘", "最高价": "最高",
+                    "最低价": "最低", "收盘价": "收盘",
+                })
+                return self._normalize(raw, date_col="日期")
+
+            raw = ak.futures_zh_daily_sina(symbol=symbol)
+        except Exception as exc:  # noqa: BLE001 - one bad contract must not raise
+            # akshare raises rather than returning empty for a code Sina does
+            # not list (a ZCE three-digit delivery month such as ``MA605``, or
+            # a stray exchange suffix), so this is the not-found path too.
+            logger.warning("akshare futures fetch failed for %s: %s", code, exc)
+            return None
+
+        if raw is None or raw.empty:
+            return None
+        df = self._normalize(raw, date_col="date")
+        # The dated endpoint ignores the window, so slice it here; without this
+        # a one-month request came back with the contract's entire history.
+        return df.loc[str(start_date):str(end_date)]
 
     @staticmethod
     def _normalize(df: pd.DataFrame, date_col: str = "日期") -> pd.DataFrame:

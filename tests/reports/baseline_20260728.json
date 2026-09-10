@@ -279,7 +279,7 @@
           }
         },
         {
-          "name": "vibe-trading-quanta importable",
+          "name": "vibe-trading-ai importable",
           "status": "PASS",
           "duration_ms": 0.0,
           "message": "v0.1.0",

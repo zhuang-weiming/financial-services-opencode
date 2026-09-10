@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import tempfile
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -53,6 +54,9 @@ class SessionStore:
 
     def _attempt_file(self, session_id: str, attempt_id: str) -> Path:
         return self._attempt_dir(session_id, attempt_id) / "attempt.json"
+
+    def _partial_response_file(self, session_id: str, attempt_id: str) -> Path:
+        return self._attempt_dir(session_id, attempt_id) / "partial_response.json"
 
     # ---- Session CRUD ----
 
@@ -238,15 +242,102 @@ class SessionStore:
             attempt.to_dict(),
         )
 
+    def list_attempts(self) -> List[Attempt]:
+        """Read every valid persisted attempt.
+
+        Returns:
+            Attempts found below the session storage root.
+        """
+        attempts: List[Attempt] = []
+        for path in self.base_dir.glob("*/attempts/*/attempt.json"):
+            data = self._read_json(path)
+            if not isinstance(data, dict):
+                continue
+            try:
+                attempts.append(Attempt.from_dict(data))
+            except (TypeError, ValueError, KeyError) as exc:
+                logger.warning("Skipping corrupt attempt file %s: %s", path, exc)
+        return attempts
+
+    def get_message_for_attempt(
+        self, session_id: str, attempt_id: str
+    ) -> Optional[Message]:
+        """Return the persisted assistant message linked to an attempt.
+
+        Args:
+            session_id: Session ID.
+            attempt_id: Attempt ID.
+
+        Returns:
+            The linked message, or None when the reply is not in the log.
+        """
+        for message in reversed(self.get_messages(session_id, limit=1_000_000)):
+            if message.linked_attempt_id == attempt_id:
+                return message
+        return None
+
+    # ---- Streaming Response Checkpoints ----
+
+    def save_partial_response(
+        self, session_id: str, attempt_id: str, content: str
+    ) -> None:
+        """Atomically persist the current streamed assistant text.
+
+        Args:
+            session_id: Session ID.
+            attempt_id: Attempt ID.
+            content: Assistant text accumulated so far.
+        """
+        self._write_json(
+            self._partial_response_file(session_id, attempt_id),
+            {"content": content},
+        )
+
+    def get_partial_response(self, session_id: str, attempt_id: str) -> Optional[str]:
+        """Read a streamed assistant response checkpoint.
+
+        Args:
+            session_id: Session ID.
+            attempt_id: Attempt ID.
+
+        Returns:
+            Saved response text, or None when no checkpoint exists.
+        """
+        data = self._read_json(self._partial_response_file(session_id, attempt_id))
+        if not isinstance(data, dict):
+            return None
+        content = data.get("content")
+        return content if isinstance(content, str) else None
+
+    def delete_partial_response(self, session_id: str, attempt_id: str) -> None:
+        """Remove a response checkpoint after the attempt becomes terminal.
+
+        Args:
+            session_id: Session ID.
+            attempt_id: Attempt ID.
+        """
+        self._partial_response_file(session_id, attempt_id).unlink(missing_ok=True)
+
     # ---- IO Helpers ----
 
     @staticmethod
     def _write_json(path: Path, data: Dict[str, Any]) -> None:
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(
-            json.dumps(data, ensure_ascii=False, indent=2),
-            encoding="utf-8",
+        encoded = json.dumps(data, ensure_ascii=False, indent=2).encode("utf-8")
+        fd, temporary_name = tempfile.mkstemp(
+            dir=path.parent,
+            prefix=f".{path.name}.",
+            suffix=".tmp",
         )
+        temporary_path = Path(temporary_name)
+        try:
+            with os.fdopen(fd, "wb") as temporary_file:
+                temporary_file.write(encoded)
+                temporary_file.flush()
+                os.fsync(temporary_file.fileno())
+            os.replace(temporary_path, path)
+        finally:
+            temporary_path.unlink(missing_ok=True)
 
     @staticmethod
     def _read_json(path: Path) -> Optional[Dict[str, Any]]:

@@ -19,7 +19,7 @@ Single browse-style tool that returns **AI-summarized company announcements** wi
 
 ## When NOT to use
 
-- **Sentiment / social media** → not in scope (use `vibe-trading-quanta` sentiment tools)
+- **Sentiment / social media** → not in scope (use `vibe-trading-ai` sentiment tools)
 - **Real-time breaking news** → this is a curated, AI-summarized feed, not a firehose
 - **Deep transcript / 10-Q MD&A reading** → `llmquant-sec`
 - **Macro news** (Fed minutes, CPI release) → `llmquant-macro` or web search

@@ -44,6 +44,7 @@ __all__ = [
     "cointegration_test",
     "find_hedge_ratio",
     "compute_half_life",
+    "fit_ornstein_uhlenbeck",
     "granger_test",
     "fit_garch",
     "fit_markov_regime",
@@ -228,6 +229,103 @@ def compute_half_life(spread: pd.Series) -> float:
     if reversion >= 0:
         return float("inf")
     return float(-np.log(2) / reversion)
+
+
+def fit_ornstein_uhlenbeck(series: pd.Series, dt: float = 1.0) -> dict:
+    """Fit an Ornstein-Uhlenbeck (OU) mean-reverting process by exact discrete MLE.
+
+    The continuous-time OU process is:
+        dX_t = θ(μ - X_t)dt + σ dW_t
+
+    Under discrete sampling with interval ``dt``, this maps to an exact AR(1) model:
+        X_{t+1} = a + b X_t + ε_t,   ε_t ~ N(0, σ_ε^2)
+
+    where:
+        b = exp(-θ dt)  =>  θ = -ln(b) / dt
+        a = μ(1 - b)    =>  μ = a / (1 - b)
+        σ_ε^2 = σ^2 / (2θ) * (1 - exp(-2θ dt)) = σ^2 / (2θ) * (1 - b^2)
+        σ = sqrt(2θ * σ_ε^2 / (1 - b^2))
+        Half-life = ln(2) / θ
+        Stationary Variance = σ^2 / (2θ) = σ_ε^2 / (1 - b^2)
+
+    Args:
+        series: Spread or asset price/level time series.
+        dt: Sampling time step in desired units (e.g. 1.0 for daily, 1/252 for annualised).
+            Must be strictly positive.
+
+    Returns:
+        Dict with keys:
+            * ``theta`` (float): Mean-reversion rate θ.
+            * ``mu`` (float): Long-term equilibrium mean μ.
+            * ``sigma`` (float): Continuous diffusion volatility σ.
+            * ``half_life`` (float): Mean-reversion half-life (in time units).
+            * ``stationary_variance`` (float): Long-run stationary variance.
+            * ``stationary_std`` (float): Long-run stationary standard deviation.
+            * ``ar1_a`` (float): Discrete AR(1) intercept a.
+            * ``ar1_b`` (float): Discrete AR(1) slope b.
+            * ``residual_std`` (float): Discrete error standard deviation σ_ε.
+            * ``is_mean_reverting`` (bool): True if 0 < b < 1 (reverting).
+
+    Raises:
+        ImportError: If ``statsmodels`` is not installed.
+        ValueError: If ``dt <= 0``, fewer than 3 valid lag pairs remain, or series is constant.
+    """
+    if dt <= 0:
+        raise ValueError(f"dt must be strictly positive, got {dt}")
+
+    sm = _require("statsmodels.api", "statsmodels", "fit_ornstein_uhlenbeck")
+    s = pd.Series(series, dtype=float).dropna()
+    if not np.isfinite(s.values).all():
+        raise ValueError("series contains non-finite values")
+
+    lagged = s.shift(1)
+    frame = pd.concat({"curr": s, "lag": lagged}, axis=1).dropna()
+    if len(frame) < 3:
+        raise ValueError(f"fit_ornstein_uhlenbeck needs at least 3 lag pairs, got {len(frame)}")
+    if frame["lag"].std(ddof=0) == 0:
+        raise ValueError("fit_ornstein_uhlenbeck needs a series that varies; this one is constant")
+
+    exog = sm.add_constant(frame[["lag"]])
+    params = _ols_params(frame["curr"], exog)
+    a = float(params[0])
+    b = float(params[1])
+
+    residuals = frame["curr"] - (a + b * frame["lag"])
+    n = len(frame)
+    dof = max(1, n - 2)
+    sigma_eps_sq = float(np.sum(residuals**2) / dof)
+    sigma_eps = float(np.sqrt(sigma_eps_sq))
+
+    if 0.0 < b < 1.0:
+        theta = float(-np.log(b) / dt)
+        mu = float(a / (1.0 - b))
+        half_life = float(np.log(2.0) / theta)
+        one_minus_b2 = float(1.0 - b**2)
+        stat_var = float(sigma_eps_sq / one_minus_b2)
+        stat_std = float(np.sqrt(stat_var))
+        sigma = float(np.sqrt(2.0 * theta * stat_var))
+        is_reverting = True
+    else:
+        theta = 0.0 if b >= 1.0 else float("nan")
+        mu = float("nan") if b == 1.0 else float(a / (1.0 - b))
+        half_life = float("inf")
+        stat_var = float("inf")
+        stat_std = float("inf")
+        sigma = float("nan")
+        is_reverting = False
+
+    return {
+        "theta": theta,
+        "mu": mu,
+        "sigma": sigma,
+        "half_life": half_life,
+        "stationary_variance": stat_var,
+        "stationary_std": stat_std,
+        "ar1_a": a,
+        "ar1_b": b,
+        "residual_std": sigma_eps,
+        "is_mean_reverting": is_reverting,
+    }
 
 
 def find_hedge_ratio(y: pd.Series, x: pd.Series) -> dict:

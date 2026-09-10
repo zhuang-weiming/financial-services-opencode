@@ -286,6 +286,7 @@ class HypothesisRegistry:
         run_card_path: str = "",
         backtest_run_dir: str = "",
         metrics: dict[str, Any] | None = None,
+        validation: dict[str, Any] | None = None,
         notes: str = "",
     ) -> Hypothesis:
         """Link a run card or backtest artifact to a hypothesis.
@@ -295,6 +296,9 @@ class HypothesisRegistry:
             run_card_path: Optional path to a run_card.json.
             backtest_run_dir: Optional backtest run directory.
             metrics: Optional metrics summary.
+            validation: Optional walk-forward/Monte-Carlo/bootstrap robustness
+                results, as written by write_run_card's top-level
+                "validation" key (a sibling of "metrics", not nested in it).
             notes: Optional human note about the link.
 
         Returns:
@@ -308,13 +312,16 @@ class HypothesisRegistry:
             raise ValueError("run_card_path or backtest_run_dir is required")
         records = self.list()
         hyp = self._find_required(records, hypothesis_id)
-        hyp.run_cards.append({
+        run_card_record: dict[str, Any] = {
             "run_card_path": run_card_path,
             "backtest_run_dir": backtest_run_dir,
             "metrics": metrics or {},
             "notes": notes,
             "linked_at": _utc_now(),
-        })
+        }
+        if validation is not None:
+            run_card_record["validation"] = validation
+        hyp.run_cards.append(run_card_record)
         hyp.updated_at = _utc_now()
         self._save(records)
         return hyp
