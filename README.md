@@ -1,436 +1,226 @@
 # Opencode for Financial Services (Wealth-Guide)
 
-A unified financial-services AI agent platform powered by [Opencode](https://opencode.ai). Single-entry agent **Wealth-Guide** routes your question to the right specialized subagent — covering investment banking, equity research, private equity, wealth management, fund administration, and multi-market quantitative research.
+A unified financial-services AI agent platform powered by [Opencode](https://opencode.ai). Single-entry agent **Wealth-Guide** routes your question to the right specialized subagent — investment banking, equity research, private equity, wealth management, fund administration, and multi-market quantitative research.
 
 ## Provenance
 
-This repository merges two open-source codebases:
-
 | Source | License | Version | Contents |
 |---|---|---|---|
-| [Anthropic FSI](https://github.com/anthropic/claude-for-financial-services) | Apache 2.0 | — | 17 subagents, 59 institutional FSI skills, 3 MCP data connectors |
-| [Vibe-Trading](https://github.com/HKUDS/Vibe-Trading) | MIT | v0.1.15 | Multi-market analysis & quantitative research ("data that says what it is"): 90 skills, 462 alpha zoo, 10 backtest engines, 27 data loaders (incl. UK / KRX / HOSE markets, tickerall / nobitex / wallex explicit-only sources, pykrx KRX), 30 swarm presets, 6 portfolio optimizers, 14 broker connectors, 74 MCP tools |
-| [LLMQuant/skills](https://github.com/LLMQuant/skills) | MIT | v0.1.0 | 17 workflow-router category skills (75 workflows) grounded in LLMQuant Data (options, credit, rates-fx, crypto, commodities, strategies, investor-lenses, and more) |
-| [virattt/ai-hedge-fund](https://github.com/virattt/ai-hedge-fund) | MIT | — | Investor personas (Buffett / Munger / Graham / Lynch / Druckenmiller) + PEAD model + mandate specs, ported as the 10 `ai-hedge-fund-*` skills (upstream system prompts verbatim; local data adapter, no `aihf` install or API key required) |
+| [Anthropic FSI](https://github.com/anthropic/claude-for-financial-services) | Apache 2.0 | — | 17 subagents, 59 institutional skills, 3 MCP connectors |
+| [Vibe-Trading](https://github.com/HKUDS/Vibe-Trading) | MIT | v0.1.15 | 90 skills, 462-alpha zoo (NaN contract), 10 backtest engines, 27 data loaders (UK / KRX / HOSE; explicit-only tickerall / nobitex / wallex), 30 swarm presets, 14 broker connectors, 74 MCP tools |
+| [LLMQuant/skills](https://github.com/LLMQuant/skills) | MIT | v0.1.0 | 17 workflow routers (75 workflows) grounded in LLMQuant Data |
+| [virattt/ai-hedge-fund](https://github.com/virattt/ai-hedge-fund) | MIT | aihf 2.2.0 | 10 investor-persona skills (Buffett / Munger / Graham / Lynch / Druckenmiller + 4 mandates) |
 
 ## Quick Start
 
 ```bash
-# 1. Clone and enter the repo
-git clone <repo-url> financial-services-opencode
-cd financial-services-opencode
+git clone <repo-url> financial-services-opencode && cd financial-services-opencode
 
-# 2. One-shot Python setup (deps + vendored packages, editable install)
+# One-time setup
 pip install -r .opencode/requirements.txt
-pip install -e .opencode/python/vibe-trading
-pip install -e .opencode/python/wif-framework
+pip install -e .opencode/python/vibe-trading      # vibe-trading-ai v0.1.15
+pip install -e .opencode/python/wif-framework     # wif-framework v5.9.0
+cd .opencode && npm install && cd ..              # optional — Opencode plugin only
 
-# 3. Install Node.js plugin dependencies (optional — required for Opencode plugin)
-cd .opencode && npm install && cd ..
-
-# 4. Start a session with Wealth-Guide
 opencode --agent wealth-guide
 ```
 
-> **Note:** Steps 2–3 are a **one-time setup** — after that, the agent runs with
-> zero install delay. The two vendored Python packages are installed *editable*
-> (`vibe-trading-ai` v0.1.15 from `.opencode/python/vibe-trading`, and
-> `wif-framework` v5.9.0 from `.opencode/python/wif-framework`), and the
-> data-loader extras (tushare / yfinance / akshare / pykrx / mootdx / baostock)
-> are already resolved. Step 3 is only needed if you use this as an Opencode
-> plugin via `opencode plugin install`.
-
-
-## Setup Details
-
-### Python Dependencies
-
-The `.opencode/requirements.txt` covers all core dependencies:
-
-| Package | Used By |
-|---|---|
-| `openpyxl` | xlsx/xlsx-author skills (Excel creation) |
-| `python-pptx` | pptx/pptx-author skills (PowerPoint creation) |
-| `pandas`, `numpy` | Data manipulation across all quant skills |
-| `scipy`, `scikit-learn`, `statsmodels` | Alpha research, factor analysis, backtesting |
-| `duckdb`, `pyarrow` | Data storage and query |
-| `httpx`, `requests` | Web data fetching |
-| `Pillow` | Image processing for doc-reader |
-| `mcp` | MCP server communication |
-
-Optional data-loader packages (uncomment in `requirements.txt` or install as needed):
-
-```bash
-pip install tushare yfinance akshare ccxt finnhub-python
-```
-
-### Node.js Dependencies
-
-If using as an Opencode plugin:
-
-```bash
-cd .opencode && npm install
-```
-
-This installs `@opencode-ai/plugin` (the Opencode plugin runtime).
+> Setup is one-time; the agent then runs with zero install delay. Both vendored
+> packages install *editable*, and the data-loader extras (tushare / yfinance /
+> akshare / pykrx / mootdx / baostock) are already resolved.
 
 ## Architecture
 
 ```
-                           ┌──────────────────────┐
-                           │     wealth-guide      │  ← ONLY user-facing entry
-                           │ (intent → delegate)   │
-                           └──────┬───────────────┘
-                                  │ task(subagent=...)
-          ┌───────────────────────┼────────────────────────┐
-          │       (22 subagents)  │                        │
-       IB/ER/PE/WM           Modeling                Fund-Admin
-       pitch-agent            model-builder          gl-reconciler
-       earnings-reviewer      alpha-researcher       month-end-closer
-       market-researcher      backtest-builder       statement-auditor
-       meeting-prep-agent     factor-researcher      kyc-screener
-       ...                    market-router          ...
-                               swarm-orchestrator
+   wealth-guide  ← ONLY user-facing entry (intent → delegate)
+        │ task(subagent=...)
+        ├── IB / ER / PE / WM ── pitch-agent · earnings-reviewer · market-researcher · meeting-prep-agent
+        ├── Modeling / Quant ── model-builder · alpha-researcher · backtest-builder · factor-researcher · market-router
+        └── Fund-admin / KYC ── fund-admin · gl-reconciler · month-end-closer · statement-auditor · kyc-screener
+             (+ swarm-orchestrator, financial-analysis, operations, valuation-reviewer, private-equity, …)
 ```
 
-- **1 primary agent** (`wealth-guide`): single entry point, no user-facing agent explosion
-- **22 subagents**: each good at one domain, hidden from the user
-- **195 skills** (100% routing coverage — see [Skill Routing](#skill-routing--coverage-governance)): reusable workflow procedures triggered by subagents — **90 `vibe-trading-*`** (Vibe-Trading origin, v0.1.15) + 25 `llmquant-*` + **10 `ai-hedge-fund-*`** (multi-agent fund personas) + 2 repo-local analysis protocols (`trend-analysis-multi-algo`, `non-price-evidence`) + Anthropic FSI institutional skills. Naming convention: `vibe-trading-*` = vendored from HKUDS/Vibe-Trading; `llmquant-*` = imported from LLMQuant/skills; `ai-hedge-fund-*` = investor personas from virattt/ai-hedge-fund; bare names = Anthropic FSI or repo-local.
-- **`vibe-trading-ai` Python package** (v0.1.15, installed from `.opencode/python/vibe-trading`): vendored quantitative engine + agent tree — 462 alphas with NaN contract, 27 data loaders, 10 backtest engines, swarm presets, portfolio optimizers, plus the Quant Library (`src.quantlib.*`), tools (`src.tools.*`), factors (`src.factors.*`), and trading connectors. Namespace: `src.*` / `backtest.*` / `cli.*` (e.g. `from src.quantlib.timeseries import adf_test`, `from backtest.loaders.registry import VALID_SOURCES`).
-- **`vibe-trading` MCP server**: optional, started by `vibe-trading-mcp` (74 tools from the upstream engine). Note: the MCP's `load_skill` resolves against the package's own bundled skills (`src/skills/`, bare names) — a *separate* corpus from the renamed `.opencode/skills/vibe-trading-*` that OpenCode agents use.
+- **1 primary agent** + **22 subagents** (hidden) · **195 skills** — intent-routed, **100% coverage** ([governance](#skill-routing--coverage))
+- **`vibe-trading-ai` v0.1.15** — vendored quant engine; namespace `src.*` / `backtest.*` / `cli.*`
+- **MCP servers** — Morningstar · FactSet · llmquant-data · vibe-trading (optional)
 
 ## Subagent Reference
 
-| Subagent | Domain | Key Capabilities |
-|---|---|---|
-| `investment-banking` | IB | Pitch decks, CIMs, teasers, buyer lists, merger models, deal tracking |
-| `pitch-agent` | IB (specialized) | Buy-side pitch decks, comps, DCF, LBO, football field |
-| `equity-research` | ER | Earnings analysis, initiating coverage, morning notes, thesis tracking; **investor personas** (`ai-hedge-fund-*`: Buffett / Munger / Graham / Lynch / Druckenmiller) |
-| `earnings-reviewer` | ER (specialized) | Post-earnings update: transcript → model → note |
-| `market-researcher` | ER (specialized) | Sector primers, competitive landscapes, idea generation |
-| `private-equity` | PE | IC memos, deal screening/sourcing, unit economics, returns analysis |
-| `operations` | PE ops | Portfolio monitoring, AI readiness, DD checklists, value creation |
-| `wealth-management` | WM | Financial plans, portfolio rebalancing, TLH, client reports |
-| `meeting-prep-agent` | WM (specialized) | Client/investor meeting prep packs |
-| `model-builder` | Modeling | DCF, LBO, 3-statement, comps from scratch |
-| `financial-analysis` | Cross-domain | 3-statement, DCF, LBO, comps, competitive analysis |
-| `alpha-researcher` | Quant research | Alpha zoo browse, IC/IR, factor bench, strategy research |
-| `factor-researcher` | Factor analysis | IC/IR, quantile backtest, correlation, risk decomposition |
-| `backtest-builder` | Strategy dev | Strategy generation, backtesting, walk-forward, diagnosis |
-| `market-router` | Cross-market | Multi-market data routing (A-share, US, crypto, FX, futures, India, Korea, Vietnam, UK, Canada; explicit-only tickerall/nobitex/wallex) |
-| `swarm-orchestrator` | Multi-agent | 30 preset research teams and collaborative workflows |
-| `fund-admin` | Fund admin | NAV tie-out, accruals, roll-forwards, variance commentary |
-| `gl-reconciler` | Fund GL | GL reconciliation, break classification, root-cause trace |
-| `month-end-closer` | Month-end | Accrual schedules, roll-forwards, close packages |
-| `statement-auditor` | LP audit | NAV tie-out, formula audit, cross-statement consistency |
-| `kyc-screener` | KYC/AML | Onboarding document parse, AML rules engine, risk rating |
-| `valuation-reviewer` | Valuation QA | Assumption stress-test, sensitivity analysis, model challenge |
+> **Capabilities, not skill names.** *Key* = how many skills
+> [`wealth-guide-router.md`](.opencode/instructions/wealth-guide-router.md) names for that
+> subagent — a curated subset, **not a limit** (skills can appear under several subagents;
+> 62 unique skills named in total). Full list: [`skill-manifest.md`](.opencode/instructions/skill-manifest.md).
 
-## Data Sources
+| Subagent | Domain | Key | Capabilities |
+|---|---|:---:|---|
+| `investment-banking` | IB | 8 | Pitch decks, CIMs, teasers, buyer lists, merger models, deal tracking |
+| `equity-research` | ER | 6 | Earnings analysis, initiating coverage, morning notes, thesis tracking, **investor personas** |
+| `private-equity` | PE | 6 | IC memos, deal screening/sourcing, unit economics, returns analysis |
+| `wealth-management` | WM | 7 | Financial plans, rebalancing, TLH, client reports, WIF advisory |
+| `earnings-reviewer` | ER | 4 | Post-earnings: transcript → model → note |
+| `meeting-prep-agent` | WM | 3 | Client/investor meeting prep packs |
+| `pitch-agent` | IB | 6 | Buy-side pitch decks, comps, DCF, LBO, football field |
+| `market-researcher` | ER | 4 | Sector primers, competitive landscapes, idea generation |
+| `model-builder` | Modeling | 3 | DCF, LBO, 3-statement, comps from scratch |
+| `financial-analysis` | Cross-domain | 4 | 3-statement, DCF, LBO, comps, competitive analysis |
+| `alpha-researcher` | Quant | 4 | Alpha zoo, IC/IR, factor bench, strategy research |
+| `factor-researcher` | Quant | 3 | IC/IR, quantile backtest, correlation, risk decomposition |
+| `backtest-builder` | Quant | 4 | Strategy generation, backtesting, walk-forward, diagnosis |
+| `market-router` | Cross-market | 6 | Data routing (A-share / US / HK / crypto / FX / futures / India / Korea / Vietnam / UK / Canada) |
+| `swarm-orchestrator` | Multi-agent | — | 30 preset research teams |
+| `fund-admin` | Fund admin | 4 | NAV tie-out, accruals, roll-forwards, variance commentary |
+| `gl-reconciler` | Fund GL | 2 | GL reconciliation, break classification, root-cause trace |
+| `month-end-closer` | Month-end | 3 | Accrual schedules, roll-forwards, close packages |
+| `statement-auditor` | LP audit | 2 | NAV tie-out, formula audit, cross-statement consistency |
+| `valuation-reviewer` | Valuation QA | 3 | Assumption stress-test, sensitivity analysis, model challenge |
+| `kyc-screener` | KYC/AML | 2 | Onboarding parse, AML rules engine, risk rating |
+| `operations` | PE ops | 5 | Portfolio monitoring, AI readiness, DD checklists, value creation |
 
-### Tier 1 — Institutional (preferred)
-- **Morningstar MCP**: equity research, analyst estimates, fund data, fair value estimates
-- **FactSet MCP**: financial statements, trading data, valuation metrics
-- **llmquant-data MCP**: US equity/crypto OHLCV, ETF holdings (SEC N-PORT), FRED macro indicators, AI-summarized news, SEC 13F ownership, SEC filing text (10-K/Q + 8-K), Polymarket finance odds, papers/wiki knowledge (25 tools, 8 domains)
+## Three-Layer Analysis Stack
 
-### Tier 2 — General Web (fallback)
-- **DuckDuckGo Search**: supplementary web search when MCP sources unavailable
+**Price-layer consensus is *pseudo-independent*** (all algorithms read one OHLCV series) — the non-price and fundamental layers are what make a verdict robust. Agreement raises confidence; **disagreement localizes the decision's assumption**.
 
-### Tier 3 — Quantitative (free/multi-market)
-All routed through `vibe-trading-ai` data loaders (v0.1.15):
-- **A-Share**: MooTDX (通达信 TCP), Tencent, Sina, Baostock, AKShare, EastMoney, Tushare
-- **US/Global**: Yahoo Finance, Stooq, EastMoney, Finnhub, Alpha Vantage, Tiingo, Financial Modeling Prep
-- **HK**: Tencent, EastMoney, Yahoo, LongBridge (SDK), Futu (OpenD)
-- **Canada**: Yahoo (.TO / .V)
-- **India**: Yahoo (.NS / .BO), broker loaders (Shoonya / Dhan); live order placement disabled
-- **Korea (KRX)**: pykrx (Naver-adjusted daily); Yahoo fallback
-- **Vietnam (HOSE)**: Yahoo (.VN); long-only, ±7% band
-- **UK (LSE)**: Yahoo (.L / .IL); SDRT 0.5% purchase-side duty
-- **Crypto**: OKX, CCXT (100+ exchanges); nobitex / wallex Toman sources are explicit-only
-- **China Futures**: AKShare (Sina daily endpoints); tushare no longer declares `futures`
-- **Global Futures / Forex / Metals**: Yahoo, AKShare, MT5 (local), TickerAll (hosted MT5, explicit-only)
-- **SEC Filings**: SEC EDGAR client via `backtest.loaders.sec_edgar_client`
+| Layer | Skill | Answers | Run |
+|---|---|---|---|
+| **Price** | `trend-analysis-multi-algo` | direction / support-resistance / patterns | `trend_analysis.py --code X --market sh` |
+| **Evidence** | `non-price-evidence` | volume / fund-flow / fundamentals / macro | `fetch_evidence.py --code X --market sh` |
+| **Fundamental** | `ai-hedge-fund-*` | business quality / valuation / inflection | `build_snapshot.py --code X --market sh --render` |
 
-> **Data quality priority** is enforced by the `.opencode/instructions/data-priority.md` rule — always prefer MCP sources over free loaders, and mark any unsourced figure with `[UNSOURCED]`.
->
-> **v0.1.15 data integrity rules**: every served price frame carries an
-> adjustment caliber (`split_adjusted` / `dividend_adjusted` / `raw` / `unknown`);
-> cite it next to any price you quote. NaN propagates through the alpha zoo
-> instead of being silently filled — quote IC values with the post-drop
-> sample size. `pct_change()` does not forward-fill — a missing close is a
-> missing return.
+*(all three scripts live under `.opencode/skills/<skill>/scripts/`)*
 
-## Alpha Zoo (462 pre-built factors)
+**`trend-analysis-multi-algo` — 10 algorithms.** One command runs all ten; **never conclude from a single algorithm** (WaveTrend-only is a documented failure mode). Momentum: WaveTrend (V21: N1=50/N2=105) + technical 3-way vote. Pattern: candlestick (15) · 缠论 · Elliott · harmonic. Structure: SMC/ICT · Ichimoku · Gann. Output includes an **independence caveat** (10/10 are transforms of one series).
 
-Five families bundled in the `vibe-trading-ai` package (v0.1.15 — grew from 461):
+**`non-price-evidence` — 4 dimensions.** Volume structure (turnover / volume-ratio / OBV / AD-line) · fund flow (margin / holder-count / dragon-tiger / block-trade / lockup / northbound) · fundamentals (东财 indicators + consensus) · macro (China CPI/PPI/M2/社融/GDP). MCP extends each (minute/tick/Level-2, US 13F/Form 4, SEC text, FRED, Polymarket). Every run reports per-source status, coverage **gaps**, and **stale flags** — a conclusion can never silently rest on missing data.
 
-| Family | Count | Origin |
-|---|---|---|
-| `qlib158` | 158 | Microsoft Qlib quantitative alphas (tagged `equity_cn`, `equity_in`, `equity_kr`) |
-| `alpha101` | 101 | Kakushadze 101 formulaic alphas |
-| `gtja191` | 191 | GTJA (国泰君安) China-specific alphas (`equity_cn` only) |
-| `academic` | — | Academic research alphas (Fama-French, Carhart, etc.) |
-| `fundamental` | — | Fundamental factor alphas |
+**`ai-hedge-fund-*` — 10 investor-persona skills.** Ported from [virattt/ai-hedge-fund](https://github.com/virattt/ai-hedge-fund) with **exact upstream system prompts** + a local data adapter (no `aihf` install or API key). Master `ai-hedge-fund` (FUND > STRATEGY > MODEL) · personas `{buffett,munger,graham,lynch,druckenmiller}` · mandates `{deep-value,earnings-drift,fundamental-ls,inflections}`. **Aggregate trigger** 「投资大佬」/「各位大佬」/「投资大师」 loads all five and returns a consensus/divergence table.
 
-```python
-from src.factors.registry import Registry
-zoo = Registry.get_alpha("qlib158")  # loads all 158 Qlib alphas
-```
-
-## LLMQuant Workflow Skills
-
-17 workflow-router category skills imported from [`LLMQuant/skills`](https://github.com/LLMQuant/skills) (MIT), grounded in the `llmquant-data` MCP. Each router indexes `workflows/*.md` procedures and enforces the LLMQuant Data evidence contract (source grounding, freshness reporting, fallback, no invented data). See `.opencode/instructions/llmquant-skills.md` for the full category → scenario → trigger → subagent map and the legacy-skill cross-reference matrix.
-
-| Skill | Category | Workflows | Primary subagent(s) |
-|---|---|---:|---|
-| `llmquant-options` | options | 10 | `factor-researcher` / `financial-analysis` |
-| `llmquant-investor-lenses` | investor-lenses | 17 | `equity-research` / `wealth-management` |
-| `llmquant-strategies` | strategies | 6 | `backtest-builder` / `swarm-orchestrator` |
-| `llmquant-equities` | equities | 5 | `equity-research` / `earnings-reviewer` |
-| `llmquant-portfolio` | portfolio | 5 | `wealth-management` / `equity-research` |
-| `llmquant-risk` | risk | 4 | `valuation-reviewer` / `factor-researcher` |
-| `llmquant-credit` | credit | 3 | `financial-analysis` / `market-researcher` |
-| `llmquant-crypto` | crypto | 3 | `market-router` / `factor-researcher` |
-| `llmquant-events` | events | 3 | `earnings-reviewer` / `market-researcher` |
-| `llmquant-macro` | macro | 3 | `market-router` / `factor-researcher` / `wealth-management` |
-| `llmquant-market-intelligence` | market-intelligence | 3 | `market-researcher` / `equity-research` |
-| `llmquant-prediction-markets` | prediction-markets | 3 | `market-researcher` / `market-router` |
-| `llmquant-rates-fx` | rates-fx | 3 | `market-router` / `factor-researcher` |
-| `llmquant-commodities` | commodities | 2 | `market-researcher` / `market-router` |
-| `llmquant-equity-derivatives` | equity-derivatives | 2 | `financial-analysis` / `factor-researcher` |
-| `llmquant-portfolio-lab` | portfolio-lab | 2 | `wealth-management` / `valuation-reviewer` |
-| `llmquant-etfs` | etfs | 1 | `market-researcher` / `financial-analysis` |
-
-**Total**: 17 routers, 75 workflows. 16 shipped as-is; `llmquant-macro` merged into the existing tool-reference macro skill; `llmquant-strategies` (voice/tone) and `llmquant-investor-lenses` (persona grounding) shipped with integration notes.
-
-## Three-Layer Analysis Stack (2026-09-10)
-
-Three complementary skills, designed to be run together. **Price-layer consensus is *pseudo-independent*** (all algorithms read the same OHLCV series) — the non-price and fundamental layers are what make a verdict robust.
-
-```
-┌──────────────────────────────────────────────────────────────┐
-│  Price layer    trend-analysis-multi-algo  (10 algorithms)   │
-│                 → direction / support-resistance / patterns   │
-├──────────────────────────────────────────────────────────────┤
-│  Evidence layer non-price-evidence         (4 dimensions)    │
-│                 → volume / fund-flow / fundamentals / macro   │
-├──────────────────────────────────────────────────────────────┤
-│  Fundamental    ai-hedge-fund-*            (5 personas)      │
-│                 → business quality / valuation / inflection   │
-└──────────────────────────────────────────────────────────────┘
-        cross-check → agreement raises confidence;
-                      disagreement localizes the decision's assumption
-```
-
-### 1. `trend-analysis-multi-algo` — 10-algorithm trend protocol
-
-One command runs all ten; **never conclude from a single algorithm** (WaveTrend-only is a documented failure mode).
-
-| Layer | Algorithm | Implementation |
-|---|---|---|
-| Momentum | WaveTrend (V21 caliber: N1=50, N2=105) | `alpha-engine-v21` reference |
-| Momentum | Technical three-way vote (EMA/ADX + BB/RSI + OBV) | pure pandas |
-| Pattern | Candlestick (15 patterns) | TA-Lib `CDL*` |
-| Pattern | 缠论 (fractal / stroke / pivot) | `czsc` |
-| Pattern | Elliott Wave (Zigzag + 5-wave + Fibonacci) | pure pandas |
-| Pattern | Harmonic (XABCD) | Fibonacci geometry |
-| Structure | SMC / ICT (BOS / ChoCH / FVG / Order Block) | `smartmoneyconcepts` |
-| Structure | Ichimoku (5-line + cloud) | pure pandas |
-| Structure | Gann (angles / Square of 9 / time-price squaring) | `vibe-trading-gann` |
-
-```bash
-python3 .opencode/skills/trend-analysis-multi-algo/scripts/trend_analysis.py --code 601788 --market sh
-```
-
-Output: signal matrix + divergence analysis + time-scale layering + **independence caveat** (it states that 10/10 algorithms are transforms of one price series).
-
-### 2. `non-price-evidence` — 4 independent dimensions
-
-| Dimension | Script-covered (Python-direct, free) | MCP-covered |
-|---|---|---|
-| **Volume structure** | turnover / volume-ratio / OBV / AD-line / up-down volume | minute bars, tick, Level-2 |
-| **Fund flow** | margin / holder-count / dragon-tiger / block-trade / lockup / northbound | A-share main-force flow, US 13F / Form 4, crypto on-chain |
-| **Fundamentals** | 东财 financial indicators + consensus | three statements, SEC text, Morningstar |
-| **Macro** | China CPI/PPI/M2/社融/GDP | FRED (US), Polymarket odds |
-
-```bash
-python3 .opencode/skills/non-price-evidence/scripts/fetch_evidence.py --code 601788 --market sh
-```
-
-Every run reports per-source status (✅/⚠️/❌), coverage **gaps**, and **stale flags** (>90 days) — so a conclusion can never silently rest on missing data.
-
-### 3. `ai-hedge-fund-*` — investor personas (10 skills)
-
-Investor-persona lenses ported from [`virattt/ai-hedge-fund`](https://github.com/virattt/ai-hedge-fund). Each carries the **exact upstream system prompt** plus a local data adapter — no `aihf` install or API key required.
-
-| Kind | Skills | Purpose |
-|---|---|---|
-| Master | `ai-hedge-fund` | FUND > STRATEGY > MODEL framework, CLI, data contract |
-| Persona | `ai-hedge-fund-{buffett,munger,graham,lynch,druckenmiller}` | Single-investor lens |
-| Mandate | `ai-hedge-fund-{deep-value,earnings-drift,fundamental-ls,inflections}` | Composed pods (weighted blends) |
-
-**Aggregate trigger:** 「投资大佬」/「各位大佬」/「投资大师」/「投资人视角」 → loads **all five** personas at once and returns a consensus/divergence table.
-
-```bash
-python3 .opencode/skills/ai-hedge-fund/scripts/build_snapshot.py --code 601788 --market sh --render
-```
-
-> **Snapshot fidelity.** The adapter's output validates against the upstream Pydantic
-> models (`FundamentalsSnapshot` / `PeriodFundamentals`) with **zero extra fields** —
-> 14 period fields + 6 derived aggregates, using upstream's exact `_avg` / `_trend` /
-> `_cagr` / `_fmt` formulas. No invented metrics (no `PEG`, no `earnings_growth` —
-> those are not in the upstream schema).
->
-> **Known gaps:** `current_ratio` is unavailable for financial firms (东财 returns null);
-> `free_cash_flow_per_share` uses 东财 `每股经营现金流` (operating cash flow, not
-> net of capex) — a real definitional difference from upstream's FCF.
+> **Snapshot fidelity.** Output validates against upstream's Pydantic models with **zero extra fields** (14 period fields + 6 aggregates, upstream's exact formulas). **No invented metrics** — no `PEG`, no `earnings_growth` (not in the schema).
+> **Known gaps:** `current_ratio` unavailable for financial firms; `free_cash_flow_per_share` uses 东财 每股经营现金流 (operating cash flow, not net of capex).
 
 ### Trigger phrases
 
-| You say | Layer(s) run |
+| You say | Layer(s) |
 |---|---|
 | 趋势分析 / 技术分析 / 缠论 / 波浪 / 蜡烛图 / 支撑压力 | Price only |
 | 资金流向 / 龙虎榜 / 两融 / 北向 / 非价格证据 | Evidence only |
 | 投资大佬 / 各位大佬 / 巴菲特视角 / 林奇 PEG | Fundamental only |
 | **综合分析 / 全栈分析 / 三层分析 / 投资大佬 + 趋势** | **All three** |
 
-## Skill Routing & Coverage Governance
+## Skill Routing & Coverage
 
 Routing is **intent-driven** — the user never needs to know a skill name.
 
 ```
-Layer 1  intent → subagent      wealth-guide-router.md      (hand-written, ~20 subagents)
-Layer 2  skill discovery        skill-manifest.md           (auto-generated, 195 skills)
-Layer 3  coverage test          tests/test_skills.py::test_skill_routing_coverage
+Layer 1  intent → subagent   wealth-guide-router.md   (hand-written, ~20 subagents)
+Layer 2  skill discovery     skill-manifest.md        (auto-generated, 195 skills)
+Layer 3  coverage gate       tests/test_skills.py::test_skill_routing_coverage
 ```
 
-- **`.opencode/instructions/skill-manifest.md`** — auto-generated from every `SKILL.md`
-  frontmatter (`name` + `description`); **do not hand-edit**.
-- **Regenerate / check:**
-  ```bash
-  python3 .opencode/scripts/gen_skill_manifest.py           # regenerate the manifest
-  python3 .opencode/scripts/gen_skill_manifest.py --check   # CI: non-zero exit if any routable skill is unregistered
-  ```
-- The coverage test asserts **195/195 routable** (tool/meta skills such as `docx`/`pdf`
-  are exempt; `_shared` is an internal resource dir, not a skill).
-- **Adding a skill?** Create it, run `gen_skill_manifest.py`, then run `--check`. A
-  routable-but-unregistered skill fails the suite.
+```bash
+python3 .opencode/scripts/gen_skill_manifest.py           # regenerate the manifest
+python3 .opencode/scripts/gen_skill_manifest.py --check   # CI: non-zero exit on any unregistered routable skill
+```
 
-> ⚠️ **Frontmatter is YAML.** A `: ` (colon + space) inside an unquoted `description`
-> breaks parsing and the skill will not load. Use Chinese punctuation or rephrase.
+- Coverage is asserted at **195/195**; tool/meta skills (`docx`/`pdf`/…) are exempt and `_shared` is an internal resource dir.
+- **Adding a skill?** Create it → run `gen_skill_manifest.py` → run `--check`.
+- ⚠️ **Frontmatter is YAML.** A `: ` (colon + space) inside an unquoted `description` breaks parsing and the skill will not load.
 
-## Changelog
+## Data Sources
 
-### v1.8 — 2026-09-10 (analysis stack + routing governance)
-**Three new skill families + 100% routing coverage.** Skill count 183 → **195**.
-- **`trend-analysis-multi-algo`** — 10-algorithm trend protocol (WaveTrend / technical vote / candlestick / 缠论 / Elliott / harmonic / SMC / Ichimoku / Gann) with a single runner script, signal matrix, divergence analysis, time-scale layering, and an **independence caveat** (price algorithms are transforms of one series — not independent evidence)
-- **`non-price-evidence`** — 4 independent dimensions (volume structure / fund flow / fundamentals / macro) with a Python-direct runner (腾讯 / 东财 / akshare) plus MCP-sourced extensions; reports per-source status, coverage gaps, and stale flags
-- **`ai-hedge-fund-*`** (10 skills) — master + 5 investor personas (Buffett / Munger / Graham / Lynch / Druckenmiller) + 4 mandates (deep-value / earnings-drift / fundamental-ls / inflections), with the exact upstream system prompts and a local snapshot adapter that validates against the upstream Pydantic models with **zero extra fields**
-- **Skill routing governance** — new `gen_skill_manifest.py` (auto-manifest + `--check` coverage gate), `skill-manifest.md` (195 skills), and `tests/test_skills.py::test_skill_routing_coverage` (asserts 0 routable-but-unregistered). Router gained a **「补充 Skill 注册」** section covering the previously-unregistered skills; the Python routing replica (`tests/__init__.py`) gained ~90 keywords (trend / non-price / persona / aggregate triggers)
-- **Fixed** — `vibe-trading-gann` was a broken empty skill (no `SKILL.md`); now has one and is registered. `_shared/run_technical_analysis.py` (older 8-framework runner) marked deprecated in favour of `trend-analysis-multi-algo`
-- **Verified**: 195/195 routing coverage, 194/194 skill frontmatter valid, test suite 1424 total / 1394 passed / 2 pre-existing failures (memory-file naming + BT directory structure, unrelated)
+### Tier 1 — Institutional MCP (preferred)
+- **Morningstar** — analyst research, fund data, fair value, screeners, ownership
+- **FactSet** — financial statements, valuation, market intelligence
+- **llmquant-data** — US equity/crypto OHLCV, ETF holdings (SEC N-PORT), FRED macro, AI-summarized news, SEC 13F, 10-K/Q/8-K text, Polymarket odds, papers/wiki (25 tools)
 
-### v1.7 — 2026-09-10 (Vibe-Trading skill namespace)
-**Renamed all 89 Vibe-Trading-origin skills to the `vibe-trading-*` namespace**, giving provenance symmetry with the `llmquant-*` skills imported from LLMQuant/skills. Also removed the redundant `vibe-thesis-tracker` duplicate.
-- **89 skills renamed** `X` → `vibe-trading-X` (directory + `name:` frontmatter). `thesis-tracker` was left bare — it is Anthropic/legacy origin (added 2026-05-26), and the Vibe-Trading duplicate `vibe-thesis-tracker` was deleted, with its 2 references repointed to `thesis-tracker`
-- **References updated**: 275 markdown links, 146 backtick refs, 4 bold refs, agent Key-Skills tables, router Skill Registry, `llmquant-skills.md` cross-reference matrix, 8 `references/`/`scripts/` path refs, README, `opencode.json`, and test fixtures (`SKILLS_DIR / "…"`)
-- **Two independent skill systems clarified**: the active OpenCode skills (`.opencode/skills/`, renamed) vs the vendored package's bundled skills (`.opencode/python/vibe-trading/src/skills/`, upstream bare names, loaded by the package's own `load_skill`). Swarm-preset `skill()` calls were reverted to bare names so the vendored packages stay self-consistent with their own `src/skills/`
-- **Verified**: 0 broken skill refs, 0 broken links, all 89 frontmatter names match directories, `skill()` calls resolve; full test suite unchanged at 1327 passed / 2 pre-existing failures (memory-file naming + BT directory structure, both unrelated)
+### Tier 2 — General web
+- **DuckDuckGo Search** — supplementary only
 
-### v1.6.1 — 2026-09-10 (re-merge audit)
-**Full re-merge of the vendored Vibe-Trading trees.** An audit found the merge was fragmented and stale: `.opencode/python/vibe-trading/` was still at **v0.1.13** (52 `src/` + 8 `backtest/` + 1 `cli/` files missing, 148 `src/` files outdated, `mcp_server.py` 4 tools short) while only `vibe-trading-ai` had been bumped to v0.1.15. Additionally a prior fix had uninstalled `vibe-trading-ai`, breaking the `src.*` / `backtest.*` / `cli.*` imports that ~40 skills depend on.
-- **`.opencode/python/vibe-trading/`** — rsync'd to upstream v0.1.15; custom `pyproject.toml` preserved and bumped 0.1.13 → **0.1.15**; reinstalled. Now: src 908/908, backtest 83/83, cli 43/43, src/skills 90/90, src/tools 78/78, quantlib 19/19
-- **New v0.1.15 modules restored**: `src/quantlib/{copula,microstructure,portfolio,volatility}.py`, `src/portfolio/*` (8), `src/trading/connectors/zerodha/*` (4), `src/strategy_discovery/*` (8), `src/scheduled_research/*` (3), `src/tools/{portfolio,strategy_discovery,scheduled_research}_tool.py`, `backtest/engines/vietnam_equity.py`, `backtest/loaders/{pykrx,tickerall,mt5,nobitex,wallex}`, `cli/commands/strategy_evidence.py`
-- **Skills**: added 2 missing skills (`vibe-trading-investor-lenses`, `vibe-trading-strategy-discovery`) + 17 missing files (16 `example_signal_engine.py` + `vibe-trading-strategy-generate/examples.md`); content-synced **37 skills** to v0.1.15 (headline: `pct_change()` → `pct_change(fill_method=None)` across 6 skills; Quant Library "import, don't retype" sections across 6 skills; naming/units/API corrections in 9 more)
-- **Verified**: both packages import at 0.1.15; 18 skill-referenced modules resolve; quanta registry intact at 27 loaders with no cross-contamination
+### Tier 3 — Quantitative loaders (`vibe-trading-ai` v0.1.15)
 
-### v1.6 — 2026-09-10
-**Vibe-Trading v0.1.15 sync** ("data that says what it is"). The vendored
-`vibe-trading-ai` package and Tier-2 routing now reflect: **462 alpha zoo**
-(was 461, NaN contract enforced at the registry), `pct_change()` no longer
-forward-fills, adjustment caliber stamped on served price frames, three new
-markets (**UK equity / Korea KRX / Vietnam HOSE**), explicit-only sources
-(`tickerall` hosted MT5, `nobitex`/`wallex` Iranian Toman), 14 broker
-connectors (Zerodha Kite added; live order placement structurally disabled
-because Kite has no paper/live switch). New `vibe-trading` MCP server entry
-in `opencode.json` (74 upstream tools).
-- **`vibe-trading-ai`** — package version 0.1.0 → **0.1.15**, `__source__`
-  bumped to Vibe-Trading v0.1.15
-- **`alpha-zoo/SKILL.md`** — 461 → **462**, NaN contract documented, survivorship-bias flag documented
-- **`data-routing/SKILL.md`** — added `tickerall` / `nobitex` / `wallex` / `longbridge` / `mt5` / `pykrx` / `india_broker`; UK / KR / VN / Crypto IRR rows; explicit-source notes
-- **`quant-research.md`** + **`data-priority.md`** — Tier-2 expanded; explicit-only and "never joins automatic fallback" notes added
-- **`wealth-guide` agent** — Version 1.5 → **1.6** with v0.1.15 upgrade notes; `mcp__vibe-trading__*` wiring surfaced; skill count 180 → **184**
-- **`alpha-researcher` / `backtest-builder` / `factor-researcher` / `market-router`** — markets covered + loader routing tables synced to v0.1.15 (Korea / Vietnam / UK engines, `BRK.B.US` class-share support, adjustment-caliber note)
-- **`strategy-generate/SKILL.md`** — market detection table extended with UK / KR / VN / China Futures / Global Futures / explicit-only TickerAll; data-window-separated-from-evaluation window documented
-- **`opencode.json`** — added `vibe-trading` MCP server (`vibe-trading-mcp`)
-- **README** — Provenance row bumped to v0.1.15; Tier-3 sources expanded; Alpha Zoo 461 → **462**
+| Market | Sources |
+|---|---|
+| A-Share | MooTDX, Tencent, Sina, Baostock, AKShare, EastMoney, Tushare |
+| US / Global | Yahoo, Stooq, EastMoney, Finnhub, Alpha Vantage, Tiingo, FMP |
+| HK | Tencent, EastMoney, Yahoo, LongBridge, Futu |
+| Canada / India | Yahoo (`.TO`/`.V` · `.NS`/`.BO`); India broker loaders read-only |
+| Korea (KRX) | pykrx (Naver-adjusted); Yahoo fallback |
+| Vietnam (HOSE) | Yahoo (`.VN`); long-only, ±7% band |
+| UK (LSE) | Yahoo (`.L`/`.IL`); SDRT 0.5% purchase-side |
+| Crypto | OKX, CCXT; nobitex / wallex (Toman) explicit-only |
+| Futures / FX / Metals | AKShare (China), Yahoo, MT5 (local), TickerAll (hosted, explicit-only) |
+| SEC filings | EDGAR client (`backtest.loaders.sec_edgar_client`) |
 
-### v1.5 — 2026-08-29
-**LLMQuant integration**: 17 new workflow-router category skills (75 workflows, `LLMQuant/skills` v0.1.0) + `llmquant-data` MCP (25 tools, 8 domains) wired into the agent's tool list. New `.opencode/instructions/llmquant-skills.md` registry doc (category → scenario → trigger → subagent mapping, legacy-skill cross-reference). 9 legacy skills updated with "Related llmquant skills" cross-refs. Wealth-Guide upgraded with `mcp__llmquant-data__*` tool wiring and `> Version 1.5` marker.
-- **+16 new skill folders** (commodities, credit, crypto, equities, equity-derivatives, etfs, events, investor-lenses, market-intelligence, options, portfolio, portfolio-lab, prediction-markets, rates-fx, risk, strategies)
-- **+3 workflows merged** into existing `llmquant-macro` (global-macro-dashboard, fed-policy-preview, macro-to-portfolio-impact)
-- **+9 tool-ref skills** from the prior turn (data master + market-data, funds, macro, news, research, polymarket, sec, personal)
-- **+28 Skill Registry rows** in `wealth-guide-router.md`
-- **README** Provenance table extended; Data Sources Tier 1 adds `llmquant-data MCP`; new "LLMQuant Workflow Skills" section; skill count 146 → **180**
+> **Data-quality rules** (`.opencode/instructions/data-priority.md`): prefer MCP over free
+> loaders; mark unsourced figures `[UNSOURCED]`. v0.1.15 adds: every price frame carries an
+> **adjustment caliber** (cite it); **NaN propagates** through the alpha zoo (quote IC with the
+> post-drop sample size); **`pct_change()` does not forward-fill**.
 
-### v1.0 — initial versioned release
-First explicit Wealth-Guide version. Baseline = Anthropic FSI (17 subagents, 59 institutional skills, 3 MCP data connectors) + Vibe-Trading (87 skills, 461 alpha zoo, 11 backtest engines, 21+ data loaders, 30 swarm presets, 6 portfolio optimizers) + 22 subagents total.
+## Alpha Zoo (462 factors)
 
----
+`qlib158` 158 (Qlib; `equity_cn`/`equity_in`/`equity_kr`) · `alpha101` 101 (Kakushadze) · `gtja191` 191 (China) · `academic` (Fama-French / Carhart) · `fundamental`.
+
+```python
+from src.factors.registry import Registry
+zoo = Registry.get_alpha("qlib158")
+```
+
+## LLMQuant Workflow Skills
+
+17 routers / 75 workflows from [LLMQuant/skills](https://github.com/LLMQuant/skills), grounded in `llmquant-data`. Full mapping: `.opencode/instructions/llmquant-skills.md`.
+
+`options` (10) · `investor-lenses` (17) · `strategies` (6) · `equities` (5) · `portfolio` (5) · `risk` (4) · `credit` (3) · `crypto` (3) · `events` (3) · `macro` (3) · `market-intelligence` (3) · `prediction-markets` (3) · `rates-fx` (3) · `commodities` (2) · `equity-derivatives` (2) · `portfolio-lab` (2) · `etfs` (1) — routed to `factor-researcher` / `equity-research` / `backtest-builder` / `wealth-management` / `market-router` / `market-researcher` / `financial-analysis` / `valuation-reviewer` / `earnings-reviewer`.
 
 ## MCP Configuration
 
-The repo includes MCP server config at `.opencode/mcp/servers.json` for Morningstar, FactSet, and llmquant-data. To use these, you need your own API keys:
+Config: `.opencode/mcp/servers.json`. Bring your own keys:
 
 ```bash
-# Set environment variables before starting opencode
 export MORNINGSTAR_API_KEY="your-key"
 export FACTSET_API_KEY="your-key"
 export LLMQUANT_API_KEY="your-key"
 ```
 
-Without MCP keys, the system falls back to Tier 2 (DDG search) and Tier 3 (free quant loaders).
+Without MCP keys the system falls back to Tier 2 (DDG) and Tier 3 (free loaders).
 
 ## Cookbooks (`./example/`)
 
-Each subagent has a cookbook with sample data files and question sets. These serve as tutorials and test cases:
+Each subagent has a cookbook (sample data + question sets) — tutorials and test cases.
 
 ```bash
-# Try a cookbook
 opencode --agent wealth-guide --prompt "$(cat example/earnings-reviewer/questions.md)"
 ```
-
-Available cookbooks:
-- `example/wealth-guide-e2e/` — End-to-end walkthrough
-- `example/explore/` — Introduction to using wealth-guide
-- `example/<subagent-name>/` — One per subagent (22 total)
 
 ## Testing
 
 ```bash
-# Run the full test suite
-python tests/run_all.py
+python tests/run_all.py                              # full suite
+python3 .opencode/scripts/gen_skill_manifest.py --check   # routing-coverage gate
 ```
 
-The test suite covers:
-- **Structural tests**: agent frontmatter, skill/instruction validity, frontmatter integrity
-- **Integration tests**: alpha Registry loading, live-trade pattern detection, MCP integrity, skill syntax checks
-- **Business acceptance**: Chinese queries, multi-domain routing, cross-contamination (adversarial queries), edge cases, routing table coverage
-- **Unit tests**: routing logic, pipeline correctness
-- **Skill routing coverage**: `test_skill_routing_coverage` asserts **0 routable-but-unregistered** skills (195/195); `test_skill_manifest_fresh` asserts the auto-generated manifest matches the skills on disk
+Covers: structural (agent/skill frontmatter), integration (alpha Registry, live-trade
+detection, MCP integrity), business acceptance (Chinese queries, cross-domain routing,
+adversarial cross-contamination), unit (routing, pipeline), and **skill routing coverage**
+(`test_skill_routing_coverage` asserts 0 routable-but-unregistered; `test_skill_manifest_fresh`
+asserts the manifest matches disk).
 
-Current baseline: **1424 tests, 1394 passed, 2 pre-existing failures** (MP-1b memory-file naming, QB-2 BT directory structure — both unrelated to skills/routing).
+**Baseline:** 1424 tests · 1394 passed · 2 pre-existing failures (memory-file naming, BT directory structure — both unrelated).
 
-```bash
-# Routing-coverage gate alone (non-zero exit on any unregistered routable skill)
-python3 .opencode/scripts/gen_skill_manifest.py --check
-```
+## Changelog
+
+| Version | Date | Headline |
+|---|---|---|
+| **v1.8** | 2026-09-10 | **Analysis stack + routing governance.** `trend-analysis-multi-algo` (10 algorithms), `non-price-evidence` (4 dimensions), `ai-hedge-fund-*` (10 persona skills, upstream-faithful snapshot). Skill count 183 → **195**. Added `gen_skill_manifest.py` + `skill-manifest.md` + coverage test. Fixed broken `vibe-trading-gann`. |
+| v1.7 | 2026-09-10 | Renamed 89 Vibe-Trading skills → `vibe-trading-*`; removed redundant `vibe-thesis-tracker`; clarified the two skill systems (OpenCode vs vendored package). |
+| v1.6.1 | 2026-09-10 | Re-merge audit: `.opencode/python/vibe-trading/` v0.1.13 → **v0.1.15**; restored 12 missing v0.1.15 modules; content-synced 37 skills. |
+| v1.6 | 2026-09-10 | Vibe-Trading v0.1.15 sync — 462 alphas (NaN contract), `pct_change()` no forward-fill, adjustment caliber, UK/KRX/HOSE, explicit-only sources. |
+| v1.5 | 2026-08-29 | LLMQuant integration — 17 workflow routers (75 workflows) + `llmquant-data` MCP (25 tools). |
+| v1.0 | — | Initial release: Anthropic FSI + Vibe-Trading + 22 subagents. |
 
 ## License
 
-This project contains work from multiple sources:
-- Original Anthropic FSI content: Apache 2.0
-- Vibe-Trading content (vendored as `vibe-trading-ai`, v0.1.15): MIT — see the upstream [HKUDS/Vibe-Trading](https://github.com/HKUDS/Vibe-Trading) repo
+- Anthropic FSI content: Apache 2.0
+- Vibe-Trading content (`vibe-trading-ai` v0.1.15): MIT — [HKUDS/Vibe-Trading](https://github.com/HKUDS/Vibe-Trading)
+- LLMQuant/skills content: MIT
 - Merged original code: Apache 2.0
 
 ---
