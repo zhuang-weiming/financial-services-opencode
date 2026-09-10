@@ -1,7 +1,7 @@
 # Skill Manifest — 全量 skill 自动清单
 
 > **自动生成，请勿手工编辑。** 重新生成：`python3 .opencode/scripts/gen_skill_manifest.py`
-> 共 **195** 个 skill（vibe-trading 90 / llmquant 25 / 其他 80）
+> 共 **194** 个 skill（vibe-trading 90 / llmquant 25 / 其他 79）（另有 1 个损坏/无 SKILL.md 目录未计入）
 
 ## 使用方式（给 wealth-guide 及 subagent）
 
@@ -215,7 +215,7 @@
 | `tax-loss-harvesting` | Identify tax-loss harvesting opportunities across taxable accounts. Finds positions with unrealized losses, suggests replacement securities, and tracks wash ... |
 | `teaser` | Draft anonymous one-page company teasers for sell-side M&A processes. Creates a compelling summary without revealing the company's identity, designed to gaug... |
 | `thesis-tracker` | Buy-side discipline system. For each holding, maintain a written investment thesis — core thesis in 5 sentences, falsifiable assumptions, red lines, valuatio... |
-| `trend-analysis-multi-algo` | 多算法趋势分析协议 (10 算法强制启动)。当用户要求对某只股票/资产做"趋势分析 / 技术分析 / 走势判断 / 该不该买 / 该不该卖 / 形态分析 / 波浪分析 / 缠论分析 / 蜡烛图分析 / 支撑压力"时加载。一次性启动 动量层(WaveTrend V21 + 技术三维投票) + 形态层(蜡烛图/缠论/... |
+| `trend-analysis-multi-algo` | 多算法趋势分析协议 (10 算法强制启动)。当用户要求对某只股票/资产做趋势分析 / 技术分析 / 走势判断 / 该不该买 / 该不该卖 / 形态分析 / 波浪分析 / 缠论分析 / 蜡烛图分析 / 支撑压力时加载。一次性启动 动量层(WaveTrend V21 + 技术三维投票) + 形态层(蜡烛图/缠论/艾略... |
 | `unit-economics` | Analyze unit economics for PE targets — ARR cohorts, LTV/CAC, net retention, payback periods, revenue quality, and margin waterfall. Essential for software/S... |
 | `value-creation-plan` | Structure post-acquisition value creation plans with revenue, cost, and operational levers mapped to an EBITDA bridge. Includes 100-day priorities, KPI targe... |
 | `variance-commentary` | Write flux commentary for every P&L and balance-sheet line over threshold — current vs prior period and vs budget, with the driver explained from underlying ... |

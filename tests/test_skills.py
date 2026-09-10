@@ -247,7 +247,8 @@ def test_skill_manifest_fresh() -> TestResult:
     if not manifest.exists():
         return TestResult(name="skill_manifest", status="FAIL", message="skill-manifest.md missing")
     txt = manifest.read_text(errors="ignore")
-    n_skills = len([d for d in SKILLS_DIR.iterdir() if d.is_dir()])
+    n_skills = len([d for d in SKILLS_DIR.iterdir()
+                    if d.is_dir() and (d / "SKILL.md").exists()])
     m = re.search(r"共 \*\*(\d+)\*\* 个 skill", txt)
     if not m:
         return TestResult(name="skill_manifest", status="WARN", message="count line not found in manifest")

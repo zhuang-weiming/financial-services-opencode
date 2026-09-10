@@ -40,41 +40,50 @@ opencode --agent wealth-guide
              (+ swarm-orchestrator, financial-analysis, operations, valuation-reviewer, private-equity, …)
 ```
 
-- **1 primary agent** + **22 subagents** (hidden) · **195 skills** — intent-routed, **100% coverage** ([governance](#skill-routing--coverage))
+- **1 primary agent** + **22 subagents** (hidden) · **194 skills** — intent-routed, **100% coverage** ([governance](#skill-routing--coverage))
 - **`vibe-trading-ai` v0.1.15** — vendored quant engine; namespace `src.*` / `backtest.*` / `cli.*`
 - **MCP servers** — Morningstar · FactSet · llmquant-data · vibe-trading (optional)
 
 ## Subagent Reference
 
-> **Capabilities, not skill names.** *Key* = how many skills
-> [`wealth-guide-router.md`](.opencode/instructions/wealth-guide-router.md) names for that
-> subagent — a curated subset, **not a limit** (skills can appear under several subagents;
-> 62 unique skills named in total). Full list: [`skill-manifest.md`](.opencode/instructions/skill-manifest.md).
+> **Every one of the 194 skills is listed below** — 238 assignments across 22 subagents, so a
+> skill may appear under several. *(shared)* = protocol skills loaded by all subagents;
+> *(tools)* = document/tooling skills available to all. Source of truth:
+> [`skill-manifest.md`](.opencode/instructions/skill-manifest.md); intent routing:
+> [`wealth-guide-router.md`](.opencode/instructions/wealth-guide-router.md).
 
-| Subagent | Domain | Key | Capabilities |
-|---|---|:---:|---|
-| `investment-banking` | IB | 8 | Pitch decks, CIMs, teasers, buyer lists, merger models, deal tracking |
-| `equity-research` | ER | 6 | Earnings analysis, initiating coverage, morning notes, thesis tracking, **investor personas** |
-| `private-equity` | PE | 6 | IC memos, deal screening/sourcing, unit economics, returns analysis |
-| `wealth-management` | WM | 7 | Financial plans, rebalancing, TLH, client reports, WIF advisory |
-| `earnings-reviewer` | ER | 4 | Post-earnings: transcript → model → note |
-| `meeting-prep-agent` | WM | 3 | Client/investor meeting prep packs |
-| `pitch-agent` | IB | 6 | Buy-side pitch decks, comps, DCF, LBO, football field |
-| `market-researcher` | ER | 4 | Sector primers, competitive landscapes, idea generation |
-| `model-builder` | Modeling | 3 | DCF, LBO, 3-statement, comps from scratch |
-| `financial-analysis` | Cross-domain | 4 | 3-statement, DCF, LBO, comps, competitive analysis |
-| `alpha-researcher` | Quant | 4 | Alpha zoo, IC/IR, factor bench, strategy research |
-| `factor-researcher` | Quant | 3 | IC/IR, quantile backtest, correlation, risk decomposition |
-| `backtest-builder` | Quant | 4 | Strategy generation, backtesting, walk-forward, diagnosis |
-| `market-router` | Cross-market | 6 | Data routing (A-share / US / HK / crypto / FX / futures / India / Korea / Vietnam / UK / Canada) |
-| `swarm-orchestrator` | Multi-agent | — | 30 preset research teams |
-| `fund-admin` | Fund admin | 4 | NAV tie-out, accruals, roll-forwards, variance commentary |
-| `gl-reconciler` | Fund GL | 2 | GL reconciliation, break classification, root-cause trace |
-| `month-end-closer` | Month-end | 3 | Accrual schedules, roll-forwards, close packages |
-| `statement-auditor` | LP audit | 2 | NAV tie-out, formula audit, cross-statement consistency |
-| `valuation-reviewer` | Valuation QA | 3 | Assumption stress-test, sensitivity analysis, model challenge |
-| `kyc-screener` | KYC/AML | 2 | Onboarding parse, AML rules engine, risk rating |
-| `operations` | PE ops | 5 | Portfolio monitoring, AI readiness, DD checklists, value creation |
+| Subagent | Domain | skills |
+|---|---|---|
+| `investment-banking` | Investment Banking | `pitch-deck` · `cim-builder` · `teaser` · `deal-tracker` · `process-letter` · `merger-model` · `datapack-builder` · `buyer-list` · `strip-profile` |
+| `equity-research` | Equity Research | `earnings-analysis` · `initiating-coverage` · `morning-note` · `catalyst-calendar` · `thesis-tracker` · `model-update` · `ai-hedge-fund` · `ai-hedge-fund-buffett` · `ai-hedge-fund-munger` · `ai-hedge-fund-graham` · `ai-hedge-fund-lynch` · `ai-hedge-fund-druckenmiller` · `ai-hedge-fund-deep-value` · `ai-hedge-fund-fundamental-ls` · `ai-hedge-fund-inflections` · `vibe-trading-deep-company-series` · `vibe-trading-dividend-analysis` · `vibe-trading-investor-lenses` · `vibe-trading-management-deep-dive` · `vibe-trading-report-generate` · `llmquant-equities` · `llmquant-investor-lenses` · `stock-deep-dive` |
+| `private-equity` | Private Equity | `ic-memo` · `deal-screening` · `deal-sourcing` · `unit-economics` · `value-creation-plan` · `returns-analysis` · `dd-meeting-prep` · `vibe-trading-private-company-research` |
+| `wealth-management` | Wealth Management | `client-report` · `client-review` · `financial-plan` · `investment-proposal` · `portfolio-rebalance` · `tax-loss-harvesting` · `wif-fund-advisory` · `wif-ashare-advisory` · `sell-ladder` · `vibe-trading-asset-allocation` · `vibe-trading-etf-analysis` · `vibe-trading-fund-analysis` · `vibe-trading-trade-journal` · `vibe-trading-shadow-account` · `llmquant-personal` · `llmquant-portfolio` · `llmquant-portfolio-lab` |
+| `earnings-reviewer` | Equity Research (Earnings) | `earnings-analysis` · `earnings-preview` · `model-update` · `morning-note` · `ai-hedge-fund-earnings-drift` · `vibe-trading-earnings-forecast` · `vibe-trading-earnings-revision` · `llmquant-events` · `llmquant-news` |
+| `meeting-prep-agent` | Wealth Management (Meeting Prep) | `client-review` · `client-report` · `investment-proposal` |
+| `pitch-agent` | Investment Banking (Pitch) | `pitch-deck` · `comps-analysis` · `dcf-model` · `ib-check-deck` · `deck-refresh` · `lbo-model` |
+| `market-researcher` | Equity Research (Sector) | `sector-overview` · `competitive-analysis` · `comps-analysis` · `idea-generation` · `vibe-trading-ashare-pre-st-filter` · `vibe-trading-bottleneck-hunter` · `vibe-trading-commodity-analysis` · `vibe-trading-convertible-bond` · `vibe-trading-edgar-sec-filings` · `vibe-trading-fundamental-filter` · `vibe-trading-geopolitical-risk` · `vibe-trading-regulatory-knowledge` · `vibe-trading-sector-rotation` · `vibe-trading-sentiment-analysis` · `vibe-trading-social-media-intelligence` · `vibe-trading-us-etf-flow` · `llmquant-commodities` · `llmquant-etfs` · `llmquant-funds` · `llmquant-market-intelligence` · `llmquant-polymarket` · `llmquant-prediction-markets` · `llmquant-sec` |
+| `model-builder` | Financial Modeling | `dcf-model` · `lbo-model` · `3-statement-model` · `comps-analysis` · `vibe-trading-valuation-model` |
+| `financial-analysis` | Cross-Domain Financial Analysis | `3-statement-model` · `dcf-model` · `lbo-model` · `comps-analysis` · `competitive-analysis` · `ai-hedge-fund-graham` · `ai-hedge-fund-deep-value` · `vibe-trading-credit-analysis` · `vibe-trading-financial-statement` · `vibe-trading-valuation-model` · `llmquant-credit` · `llmquant-equity-derivatives` |
+| `alpha-researcher` | Quantitative Research (Alpha) | `vibe-trading-alpha-zoo` · `vibe-trading-factor-research` · `vibe-trading-multi-factor` · `vibe-trading-quant-statistics` · `alpha-engine-v21` · `trend-analysis-multi-algo` · `non-price-evidence` · `vibe-trading-candlestick` · `vibe-trading-chanlun` · `vibe-trading-elliott-wave` · `vibe-trading-gann` · `vibe-trading-harmonic` · `vibe-trading-ichimoku` · `vibe-trading-smc` · `vibe-trading-technical-basic` · `llmquant-research` |
+| `factor-researcher` | Quantitative Research (Factors) | `vibe-trading-factor-research` · `vibe-trading-multi-factor` · `vibe-trading-correlation-analysis` · `vibe-trading-correlation-regime` · `alpha-engine-v21` · `ai-hedge-fund-druckenmiller` · `ai-hedge-fund-earnings-drift` · `ai-hedge-fund-inflections` · `vibe-trading-behavioral-finance` · `vibe-trading-market-microstructure` · `vibe-trading-options-advanced` · `vibe-trading-options-payoff` · `vibe-trading-options-strategy` · `vibe-trading-performance-attribution` · `vibe-trading-quant-statistics` · `vibe-trading-volatility` · `llmquant-options` |
+| `backtest-builder` | Quantitative Research (Backtest) | `vibe-trading-strategy-generate` · `vibe-trading-backtest-diagnose` · `vibe-trading-strategy-dev-manager` · `alpha-engine-v21` · `vibe-trading-corporate-events` · `vibe-trading-cross-market-strategy` · `vibe-trading-event-driven` · `vibe-trading-execution-model` · `vibe-trading-minute-analysis` · `vibe-trading-ml-strategy` · `vibe-trading-pair-trading` · `vibe-trading-pine-script` · `vibe-trading-seasonal` · `vibe-trading-strategy-discovery` · `vibe-trading-vnpy-export` · `llmquant-strategies` |
+| `market-router` | Cross-Market Data Routing | `vibe-trading-data-routing` · `vibe-trading-tushare` · `vibe-trading-yfinance` · `vibe-trading-akshare` · `vibe-trading-mootdx` · `vibe-trading-okx-market` · `vibe-trading-ccxt` · `llmquant-rates-fx` · `vibe-trading-correlation-regime` · `vibe-trading-adr-hshare` · `vibe-trading-crypto-derivatives` · `vibe-trading-defi-yield` · `vibe-trading-eastmoney` · `vibe-trading-global-macro` · `vibe-trading-hk-connect-flow` · `vibe-trading-liquidation-heatmap` · `vibe-trading-macro-analysis` · `vibe-trading-onchain-analysis` · `vibe-trading-perp-funding-basis` · `vibe-trading-qveris` · `vibe-trading-sec-edgar` · `vibe-trading-stablecoin-flow` · `vibe-trading-token-unlock-treasury` · `llmquant-crypto` · `llmquant-data` · `llmquant-macro` · `llmquant-market-data` |
+| `swarm-orchestrator` | Multi-Agent Orchestration | `ai-hedge-fund` · `ai-hedge-fund-buffett` · `ai-hedge-fund-munger` · `ai-hedge-fund-graham` · `ai-hedge-fund-lynch` · `ai-hedge-fund-druckenmiller` · `ai-hedge-fund-fundamental-ls` |
+| `fund-admin` | Fund Administration | `nav-tieout` · `accrual-schedule` · `roll-forward` · `variance-commentary` |
+| `gl-reconciler` | Fund General Ledger | `gl-recon` · `break-trace` |
+| `month-end-closer` | Fund Month-End Close | `accrual-schedule` · `roll-forward` · `variance-commentary` |
+| `statement-auditor` | LP Statement Audit | `nav-tieout` · `audit-xls` |
+| `valuation-reviewer` | Valuation Review | `returns-analysis` · `portfolio-monitoring` · `ic-memo` · `vibe-trading-hedging-strategy` · `vibe-trading-risk-analysis` · `llmquant-risk` |
+| `kyc-screener` | KYC / AML Compliance | `kyc-doc-parse` · `kyc-rules` |
+| `operations` | Private Equity Operations | `portfolio-monitoring` · `ai-readiness` · `dd-checklist` · `deal-sourcing` · `value-creation-plan` |
+| *(shared)* | All subagents | `5-why-adversary` · `personal-trading-system` · `buy-ladder` · `vibe-trading-research-discipline` · `vibe-trading-research-goal` |
+| *(tools)* | All subagents (tooling) | `docx` · `pdf` · `xlsx` · `xlsx-author` · `pptx` · `pptx-author` · `clean-data-xls` · `ppt-template-creator` · `skill-creator` · `vibe-trading-doc-reader` · `vibe-trading-web-reader` |
+
+> **Router drift found.** Three names in the router's registry are **not real skills** and
+> were corrected above: `factor-analysis` → `vibe-trading-multi-factor`; `crypto-market-analysis`
+> → `vibe-trading-okx-market` / `vibe-trading-ccxt`; `fx-market-analysis` → `llmquant-rates-fx`.
+> The router also lists `IC/IR` and `quantile backtest` as if they were skills — they are
+> capabilities of `vibe-trading-factor-research`.
 
 ## Three-Layer Analysis Stack
 
@@ -112,7 +121,7 @@ Routing is **intent-driven** — the user never needs to know a skill name.
 
 ```
 Layer 1  intent → subagent   wealth-guide-router.md   (hand-written, ~20 subagents)
-Layer 2  skill discovery     skill-manifest.md        (auto-generated, 195 skills)
+Layer 2  skill discovery     skill-manifest.md        (auto-generated, 194 skills)
 Layer 3  coverage gate       tests/test_skills.py::test_skill_routing_coverage
 ```
 
@@ -121,7 +130,7 @@ python3 .opencode/scripts/gen_skill_manifest.py           # regenerate the manif
 python3 .opencode/scripts/gen_skill_manifest.py --check   # CI: non-zero exit on any unregistered routable skill
 ```
 
-- Coverage is asserted at **195/195**; tool/meta skills (`docx`/`pdf`/…) are exempt and `_shared` is an internal resource dir.
+- Coverage is asserted at **194/194**; tool/meta skills (`docx`/`pdf`/…) are exempt and `_shared` is an internal resource dir.
 - **Adding a skill?** Create it → run `gen_skill_manifest.py` → run `--check`.
 - ⚠️ **Frontmatter is YAML.** A `: ` (colon + space) inside an unquoted `description` breaks parsing and the skill will not load.
 
@@ -209,7 +218,7 @@ asserts the manifest matches disk).
 
 | Version | Date | Headline |
 |---|---|---|
-| **v1.8** | 2026-09-10 | **Analysis stack + routing governance.** `trend-analysis-multi-algo` (10 algorithms), `non-price-evidence` (4 dimensions), `ai-hedge-fund-*` (10 persona skills, upstream-faithful snapshot). Skill count 183 → **195**. Added `gen_skill_manifest.py` + `skill-manifest.md` + coverage test. Fixed broken `vibe-trading-gann`. |
+| **v1.8** | 2026-09-10 | **Analysis stack + routing governance.** `trend-analysis-multi-algo` (10 algorithms), `non-price-evidence` (4 dimensions), `ai-hedge-fund-*` (10 persona skills, upstream-faithful snapshot). Skill count 183 → **194**. Added `gen_skill_manifest.py` + `skill-manifest.md` + coverage test. Fixed broken `vibe-trading-gann`. |
 | v1.7 | 2026-09-10 | Renamed 89 Vibe-Trading skills → `vibe-trading-*`; removed redundant `vibe-thesis-tracker`; clarified the two skill systems (OpenCode vs vendored package). |
 | v1.6.1 | 2026-09-10 | Re-merge audit: `.opencode/python/vibe-trading/` v0.1.13 → **v0.1.15**; restored 12 missing v0.1.15 modules; content-synced 37 skills. |
 | v1.6 | 2026-09-10 | Vibe-Trading v0.1.15 sync — 462 alphas (NaN contract), `pct_change()` no forward-fill, adjustment caliber, UK/KRX/HOSE, explicit-only sources. |

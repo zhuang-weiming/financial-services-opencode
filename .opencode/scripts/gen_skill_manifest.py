@@ -107,12 +107,15 @@ def classify(rows: list[dict]) -> dict:
 
 def write_manifest(rows: list[dict]):
     buckets = classify(rows)
+    broken = [r for r in rows if r.get("broken")]
+    real = len(rows) - len(broken)
+    note = f"（另有 {len(broken)} 个损坏/无 SKILL.md 目录未计入）" if broken else ""
     lines = [
         "# Skill Manifest — 全量 skill 自动清单",
         "",
         "> **自动生成，请勿手工编辑。** 重新生成：`python3 .opencode/scripts/gen_skill_manifest.py`",
-        f"> 共 **{len(rows)}** 个 skill（vibe-trading {len(buckets['vibe-trading'])} / "
-        f"llmquant {len(buckets['llmquant'])} / 其他 {len(buckets['bare'])}）",
+        f"> 共 **{real}** 个 skill（vibe-trading {len(buckets['vibe-trading'])} / "
+        f"llmquant {len(buckets['llmquant'])} / 其他 {len(buckets['bare']) - len(broken)}）{note}",
         "",
         "## 使用方式（给 wealth-guide 及 subagent）",
         "",
@@ -181,7 +184,8 @@ def main():
 
     if not args.check:
         n = write_manifest(rows)
-        print(f"\n✅ manifest 已写入 {OUT.relative_to(ROOT)} ({n} skills)")
+        print(f"\n✅ manifest 已写入 {OUT.relative_to(ROOT)} "
+              f"({n - len(broken)} skills, {len(broken)} broken excluded)")
 
     # CI 模式：可路由未注册 > 0 则非零退出
     if args.check and actionable:
