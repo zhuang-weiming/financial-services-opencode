@@ -53,9 +53,11 @@
     │   ├── 稳定币全景研究_发布版v3-fixed.md 2026-08-26                 # 稳定币政策/储备/赛道全图
     │   ├── aihf-masters-crisis-backtest-2026-09-14.md                # 【新】8 大师危机全周期回测（真实数据；REINFORCEMENT）
     │   └── **timing-dashboard-us-cn-2026-09-11.md**                   # 【新】择时总表（美 WIF v5.9 + 中 WIF v2.7）；含 2 处官方数据缺陷
-    ├── 数据层 data/  【2026-09-15 新建】
-    │   ├── **timing_snapshot_20260911.json**   # 结构化快照（美+中 + provenance + 阈值 + 缺陷清单）
-    │   └── **timing_log.csv**                  # 可追加长表（market×category×indicator，70 行起）
+    ├── 数据层 data/  【2026-09-15 新建 · **只存指针，不复制数值**】
+    │   ├── **artifacts_manifest.json**   # 21 项产物：绝对路径 + sha256 + 用途 + 产出脚本
+    │   └── README.md                     # 指针约定说明
+    │       └─ 数值住在 example/wif-framework/data/ 与 example/wif-ashare/data/
+    │          漂移检查：python3 .opencode/scripts/build_artifacts_manifest.py --check
     └── theses/
 ```
 
@@ -70,7 +72,7 @@
 
 ## 当前活跃内容
 
-**最后更新:** **2026-09-15（择时快照落库 — 新建 `data/` 数据层（JSON+CSV）；美 WIF v5.9 与中国 WIF v2.7 读数写入 3.US/3.1/4.2/2.HYP-011；发现 2 处官方数据缺陷；新增 reports/timing-dashboard-us-cn-2026-09-11.md）**
+**最后更新:** **2026-09-15（数据层定型为「**只存指针，不复制数值**」—— `data/artifacts_manifest.json` 21 项（路径+sha256），配套 `.opencode/scripts/build_artifacts_manifest.py --check` 做漂移检测；**已实测**：故意改 1 字节 → DRIFT 退出码 1；重跑 5 个产出脚本 → 零漂移。美 WIF v5.9 / 中 WIF v2.7 读数已写入 3.US/3.1/4.2/2.HYP-011；发现 2 处官方数据缺陷）**
 
 > 前次：2026-09-14（ai-hedge-fund 8 大师危机全周期回测 — 真实数据；新增 `reports/aihf-masters-crisis-backtest-2026-09-14.md`；reports 树补齐至 15 项；核心为 REINFORCEMENT 不入 LAW/HYP，新增待验证项"capex/收入比 35% 阈值缺回测"→ 建议 BT-020）**
 

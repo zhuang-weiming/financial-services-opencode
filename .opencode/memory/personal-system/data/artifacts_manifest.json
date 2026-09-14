@@ -1,0 +1,225 @@
+{
+  "generated": "2026-09-14T11:35:27Z",
+  "convention": "POINTERS_ONLY — memory stores paths + sha256, never values. Values live in the artifacts themselves; re-run the producer scripts to rebuild. See data/README.md.",
+  "repo_root": "/Users/weimingzhuang/Documents/source_code/financial-services-opencode",
+  "artifact_count": 21,
+  "artifacts": [
+    {
+      "id": "wif-matrix-base-20260716",
+      "path": "example/wif-framework/data/_merged_prices_20260716.csv",
+      "as_of": "2026-07-16",
+      "role": "upstream_input",
+      "note": "官方矩阵（**自带 2026-06-09 口径断裂**，见 data_defects）；read-only",
+      "exists": true,
+      "sha256": "49c153822b6cb7d9bbc13cd6092d9f90c4d73086747b995c8dddceea1589dfad",
+      "bytes": 697811
+    },
+    {
+      "id": "wif-credit-baa-1986-2026",
+      "path": "example/wif-framework/data/tickers_20260716/CreditSpread_BAA_1986_2026.csv",
+      "as_of": "2026-05-08",
+      "role": "upstream_input",
+      "note": "信用利差历史（只到 2026-05-08，故 Z(F29_60d) 算不出）",
+      "exists": true,
+      "sha256": "ae47a6ba5ca0f376988796511a095a4c4a17c9923cfaeb76a28b881cb6575a41",
+      "bytes": 353189
+    },
+    {
+      "id": "ashare-macro-pmi",
+      "path": "example/wif-ashare/data/macro_pmi.csv",
+      "as_of": "2026-08",
+      "role": "upstream_input",
+      "note": "PMI 月度（仓内 2026-09-01 更新）",
+      "exists": true,
+      "sha256": "b08f32093f3d2dd40148178823fbff64cd9eed967126088a10df2ef6fd59a11c",
+      "bytes": 5390
+    },
+    {
+      "id": "ashare-macro-m2m1",
+      "path": "example/wif-ashare/data/macro_m2_m1_spread.csv",
+      "as_of": "2026-06",
+      "role": "upstream_input",
+      "note": "M2/M1 剪刀差（**滞后 2 个月**，占 MCI 一半权重）",
+      "exists": true,
+      "sha256": "3230eb1a4109cec59982dcbb75918f1cdfa17bb09f671faa27109ff4be7120ec",
+      "bytes": 9260
+    },
+    {
+      "id": "wif-increment-prices-20260912",
+      "path": "example/wif-framework/data/_increments/wif_update_20260912.csv",
+      "as_of": "2026-09-11",
+      "role": "fetch",
+      "note": "9 标的 × 41 交易日（原始收盘价，故需比例拼接）",
+      "exists": true,
+      "sha256": "0eae43c0c7ed4a9d4d1724dcb9d276aa248d7f99ff571e4398b42d4bb632062e",
+      "bytes": 18736
+    },
+    {
+      "id": "wif-increment-vix-20260912",
+      "path": "example/wif-framework/data/_increments/vix_window_20260912.csv",
+      "as_of": "2026-09-11",
+      "role": "fetch",
+      "note": "^VIX 42 个交易日",
+      "exists": true,
+      "sha256": "5c6255ee612b9eb265e24a1a120f655ffbbb74c170f4935d4154996b3a1f4f8b",
+      "bytes": 720
+    },
+    {
+      "id": "ashare-increment-hs300-20260911",
+      "path": "example/wif-ashare/data/_increments/hs300_tencent_20260911.csv",
+      "as_of": "2026-09-11",
+      "role": "fetch",
+      "note": "HS300 85 个交易日（Tier-1 Tencent）",
+      "exists": true,
+      "sha256": "f9adb479ebbcaed7acd5a66452cdb2d5aa6611ebaee21beeafa2ad069b784a40",
+      "bytes": 1610
+    },
+    {
+      "id": "wif-matrix-extended-20260911",
+      "path": "example/wif-framework/data/_merged_prices_20260911.csv",
+      "as_of": "2026-09-11",
+      "role": "derived",
+      "producer": "example/wif-framework/scripts/wif_now.py",
+      "note": "deglitch + 比例拼接后的矩阵（4966×10；SPY 2007=99.06 / 2026-09=1394.74）",
+      "exists": true,
+      "sha256": "254120a2823fd5615703c71cacadafa9a11373b17440646a0ea2cd2830fd8339",
+      "bytes": 706897
+    },
+    {
+      "id": "wif-phase-assessment-20260911",
+      "path": "example/wif-framework/data/wif_phase_assessment_20260911.json",
+      "as_of": "2026-09-11",
+      "role": "derived",
+      "producer": "example/wif-framework/scripts/wif_assessment.py",
+      "note": "WIF v5.9 五层读数（相位/象限/CSI/硬触发）",
+      "exists": true,
+      "sha256": "6af0b4e803de554403f573b934100c6a42bf6de816ce8f0c9ee3bb479918c72f",
+      "bytes": 7266
+    },
+    {
+      "id": "wif-phase-assessment-20260911-md",
+      "path": "example/wif-framework/data/wif_phase_assessment_20260911.md",
+      "as_of": "2026-09-11",
+      "role": "derived",
+      "producer": "example/wif-framework/scripts/wif_assessment.py",
+      "note": "人读版",
+      "exists": true,
+      "sha256": "f2507ddee5c805c7b7d398d2dcf786009a83992de2099168230f1ea22013c5f1",
+      "bytes": 3309
+    },
+    {
+      "id": "wif-verify-signals-20260911",
+      "path": "example/wif-framework/data/verify_signals_20260911.json",
+      "as_of": "2026-09-11",
+      "role": "derived",
+      "producer": "example/wif-framework/scripts/verify_signals.py",
+      "note": "29 项核验明细（含 A4：文档 +1283% 被证伪）",
+      "exists": true,
+      "sha256": "3ede038c2d6c3bb38fa36681b5b688b067283079103b3aaeafe4b47062f3a61a",
+      "bytes": 4179
+    },
+    {
+      "id": "wif-other-signals-20260911",
+      "path": "example/wif-framework/data/other_signals_20260911.json",
+      "as_of": "2026-09-11",
+      "role": "derived",
+      "producer": "example/wif-framework/scripts/other_signals.py",
+      "note": "非 WIF 择时 skill（Markov/VaR/波动/相关/相对强弱）",
+      "exists": true,
+      "sha256": "85bdf2ebedf15287ee8962548507ba5f60088140684eff61c568c0820df59b12",
+      "bytes": 1293
+    },
+    {
+      "id": "wif-timing-dashboard-20260911",
+      "path": "example/wif-framework/data/timing_dashboard_20260911.md",
+      "as_of": "2026-09-11",
+      "role": "report",
+      "note": "美方择时总表 + 数据质量声明",
+      "exists": true,
+      "sha256": "80b0711aed793e234b839e7c03023c007d2d98d6561b683ff4be5c9a665988c2",
+      "bytes": 5649
+    },
+    {
+      "id": "wif-f29-anchors-20260911",
+      "path": "example/wif-framework/data/F29_anchors_20260911.csv",
+      "as_of": "2026-09-10",
+      "role": "derived",
+      "producer": "example/wif-framework/scripts/wif_now.py",
+      "note": "F29 三个锚点 165/159/151 bp",
+      "exists": true,
+      "sha256": "71b62a3a99f6ca7422d2d696a808294c7d5f8e0479ace5ad9ead53f32fd1cc77",
+      "bytes": 184
+    },
+    {
+      "id": "ashare-assessment-20260911",
+      "path": "example/wif-ashare/data/ashare_assessment_20260911.json",
+      "as_of": "2026-09-11",
+      "role": "derived",
+      "producer": "example/wif-ashare/scripts/ashare_now.py",
+      "note": "WIF v2.7：MCI 0.3444 → Q3；五资产目标权重",
+      "exists": true,
+      "sha256": "906063e3f8fe2419999bd59e66c95c449e91ab75bbfa13eedd64c2186891092f",
+      "bytes": 688
+    },
+    {
+      "id": "ashare-dashboard-20260911",
+      "path": "example/wif-ashare/data/ashare_dashboard_20260911.md",
+      "as_of": "2026-09-11",
+      "role": "report",
+      "note": "A股择时总表",
+      "exists": true,
+      "sha256": "0de185d71b81451ae5a0b8991f1d14d9bbc3a3fb814ce27ae2c01f6b3b3a37b0",
+      "bytes": 4889
+    },
+    {
+      "id": "script-wif-now",
+      "path": "example/wif-framework/scripts/wif_now.py",
+      "as_of": "2026-09-15",
+      "role": "tool",
+      "note": "矩阵重建（含 deglitch + 比例拼接）",
+      "exists": true,
+      "sha256": "43a9b61a9e755db3a86311f356d3c9f070498113e1c5a57ba47672597322b8af",
+      "bytes": 11598
+    },
+    {
+      "id": "script-wif-assessment",
+      "path": "example/wif-framework/scripts/wif_assessment.py",
+      "as_of": "2026-09-15",
+      "role": "tool",
+      "note": "相位评估生成器",
+      "exists": true,
+      "sha256": "4dce4bd69e3247e6dc42dfc4de3af3006c2b8d329e0057820fd1d7e717aa4148",
+      "bytes": 14988
+    },
+    {
+      "id": "script-other-signals",
+      "path": "example/wif-framework/scripts/other_signals.py",
+      "as_of": "2026-09-15",
+      "role": "tool",
+      "note": "其他择时 skill",
+      "exists": true,
+      "sha256": "4ca1290013c43a0f8b2c1fbb81cc33314b7bf285c37b80eb50d4e91204930d8f",
+      "bytes": 9098
+    },
+    {
+      "id": "script-verify-signals",
+      "path": "example/wif-framework/scripts/verify_signals.py",
+      "as_of": "2026-09-15",
+      "role": "tool",
+      "note": "29 项核验（含 Tier-1 地面真值）",
+      "exists": true,
+      "sha256": "57473aa4f37bf07eea08d10276da91effa6aab8e827b1d44d6ba0885aa680228",
+      "bytes": 7782
+    },
+    {
+      "id": "script-ashare-now",
+      "path": "example/wif-ashare/scripts/ashare_now.py",
+      "as_of": "2026-09-15",
+      "role": "tool",
+      "note": "A股读数（用 ashare.py 原函数）",
+      "exists": true,
+      "sha256": "844210894797b68c715b6bbbbe6c539bdd0dc20114f3f8ec8a9203367508b62b",
+      "bytes": 5146
+    }
+  ]
+}

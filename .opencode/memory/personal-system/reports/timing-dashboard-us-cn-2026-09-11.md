@@ -1,7 +1,9 @@
 # 择时总表（美 / 中）— 2026-09-11 快照
 
 > **性质：** 研究草稿。**不构成投资建议。**
-> **数据层：** `personal-system/data/timing_snapshot_20260911.json`（结构化）+ `timing_log.csv`（可追加长表）
+> **数据层：** `personal-system/data/artifacts_manifest.json` —— **只存指针（路径 + sha256），不复制数值**。
+> 数值住在原件里（`example/wif-framework/data/` · `example/wif-ashare/data/`），改由产出脚本重建。
+> 漂移检查：`python3 .opencode/scripts/build_artifacts_manifest.py --check`
 > **可复跑产物：** `example/wif-framework/`（美）· `example/wif-ashare/`（中）
 > **核验：** 美方 29/29 项通过 `verify_signals.py`；中方用 `ashare.py` 原函数
 
