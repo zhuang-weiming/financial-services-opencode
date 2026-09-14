@@ -35,18 +35,28 @@
     │   ├── sell-ladder/ · buy-ladder/       # 判定引擎 + runs 历史
     │   ├── research/                        # 概率客观化算法 alg1-4 + 化债模型 py
     │   └── backtests/                       # BT-001~018 完整回测资产
-    ├── 现行报告 reports/（**当前 8 个有效文件**）
+    ├── 现行报告 reports/（**当前 16 个文件：15 .md + 1 目录**）
     │   ├── **AI 巨头估值与债务研究线**
     │   │   ├── ai_valuation_thresholds.md                # 【主】AI 巨头估值+泡沫阈值（五方法双情景，2026-09-07 最新）
     │   │   ├── tech_giants_corporate_debt.md             # AI 巨头企业债全面画像（债务姊妹篇）
     │   │   ├── ai-bubble-bank-indicators-consolidated-2026-08-19.md  # 投行 AI 泡沫指标
-    │   │   └── ai-bubble-inflation-stages-deep-2026-08-18.md         # 危机×通胀×大类资产回报数据集
+    │   │   ├── ai-bubble-inflation-stages-deep-2026-08-18.md         # 危机×通胀×大类资产回报数据集
+    │   │   ├── nvda-q2fy27-deep-dive-2026-09-07.md                    # NVDA Q2 FY27 深度
+    │   │   ├── googl-q2-2026-deep-dive-2026-09-07.md                  # GOOGL Q2 深度（含非经营重估污染）
+    │   │   ├── multi-hyperscaler-ai-loop-network-2026-09-07.md        # 多巨头 AI 内循环网络
+    │   │   └── ai-network/                                            # AI 网络配套资产
     │   ├── **SPCX (SpaceX) 主报告**（2026-09-01 五维合并版）
     │   │   └── SPCX-master-2026-09-01.md                 # 评级/目标价/红线/催化剂（Q2财报+估值+技术+竞争合并）
     │   ├── global-relay-debt-monetization-scenario-map-v3-2026-08-25.md  # 终版情景图（HYP-032 配套）
+    │   ├── fed-warsh-debt-monetization-hyp-reevaluation-2026-09-10.md   # Warsh hawkish-hold 重估（HYP-020/026）
     │   ├── china-silicon-wafer-landscape-2026-08-25.md               # 中国半导体硅片厂商竞争格局
-    │   └── 稳定币全景研究_发布版v3-fixed.md 2026-08-26                 # 稳定币政策/储备/赛道全图
-    └── theses/ · data/
+    │   ├── 稳定币全景研究_发布版v3-fixed.md 2026-08-26                 # 稳定币政策/储备/赛道全图
+    │   ├── aihf-masters-crisis-backtest-2026-09-14.md                # 【新】8 大师危机全周期回测（真实数据；REINFORCEMENT）
+    │   └── **timing-dashboard-us-cn-2026-09-11.md**                   # 【新】择时总表（美 WIF v5.9 + 中 WIF v2.7）；含 2 处官方数据缺陷
+    ├── 数据层 data/  【2026-09-15 新建】
+    │   ├── **timing_snapshot_20260911.json**   # 结构化快照（美+中 + provenance + 阈值 + 缺陷清单）
+    │   └── **timing_log.csv**                  # 可追加长表（market×category×indicator，70 行起）
+    └── theses/
 ```
 
 **已删除（清理记录）：**
@@ -60,12 +70,16 @@
 
 ## 当前活跃内容
 
-**最后更新:** **2026-09-10（wealth-guide v1.6 全面 rerun — 5 个 subagent 协同 + 用户 Warsh 判断 vs Jackson Hole 事实冲突登记；5 条 HYP 状态刷新 + 三剧本微调 + META Capex/Rev 已超 35% 警示线 + Brent $101.21 S8 触发预警）**
+**最后更新:** **2026-09-15（择时快照落库 — 新建 `data/` 数据层（JSON+CSV）；美 WIF v5.9 与中国 WIF v2.7 读数写入 3.US/3.1/4.2/2.HYP-011；发现 2 处官方数据缺陷；新增 reports/timing-dashboard-us-cn-2026-09-11.md）**
+
+> 前次：2026-09-14（ai-hedge-fund 8 大师危机全周期回测 — 真实数据；新增 `reports/aihf-masters-crisis-backtest-2026-09-14.md`；reports 树补齐至 15 项；核心为 REINFORCEMENT 不入 LAW/HYP，新增待验证项"capex/收入比 35% 阈值缺回测"→ 建议 BT-020）**
+
+> 前次：2026-09-14（视频核查蒸馏 — 新增 HYP-033「G7 长端国债买家坍缩 → 期限溢价新常态 + 黄金重估」+ CONFLICT-LOGIC-011「剧烈通胀 vs 驯服通胀」；活跃假设 16 → 17）
 
 | 项目 | 状态 |
 |------|------|
 | **活跃法则** | 3 条（LAW-001~003，全含 5-Why Challenge；失效法则 FAILED-001 已内化于 LAW-003） |
-| **活跃假设** | **16 个**：Tier 1 ⭐ = HYP-006/015/016/021/026/029 + **HYP-032（G2双人舞×接力式化债×驯服通胀，细化层，概率继承三剧本账本）**；Tier 2 = HYP-002/011/014/017/020/024/028/030；Tier 3 = HYP-027（γ父框架）。另 HYP-025 元评估 |
+| **活跃假设** | **17 个**：Tier 1 ⭐ = HYP-006/015/016/021/026/029 + **HYP-032（G2双人舞×接力式化债×驯服通胀，细化层）** + **HYP-033（G7 长端买家坍缩 → 期限溢价新常态 + 黄金重估，结构层父框架）**；Tier 2 = HYP-002/011/014/017/020/024/028/030；Tier 3 = HYP-027（γ父框架）。另 HYP-025 元评估 |
 | **三剧本概率账本（v3.2, 2026-09-10 Bridgewater 视角修正）** | **α=HYP-029 接力化债 51%**（原 52.5% ↓）/ **β=HYP-028 慢速金融抑制 35%**（不上调）/ **γ=HYP-027 快剧本 14%**（原 12.5% 微↑，Warsh hawkish-hold 而非立即加息 → 阶段 1 启动条件保留）；δ（AI 无痛路径）3-5% 为制度性反方 |
 | **HYP-011 危机分** | **1 → 2-3 分（边缘）**：S7 US30Y 5.24% 持续触发（+1 分）；**S8 Brent $101.21 9/9 首次突破 $100，即将 +1 分** → 9/23 复审节点；逼近 L2 减仓 30% 预备区 |
 | **HYP-006 触发距离** | META Capex/Rev 35.1% **🔴 已触发**（减仓 AI 基础设施/云至 50%）；MSFT 34.9% 临界（0.1pp）；NVDA Q/Q +17.9% 健康（+7.9pp 距 <10%）|
@@ -74,7 +88,7 @@
 | **框架版本** | CHINA v1.4（CDS 双层阈值）· US v2.1（双剧本联动+AI附录）· **五年预判 v2（新增 3.2）** |
 | **回测总数** | 18（BT-001~018，最新 BT-018 = 信号持续期持有口径下信心缩放 vs 均匀 50% 验证） |
 | **新增触发器（T-NEW）** | T-NEW-1 NVDA AR/Q Revenue / T-NEW-2 NVDA Long-term debt / T-NEW-3 NVDA Equity securities / T-NEW-4 GOOGL CapEx/OCF / T-NEW-5 GOOGL Equity Securities / T-NEW-6 GOOGL Q2 净利润公允价值占比 / T-NEW-7 AI 内/外循环 GMV 比 / T-NEW-8 hyperscaler CapEx/AI ARR — **T-NEW-4/5/6/7 已硬触发** |
-| **OPEN 冲突数** | 8 个（含 **CONFLICT-USER-WARSH 部分 RESOLVED** —— 我第一轮误读"鹰派 hold = 鹰派 hike"，Bridgewater 视角纠正后：Warsh 是 data-dependent hawkish-hold，9/15-16 FOMC 维持当前 60% / 加息 25bp 30-35%；9/15-16 强制复审） |
+| **OPEN 冲突数** | 9 个（含 **CONFLICT-USER-WARSH 部分 RESOLVED** —— 我第一轮误读"鹰派 hold = 鹰派 hike"，Bridgewater 视角纠正后：Warsh 是 data-dependent hawkish-hold，9/15-16 FOMC 维持当前 60% / 加息 25bp 30-35%；9/15-16 强制复审。**+ CONFLICT-LOGIC-011 NEW** —— HYP-033「通胀必然可怕」vs HYP-032「驯服的通胀」= 时间尺度混淆，OPEN） |
 | **HYP 文档压缩** | **2026-09-10 执行：2.HYPOTHESES.md 1258 → 570 行（-54.7%）** —— 采纳用户裁定"不能只增加不减少"，删除 v1-v3 历史版本 / 重复证据库 / Round 3 独立子标题；目标 <1000 行已达成 |
 
 ### 🔴 强制复审节点（2026-09-10 更新）
@@ -102,6 +116,7 @@
 4. **主事件日历**: 9·24习特会 → 11·10休战到期 → 12月FOMC → 2027春夏 $41.1T上限 → **2027H2-2028 衰退∩X-date = 主触发窗**。**2026-09-10 补充**：9/15-16 FOMC（维持 60% / 加息 30-35%）→ 9/23 Brent $100 持续复审 → 9/24 习特会 已升级为强制复审锚点。
 5. **2026 习特会管理台湾**（8-30 补充）: 习特会模糊确认"一个中国" + 维持现状 → 台湾灰色地带危机概率 **40-50% → 20-30%**（推迟到 2028-2030 远期）；**2028 准战争主触发点从台湾转移到伊朗/霍尔木兹**（35-45%）；日本是台湾冲突的"自动第二玩家"（被拖入概率 60-70%），但中日双边热战仅 5-10%。**2026-09-10 补充**：Brent $101.21 主要驱动是 7/7 撤销 General License X（伊朗制裁）→ "制裁驱动"vs"货币驱动"商品长牛 = **可逆性差异** = HYP-029 证据质量下调（9/6 raw-log 已记录）。
 6. **🔴 AI 泡沫现状（2026-09-10 新增）**: NVDA Q/Q +17.9% 健康（Q3 指引 $108B 维持 + FY28 ~70% 增长）；**MSFT Capex/Rev 34.9% 临界（差 0.1pp）**；**META 35.1% 已超警示线 → HYP-006 减仓 AI 基础设施/云至 50% 条件性启动**；GOOGL 单季 37.5% + CapEx/OCF 95% + Q2 净利润 88% 来自公允价值重估 → T-NEW-4/5/6 触发；AI 内/外循环 GMV 8-12x → T-NEW-7 触发。位置：阶段 1.5 → 阶段 2 过渡区间（3-6 个月缓冲期）。
+7. **🆕 长端国债需求结构（2026-09-14 新增 — HYP-033）**: 全球长端利率抬升的**结构原因** = DB 养老金（久期匹配型、监管驱动型买家）系统性撤退 → 价格敏感型买家（DC/外资/对冲基金）接盘 + 创纪录供给 → **期限溢价新常态**。德国债务/GDP 仅 63.5% 却长端创 15 年新高 = 超越"债务水平"的结构证据。**⚠️ 视频原文 3 处口径错误已备案，不得重复引用**（DB 80%→14% 口径混淆 / 美国 12 个月滚动改写成"发达到 2027" / 企业杠杆贷款到期墙塞进主权债）。**⚠️ 与 HYP-032「驯服通胀」张力 → CONFLICT-LOGIC-011（OPEN）**。
 
 ---
 

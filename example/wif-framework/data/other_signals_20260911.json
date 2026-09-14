@@ -1,0 +1,55 @@
+{
+  "as_of": "2026-09-11",
+  "n_obs": 4966,
+  "markov": {
+    "regime": 0,
+    "label": "calm",
+    "prob": 0.9722701766075469,
+    "ann_vol_calm": 0.11011421191396785,
+    "ann_vol_turb": 0.2461572272777093,
+    "duration_calm": 67.09815520163549,
+    "duration_turb": 30.104939195228265,
+    "window_days": 1500
+  },
+  "corr": {
+    "spy_tlt": 0.368434908607885,
+    "spy_gld": 0.28858726201112256,
+    "spy_bnd": 0.4346258960085464,
+    "z_spy_gld_20d": 1.645082744806824
+  },
+  "vol": {
+    "spy_rv20": 0.08742023415934981,
+    "spy_rv60": 0.10514664012129536,
+    "vix": 15.84,
+    "vix_pctile": 37.59565042287555
+  },
+  "tail": {
+    "var95_1d": -0.018057417639396344,
+    "cvar95_1d": -0.029996694229784782,
+    "cur_dd": -0.0174705954262393,
+    "max_dd": -0.552011045721988
+  },
+  "rates": {
+    "dgs2": 4.62,
+    "dgs10": 4.95,
+    "dgs30": 5.37,
+    "slope_10y2y": 0.33,
+    "slope_30y10y": 0.42
+  },
+  "rel_strength": {
+    "XLE": 0.15818393283996124,
+    "QQQ": -0.03248496142366364,
+    "GLD": 0.02674911443177308,
+    "TLT": -0.10899315786958064
+  },
+  "credit": {
+    "baa10y_bp": 151,
+    "hy_oas_bp": 271,
+    "hy_oas_date": "2026-07-15"
+  },
+  "unavailable": [
+    "prediction-markets (credits/network)",
+    "fear-score tool",
+    "garch (arch not installed locally)"
+  ]
+}

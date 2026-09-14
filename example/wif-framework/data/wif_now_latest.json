@@ -1,0 +1,20 @@
+{
+ "as_of": "2026-09-11",
+ "phase": {
+  "phase": 1,
+  "phase1_status": "HEALTHY",
+  "macro_quadrant": 2,
+  "date": "2026-09-11",
+  "vix": 15.84,
+  "vixterm": 1.56
+ },
+ "csi_partial": -0.28052109015350946,
+ "phase1_status": "HEALTHY",
+ "quadrant": 2,
+ "f29_last": {
+  "value_bp": 159,
+  "date": "2026-07-16",
+  "baa": 6.16,
+  "dgs10": 4.57
+ }
+}

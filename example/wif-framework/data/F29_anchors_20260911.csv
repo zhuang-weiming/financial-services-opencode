@@ -1,0 +1,4 @@
+date,f29_bp,source
+2026-05-08,165,CreditSpread_BAA_1986_2026.csv
+2026-07-16,159,wif_phase_assessment_20260717.json (BAA 6.16 - DGS10 4.57)
+2026-09-10,151,FRED BAA10Y via llmquant-data

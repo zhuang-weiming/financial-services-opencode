@@ -1,0 +1,217 @@
+{
+  "update_date": "2026-09-11",
+  "assessment_date": "2026-09-11",
+  "data_sources": {
+    "prices": "example/wif-framework/data/_merged_prices_20260911.csv (official matrix to 2026-07-16 + Tier-1 MCP splice)",
+    "F29": "FRED BAA10Y via llmquant-data (Moody's Baa - 10Y)",
+    "VIX": "^VIX via llmquant-data",
+    "macro": "FRED via llmquant-data (DGS10/DGS30/T10Y2Y/T10YIE/NFCI/STLFSI4/DTWEXBGS/DCOILWTICO/FEDFUNDS)"
+  },
+  "caveats": [
+    "CSI runs at 55% of its designed weight: the local matrix has NO F29 column, and compute_csi's docstring states missing components contribute zero AND are NOT rescaled. Therefore Z(F29_60d) (45% weight) is absent and the CSI value is NOT comparable to the WIF backtest (Sharpe 1.01), which used a 100% CSI.",
+    "The F29>500bp EMERGENCY hard-trigger is verified by anchor (151bp) but is not wired into the local CSI.",
+    "VIX splice point: official matrix 2026-07-16 VIX=15.67 vs Tier-1 16.73 (~1pt discontinuity).",
+    "VIXTERM CALIBRE MISMATCH with the 2026-07-17 assessment: that file defines VIXTERM = VIX_spot - VIX3M(value -0.73), whereas _merged_prices uses VIXTERM = VIX - VIXM(ETF price). Same field name, two calibres -> the two assessments are NOT a continuous series. Resolve before comparing across dates.",
+    "BAA10Y is an INVESTMENT-GRADE spread; it may not cover AI-related leverage (ORCL D/E 3.63, CRWV D/E 8.94). 'Corporate credit improving' must not be extrapolated to AI debt without checking HY (BAMLH0A0HYM2)."
+  ],
+  "macro_indicators": {
+    "credit": {
+      "f29_baa_10y": {
+        "value": 151,
+        "date": "2026-09-10",
+        "source": "FRED BAA10Y via llmquant-data",
+        "hard_trigger_bp": 500
+      }
+    },
+    "yields": {
+      "us10y": {
+        "value": 4.95,
+        "date": "2026-09-10",
+        "source": "FRED DGS10"
+      },
+      "us30y": {
+        "value": 5.37,
+        "date": "2026-09-10",
+        "source": "FRED DGS30"
+      },
+      "us2y": {
+        "value": 4.62,
+        "date": "2026-09-10",
+        "source": "FRED DGS2 (implied 10y-2y=+0.33)"
+      },
+      "breakeven_10y": {
+        "value": 2.36,
+        "date": "2026-09-11",
+        "source": "FRED T10YIE"
+      },
+      "real_10y": {
+        "value": 2.59,
+        "date": "2026-09-11",
+        "source": "computed 4.95 - 2.36"
+      }
+    },
+    "spreads": {
+      "f29_bp": 151,
+      "curve_10y_2y": {
+        "value": 0.33,
+        "date": "2026-09-11",
+        "source": "FRED T10Y2Y"
+      }
+    },
+    "volatility": {
+      "vix_spot": {
+        "value": 15.84,
+        "date": "2026-09-11",
+        "source": "^VIX via llmquant-data"
+      },
+      "vix_10d_return_pct": 9.2
+    },
+    "conditions": {
+      "nfci": {
+        "value": -0.56,
+        "date": "2026-08-28",
+        "source": "FRED NFCI"
+      },
+      "stl_fin_stress": {
+        "value": -0.7884,
+        "date": "2026-09-04",
+        "source": "FRED STLFSI4"
+      }
+    },
+    "rates_policy": {
+      "fed_funds": {
+        "value": 3.63,
+        "date": "2026-08-01",
+        "source": "FRED FEDFUNDS"
+      }
+    },
+    "fx_energy": {
+      "dxy_broad": {
+        "value": 118.0732,
+        "date": "2026-09-04",
+        "source": "FRED DTWEXBGS"
+      },
+      "wti": {
+        "value": 97.26,
+        "date": "2026-09-09",
+        "source": "FRED DCOILWTICO"
+      },
+      "brent": {
+        "value": 101.21,
+        "date": "2026-09-09",
+        "source": "记忆库 4.2（新华社）"
+      }
+    },
+    "sentiment": {
+      "fear_greed": {
+        "value": 57,
+        "date": "2026-09-14",
+        "source": "Alternative.me F&G via vibe-trading"
+      }
+    }
+  },
+  "wif_phase_assessment": {
+    "layer1_csi": {
+      "phase1_status": "HEALTHY",
+      "csi_partial_55pct": -0.2805,
+      "csi_engine_value": -0.2805,
+      "components": {
+        "z_vixtterm_60d": 0.139,
+        "z_vixtterm_weight": 0.35,
+        "z_vixtterm_contribution": 0.0485,
+        "neg_z_spy_gld_corr_20d": -1.645,
+        "corr_weight": 0.2,
+        "corr_contribution": -0.329,
+        "z_f29_60d": null,
+        "f29_weight": 0.45,
+        "f29_contribution": null,
+        "f29_note": "not computable: no 60-day daily BAA10Y series in the local matrix"
+      },
+      "hard_triggers": {
+        "f29_gt_500bp": false,
+        "f29_value_bp": 151,
+        "f29_distance_to_trigger_bp": 349,
+        "vix_gt_40_and_vix10d_gt_100pct": false
+      }
+    },
+    "layer2_macro_quadrant": {
+      "spy_126d_momentum_60d_mean": 0.1207,
+      "tlt_126d_momentum_60d_mean": -0.0423,
+      "quadrant": 2,
+      "quadrant_label": "Recovery (risk-on)",
+      "rule": "126d pct_change THEN 60d rolling mean; sign tested (phase.py::macro_quadrant)"
+    },
+    "layer3_mci": {
+      "mci_level": "Moderate",
+      "note": "US MCI is not implemented in the vendored library (only A-share ashare.py::compute_mci); Phase is derived from (phase1_status, quadrant)."
+    },
+    "final_phase": {
+      "phase_number": 1,
+      "phase_name": "Rising",
+      "allocation_range": {
+        "equity": "65-75%",
+        "fixed_income": "10-15%",
+        "real_assets": "15-25%"
+      }
+    },
+    "rebalance": {
+      "phase_switch": false,
+      "action": "none",
+      "rule": "switch -> next close; routine -> every 15 trading days; MCI<+5 -> VTI-only"
+    }
+  },
+  "risk_flags": [
+    "F29 (investment-grade credit spread) is NARROWING (165->159->151bp) while US30Y is at a post-2007 high (5.37%): corporate credit and sovereign credit are DIVERGING.",
+    "CSI runs at 55% weight (no F29 column) -> the HEALTHY reading is not fully evidenced.",
+    "BAA10Y may not cover AI-related leverage (ORCL D/E 3.63, CRWV D/E 8.94).",
+    "VIX 15.84 with SPY 126d +20.9% = complacent equity pricing while the long end sells off."
+  ],
+  "cross_validation": {
+    "method": "WIF engine (prices) x Tier-1 FRED macro x user HYP-011 8-signal framework",
+    "agreement": "WIF Phase 1 Rising / HEALTHY vs HYP-011 crisis score 2-3 (L0-L1) -> CONSISTENT (both 'not yet')",
+    "conflict": "4.2 AI-bubble 5-signal framework says 4/5 triggered -> 'clear out'. Different mechanism (AI capex vs price/credit stress) -> registered as CONFLICT-TIMING-001."
+  },
+  "cross_market_divergence": [
+    {
+      "line": "企业信用 Corporate credit (F29)",
+      "direction": "改善",
+      "latest": "151 bp",
+      "trend": "165 → 159 → 151 bp"
+    },
+    {
+      "line": "主权信用 Sovereign credit (US30Y)",
+      "direction": "恶化",
+      "latest": "5.37%",
+      "trend": "2007 年以来新高"
+    },
+    {
+      "line": "权益/波动 Equity / vol",
+      "direction": "平静",
+      "latest": "VIX 15.84",
+      "trend": "SPY 126d +20.9%"
+    }
+  ],
+  "f29_history": [
+    {
+      "date": "2026-05-08",
+      "f29_bp": 165,
+      "source": "CreditSpread_BAA_1986_2026.csv"
+    },
+    {
+      "date": "2026-07-16",
+      "f29_bp": 159,
+      "source": "wif_phase_assessment_20260717.json"
+    },
+    {
+      "date": "2026-09-10",
+      "f29_bp": 151,
+      "source": "FRED BAA10Y"
+    }
+  ],
+  "allocation_tilt_recommendation": {
+    "reasoning": "Phase 1 Rising + HEALTHY (partial CSI) -> risk-on; but only 55% of the CSI is live, so treat as indicative, not executable.",
+    "equity_pct": 70,
+    "fixed_income_pct": 13,
+    "real_assets_pct": 17
+  }
+}

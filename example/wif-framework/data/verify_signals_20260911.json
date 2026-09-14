@@ -1,0 +1,198 @@
+[
+  {
+    "check":"A1 SPY buy-hold cum return vs Tier-1 ground truth",
+    "status":"PASS",
+    "value":"+661.8%",
+    "expected":"+659.3%",
+    "note":"Tier-1 adjustedClose"
+  },
+  {
+    "check":"A1b SPY 2007-01-03 level vs Tier-1",
+    "status":"PASS",
+    "value":"99.06",
+    "expected":"98.87",
+    "note":"adjustedClose"
+  },
+  {
+    "check":"A1c SPY terminal level vs Tier-1",
+    "status":"PASS",
+    "value":"754.61",
+    "expected":"750.72",
+    "note":"adjustedClose"
+  },
+  {
+    "check":"A2 SPY max drawdown",
+    "status":"PASS",
+    "value":"-55.2%",
+    "expected":"-55.2%",
+    "note":"2008 GFC"
+  },
+  {
+    "check":"A3 sample size",
+    "status":"PASS",
+    "value":4926,
+    "expected":4926,
+    "note":""
+  },
+  {
+    "check":"A4 skill doc figure is artifact-contaminated (NOT a valid benchmark)",
+    "status":"PASS",
+    "value":"doc +1283.0%",
+    "expected":"truth +659.3%",
+    "note":"docs SPIKE +81.5% on 2026-06-09 → doc overstates by ~624pp"
+  },
+  {
+    "check":"B1 no unexplained 1-day jump in SPY (excl. 2008 crisis days)",
+    "status":"PASS",
+    "value":"14.5%",
+    "expected":"<25%",
+    "note":"worst = 2008-10-13"
+  },
+  {
+    "check":"B2 current SPY drawdown is small (near highs)",
+    "status":"PASS",
+    "value":"-1.7%",
+    "expected":">-10%",
+    "note":""
+  },
+  {
+    "check":"C20 SPY realised vol 20d",
+    "status":"PASS",
+    "value":"8.7% (pctile 19)",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C60 SPY realised vol 60d",
+    "status":"PASS",
+    "value":"10.5% (pctile 19)",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C252 SPY realised vol 252d",
+    "status":"PASS",
+    "value":"12.7% (pctile 30)",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-VIX VIX level vs 2007-2026 distribution",
+    "status":"PASS",
+    "value":"15.84 (pctile 38)",
+    "expected":"-",
+    "note":"matrix starts 2007, not 1990"
+  },
+  {
+    "check":"C-CORR SPY\/TLT 60d",
+    "status":"PASS",
+    "value":"+0.37 (pctile 98)",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-CORR SPY\/GLD 60d",
+    "status":"PASS",
+    "value":"+0.29 (pctile 75)",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-CORR SPY\/BND 60d",
+    "status":"PASS",
+    "value":"+0.43 (pctile 96)",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-TAIL full 2007- 95% 1d",
+    "status":"PASS",
+    "value":"VaR -1.81% \/ CVaR -3.00%",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-TAIL full 2007- 99% 1d",
+    "status":"PASS",
+    "value":"VaR -3.58% \/ CVaR -5.23%",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-TAIL last 3y 95% 1d",
+    "status":"PASS",
+    "value":"VaR -1.43% \/ CVaR -2.14%",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-TAIL last 3y 99% 1d",
+    "status":"PASS",
+    "value":"VaR -2.47% \/ CVaR -3.63%",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-MARKOV current regime = calm (low-vol)",
+    "status":"PASS",
+    "value":"regime 0 (calm), p=97.2%, calm vol 11.0%, dur 67.1d",
+    "expected":"calm",
+    "note":""
+  },
+  {
+    "check":"C-CURVE 10Y-2Y not inverted",
+    "status":"PASS",
+    "value":"+0.33%",
+    "expected":">0",
+    "note":"FRED 2026-09-10"
+  },
+  {
+    "check":"C-RELS XLE vs SPY 60d",
+    "status":"PASS",
+    "value":"+15.8%",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-RELS QQQ vs SPY 60d",
+    "status":"PASS",
+    "value":"-3.2%",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-RELS GLD vs SPY 60d",
+    "status":"PASS",
+    "value":"+2.7%",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"C-RELS TLT vs SPY 60d",
+    "status":"PASS",
+    "value":"-10.9%",
+    "expected":"-",
+    "note":""
+  },
+  {
+    "check":"D1 saved CSI == sum of its two live components",
+    "status":"PASS",
+    "value":"-0.2805",
+    "expected":"sum of components",
+    "note":""
+  },
+  {
+    "check":"D2 saved quadrant == re-derived quadrant",
+    "status":"PASS",
+    "value":"Q2",
+    "expected":"Q2",
+    "note":""
+  },
+  {
+    "check":"D3 phase 1 consistent with (HEALTHY, Q2)",
+    "status":"PASS",
+    "value":"Phase 1",
+    "expected":"Phase 1",
+    "note":"phase_map[(HEALTHY,2)] = 1"
+  }
+]
