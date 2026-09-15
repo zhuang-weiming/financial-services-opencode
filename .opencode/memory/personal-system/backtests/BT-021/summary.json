@@ -1,0 +1,167 @@
+{
+  "meta": {
+    "ipo_span": [
+      "1999-12-31",
+      "2026-07-31"
+    ],
+    "n_months": 320,
+    "data_source": "akshare stock_xgsglb_em / index_hist_sw / index_zh_a_hist(000300)",
+    "unit_note": "发行总数=万股 × 发行价格=元 → 募资额=万元"
+  },
+  "correlation": {
+    "券商_非银金融": {
+      "concurrent": -0.072,
+      "fwd1m": -0.155,
+      "fwd3m": -0.21,
+      "fwd6m": -0.291,
+      "fwd3m_lag3m_ipo": -0.202
+    },
+    "电子": {
+      "concurrent": -0.024,
+      "fwd1m": -0.083,
+      "fwd3m": -0.144,
+      "fwd6m": -0.266,
+      "fwd3m_lag3m_ipo": -0.233
+    },
+    "计算机": {
+      "concurrent": -0.077,
+      "fwd1m": -0.119,
+      "fwd3m": -0.162,
+      "fwd6m": -0.26,
+      "fwd3m_lag3m_ipo": -0.176
+    },
+    "通信": {
+      "concurrent": -0.131,
+      "fwd1m": -0.163,
+      "fwd3m": -0.239,
+      "fwd6m": -0.351,
+      "fwd3m_lag3m_ipo": -0.257
+    },
+    "国防军工": {
+      "concurrent": 0.071,
+      "fwd1m": -0.039,
+      "fwd3m": -0.124,
+      "fwd6m": -0.292,
+      "fwd3m_lag3m_ipo": -0.268
+    },
+    "沪深300": {
+      "concurrent": -0.018,
+      "fwd1m": -0.114,
+      "fwd3m": -0.178,
+      "fwd6m": -0.237,
+      "fwd3m_lag3m_ipo": -0.176
+    }
+  },
+  "tercile_event": {
+    "券商_非银金融": {
+      "hi_n": 66,
+      "lo_n": 59,
+      "hi_fwd6_mean": -4.63,
+      "hi_fwd6_median": -5.6,
+      "lo_fwd6_mean": 17.42,
+      "lo_fwd6_median": 3.86,
+      "hi_fwd6_win": 35.2,
+      "hi_fwd3_median": -1.14
+    },
+    "电子": {
+      "hi_n": 66,
+      "lo_n": 59,
+      "hi_fwd6_mean": -1.28,
+      "hi_fwd6_median": -1.06,
+      "lo_fwd6_mean": 16.5,
+      "lo_fwd6_median": 14.25,
+      "hi_fwd6_win": 45.5,
+      "hi_fwd3_median": -0.93
+    },
+    "计算机": {
+      "hi_n": 66,
+      "lo_n": 59,
+      "hi_fwd6_mean": -3.61,
+      "hi_fwd6_median": -4.91,
+      "lo_fwd6_mean": 16.46,
+      "lo_fwd6_median": 9.4,
+      "hi_fwd6_win": 38.9,
+      "hi_fwd3_median": -4.07
+    },
+    "通信": {
+      "hi_n": 66,
+      "lo_n": 59,
+      "hi_fwd6_mean": -1.46,
+      "hi_fwd6_median": -2.34,
+      "lo_fwd6_mean": 21.99,
+      "lo_fwd6_median": 20.51,
+      "hi_fwd6_win": 42.6,
+      "hi_fwd3_median": -1.86
+    },
+    "国防军工": {
+      "hi_n": 66,
+      "lo_n": 59,
+      "hi_fwd6_mean": -3.83,
+      "hi_fwd6_median": -6.79,
+      "lo_fwd6_mean": 13.54,
+      "lo_fwd6_median": 12.72,
+      "hi_fwd6_win": 31.5,
+      "hi_fwd3_median": -0.2
+    },
+    "沪深300": {
+      "hi_n": 66,
+      "lo_n": 59,
+      "hi_fwd6_mean": -2.74,
+      "hi_fwd6_median": -3.9,
+      "lo_fwd6_mean": 10.51,
+      "lo_fwd6_median": 7.63,
+      "hi_fwd6_win": 37.9,
+      "hi_fwd3_median": 0.22
+    }
+  },
+  "natural_experiment_2013": {
+    "pre_2011": {
+      "months": 22,
+      "ipo_count": 395,
+      "ret_pct": {
+        "券商_非银金融": null,
+        "电子": -34.4,
+        "计算机": null,
+        "通信": null,
+        "国防军工": null,
+        "沪深300": -26.7
+      }
+    },
+    "freeze_2013": {
+      "months": 14,
+      "ipo_count": 0,
+      "ret_pct": {
+        "券商_非银金融": null,
+        "电子": 64.5,
+        "计算机": null,
+        "通信": null,
+        "国防军工": null,
+        "沪深300": 8.9
+      }
+    },
+    "reopen_2014": {
+      "months": 12,
+      "ipo_count": 117,
+      "ret_pct": {
+        "券商_非银金融": null,
+        "电子": 12.3,
+        "计算机": null,
+        "通信": null,
+        "国防军工": null,
+        "沪深300": 60.4
+      }
+    },
+    "post_2015": {
+      "months": 12,
+      "ipo_count": 211,
+      "ret_pct": {
+        "券商_非银金融": -8.1,
+        "电子": 56.4,
+        "计算机": 69.6,
+        "通信": 60.8,
+        "国防军工": 22.1,
+        "沪深300": 8.6
+      }
+    }
+  }
+}

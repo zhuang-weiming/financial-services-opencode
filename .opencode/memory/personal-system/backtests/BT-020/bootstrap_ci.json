@@ -1,0 +1,56 @@
+{
+  "sample_start": "2005-04-08",
+  "n_bootstrap": 10000,
+  "seed": 42,
+  "cases": {
+    "A_dd40_dur120_market": {
+      "fwd60": {
+        "n": 17,
+        "median": 5.76,
+        "ci95_lo": -10.14,
+        "ci95_hi": 11.77,
+        "p_median_gt0": 0.767
+      },
+      "fwd120": {
+        "n": 17,
+        "median": 0.5,
+        "ci95_lo": -7.65,
+        "ci95_hi": 19.36,
+        "p_median_gt0": 0.602
+      }
+    },
+    "C_dd40_dur180_market": {
+      "fwd60": {
+        "n": 17,
+        "median": 3.84,
+        "ci95_lo": -8.38,
+        "ci95_hi": 13.04,
+        "p_median_gt0": 0.772
+      },
+      "fwd120": {
+        "n": 17,
+        "median": 5.66,
+        "ci95_lo": -3.9,
+        "ci95_hi": 21.32,
+        "p_median_gt0": 0.895
+      }
+    },
+    "matched_563530_shape": {
+      "desc": "dd -38~-52%, dur 150-230d",
+      "fwd60": {
+        "n": 8,
+        "median": 10.03,
+        "ci95_lo": -8.38,
+        "ci95_hi": 13.59,
+        "p_median_gt0": 0.922
+      },
+      "fwd120": {
+        "n": 8,
+        "median": -2.51,
+        "ci95_lo": -7.65,
+        "ci95_hi": 21.32,
+        "p_median_gt0": 0.346
+      }
+    }
+  }
+}
