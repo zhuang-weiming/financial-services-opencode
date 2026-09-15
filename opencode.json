@@ -19,11 +19,6 @@
       "url": "https://mcp.morningstar.com/mcp",
       "enabled": true
     },
-    "factset": {
-      "type": "remote",
-      "url": "https://mcp.factset.com/content/v1",
-      "enabled": true
-    },
     "ddg-search": {
       "type": "local",
       "command": [
